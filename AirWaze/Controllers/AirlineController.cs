@@ -10,7 +10,19 @@ namespace AirWaze.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View();
+            List<AirlineListViewModel> thislist = new List<AirlineListViewModel>();
+            foreach (var airline in airlineEntities)
+            {
+                thislist.Add(new AirlineListViewModel()
+                {
+                    AirlineID = airline.AirlineID,
+                    NameTag = airline.NameTag,
+                    Name = airline.Name,
+                    Adress = airline.Adress,
+                    Logo = airline.Logo,
+                });              
+            }
+            return View(thislist);
         }
 
         [HttpGet]
@@ -33,6 +45,7 @@ namespace AirWaze.Controllers
                 {
                     AirlineID = Guid.NewGuid(),
                     Name = airlineViewModel.Name,
+                    NameTag = airlineViewModel.NameTag,
                     CompanyNumber = airlineViewModel.CompanyNumber,
                     CurrentPlanes = airlineViewModel.CurrentPlanes,
                     Adress = airlineViewModel.Adress,
@@ -41,6 +54,7 @@ namespace AirWaze.Controllers
                     AccountNumber = airlineViewModel.AccountNumber,
                     //ListInvoices = airlineViewModel.ListInvoices,
                     Logo = airlineViewModel.Logo,
+                    
                 };
 
                 airlineEntities.Add(newEntity);
@@ -58,6 +72,7 @@ namespace AirWaze.Controllers
             {
                 AirlineID = thisAirline.AirlineID,
                 Name = thisAirline.Name,
+                NameTag = thisAirline.NameTag,
                 CompanyNumber = thisAirline.CompanyNumber,
                 CurrentPlanes = thisAirline.CurrentPlanes,
                 Adress = thisAirline.Adress,
@@ -84,6 +99,7 @@ namespace AirWaze.Controllers
                 if (airline.AirlineID == ID)
                 {
                     airlineUpdateViewModel.Name = airline.Name;
+                    airlineUpdateViewModel.NameTag = airline.NameTag;
                     airlineUpdateViewModel.CompanyNumber = airline.CompanyNumber;
                     airlineUpdateViewModel.CurrentPlanes = airline.CurrentPlanes;
                     airlineUpdateViewModel.Adress = airline.Adress;
@@ -112,6 +128,7 @@ namespace AirWaze.Controllers
 
                     AirlineID = myairline.AirlineID,
                     Name = myairline.Name,
+                    NameTag = myairline.NameTag,
                     CompanyNumber = myairline.CompanyNumber,
                     CurrentPlanes = myairline.CurrentPlanes,
                     Adress = myairline.Adress,
@@ -144,7 +161,7 @@ namespace AirWaze.Controllers
         {
             var airline = airlineEntities.FirstOrDefault(x => x.AirlineID == ID);
             airlineEntities.Remove(airline);
-            //await _myDatabase.RemoveMovie(airline);
+            //await _myDatabase.RemoveAirline(airline);
             return RedirectToAction("Index");
         }
     }
