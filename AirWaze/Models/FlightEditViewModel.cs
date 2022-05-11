@@ -1,6 +1,6 @@
-﻿namespace AirWaze.Entities
+﻿namespace AirWaze.Models
 {
-    public class Flight
+    public class FlightEditViewModel
     {
         public int FlightID { get; set; }
         public string FlightNr { get; set; }
@@ -14,6 +14,5 @@
         public Gate CurrentGate { get; set; }
         public Runway CurrentRunway { get; set; }
         public bool IsCompleted { get; set; }
-
     }
 }
