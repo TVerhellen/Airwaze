@@ -4,8 +4,8 @@ namespace AirWaze.Models
 {
     public class PlaneDeleteViewModel
     {
-        public int PlaneID { get; set; }
-       
+        public string PlaneNr { get; set; }
+
         public Airline CurrentAirline { get; set; }
        
         public string Type { get; set; }

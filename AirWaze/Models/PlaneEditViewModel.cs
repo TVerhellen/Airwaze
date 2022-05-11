@@ -4,8 +4,7 @@ namespace AirWaze.Models
 {
     public class PlaneEditViewModel
     {
-        public int PlaneID { get; set; }
-
+       
         public string PlaneNr { get; set; }
 
         public Airline CurrentAirline { get; set; }
@@ -18,7 +17,7 @@ namespace AirWaze.Models
 
         public string Manufacturer { get; set; }
 
-        public enum FlightRegion { }
+        public string FlightRegion { get; set; }
 
         public int FirstClassCapacity { get; set; }
 
