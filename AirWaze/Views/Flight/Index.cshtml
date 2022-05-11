@@ -9,6 +9,7 @@
                 <th scope="col">Date</th>
                 <th scope="col">Time</th>
                 <th scope="col">Destination</th>
+                <th scope="col">Flight Number</th>
             </tr>
         </thead>
         <tbody>
@@ -17,7 +18,8 @@
                 <tr>
                     <td>@x.Departure.Date</td>
                     <td>@x.Departure.Hour:@x.Departure.Minute</td>
-                    <td>@x.Destination</td>                          
+                    <td>@x.Destination</td>     
+                    <td>@x.FlightNr</td>
                     <td><a class="btn btn-primary" asp-controller="Statistics" asp-action="Edit" asp-route-id="@x.FlightNr">Edit</a></td>
                     <td><a class="btn btn-primary" asp-controller="Statistics" asp-action="Delete" asp-route-id="@x.FlightNr">Delete</a></td>
                 </tr>
