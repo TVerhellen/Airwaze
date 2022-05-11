@@ -10,7 +10,7 @@ namespace AirWaze.Models
 
         public string NameTag { get; set; }
 
-        public int CompanyNumber { get; set; }
+        public string CompanyNumber { get; set; }
 
         public List<Plane> CurrentPlanes { get; set; }
 
