@@ -1,0 +1,16 @@
+﻿
+td {
+    border: 1px solid lightgrey;
+}
+
+thead {
+    border: 1px solid black;
+    background-color: rgb(66,155,245);
+    color: white;
+}
+
+td, th {
+    text-align: center;
+    width: auto;
+    padding: 10px;
+}

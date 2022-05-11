@@ -3,3 +3,46 @@
 *@
 @{
 }
+<head>
+    <link rel="stylesheet" href="~/css/customstyle.css" asp-append-version="true" />
+</head>
+
+@model List<AirlineListViewModel>
+
+<div>
+    <h1 style="color:red;">VOOR AIRPORT/ADMIN AUTH ONLY</h1>
+    
+    <h1>Overzicht Airlines:</h1>  
+
+    <table>
+     <thead>
+        <tr>
+            <th>Name</th>
+            <th>NameTag</th>
+            <th>Adress</th>
+            <th>Logo</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+     </thead>
+    <tbody>
+            @foreach (var airline in Model)
+            {
+                    <tr>
+                        <td>@airline.Name</td>
+                        <td>@airline.NameTag</td>
+                        <td>@airline.Adress</td>
+                        <td>@airline.Logo</td>                        
+                        <td><a class="btn btn-primary" asp-action="Detail" asp-controller="Airline" asp-route-ID=@airline.AirlineID>Detail</a></td>
+                        <td><a class="btn btn-secondary" asp-action="Edit" asp-controller="Airline" asp-route-ID=@airline.AirlineID>Edit</a></td>
+                        <td><a class="btn btn-secondary" asp-action="Delete" asp-controller="Airline" asp-route-ID=@airline.AirlineID>Delete</a></td>
+                    </tr>                   
+            }
+            <tr>
+                <a asp-action="Create" asp-controller="Airline">Create Airline</a>
+            </tr>
+        </tbody>
+    </table>   
+</div>
+ 
