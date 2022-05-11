@@ -6,7 +6,7 @@ namespace AirWaze.Models
 {
     public class AirlineCreateViewModel
     {
-        public Guid AirlineID { get; set; }
+        public Guid? AirlineID { get; set; }
 
         public string Name { get; set; }
 
@@ -14,7 +14,7 @@ namespace AirWaze.Models
 
         public int CompanyNumber { get; set; }
 
-        public List<Plane> CurrentPlanes { get; set; }
+        public List<Plane>? CurrentPlanes { get; set; }
 
         public string Adress { get; set; }
 

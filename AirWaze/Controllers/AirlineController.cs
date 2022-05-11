@@ -47,13 +47,13 @@ namespace AirWaze.Controllers
                     Name = airlineViewModel.Name,
                     NameTag = airlineViewModel.NameTag,
                     CompanyNumber = airlineViewModel.CompanyNumber,
-                    CurrentPlanes = airlineViewModel.CurrentPlanes,
+                    CurrentPlanes = new List<Plane>(),
                     Adress = airlineViewModel.Adress,
                     Email = airlineViewModel.Email,
                     PhoneNumber = airlineViewModel.PhoneNumber,                   
                     AccountNumber = airlineViewModel.AccountNumber,
                     //ListInvoices = airlineViewModel.ListInvoices,
-                    Logo = airlineViewModel.Logo,
+                    //Logo = airlineViewModel.Logo,
                     
                 };
 
