@@ -1,6 +1,8 @@
-﻿namespace AirWaze.Models
+﻿using AirWaze.Entities;
+
+namespace AirWaze.Models
 {
-    public class FlightEditViewModel
+    public class FlightDetailViewModel
     {
         public int FlightID { get; set; }
         public string FlightNr { get; set; }

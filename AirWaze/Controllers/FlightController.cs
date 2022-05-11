@@ -1,4 +1,5 @@
-﻿using AirWaze.Entities;
+﻿using AirWaze.Database.Design;
+using AirWaze.Entities;
 using AirWaze.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,7 +22,7 @@ namespace AirWaze.Controllers
 
             foreach (var flight in _flightDatabase.GetFlights())
             {
-                flightViewModels.Add(new FlightListViewModel() { FlightID = flight.FlighID, FlightNr = flight.FlightNr, FlightTime = flight.FlightTime, 
+                flightViewModels.Add(new FlightListViewModel() { FlightID = flight.FlightID, FlightNr = flight.FlightNr, FlightTime = flight.FlightTime, 
                     Departure = flight.Departure, Destination = flight.Destination, IsCancelled = flight.IsCancelled, CurrentGate = flight.CurrentGate, 
                     IsCompleted = flight.IsCompleted });
             }
@@ -158,8 +159,15 @@ namespace AirWaze.Controllers
             return View(flightViewModel);
         }
 
-        // DeleteConfirm Action
+        public IActionResult ConfirmDelete(string flightnr)
+        {
+            var flightEntity = _flightDatabase.GetFlightByNr(flightnr);
+            if (flightEntity == null) return new NotFoundResult();
 
+            _flightDatabase.RemoveFlight(flightEntity);
+
+            return RedirectToAction("Index");
+        }
 
 
 
