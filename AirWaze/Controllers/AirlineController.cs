@@ -8,7 +8,7 @@ namespace AirWaze.Controllers
     {
         private static List<Airline> airlineEntities = new List<Airline>();
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             return View();
         }
@@ -23,7 +23,7 @@ namespace AirWaze.Controllers
 
         [AutoValidateAntiforgeryToken]
         [HttpPost]
-        public IActionResult Create(AirlineCreateViewModel airlineViewModel)
+        public async Task<IActionResult> Create(AirlineCreateViewModel airlineViewModel)
         {
             var isValid = TryValidateModel(airlineViewModel);
 
@@ -44,7 +44,7 @@ namespace AirWaze.Controllers
                 };
 
                 airlineEntities.Add(newEntity);
-                //_myDatabase.AddAirline(newEntity);  
+                //await _myDatabase.AddAirline(newEntity);  
                 return RedirectToAction("Index");
             }          
             return View(airlineViewModel);
@@ -99,7 +99,7 @@ namespace AirWaze.Controllers
 
         [AutoValidateAntiforgeryToken]
         [HttpPost]
-        public IActionResult Update(AirlineEditViewModel airlineUpdateViewModel)
+        public async Task<IActionResult> Update(AirlineEditViewModel airlineUpdateViewModel)
         {
 
             var isValid = TryValidateModel(airlineUpdateViewModel);
@@ -121,10 +121,31 @@ namespace AirWaze.Controllers
                     Logo = myairline.Logo,
                 };
                 airlineEntities.Add(newEntity);
-                //_myDatabase.UpdateAirline(newEntity);
+                //await _myDatabase.UpdateAirline(newEntity);
                 return RedirectToAction("Index");
             }
             return View(airlineUpdateViewModel);
+        }
+
+        [HttpGet]
+        public IActionResult Delete(Guid ID)
+        {
+            var airline = airlineEntities.FirstOrDefault(x => x.AirlineID == ID);
+            AirlineDeleteViewModel airlineDeleteViewModel = new AirlineDeleteViewModel
+            {
+                AirlineID = airline.AirlineID,
+                Name = airline.Name,
+                CompanyNumber = airline.CompanyNumber,
+                Adress = airline.Adress,
+            };
+            return View(airlineDeleteViewModel);
+        }
+        public async Task<IActionResult> DeleteConfirm(Guid ID)
+        {
+            var airline = airlineEntities.FirstOrDefault(x => x.AirlineID == ID);
+            airlineEntities.Remove(airline);
+            //await _myDatabase.RemoveMovie(airline);
+            return RedirectToAction("Index");
         }
 
     }
