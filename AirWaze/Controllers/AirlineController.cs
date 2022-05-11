@@ -147,6 +147,5 @@ namespace AirWaze.Controllers
             //await _myDatabase.RemoveMovie(airline);
             return RedirectToAction("Index");
         }
-
     }
 }
