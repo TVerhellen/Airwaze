@@ -22,11 +22,22 @@ namespace AirWaze.Controllers
                 ExtraLuggage = false
             }
         };
-        List<Flight> allFlights = new List<Flight>
+        public static readonly List<Flight> allFlights = new List<Flight>
         {
             new Flight()
             {
-
+                FlightID = 1,
+                FlightNr = "2",
+                CurrentPlane = new Plane(),
+                FlightTime = TimeSpan.FromHours(5),
+                Departure = DateTime.Now.AddDays(5),
+                ListTickets = new List<Ticket>(),
+                Distance = 1000,
+                Destination = "Berlin",
+                IsCancelled = false,
+                CurrentGate = new Gate(),
+                CurrentRunway = new Runway(),
+                IsCompleted = false
             }
         };
 
@@ -52,6 +63,7 @@ namespace AirWaze.Controllers
             return View(new TicketCreateViewModel());
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public IActionResult Create(TicketCreateViewModel newTicket)
         {
@@ -66,7 +78,7 @@ namespace AirWaze.Controllers
                     FirstName = newTicket.FirstName,
                     Price = newTicket.Price,
                     FirstClass = newTicket.FirstClass,
-                    Seat = newTicket.Seat,
+                    Seat = "1A",
                     ExtraLuggage = newTicket.ExtraLuggage,
                     Status = 0
                 });
@@ -86,6 +98,7 @@ namespace AirWaze.Controllers
             return View();
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public IActionResult Edit(string TicketNr, TicketEditViewModel editedTicket)
         {

@@ -15,5 +15,9 @@
         public Runway CurrentRunway { get; set; }
         public bool IsCompleted { get; set; }
 
+        public override string ToString()
+        {
+            return $"{Destination}, {Departure.Date}";
+        }
     }
 }
