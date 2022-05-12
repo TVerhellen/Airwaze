@@ -19,46 +19,83 @@ namespace AirWaze.Controllers
         //Gets All Entities of Planes - Will do For all uses!
         public PlaneController()
         {
-            Airline testAirline = new Airline
+            if (planeEntities.Count == 0)
             {
-                Number = "55",
-                PhoneNumber = "777888999",
-                CurrentPlanes = new List<Plane>(),
-                AccountNumber = "111222333",
-                Adress = "Koekoekstraat",
-                City = "Melle",
-                AirlineID = Guid.NewGuid(),
-                CompanyNumber = "5555555",
-                Email = "ikke@virgin.com",
-                Name = "Harald Airways",
-                NameTag = "HAR",
-            };
-            Plane testplane = new Plane
-            {
-                PlaneNr = "6666",
-                CurrentAirline = testAirline,
-                PassengerCapacity = 200,
-                FuelUsagePerKM = 500,
-                FirstClassCapacity = 100,
-                FlightRegion = "EUR",
-                FuelCapacity = 5000,
-                IsAvailable = true,
-                LoadCapacity = 10000,
-                Manufacturer = "Boeing",
-                Type = "747",
-                SeatDiagram = new string[5,40],                                        
-            };
-            planeEntities.Add(testplane);
+                Airline testAirline = new Airline
+                {
+                    Number = "55",
+                    PhoneNumber = "777888999",
+                    CurrentPlanes = new List<Plane>(),
+                    AccountNumber = "111222333",
+                    Adress = "Koekoekstraat",
+                    City = "Melle",
+                    AirlineID = Guid.NewGuid(),
+                    CompanyNumber = "5555555",
+                    Email = "ikke@virgin.com",
+                    Name = "Harald Airways",
+                    NameTag = "HAR",
+                };
+                Plane testplane = new Plane
+                {
+                    PlaneNr = "6666",
+                    CurrentAirline = testAirline,
+                    PassengerCapacity = 200,
+                    FuelUsagePerKM = 500,
+                    FirstClassCapacity = 100,
+                    FlightRegion = "EUR",
+                    FuelCapacity = 5000,
+                    IsAvailable = true,
+                    LoadCapacity = 10000,
+                    Manufacturer = "Boeing",
+                    Type = "747",
+                    SeatDiagram = new string[5, 40],
+                };
+                planeEntities.Add(testplane);
+            }
+            
         }
-        public async Task<IActionResult> Index()
+
+        //FOR AIRLINE ROLE
+        public async Task<IActionResult> Index(Guid ID)
+        {
+            planeEntities[0].CurrentAirline.AirlineID = ID;
+            
+            List<Plane> planelistAirline = new List<Plane>();
+            foreach (Plane x in planeEntities)
+            {
+                if (x.CurrentAirline.AirlineID == ID)
+                {
+                    planelistAirline.Add(x);
+                }
+            }                 
+            List<PlaneListViewModel> thislist = new List<PlaneListViewModel>();
+            foreach (var plane in planelistAirline)
+            {
+                thislist.Add(new PlaneListViewModel()
+                {
+                    PlaneNr = plane.PlaneNr,                    
+                    CurrentAirline = plane.CurrentAirline,
+                    PassengerCapacity = plane.PassengerCapacity,                    
+                    FlightRegion = plane.FlightRegion,                    
+                    IsAvailable = plane.IsAvailable,                    
+                });
+            }
+            return View(thislist);
+        }
+
+        //ADMIN ROLE
+        public async Task<IActionResult> List()
         {
             List<PlaneListViewModel> thislist = new List<PlaneListViewModel>();
             foreach (var plane in planeEntities)
             {
                 thislist.Add(new PlaneListViewModel()
                 {
-                    PlaneNr = plane.PlaneNr
-                    //TO DO ADD PROPS
+                    PlaneNr = plane.PlaneNr,
+                    CurrentAirline = plane.CurrentAirline,
+                    PassengerCapacity = plane.PassengerCapacity,
+                    FlightRegion = plane.FlightRegion,
+                    IsAvailable = plane.IsAvailable,
                 });
             }
             return View(thislist);
@@ -88,8 +125,17 @@ namespace AirWaze.Controllers
                     
                     PlaneNr = tempPlaneNr,
                     //FROM Cmb box
-                    FlightRegion = planeViewModel.FlightRegion,
-                    //TO DO ADD PROPS                
+                    FlightRegion = planeViewModel.FlightRegion,      
+                    CurrentAirline = planeViewModel.CurrentAirline,
+                    PassengerCapacity = planeViewModel.PassengerCapacity,
+                    FuelUsagePerKM = planeViewModel.FuelUsagePerKM,
+                    FirstClassCapacity = planeViewModel.FirstClassCapacity,                   
+                    FuelCapacity = planeViewModel.FuelCapacity,
+                    IsAvailable = planeViewModel.IsAvailable,
+                    LoadCapacity = planeViewModel.LoadCapacity,
+                    Manufacturer = planeViewModel.Manufacturer,
+                    Type = planeViewModel.Type,
+                    SeatDiagram = planeViewModel.SeatDiagram,
                 };
                 planeEntities.Add(newEntity);
                 //await _myDatabase.AddPlane(newEntity);  

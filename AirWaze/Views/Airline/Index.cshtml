@@ -3,6 +3,7 @@
 *@
 @{
 }
+@model AirlineIndexViewModel
 
 <p>Guid/Model nodig Met Airline</p>
 <h1>Hello - insert name Airliner -</h1>
@@ -10,13 +11,15 @@
 <h1>Status Panel Here, For now Buttons will do</h1>
 
 <a class="btn btn-primary" asp-action="List" asp-controller="Airline">Admin List View</a>
+<a class="btn btn-primary" asp-action="Index" asp-controller="Plane" asp-route-ID="@Model.Airline.AirlineID">Lijst Vliegtuigen</a>
+
 
 <p> These Dont work yet</p>
 <a class="btn btn-primary" asp-action="Detail" asp-controller="Airline" asp-route-ID="HierGUiDAirliner">Detail Pagina</a>
 
 <a class="btn btn-primary" asp-action="Update" asp-controller="Airline" asp-route-ID="HierGUiDAirliner">Update perso gegevens</a>
 
-<a class="btn btn-primary" asp-action="List" asp-controller="Plane" asp-route-ID="HierGUiDAirliner/Planes">Lijst Vliegtuigen</a>
+
 
 <a class="btn btn-primary" asp-action="List" asp-controller="FLight" asp-route-ID="HierGUiDAirliner/Flights/Planes">Lijst VLuchten</a>
 

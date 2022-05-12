@@ -2,15 +2,12 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    @model List<PlaneListViewModel> 
-    string x = @Model[0].CurrentAirline.Name;
 }
-
-
+@model List<PlaneListViewModel> 
 
 
 <div>
-    <h1 style="color:red;">Hallo @x</h1>
+    <h1 style="color:red;">Hallo Admin</h1>
     
     @if (Model.Count != 0)
     {
@@ -49,11 +46,7 @@
         <h1>No Planes Currently Available</h1>
     }
     <div style="margin:100px;">
- <a class="btn btn-secondary" asp-area="" asp-controller="Plane" asp-action="Create" style="margin-left:250px;width:600px;">Add New Plane</a>
+ <a class="btn btn-secondary" asp-area="" asp-controller="Plane" asp-action="Create" style="margin-left:250px;width:600px;">Create New Airline</a>
   </div> 
 
 </div>
-
-
-
-

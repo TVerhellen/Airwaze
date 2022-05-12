@@ -23,6 +23,8 @@ namespace AirWaze.Models
         public decimal FuelUsagePerKM { get; set; }
 
         public string[,] SeatDiagram { get; set; }
+
+        public bool IsAvailable { get; set; }
        
     }
 }
