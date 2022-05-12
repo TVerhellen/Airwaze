@@ -9,6 +9,13 @@ namespace AirWaze.Controllers
         private static List<Airline> airlineEntities = new List<Airline>();
 
 
+        //Gets All Entities of Airlines - Will do For all uses!
+        //public AirlineController(IDatabase mydatabase)
+        //{
+        //    _myDatabase = mydatabase;
+        //    AirlineEntities = _myDatabase.GetAirlines();           
+        //}
+
         //Airline Role
         public IActionResult Index()
         {          
@@ -25,8 +32,7 @@ namespace AirWaze.Controllers
                 {
                     AirlineID = airline.AirlineID,
                     NameTag = airline.NameTag,
-                    Name = airline.Name,
-                    Adress = airline.Adress,
+                    Name = airline.Name,                    
                     Logo = airline.Logo,
                 });              
             }
@@ -59,6 +65,8 @@ namespace AirWaze.Controllers
                     CompanyNumber = airlineViewModel.CompanyNumber,
                     CurrentPlanes = new List<Plane>(),
                     Adress = airlineViewModel.Adress,
+                    Number = airlineViewModel.Number,
+                    City = airlineViewModel.City,
                     Email = airlineViewModel.Email,
                     PhoneNumber = airlineViewModel.PhoneNumber,                   
                     AccountNumber = airlineViewModel.AccountNumber,
@@ -87,18 +95,17 @@ namespace AirWaze.Controllers
                 CompanyNumber = thisAirline.CompanyNumber,
                 CurrentPlanes = thisAirline.CurrentPlanes,
                 Adress = thisAirline.Adress,
+                Number = thisAirline.Number,
+                City = thisAirline.City,
                 Email = thisAirline.Email,
                 PhoneNumber = thisAirline.PhoneNumber,
                 AccountNumber = thisAirline.AccountNumber,
                 //ListInvoices = airlineViewModel.ListInvoices,
                 Logo = thisAirline.Logo,
             };
-            var isValid = TryValidateModel(airlineDetailViewModel);
-            if (isValid)
-            {
-                return View(airlineDetailViewModel);
-            }
-            return RedirectToAction("Index");
+            
+            return View(airlineDetailViewModel);
+           
         }
 
         //Airline?? Zeker Admin
@@ -116,6 +123,8 @@ namespace AirWaze.Controllers
                     airlineUpdateViewModel.CompanyNumber = airline.CompanyNumber;
                     airlineUpdateViewModel.CurrentPlanes = airline.CurrentPlanes;
                     airlineUpdateViewModel.Adress = airline.Adress;
+                    airlineUpdateViewModel.Number = airline.Number;
+                    airlineUpdateViewModel.City = airline.City;
                     airlineUpdateViewModel.Email = airline.Email;
                     airlineUpdateViewModel.PhoneNumber = airline.PhoneNumber;
                     airlineUpdateViewModel.AccountNumber = airline.AccountNumber;
@@ -146,6 +155,8 @@ namespace AirWaze.Controllers
                     CompanyNumber = airlineUpdateViewModel.CompanyNumber,
                     CurrentPlanes = airlineUpdateViewModel.CurrentPlanes,
                     Adress = airlineUpdateViewModel.Adress,
+                    Number = airlineUpdateViewModel.Number,
+                    City = airlineUpdateViewModel.City,
                     Email = airlineUpdateViewModel.Email,
                     PhoneNumber = airlineUpdateViewModel.PhoneNumber,
                     AccountNumber = airlineUpdateViewModel.AccountNumber,
@@ -170,6 +181,8 @@ namespace AirWaze.Controllers
                 Name = airline.Name,
                 CompanyNumber = airline.CompanyNumber,
                 Adress = airline.Adress,
+                Number = airline.Number,
+                City = airline.City
             };
             return View(airlineDeleteViewModel);
         }
