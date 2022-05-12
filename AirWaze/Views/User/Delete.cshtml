@@ -1,0 +1,13 @@
+﻿@model UserDeleteViewModel
+
+<h1>Delete user</h1>
+<p>Are you sure you want to delete @Model.FirstName @Model.LastName?</p>
+<br />
+
+<form asp-controller="User" asp-action="ConfirmDelete" method="post" asp-route-UserID=@Model.UserID>  
+
+    <button class="btn btn-danger" type="submit">Delete passenger</button>
+</form>
+<br />
+
+<a href="/User/Index" class="btn btn-primary btn-lg">Go back </a>

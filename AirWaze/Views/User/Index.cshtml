@@ -1,0 +1,27 @@
+﻿@model List<UserListViewModel>
+
+<div>
+    <table>
+        <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+        </tr>
+        @foreach(var user in Model)
+        {
+            <tr>
+                <td>@user.FirstName</td>
+                <td>@user.LastName </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><a asp-controller="User" asp-action="Detail" asp-route-UserID=@user.UserID>Detail</a></td>
+                <td><a asp-controller="User" asp-action="Edit" asp-route-UserID=@user.UserID>Edit</a></td>
+                <td><a asp-controller="User" asp-action="Delete" asp-route-UserID=@user.UserID>Delete</a></td>
+            </tr>
+        }
+
+    </table>
+</div>
+<br />
+<a href="/User/Create" class="btn btn-primary btn-lg">Create new passenger </a>
