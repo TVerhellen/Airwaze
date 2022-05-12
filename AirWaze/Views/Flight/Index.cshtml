@@ -20,9 +20,12 @@
                     <td>@x.Departure.Hour:@x.Departure.Minute</td>
                     <td>@x.Destination</td>     
                     <td>@x.FlightNr</td>
-                    <td><a class="btn btn-primary" asp-controller="Statistics" asp-action="Edit" asp-route-id="@x.FlightNr">Edit</a></td>
-                    <td><a class="btn btn-primary" asp-controller="Statistics" asp-action="Delete" asp-route-id="@x.FlightNr">Delete</a></td>
+                    <td><a class="btn btn-primary" asp-controller="Flight" asp-action="Detail" asp-route-id="@x.FlightNr">Details</a></td>
+                    <td><a class="btn btn-primary" asp-controller="Flight" asp-action="Edit" asp-route-id="@x.FlightNr">Edit</a></td>
+                    <td><a class="btn btn-primary" asp-controller="Flight" asp-action="Delete" asp-route-id="@x.FlightNr">Delete</a></td>
                 </tr>
+
+                <!-- Possible Notifications: Delayed?, Cancelled, Boarding, In Transit, Arrived At Destination, Fully Booked -->
             }
             
         </tbody>

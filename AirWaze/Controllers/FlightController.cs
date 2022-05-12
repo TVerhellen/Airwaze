@@ -76,7 +76,6 @@ namespace AirWaze.Controllers
                     CurrentPlane = flightEntity.CurrentPlane,
                     FlightTime = flightEntity.FlightTime,
                     Departure = flightEntity.Departure,
-                    ListTickets = flightEntity.ListTickets,
                     Distance = flightEntity.Distance,
                     Destination = flightEntity.Destination,
                     IsCancelled = flightEntity.IsCancelled,
@@ -96,6 +95,7 @@ namespace AirWaze.Controllers
             return View(flightCreateViewModel);
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public IActionResult Create(FlightCreateViewModel flightViewModel)
         {
@@ -109,7 +109,6 @@ namespace AirWaze.Controllers
                     CurrentPlane = flightViewModel.CurrentPlane,
                     FlightTime = flightViewModel.FlightTime,
                     Departure = flightViewModel.Departure,
-                    ListTickets = flightViewModel.ListTickets,
                     Distance = flightViewModel.Distance,
                     Destination = flightViewModel.Destination,
                     IsCancelled = flightViewModel.IsCancelled,
@@ -151,7 +150,6 @@ namespace AirWaze.Controllers
                 CurrentPlane = flightEntity.CurrentPlane,
                 FlightTime = flightEntity.FlightTime,
                 Departure = flightEntity.Departure,
-                ListTickets = flightEntity.ListTickets,
                 Distance = flightEntity.Distance,
                 Destination = flightEntity.Destination,
                 IsCancelled = flightEntity.IsCancelled,
@@ -163,6 +161,7 @@ namespace AirWaze.Controllers
             return View(flightEdit);
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public IActionResult Edit(string flightnr, FlightEditViewModel flightViewModel)
         {
@@ -188,7 +187,6 @@ namespace AirWaze.Controllers
             flightEntity.CurrentPlane = flightViewModel.CurrentPlane;
             flightEntity.FlightTime = flightViewModel.FlightTime;
             flightEntity.Departure = flightViewModel.Departure;
-            flightEntity.ListTickets = flightViewModel.ListTickets;
             flightEntity.Distance = flightViewModel.Distance;
             flightEntity.Destination = flightViewModel.Destination;
             flightEntity.IsCancelled = flightViewModel.IsCancelled;
@@ -228,6 +226,7 @@ namespace AirWaze.Controllers
             return View(flightViewModel);
         }
 
+        [HttpGet]
         public IActionResult DeleteConfirm(string flightnr)
         {
             Flight flightEntity = null;
