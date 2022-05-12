@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AirWaze.Entities;
 
-namespace AirWaze.Entities
+namespace AirWaze.Models
 {
-    public class User : IdentityUser
+    public class UserDetailViewModel
     {
         public Guid UserID { get; set; }
         public string Name { get; set; }
@@ -21,6 +21,6 @@ namespace AirWaze.Entities
         public List<Ticket> ListCurrentTickets { get; set; }
         public List<Ticket> ListPastTickets { get; set; }
         public List<bool> Milestones { get; set; }
-        public string? AdminComments { get; set; }
+        public string AdminComments { get; set; }
     }
 }
