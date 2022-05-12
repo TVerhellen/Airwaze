@@ -32,11 +32,20 @@ namespace AirWaze.Models
         public string Adress { get; set; }
 
         [Required]
+        [StringLength(8)]
+        public string Number { get; set; }
+
+        [Required]
+        [StringLength(30)]
+        public string City { get; set; }
+
+        [Required]
         [RegularExpression(@"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", ErrorMessage = "Please enter a valid email address")]
         public string Email { get; set; }
 
         [Required]
-        public int PhoneNumber { get; set; }
+        [StringLength(15)]
+        public string PhoneNumber { get; set; }
 
         [Required]
         public string AccountNumber { get; set; }
