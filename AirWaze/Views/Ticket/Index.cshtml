@@ -4,21 +4,4 @@
 @{
 }
 
-@model List<TicketListViewModel>
-
-<div>
-    <table>
-        <tr>
-            <th>Ticket Number</th>
-            <th>Name</th>
-        </tr>
-        @foreach(var ticket in Model)
-        {
-            <tr>
-                <td>@ticket.TicketNr</td>
-                <td>@ticket.LastName @ticket.FirstName</td>
-            </tr>
-        }
-
-    </table>
-</div>
+index

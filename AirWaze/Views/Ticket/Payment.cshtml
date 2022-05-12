@@ -1,0 +1,18 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model TicketEditViewModel
+
+<h1>Payment</h1>
+<p>Destination: @Model.CurrentFlight.Destination</p>
+<p>Departure: @Model.CurrentFlight.Departure</p>
+<p>First Class: @if (Model.FirstClass) { <p>yes</p> } else { <p>no</p> }
+<p>Extra Luggage: @if (Model.ExtraLuggage) { <p>yes</p> } else { <p>no</p> }
+<h2>Total Price: € @Model.Price</h2>
+
+<button asp-action="ConfirmedPayment" asp-route-ID="@Model.TicketNr">Pay Now</button>
+<button asp-action="Edit" asp-route-ID="@Model.TicketNr">Change Ticket</button>
+<button asp-action="Delete" asp-route-ID="@Model.TicketNr">Abort</button>

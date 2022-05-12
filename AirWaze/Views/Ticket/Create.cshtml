@@ -20,8 +20,8 @@
         <span class="text-danger" asp-validation-for="FirstName"></span>
     </div>
     <div>
-        <label asp-for="CurrentFlight">Flight</label>
-        <select asp-for="CurrentFlight" asp-items="@(new SelectList(@TicketController.allFlights))">
+        <label asp-for="CurrentFlightNr">Flight</label>
+        <select asp-for="CurrentFlightNr" asp-items="@(new SelectList(@TicketController.allFlights, nameof(Flight.FlightNr), nameof(Flight.Destination)))">
             <option>Select a flight</option>
         </select>
     </div>

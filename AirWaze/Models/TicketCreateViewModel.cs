@@ -6,7 +6,7 @@ namespace AirWaze.Models
     public class TicketCreateViewModel
     {
         [Required(ErrorMessage = "A flight must be selected!")]
-        public Flight CurrentFlight { get; set; }
+        public string CurrentFlightNr { get; set; }
 
         [MinLength(1, ErrorMessage = "Minimum 1 character!")]
         [MaxLength(20, ErrorMessage = "Maximum 20 characters!")]
@@ -19,7 +19,7 @@ namespace AirWaze.Models
         public string FirstName { get; set; }
         public decimal Price { get; set; }
         public bool FirstClass { get; set; }
-        public string Seat { get; set; }
+        public string? Seat { get; set; }
         public bool ExtraLuggage { get; set; }
     }
 }
