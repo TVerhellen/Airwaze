@@ -2,4 +2,12 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    @model PlaneDeleteViewModel
+    
 }
+<h1>@Model.PlaneNr @Model.Manufacturer @Model.Type  </h1>
+<p>Delete this Plane??</p>
+
+<a class="btn btn-primary" asp-controller="Plane" asp-action="DeleteConfirm" asp-route-ID="@Model.PlaneNr" style="margin-left:10px;">Ja</a>
+    <a class="btn btn-primary" asp-controller="Plane" asp-action="Index" style="margin-left:10px;">Neen</a>
+    

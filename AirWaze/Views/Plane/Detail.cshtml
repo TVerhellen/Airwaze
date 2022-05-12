@@ -3,3 +3,10 @@
 *@
 @{
 }
+@model PlaneDetailViewModel
+
+ <h1>Detail Pagina</h1>
+
+ <p>@Model.FuelUsagePerKM @Model.Type @Model.CurrentAirline.Email @Model.PlaneNr @Model.Manufacturer</p>
+
+ <a class="btn btn-primary" asp-action="Index" asp-controller="Plane">Back</a>

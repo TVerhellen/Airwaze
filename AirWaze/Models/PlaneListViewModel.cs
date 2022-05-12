@@ -5,7 +5,7 @@ namespace AirWaze.Models
     public class PlaneListViewModel
     {       
         public string PlaneNr { get; set; }
-        public Airline CurrentAirline { get; set; }
+        public Airline? CurrentAirline { get; set; }
 
         public string Manufacturer { get; set; }
 
