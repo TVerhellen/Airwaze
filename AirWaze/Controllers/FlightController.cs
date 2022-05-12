@@ -20,15 +20,15 @@ namespace AirWaze.Controllers
 //        {
 //            var flightViewModels = new List<FlightListViewModel>();
 
-            foreach (var flight in _flightDatabase.GetFlights())
-            {
-                flightViewModels.Add(new FlightListViewModel()
-        {
-            FlightID = flight.FlighID, FlightNr = flight.FlightNr, FlightTime = flight.FlightTime, 
-                    Departure = flight.Departure, Destination = flight.Destination, IsCancelled = flight.IsCancelled, CurrentGate = flight.CurrentGate, 
-                    IsCompleted = flight.IsCompleted });
-            }
-            return View(flightViewModels);
+        //    foreach (var flight in _flightDatabase.GetFlights())
+        //    {
+        //        flightViewModels.Add(new FlightListViewModel()
+        //{
+        //    FlightID = flight.FlighID, FlightNr = flight.FlightNr, FlightTime = flight.FlightTime, 
+        //            Departure = flight.Departure, Destination = flight.Destination, IsCancelled = flight.IsCancelled, CurrentGate = flight.CurrentGate, 
+        //            IsCompleted = flight.IsCompleted });
+        //    }
+        //    return View(flightViewModels);
 }
 
 //        [HttpGet]
@@ -163,20 +163,20 @@ namespace AirWaze.Controllers
 
 // DeleteConfirm Action
 
-return RedirectToAction("Index");
-        }
+//return RedirectToAction("Index");
+//        }
 
 
 
 
-        // TODO: fill in method logic
-        private string CreateFlightNr(FlightCreateViewModel flightmodel)
-{
-    // Unique number (check database): 1-3 letters + 1-4 numbers
-    //e.g. BA4432
-    //1st 2 letters of destination + random nr (if already exists +1) ??
+//        // TODO: fill in method logic
+//        private string CreateFlightNr(FlightCreateViewModel flightmodel)
+//{
+//    // Unique number (check database): 1-3 letters + 1-4 numbers
+//    //e.g. BA4432
+//    //1st 2 letters of destination + random nr (if already exists +1) ??
 
-    return "";
-}
-    }
+//    return "";
+//}
+//    }
 }
