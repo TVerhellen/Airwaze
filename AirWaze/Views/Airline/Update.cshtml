@@ -3,3 +3,62 @@
 *@
 @{
 }
+@model AirlineEditViewModel
+
+<form asp-controller="Airline" asp-action="Update" method="post">
+     <div class="form-group" hidden="hidden">
+        <label asp-for="AirlineID"></label>
+        <input class ="form-control" asp-for="AirlineID" />
+        <span class="text-danger" asp-validation-for="AirlineID"></span>
+    </div>
+
+    
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input class ="form-control" asp-for="Name" />
+        <span class="text-danger" asp-validation-for="Name"></span>
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="NameTag"></label>
+        <input class ="form-control" asp-for="NameTag" />
+        <span class="text-danger" asp-validation-for="NameTag"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CompanyNumber"></label>
+        <input class ="form-control" asp-for="CompanyNumber" />
+        <span class="text-danger" asp-validation-for="CompanyNumber"></span>
+    </div>    
+    <div class="form-group">
+        <label asp-for="Adress"></label>
+        <input class ="form-control" asp-for="Adress" />
+        <span class="text-danger" asp-validation-for="Adress"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Number"></label>
+        <input class ="form-control" asp-for="Number" />
+        <span class="text-danger" asp-validation-for="Number"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="City"></label>
+        <input class ="form-control" asp-for="City" />
+        <span class="text-danger" asp-validation-for="City"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input class ="form-control" asp-for="Email" />
+        <span class="text-danger" asp-validation-for="Email"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PhoneNumber"></label>
+        <input class ="form-control" asp-for="PhoneNumber" />
+        <span class="text-danger" asp-validation-for="PhoneNumber"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="AccountNumber"></label>
+        <input class ="form-control" asp-for="AccountNumber" />
+        <span class="text-danger" asp-validation-for="AccountNumber"></span>
+    </div>
+
+    <button class="btn btn-secondary" type="submit" style="margin-top:50px;margin-left:40%;width:400px;">Update</button> 
+</form>

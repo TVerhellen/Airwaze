@@ -8,7 +8,22 @@ namespace AirWaze.Controllers
     {
         private static List<Airline> airlineEntities = new List<Airline>();
 
-        public async Task<IActionResult> Index()
+
+        //Gets All Entities of Airlines - Will do For all uses!
+        //public AirlineController(IDatabase mydatabase)
+        //{
+        //    _myDatabase = mydatabase;
+        //    AirlineEntities = _myDatabase.GetAirlines();           
+        //}
+
+        //Airline Role
+        public IActionResult Index()
+        {          
+            return View();
+        }
+
+        //Only ADMINS
+        public async Task<IActionResult> List()
         {
             List<AirlineListViewModel> thislist = new List<AirlineListViewModel>();
             foreach (var airline in airlineEntities)
@@ -17,14 +32,14 @@ namespace AirWaze.Controllers
                 {
                     AirlineID = airline.AirlineID,
                     NameTag = airline.NameTag,
-                    Name = airline.Name,
-                    Adress = airline.Adress,
+                    Name = airline.Name,                    
                     Logo = airline.Logo,
                 });              
             }
             return View(thislist);
         }
 
+        //Airline Role DIE NOG NIET BESTAAT, indien al bestaande NOOIT NAAR HIER + Admin
         [HttpGet]
         public IActionResult Create()
         {
@@ -33,6 +48,7 @@ namespace AirWaze.Controllers
             return View(airlineCreateViewModel);
         }
 
+        //Airline Role DIE NOG NIET BESTAAT, indien al bestaande NOOIT NAAR HIER+ Admin
         [AutoValidateAntiforgeryToken]
         [HttpPost]
         public async Task<IActionResult> Create(AirlineCreateViewModel airlineViewModel)
@@ -49,6 +65,8 @@ namespace AirWaze.Controllers
                     CompanyNumber = airlineViewModel.CompanyNumber,
                     CurrentPlanes = new List<Plane>(),
                     Adress = airlineViewModel.Adress,
+                    Number = airlineViewModel.Number,
+                    City = airlineViewModel.City,
                     Email = airlineViewModel.Email,
                     PhoneNumber = airlineViewModel.PhoneNumber,                   
                     AccountNumber = airlineViewModel.AccountNumber,
@@ -64,6 +82,7 @@ namespace AirWaze.Controllers
             return View(airlineViewModel);
         }
 
+        //Airline Role + Admin
         [HttpGet]
         public IActionResult Detail(Guid ID)
         {
@@ -76,20 +95,20 @@ namespace AirWaze.Controllers
                 CompanyNumber = thisAirline.CompanyNumber,
                 CurrentPlanes = thisAirline.CurrentPlanes,
                 Adress = thisAirline.Adress,
+                Number = thisAirline.Number,
+                City = thisAirline.City,
                 Email = thisAirline.Email,
                 PhoneNumber = thisAirline.PhoneNumber,
                 AccountNumber = thisAirline.AccountNumber,
                 //ListInvoices = airlineViewModel.ListInvoices,
                 Logo = thisAirline.Logo,
             };
-            var isValid = TryValidateModel(airlineDetailViewModel);
-            if (isValid)
-            {
-                return View(airlineDetailViewModel);
-            }
-            return RedirectToAction("Index");
+            
+            return View(airlineDetailViewModel);
+           
         }
 
+        //Airline?? Zeker Admin
         [HttpGet]
         public IActionResult Update(Guid ID)
         {  
@@ -98,11 +117,14 @@ namespace AirWaze.Controllers
             {
                 if (airline.AirlineID == ID)
                 {
+                    airlineUpdateViewModel.AirlineID = airline.AirlineID;
                     airlineUpdateViewModel.Name = airline.Name;
                     airlineUpdateViewModel.NameTag = airline.NameTag;
                     airlineUpdateViewModel.CompanyNumber = airline.CompanyNumber;
                     airlineUpdateViewModel.CurrentPlanes = airline.CurrentPlanes;
                     airlineUpdateViewModel.Adress = airline.Adress;
+                    airlineUpdateViewModel.Number = airline.Number;
+                    airlineUpdateViewModel.City = airline.City;
                     airlineUpdateViewModel.Email = airline.Email;
                     airlineUpdateViewModel.PhoneNumber = airline.PhoneNumber;
                     airlineUpdateViewModel.AccountNumber = airline.AccountNumber;
@@ -111,8 +133,9 @@ namespace AirWaze.Controllers
                 }
             }
             return View(airlineUpdateViewModel);
-        }      
+        }
 
+        //Airline?? Zeker Admin
         [AutoValidateAntiforgeryToken]
         [HttpPost]
         public async Task<IActionResult> Update(AirlineEditViewModel airlineUpdateViewModel)
@@ -122,28 +145,32 @@ namespace AirWaze.Controllers
             if (isValid)
             {
                 Airline myairline = airlineEntities.FirstOrDefault(x => x.AirlineID == airlineUpdateViewModel.AirlineID);
-                airlineEntities.Remove(airlineEntities.FirstOrDefault(x => x.AirlineID == airlineUpdateViewModel.AirlineID));
+                
                 var newEntity = new Airline
                 {
 
-                    AirlineID = myairline.AirlineID,
-                    Name = myairline.Name,
-                    NameTag = myairline.NameTag,
-                    CompanyNumber = myairline.CompanyNumber,
-                    CurrentPlanes = myairline.CurrentPlanes,
-                    Adress = myairline.Adress,
-                    Email = myairline.Email,
-                    PhoneNumber = myairline.PhoneNumber,
-                    AccountNumber = myairline.AccountNumber,
-                    Logo = myairline.Logo,
+                    AirlineID = (Guid)airlineUpdateViewModel.AirlineID,
+                    Name = airlineUpdateViewModel.Name,
+                    NameTag = airlineUpdateViewModel.NameTag,
+                    CompanyNumber = airlineUpdateViewModel.CompanyNumber,
+                    CurrentPlanes = airlineUpdateViewModel.CurrentPlanes,
+                    Adress = airlineUpdateViewModel.Adress,
+                    Number = airlineUpdateViewModel.Number,
+                    City = airlineUpdateViewModel.City,
+                    Email = airlineUpdateViewModel.Email,
+                    PhoneNumber = airlineUpdateViewModel.PhoneNumber,
+                    AccountNumber = airlineUpdateViewModel.AccountNumber,
+                    Logo = airlineUpdateViewModel.Logo,
                 };
-                airlineEntities.Add(newEntity);
+                airlineEntities.Remove(myairline);
+                airlineEntities.Add(newEntity);                
                 //await _myDatabase.UpdateAirline(newEntity);
-                return RedirectToAction("Index");
+                return RedirectToAction("List");
             }
             return View(airlineUpdateViewModel);
         }
 
+        //Admin Role
         [HttpGet]
         public IActionResult Delete(Guid ID)
         {
@@ -154,15 +181,19 @@ namespace AirWaze.Controllers
                 Name = airline.Name,
                 CompanyNumber = airline.CompanyNumber,
                 Adress = airline.Adress,
+                Number = airline.Number,
+                City = airline.City
             };
             return View(airlineDeleteViewModel);
         }
+
+        //ADMIN role
         public async Task<IActionResult> DeleteConfirm(Guid ID)
         {
             var airline = airlineEntities.FirstOrDefault(x => x.AirlineID == ID);
             airlineEntities.Remove(airline);
             //await _myDatabase.RemoveAirline(airline);
-            return RedirectToAction("Index");
+            return RedirectToAction("List");
         }
     }
 }

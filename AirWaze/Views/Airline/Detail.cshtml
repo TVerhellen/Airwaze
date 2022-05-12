@@ -3,3 +3,10 @@
 *@
 @{
 }
+ @model AirlineDetailViewModel
+
+ <h1>Detail Pagina</h1>
+
+ <p>@Model.PhoneNumber @Model.Adress @Model.Email @Model.Name</p>
+
+ <a class="btn btn-primary" asp-action="Index" asp-controller="Airline">Back</a>
