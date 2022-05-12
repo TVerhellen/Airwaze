@@ -34,7 +34,7 @@ namespace AirWaze.Models
         public string HouseNumber { get; set; }
 
         [Range(0, int.MaxValue, ErrorMessage = "Bus error")]
-        public string Bus { get; set; }
+        public string? Bus { get; set; }
 
         [Required(ErrorMessage = "Zipcode is Required")]
         [RegularExpression(@"^\d{5}(-\d{4})?$", ErrorMessage = "Invalid Zipcode")]

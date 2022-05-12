@@ -12,7 +12,7 @@ namespace AirWaze.Entities
         public string Email { get; set; }
         public string StreetName { get; set; }
         public string HouseNumber { get; set; }
-        public string Bus { get; set; }
+        public string? Bus { get; set; }
         public string Zipcode { get; set; }
         public string City { get; set; }
         public string Country { get; set; }

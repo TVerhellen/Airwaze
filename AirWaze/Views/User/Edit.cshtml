@@ -1,5 +1,71 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿ @model UserEditViewModel
+
+<form asp-controller="User" asp-action="Edit" asp-route-UserID="@Model.UserID" method="post">
+    
+    <div class="form-group" hidden="hidden">
+        <label asp-for="UserID"></label>
+        <input class ="form-control" asp-for="UserID" />
+        <span class="text-danger" asp-validation-for="UserID"></span>
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="FirstName"></label>
+        <input class ="form-control" asp-for="FirstName" />
+        <span class="text-danger" asp-validation-for="FirstName"></span>
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="LastName"></label>
+        <input class ="form-control" asp-for="LastName" />
+        <span class="text-danger" asp-validation-for="LastName"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input class ="form-control" asp-for="Email" />
+        <span class="text-danger" asp-validation-for="Email"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PhoneNumber"></label>
+        <input class ="form-control" asp-for="PhoneNumber" />
+        <span class="text-danger" asp-validation-for="PhoneNumber"></span>
+    </div>
+    <strong>Address:</strong>
+    <div class="form-group">
+        <label asp-for="StreetName"></label>
+        <input class ="form-control" asp-for="StreetName" />
+        <span class="text-danger" asp-validation-for="StreetName"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="HouseNumber"></label>
+        <input class ="form-control" asp-for="HouseNumber" />
+        <span class="text-danger" asp-validation-for="HouseNumber"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Bus"></label>
+        <input class ="form-control" asp-for="Bus" />
+        <span class="text-danger" asp-validation-for="Bus"></span>
+    </div>
+     <div class="form-group">
+        <label asp-for="Bus"></label>
+        <input class ="form-control" asp-for="Bus" />
+        <span class="text-danger" asp-validation-for="Bus"></span>
+    </div>  
+     <div class="form-group">
+        <label asp-for="Zipcode"></label>
+        <input class ="form-control" asp-for="Zipcode" />
+        <span class="text-danger" asp-validation-for="Zipcode"></span>
+    </div> 
+     <div class="form-group">
+        <label asp-for="City"></label>
+        <input class ="form-control" asp-for="City" />
+        <span class="text-danger" asp-validation-for="City"></span>
+    </div> 
+     <div class="form-group">
+        <label asp-for="Country"></label>
+        <input class ="form-control" asp-for="Country" />
+        <span class="text-danger" asp-validation-for="Country"></span>
+    </div> 
+    <br />
+    <button class="btn btn-primary" type="submit">Edit passenger</button> 
+</form>
+

@@ -23,6 +23,7 @@ namespace AirWaze.Controllers
              }
         };
 
+        //only user + admin
         [HttpGet]
         public IActionResult Index()
         {
@@ -39,6 +40,7 @@ namespace AirWaze.Controllers
             return View(userList);
         }
 
+        //only user + admin
         [Route("User/Detail/{UserID:Guid}")]
         [HttpGet]
         public IActionResult Detail(Guid UserID)
@@ -64,6 +66,7 @@ namespace AirWaze.Controllers
             return View(newUser);
         }
 
+        //only user + admin
         [HttpGet]
         public IActionResult Create()
         {
@@ -71,6 +74,7 @@ namespace AirWaze.Controllers
             return View(userCreateViewModel);
         }
 
+        //only user + admin
         [ValidateAntiForgeryToken]
         [HttpPost]
         public IActionResult Create(UserCreateViewModel newUser)
@@ -92,10 +96,88 @@ namespace AirWaze.Controllers
                     Country = newUser.Country,
                     City = newUser.City,
                     PhoneNumber  = newUser.PhoneNumber,
+                    Email = newUser.Email,
                 });
                 return RedirectToAction("Index");
             }
             return View(newUser);
+        }
+
+        //only user + admin
+        [Route("User/Edit/{UserID:Guid}")]
+        [HttpGet]
+        public ActionResult Edit(Guid UserID)
+        {
+            UserEditViewModel userEditViewModel = new UserEditViewModel();
+            foreach (var myUser in userEntities)
+            {
+                if (myUser.UserID == UserID)
+                {
+                    userEditViewModel.UserID = myUser.UserID;
+                    userEditViewModel.FirstName = myUser.FirstName;
+                    userEditViewModel.LastName = myUser.LastName;
+                    userEditViewModel.StreetName = myUser.StreetName;
+                    userEditViewModel.HouseNumber = myUser.HouseNumber;
+                    userEditViewModel.Bus = myUser.Bus;
+                    userEditViewModel.Zipcode = myUser.Zipcode;
+                    userEditViewModel.Country = myUser.Country;
+                    userEditViewModel.City = myUser.City;
+                    userEditViewModel.PhoneNumber = myUser.PhoneNumber;
+                    userEditViewModel.Email = myUser.Email;
+                    break;
+                }
+            }
+            return View(userEditViewModel);           
+        }
+
+        //only user + admin
+        [HttpPost]
+        public ActionResult Edit(Guid id, [FromForm] UserEditViewModel newUser)
+        {
+           User myUser = new User()
+            {
+                UserID = newUser.UserID,
+                FirstName = newUser.FirstName,
+                LastName = newUser.LastName,
+                StreetName = newUser.StreetName,
+                HouseNumber = newUser.HouseNumber,
+                Bus = newUser.Bus,
+                Zipcode = newUser.Zipcode,
+                Country = newUser.Country,
+                City = newUser.City,
+                PhoneNumber = newUser.PhoneNumber,
+                Email = newUser.Email,
+           };
+            var user = userEntities.FirstOrDefault(x => x.UserID == newUser.UserID);
+            var index = userEntities.IndexOf(user);
+            userEntities[index] = myUser;
+
+            return RedirectToAction("Index");
+        }
+
+        //only user + admin
+        [Route("User/Delete/{UserID:Guid}")]
+        [HttpGet]
+        public ActionResult Delete(Guid UserID)
+        {
+            var user = userEntities.FirstOrDefault(x => x.UserID == UserID);
+            UserDeleteViewModel myUser = new UserDeleteViewModel()
+            {
+                UserID = user.UserID,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+            };
+
+            return View(myUser);
+        }
+
+        //only user + admin
+        [Route("User/Delete/{UserID:Guid}")]
+        [HttpPost]
+        public ActionResult ConfirmDelete(Guid UserID)
+        {
+            userEntities.Remove(userEntities.FirstOrDefault(x => x.UserID == UserID));
+            return RedirectToAction("Index");
         }
     }
 }

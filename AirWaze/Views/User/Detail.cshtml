@@ -19,12 +19,26 @@
     <strong>Phonenumber:</strong>
     <p>@Model.PhoneNumber</p>
     <br />
+    <strong>Milestones:</strong>
+@*    @if(Model.Milestones.Count != 0)
+    {
+        @foreach(var milestone in @Model.Milestones)
+        {
+            <p>milestone.Milestones</p>
+        }
+    }
+    else
+    {
+        <p>There are no milestones yet. Keep flying with us to get more milestones!</p>
+    }
+    <br />*@
 }
 else
 {
     <h1>The user is not found.</h1>    
 }
+<br />
 <a href="/User/Index" class="btn btn-primary btn-lg">Go back </a>
-
+<a class="btn btn-primary asp-controller="User" asp-action="Edit" asp-route-UserID=@Model.UserID >Edit</a>
 
 

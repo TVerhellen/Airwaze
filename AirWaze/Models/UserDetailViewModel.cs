@@ -12,7 +12,7 @@ namespace AirWaze.Models
         public string Email { get; set; }
         public string StreetName { get; set; }
         public string HouseNumber { get; set; }
-        public string Bus { get; set; }
+        public string? Bus { get; set; }
         public string Zipcode { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
@@ -21,6 +21,6 @@ namespace AirWaze.Models
         public List<Ticket> ListCurrentTickets { get; set; }
         public List<Ticket> ListPastTickets { get; set; }
         public List<bool> Milestones { get; set; }
-        public string AdminComments { get; set; }
+        public string? AdminComments { get; set; }
     }
 }
