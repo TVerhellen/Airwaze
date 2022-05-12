@@ -8,46 +8,6 @@ namespace AirWaze.Controllers
     public class FlightController : Controller
     {
         private readonly List<Flight> flights = new List<Flight>();
-        private readonly List<Plane> planes = new List<Plane>{
-            new Plane()
-            {
-                PlaneNr = "Plane1",
-                CurrentAirline = new Airline(),
-                PassengerCapacity = 300,
-                FuelCapacity = 850,
-                Type = "Boeing 747",
-                Manufacturer = "Boeing",
-                FlightRegion = "Europe",
-                FirstClassCapacity = 50,
-                LoadCapacity = 5000,
-                FuelUsagePerKM = 18,
-                SeatDiagram = null,
-                IsAvailable = true
-            }
-        };
-        private readonly List<Gate> gates = new List<Gate>{
-            new Gate()
-            {
-                Number = 1,
-                Queue = 0,
-                CurrentFlight = new Flight(),
-                IsAvailable = true
-            }
-        };
-        private readonly List<Runway> runways = new List<Runway>{
-            new Runway()
-            {
-                TicketNr = "1",
-                CurrentFlight = new Flight(),
-                CurrentUser = new User(),
-                LastName = "Verhellen",
-                FirstName = "Tijs",
-                Price = 50,
-                FirstClass = false,
-                Seat = "15C",
-                ExtraLuggage = false
-            }
-        };
         //private readonly IFlightDatabase _flightDatabase;
         Random _random = new Random();
 
@@ -135,8 +95,9 @@ namespace AirWaze.Controllers
         public IActionResult Create(FlightCreateViewModel flightViewModel)
         {
             flightViewModel.FlightNr = CreateFlightNr(flightViewModel);
-            flightViewModel.CurrentGate = null;
-            flightViewModel.CurrentRunway = null;
+            flightViewModel.CurrentGate = new Gate();
+            flightViewModel.CurrentRunway = new Runway();
+            flightViewModel.CurrentPlane = new Plane();
             flightViewModel.Status = 0;
 
             var isModelValid = TryValidateModel(flightViewModel);
@@ -273,7 +234,7 @@ namespace AirWaze.Controllers
         private string CreateFlightNr(FlightCreateViewModel flightmodel)
         {
             //1st 2 letters of destination + date
-            string tempFlightNr1 = flightmodel.Destination.Substring(0, 2) + flightmodel.Departure.ToString("yy") + flightmodel.Departure.ToString("MM") + flightmodel.Departure.ToString("dd");
+            string tempFlightNr1 = flightmodel.Destination.Substring(0, 2).ToUpper() + flightmodel.Departure.ToString("yy") + flightmodel.Departure.ToString("MM") + flightmodel.Departure.ToString("dd");
             //random number of length 2
             int tempFlightNr2 = _random.Next(0, 100);
             //combine both temp nrs
