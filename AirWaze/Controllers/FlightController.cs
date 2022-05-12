@@ -178,14 +178,31 @@ namespace AirWaze.Controllers
 
 
 
-        //TODO: fill in method logic
+        
         private string CreateFlightNr(FlightCreateViewModel flightmodel)
         {
-            //Unique number(check database): 1-3 letters + 1-4 numbers
-            //e.g.BA4432
-            //1st 2 letters of destination + random nr(if already exists +1) ??
+            //1st 2 letters of destination + date
+            string tempFlightNr1 = flightmodel.Destination.Substring(0, 2) + flightmodel.Departure.ToString("yy") + flightmodel.Departure.ToString("MM") + flightmodel.Departure.ToString("dd");
+            //random number of length 2
+            int tempFlightNr2 = _random.Next(0, 100);
+            //combine both temp nrs
+            string tempFlightNrFull = tempFlightNr1 + tempFlightNr2.ToString("D2");
 
-            return "";
+            //keep checking database for flight with same flightnr, if present -> increment random (max 99) and recheck
+            while (_flightDatabase.GetFlightByNr(tempFlightNrFull) != null)
+            {
+                if (tempFlightNr2 == 99)
+                {
+                    tempFlightNr2 = 0;
+                }
+                else
+                {
+                    tempFlightNr2++;
+                }
+                tempFlightNrFull = tempFlightNr1 + tempFlightNr2.ToString("D2");
+            }
+
+            return tempFlightNrFull;
         }
     }
 }
