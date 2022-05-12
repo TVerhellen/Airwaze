@@ -6,6 +6,10 @@ namespace AirWaze.Models
     {       
         public string PlaneNr { get; set; }
         public Airline CurrentAirline { get; set; }
+
+        public string Manufacturer { get; set; }
+
+        public string Type { get; set; }
         public int PassengerCapacity { get; set; }
         public string FlightRegion { get; set; }
         public bool IsAvailable { get; set; }

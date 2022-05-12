@@ -58,7 +58,7 @@ namespace AirWaze.Controllers
             return View(thislist);
         }
 
-        //Airline Role DIE NOG NIET BESTAAT, indien al bestaande NOOIT NAAR HIER + Admin
+        //Guest Role + Admin
         [HttpGet]
         public IActionResult Create()
         {
@@ -67,7 +67,7 @@ namespace AirWaze.Controllers
             return View(airlineCreateViewModel);
         }
 
-        //Airline Role DIE NOG NIET BESTAAT, indien al bestaande NOOIT NAAR HIER+ Admin
+        //Guest Role + Admin
         [AutoValidateAntiforgeryToken]
         [HttpPost]
         public async Task<IActionResult> Create(AirlineCreateViewModel airlineViewModel)

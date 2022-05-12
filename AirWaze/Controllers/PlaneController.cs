@@ -55,7 +55,7 @@ namespace AirWaze.Controllers
             
         }
 
-        //FOR AIRLINE ROLE
+        // AIRLINE ROLE
         public async Task<IActionResult> Index(Guid ID)
         {
             planeEntities[0].CurrentAirline.AirlineID = ID;
@@ -77,7 +77,9 @@ namespace AirWaze.Controllers
                     CurrentAirline = plane.CurrentAirline,
                     PassengerCapacity = plane.PassengerCapacity,                    
                     FlightRegion = plane.FlightRegion,                    
-                    IsAvailable = plane.IsAvailable,                    
+                    IsAvailable = plane.IsAvailable, 
+                    Manufacturer = plane.Manufacturer,
+                    Type = plane.Type,
                 });
             }
             return View(thislist);
@@ -96,11 +98,14 @@ namespace AirWaze.Controllers
                     PassengerCapacity = plane.PassengerCapacity,
                     FlightRegion = plane.FlightRegion,
                     IsAvailable = plane.IsAvailable,
+                    Manufacturer = plane.Manufacturer,
+                    Type = plane.Type,
                 });
             }
             return View(thislist);
         }
 
+        //ADMIN
         [HttpGet]
         public IActionResult Create()
         {
@@ -108,11 +113,21 @@ namespace AirWaze.Controllers
 
             return View(planeCreateViewModel);
         }
+        //Airline
+        [HttpGet]
+        public IActionResult AddPlane(Airline ID)
+        {
+            var planeCreateViewModel = new PlaneCreateViewModel();
 
+            planeCreateViewModel.CurrentAirline = ID;
+            return View(planeCreateViewModel);
+        }
+        //AIRLINE + ADMIN
         [AutoValidateAntiforgeryToken]
         [HttpPost]
         public async Task<IActionResult> Create(PlaneCreateViewModel planeViewModel)
         {
+            planeViewModel.CurrentAirline = planeEntities[0].CurrentAirline;
             var isValid = TryValidateModel(planeViewModel);
             Random generator = new Random();
             if (isValid)
@@ -134,8 +149,7 @@ namespace AirWaze.Controllers
                     IsAvailable = planeViewModel.IsAvailable,
                     LoadCapacity = planeViewModel.LoadCapacity,
                     Manufacturer = planeViewModel.Manufacturer,
-                    Type = planeViewModel.Type,
-                    SeatDiagram = planeViewModel.SeatDiagram,
+                    Type = planeViewModel.Type                   
                 };
                 planeEntities.Add(newEntity);
                 //await _myDatabase.AddPlane(newEntity);  
@@ -144,6 +158,7 @@ namespace AirWaze.Controllers
             return View(planeViewModel);
         }
 
+        //AIRLINE + ADMIN
         [HttpGet]
         public IActionResult Detail(string ID)
         {
@@ -161,6 +176,7 @@ namespace AirWaze.Controllers
             return RedirectToAction("Index");
         }
 
+        //AIRLINE + ADMIN
         [HttpGet]
         public IActionResult Update(string ID)
         {
@@ -176,6 +192,7 @@ namespace AirWaze.Controllers
             return View(planeUpdateViewModel);
         }
 
+        //AIRLINE + ADMIN
         [AutoValidateAntiforgeryToken]
         [HttpPost]
         public async Task<IActionResult> Update(PlaneEditViewModel planeUpdateViewModel)
@@ -200,6 +217,7 @@ namespace AirWaze.Controllers
             return View(planeUpdateViewModel);
         }
 
+        //AIRLINE + ADMIN
         [HttpGet]
         public IActionResult Delete(string ID)
         {
@@ -211,6 +229,8 @@ namespace AirWaze.Controllers
             };
             return View(planeDeleteViewModel);
         }
+
+        //AIRLINE + ADMIN
         public async Task<IActionResult> DeleteConfirm(string ID)
         {
             var plane = planeEntities.FirstOrDefault(x => x.PlaneNr == ID);

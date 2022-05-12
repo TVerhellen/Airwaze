@@ -10,7 +10,7 @@
     <h1 style="color:red;">Hallo Admin</h1>
     
     @if (Model.Count != 0)
-    {
+    {       
         <h1>Overview Planes:</h1>  
 
         <table>
@@ -20,6 +20,9 @@
                     <th>Capacity</th>
                     <th>Region</th>
                     <th>Available</th>
+                    <th>Manufacturer</th>
+                    <th>Type</th>
+                    <th>Airliner</th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -33,6 +36,9 @@
                         <td>@plane.PassengerCapacity</td>                       
                         <td>@plane.FlightRegion</td>
                         <td>@plane.IsAvailable</td>
+                        <td>@plane.Manufacturer</td>
+                        <td>@plane.Type</td>   
+                        <td>@plane.CurrentAirline.NameTag</td>
                         <td><a class="btn btn-primary" asp-action="Detail" asp-controller="Plane" asp-route-ID=@plane.PlaneNr>Detail</a></td>
                         <td><a class="btn btn-secondary" asp-action="Update" asp-controller="Plane" asp-route-ID=@plane.PlaneNr>Edit</a></td>
                         <td><a class="btn btn-secondary" asp-action="Delete" asp-controller="Plane" asp-route-ID=@plane.PlaneNr>Delete</a></td>
@@ -46,7 +52,7 @@
         <h1>No Planes Currently Available</h1>
     }
     <div style="margin:100px;">
- <a class="btn btn-secondary" asp-area="" asp-controller="Plane" asp-action="Create" style="margin-left:250px;width:600px;">Create New Airline</a>
+ <a class="btn btn-secondary" asp-area="" asp-controller="Plane" asp-action="Create" style="margin-left:250px;width:600px;">Create New Plane</a>
   </div> 
-
+   
 </div>
