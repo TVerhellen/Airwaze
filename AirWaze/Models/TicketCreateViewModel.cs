@@ -5,8 +5,6 @@ namespace AirWaze.Models
 {
     public class TicketCreateViewModel
     {
-        public string TicketNr { get; set; }
-
         [Required(ErrorMessage = "A flight must be selected!")]
         public Flight CurrentFlight { get; set; }
 

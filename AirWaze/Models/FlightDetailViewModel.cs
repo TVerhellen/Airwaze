@@ -1,4 +1,6 @@
-﻿namespace AirWaze.Models
+﻿using AirWaze.Entities;
+
+namespace AirWaze.Models
 {
     public class FlightDetailViewModel
     {

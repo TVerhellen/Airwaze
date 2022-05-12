@@ -1,4 +1,6 @@
-﻿@*
+﻿@using AirWaze.Controllers
+@using AirWaze.Entities
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
@@ -17,6 +19,12 @@
         <input class="form-control" asp-for="FirstName"/>
         <span class="text-danger" asp-validation-for="FirstName"></span>
     </div>
+    <div>
+        <label asp-for="CurrentFlight">Flight</label>
+        <select asp-for="CurrentFlight" asp-items="@(new SelectList(@TicketController.allFlights))">
+            <option>Select a flight</option>
+        </select>
+    </div>
     <div class="form-group">
         <input asp-for="FirstClass"/>
         <label asp-for="FirstClass">First Class?</label>
@@ -25,4 +33,6 @@
         <input asp-for="ExtraLuggage"/>
         <label asp-for="ExtraLuggage">Extra Luggage?</label>
     </div>
+
+    <button class="btn btn-primary" type="submit">Create Ticket</button>
 </form>
