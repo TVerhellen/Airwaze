@@ -19,20 +19,24 @@ namespace AirWaze.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult List()
+        {
             var flightViewModels = new List<FlightListViewModel>();
 
             foreach (var flight in flights)
             {
                 flightViewModels.Add(new FlightListViewModel()
                 {
-                    FlightID = flight.FlightID,
                     FlightNr = flight.FlightNr,
                     FlightTime = flight.FlightTime,
                     Departure = flight.Departure,
                     Destination = flight.Destination,
-                    IsCancelled = flight.IsCancelled,
                     CurrentGate = flight.CurrentGate,
-                    IsCompleted = flight.IsCompleted
+                    Status = flight.Status
                 });
             }
 
@@ -78,10 +82,9 @@ namespace AirWaze.Controllers
                     Departure = flightEntity.Departure,
                     Distance = flightEntity.Distance,
                     Destination = flightEntity.Destination,
-                    IsCancelled = flightEntity.IsCancelled,
                     CurrentGate = flightEntity.CurrentGate,
                     CurrentRunway = flightEntity.CurrentRunway,
-                    IsCompleted = flightEntity.IsCompleted
+                    Status = flightEntity.Status
                 };
                 return View(flightDetails);
             }
@@ -111,10 +114,9 @@ namespace AirWaze.Controllers
                     Departure = flightViewModel.Departure,
                     Distance = flightViewModel.Distance,
                     Destination = flightViewModel.Destination,
-                    IsCancelled = flightViewModel.IsCancelled,
-                    CurrentGate = flightViewModel.CurrentGate,
-                    CurrentRunway = flightViewModel.CurrentRunway,
-                    IsCompleted = flightViewModel.IsCompleted
+                    CurrentGate = null,
+                    CurrentRunway = null,
+                    Status = 0
                 };
                 //_flightDatabase.AddFlight(newEntity);
                 flights.Add(newEntity);
@@ -152,10 +154,9 @@ namespace AirWaze.Controllers
                 Departure = flightEntity.Departure,
                 Distance = flightEntity.Distance,
                 Destination = flightEntity.Destination,
-                IsCancelled = flightEntity.IsCancelled,
                 CurrentGate = flightEntity.CurrentGate,
                 CurrentRunway = flightEntity.CurrentRunway,
-                IsCompleted = flightEntity.IsCompleted
+                Status = flightEntity.Status
             };
 
             return View(flightEdit);
@@ -189,10 +190,9 @@ namespace AirWaze.Controllers
             flightEntity.Departure = flightViewModel.Departure;
             flightEntity.Distance = flightViewModel.Distance;
             flightEntity.Destination = flightViewModel.Destination;
-            flightEntity.IsCancelled = flightViewModel.IsCancelled;
             flightEntity.CurrentGate = flightViewModel.CurrentGate;
             flightEntity.CurrentRunway = flightViewModel.CurrentRunway;
-            flightEntity.IsCompleted = flightViewModel.IsCompleted;
+            flightEntity.Status = flightViewModel.Status;
 
             flights.Add(flightEntity);
             //_flightDatabase.UpdateFlight(flightEntity);
@@ -216,14 +216,26 @@ namespace AirWaze.Controllers
 
             if (flightEntity == null) return new NotFoundResult();
 
-            var flightViewModel = new FlightDeleteViewModel
-            {
-                FlightNr = flightEntity.FlightNr,
-                Departure = flightEntity.Departure,
-                Destination = flightEntity.Destination
-            };
+            //TODO: review below check if Database is implemented
+            //Flight can only be deleted if flight status is 0 - Generated and there are 0 booked tickets for this flight
+            //Otherwise -> Cancel flight via Edit Action (need record of this flight)
+            //if(flightEntity.Status == 0 && _IFlightDatabase.GetTicketsForFlight(flightEntity.FlightNr).Count == 0))
+            //{
+                var flightViewModel = new FlightDeleteViewModel
+                {
+                    FlightNr = flightEntity.FlightNr,
+                    Departure = flightEntity.Departure,
+                    Destination = flightEntity.Destination
+                };
 
-            return View(flightViewModel);
+                return View(flightViewModel);
+            //}
+            //else
+            //{
+                //TODO: throw message "cannot delete existing flight with booked tickets, please change flight status to "Cancelled"
+            //}
+
+            
         }
 
         [HttpGet]
@@ -276,21 +288,21 @@ namespace AirWaze.Controllers
             //    }
             //    tempFlightNrFull = tempFlightNr1 + tempFlightNr2.ToString("D2");
             //}
-            bool flightnrexists;
+            bool flightNrExists;
 
             do
             {
-                flightnrexists = false;
+                flightNrExists = false;
 
                 foreach(var flight in flights)
                 {
                     if(tempFlightNrFull == flight.FlightNr)
                     {
-                        flightnrexists = true;
+                        flightNrExists = true;
                     }
                 }
 
-                if(flightnrexists == true)
+                if(flightNrExists == true)
                 {
                     if (tempFlightNr2 == 99)
                     {
@@ -303,7 +315,7 @@ namespace AirWaze.Controllers
                     tempFlightNrFull = tempFlightNr1 + tempFlightNr2.ToString("D2");
                 }
 
-            } while (flightnrexists == true);
+            } while (flightNrExists == true);
 
 
             //while (_flightDatabase.GetFlightByNr(tempFlightNrFull) != null)
