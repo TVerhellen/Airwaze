@@ -38,7 +38,8 @@ else
     <h1>The user is not found.</h1>    
 }
 <br />
-<a href="/User/Index" class="btn btn-primary btn-lg">Go back </a>
+<a class="btn btn-primary asp-controller="User" asp-action="Index">Go back</a>
 <a class="btn btn-primary asp-controller="User" asp-action="Edit" asp-route-UserID=@Model.UserID >Edit</a>
+<a class="btn btn-primary asp-controller="User" asp-action="Delete" asp-route-UserID=@Model.UserID >Delete</a>
 
 

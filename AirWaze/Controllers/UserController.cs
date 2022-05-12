@@ -108,33 +108,28 @@ namespace AirWaze.Controllers
         [HttpGet]
         public ActionResult Edit(Guid UserID)
         {
-            UserEditViewModel userEditViewModel = new UserEditViewModel();
-            foreach (var myUser in userEntities)
+            var user = userEntities.FirstOrDefault(x => x.UserID == UserID);
+            UserEditViewModel myUser = new UserEditViewModel()
             {
-                if (myUser.UserID == UserID)
-                {
-                    userEditViewModel.UserID = myUser.UserID;
-                    userEditViewModel.FirstName = myUser.FirstName;
-                    userEditViewModel.LastName = myUser.LastName;
-                    userEditViewModel.StreetName = myUser.StreetName;
-                    userEditViewModel.HouseNumber = myUser.HouseNumber;
-                    userEditViewModel.Bus = myUser.Bus;
-                    userEditViewModel.Zipcode = myUser.Zipcode;
-                    userEditViewModel.Country = myUser.Country;
-                    userEditViewModel.City = myUser.City;
-                    userEditViewModel.PhoneNumber = myUser.PhoneNumber;
-                    userEditViewModel.Email = myUser.Email;
-                    break;
-                }
-            }
-            return View(userEditViewModel);           
+                UserID = user.UserID,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                StreetName = user.StreetName,
+                HouseNumber = user.HouseNumber,
+                Bus = user.Bus,
+                Zipcode = user.Zipcode,
+                Country = user.Country,
+                City = user.City,
+                PhoneNumber = user.PhoneNumber,
+                Email = user.Email,
+            };
+            return View(myUser);
         }
-
         //only user + admin
         [HttpPost]
-        public ActionResult Edit(Guid id, [FromForm] UserEditViewModel newUser)
+        public ActionResult Edit(UserEditViewModel newUser)
         {
-           User myUser = new User()
+            User myUser = new User()
             {
                 UserID = newUser.UserID,
                 FirstName = newUser.FirstName,
@@ -147,7 +142,7 @@ namespace AirWaze.Controllers
                 City = newUser.City,
                 PhoneNumber = newUser.PhoneNumber,
                 Email = newUser.Email,
-           };
+            };
             var user = userEntities.FirstOrDefault(x => x.UserID == newUser.UserID);
             var index = userEntities.IndexOf(user);
             userEntities[index] = myUser;
@@ -155,20 +150,20 @@ namespace AirWaze.Controllers
             return RedirectToAction("Index");
         }
 
+        
         //only user + admin
         [Route("User/Delete/{UserID:Guid}")]
         [HttpGet]
         public ActionResult Delete(Guid UserID)
         {
             var user = userEntities.FirstOrDefault(x => x.UserID == UserID);
-            UserDeleteViewModel myUser = new UserDeleteViewModel()
+            UserDeleteViewModel userDeleteViewModel = new UserDeleteViewModel
             {
                 UserID = user.UserID,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
             };
-
-            return View(myUser);
+            return View(userDeleteViewModel);
         }
 
         //only user + admin
@@ -176,7 +171,9 @@ namespace AirWaze.Controllers
         [HttpPost]
         public ActionResult ConfirmDelete(Guid UserID)
         {
-            userEntities.Remove(userEntities.FirstOrDefault(x => x.UserID == UserID));
+            var user = userEntities.FirstOrDefault(x => x.UserID == UserID);
+            userEntities.Remove(user);
+            //await _myDatabase.RemoveUser(user);
             return RedirectToAction("Index");
         }
     }
