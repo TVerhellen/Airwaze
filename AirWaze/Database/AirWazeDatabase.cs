@@ -95,7 +95,7 @@ namespace AirWaze.Database
         public void UpdateAirline(Airline airline)
         {
           
-            _dbContext.Airlines.Update(_dbContext.Airlines.FirstOrDefault(x => x.AirlineID == airline.AirlineID));
+            _dbContext.Airlines.Update(airline);
             _dbContext.SaveChanges();
         }
 
@@ -112,7 +112,8 @@ namespace AirWaze.Database
 
         public void UpdatePlane(Plane plane)
         {
-                      
+
+
             _dbContext.Airlines.Update(plane.CurrentAirline);
             _dbContext.Planes.Update(plane);
             _dbContext.SaveChanges();

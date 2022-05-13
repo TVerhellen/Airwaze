@@ -46,9 +46,14 @@ namespace AirWaze.Controllers
                     Name = "Harald Airways",
                 };
                 LoggedInAirline = airlineEntities.FirstOrDefault(x => x.Name == LoggedInAirline.Name);
+               
 
             }
 
+            if (LoggedInAirline.CurrentPlanes == null)
+            {
+                LoggedInAirline.CurrentPlanes = new List<Plane>();
+            }
             List<Plane> planelistAirline = new List<Plane>();
             foreach (Plane x in planeEntities)
             {
