@@ -1,4 +1,5 @@
-﻿using AirWaze.Entities;
+﻿using AirWaze.Database.Design;
+using AirWaze.Entities;
 using AirWaze.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
@@ -6,8 +7,11 @@ using System.Globalization;
 namespace AirWaze.Controllers
 {
     public class PlaneController : Controller
-    {       
-        
+    {
+
+
+        private IAirWazeDatabase _myDatabase;
+
         public static List<Plane> planeEntities = new List<Plane>();
 
         private static List<string> regionList = new List<string>
@@ -17,42 +21,10 @@ namespace AirWaze.Controllers
 
 
         //Gets All Entities of Planes - Will do For all uses!
-        public PlaneController()
+        public PlaneController(IAirWazeDatabase mydatabase)
         {
-            if (planeEntities.Count == 0)
-            {
-                Airline testAirline = new Airline
-                {
-                    Number = "55",
-                    PhoneNumber = "777888999",
-                    CurrentPlanes = new List<Plane>(),
-                    AccountNumber = "111222333",
-                    Adress = "Koekoekstraat",
-                    City = "Melle",
-                    AirlineID = Guid.NewGuid(),
-                    CompanyNumber = "5555555",
-                    Email = "ikke@virgin.com",
-                    Name = "Harald Airways",
-                    NameTag = "HAR",
-                };
-                Plane testplane = new Plane
-                {
-                    PlaneNr = "6666",
-                    CurrentAirline = testAirline,
-                    PassengerCapacity = 200,
-                    FuelUsagePerKM = 500,
-                    FirstClassCapacity = 100,
-                    FlightRegion = "EUR",
-                    FuelCapacity = 5000,
-                    IsAvailable = true,
-                    LoadCapacity = 10000,
-                    Manufacturer = "Boeing",
-                    Type = "747",
-                    SeatDiagram = new string[5, 40],
-                };
-                planeEntities.Add(testplane);
-            }
-            
+            _myDatabase = mydatabase;
+            planeEntities = _myDatabase.GetPlanes();          
         }
 
         // AIRLINE ROLE
@@ -152,7 +124,7 @@ namespace AirWaze.Controllers
                     Type = planeViewModel.Type                   
                 };
                 planeEntities.Add(newEntity);
-                //await _myDatabase.AddPlane(newEntity);  
+                _myDatabase.AddPlane(newEntity);  
                 return RedirectToAction("Index", newEntity.CurrentAirline.AirlineID);
             }
             return View(planeViewModel);
@@ -244,7 +216,7 @@ namespace AirWaze.Controllers
 
                 };
                 planeEntities.Add(newEntity);
-                //await _myDatabase.UpdatePlanes(newEntity);
+                _myDatabase.UpdatePlane(newEntity);
                 return RedirectToAction("Index");
             }
             return View(planeUpdateViewModel);
@@ -271,7 +243,7 @@ namespace AirWaze.Controllers
         {
             var plane = planeEntities.FirstOrDefault(x => x.PlaneNr == ID);
             planeEntities.Remove(plane);
-            //await _myDatabase.RemovePlane(plane);
+            _myDatabase.RemovePlane(plane);
             return RedirectToAction("Index");
         }
     }
