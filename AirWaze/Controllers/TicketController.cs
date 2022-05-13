@@ -1,13 +1,21 @@
-﻿using AirWaze.Entities;
+﻿using AirWaze.Database.Design;
+using AirWaze.Entities;
 using AirWaze.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirWaze.Controllers
 {
-    // SUGGEST USING ACCOUNT CREDIT FOR REFUNDS
-
     public class TicketController : Controller
     {
+        private readonly IAirWazeDatabase database;
+
+        public TicketController(IAirWazeDatabase db)
+        {
+            database = db;
+            loadedTickets = database.GetTicketsByUser(myUser);
+        }
+
+
         static User myUser = new User();
         static Airline testAirline = new Airline
         {
@@ -38,21 +46,7 @@ namespace AirWaze.Controllers
             Type = "747",
             SeatDiagram = new string[5, 40],
         };
-        public static readonly List<Ticket> allTickets = new List<Ticket>
-        {
-            new Ticket()
-            {
-                TicketNr = "1",
-                CurrentFlight = new Flight(),
-                CurrentUser = myUser,
-                LastName = "Verhellen",
-                FirstName = "Tijs",
-                Price = 50,
-                FirstClass = false,
-                Seat = "15C",
-                ExtraLuggage = false
-            }
-        };
+        public static readonly List<Ticket> loadedTickets = new List<Ticket>();
         public static readonly List<Flight> allFlights = new List<Flight>
         {
             new Flight()
@@ -80,7 +74,7 @@ namespace AirWaze.Controllers
         public IActionResult List()
         {
             List<TicketListViewModel> list = new List<TicketListViewModel>();
-            foreach (var ticket in allTickets)
+            foreach (var ticket in loadedTickets)
             {
                 if (ticket.CurrentUser == myUser)
                 {
@@ -160,7 +154,7 @@ namespace AirWaze.Controllers
         [HttpGet]
         public IActionResult Edit(string ID)
         {
-            Ticket loadedTicket = allTickets.Single(x => x.TicketNr == ID);
+            Ticket loadedTicket = loadedTickets.Single(x => x.TicketNr == ID);
             TicketEditViewModel editTicket = new TicketEditViewModel()
             {
                 TicketNr = loadedTicket.TicketNr,
@@ -179,7 +173,7 @@ namespace AirWaze.Controllers
         [HttpPost]
         public IActionResult Edit(string ID, TicketEditViewModel editedTicket)
         {
-            Ticket loadedTicket = allTickets.Single(x => x.TicketNr == ID);
+            Ticket loadedTicket = loadedTickets.Single(x => x.TicketNr == ID);
             loadedTicket.LastName = loadedTicket.LastName;
             loadedTicket.FirstName = editedTicket.FirstName;
             return RedirectToAction("List");
@@ -187,7 +181,7 @@ namespace AirWaze.Controllers
 
         public IActionResult Delete(string ID)
         {
-            Ticket loadedTicket = allTickets.Single(x => x.TicketNr == ID);
+            Ticket loadedTicket = loadedTickets.Single(x => x.TicketNr == ID);
             TicketDeleteViewModel deleteTicket = new TicketDeleteViewModel()
             {
                 TicketNr = loadedTicket.TicketNr,
@@ -200,6 +194,7 @@ namespace AirWaze.Controllers
 
         public IActionResult ConfirmedDelete(string ID)
         {
+
             return RedirectToAction("List");
         }
 
@@ -211,7 +206,7 @@ namespace AirWaze.Controllers
             string seat = GenerateSeatNumber(chosenFlight);
             toHandle.Price = toHandle.FirstClass ? (toHandle.ExtraLuggage ? chosenFlight.Distance * (decimal)1.2 + 75 : chosenFlight.Distance * (decimal)1.2) : (toHandle.ExtraLuggage ? chosenFlight.Distance + 75 : chosenFlight.Distance);
 
-            allTickets.Add(new Ticket()
+            loadedTickets.Add(new Ticket()
             {
                 TicketNr = ticketnr,
                 CurrentFlight = chosenFlight,
@@ -237,7 +232,7 @@ namespace AirWaze.Controllers
 
         public IActionResult ConfirmedPayment(string ID)
         {
-            allTickets.Single(x => x.TicketNr == ID).Status = 1;
+            loadedTickets.Single(x => x.TicketNr == ID).Status = 1;
             return RedirectToAction("Index");
         }
 
