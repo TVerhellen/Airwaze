@@ -39,6 +39,17 @@ namespace AirWaze.Database
             return _dbContext.Airlines.ToList();
         }
 
+        public void AddUser(User user)
+        {
+            _dbContext.Users.Add(user);
+            _dbContext.SaveChanges();
+        }
+
+        public User FindUserByID(Guid id)
+        {
+            return _dbContext.Users.SingleOrDefault(user => user.UserID.Equals(id));
+        }
+
         public Flight GetFlightByNr(string nr)
         {
             throw new NotImplementedException();
@@ -65,6 +76,11 @@ namespace AirWaze.Database
             _dbContext.SaveChanges();
         }
 
+        public List<User> GetUsers()
+        {
+            return _dbContext.Users.ToList();
+        }
+
         public void RemoveFlight(Flight flight)
         {
             throw new NotImplementedException();
@@ -83,6 +99,12 @@ namespace AirWaze.Database
             _dbContext.SaveChanges();
         }
 
+        public void RemoveUser(User user)
+        {
+            _dbContext.Users.Remove(user);
+            _dbContext.SaveChanges();
+        }
+
         public void UpdateFlight(Flight flight)
         {
             throw new NotImplementedException();
@@ -92,6 +114,12 @@ namespace AirWaze.Database
         {
             _dbContext.Planes.Remove(plane);
             _dbContext.Planes.Add(plane);
+            _dbContext.SaveChanges();
+        }
+
+        public void UpdateUser(User user)
+        {
+            _dbContext.Users.Update(user);
             _dbContext.SaveChanges();
         }
     }
