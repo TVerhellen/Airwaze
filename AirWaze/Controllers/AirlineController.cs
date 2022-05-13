@@ -8,18 +8,37 @@ namespace AirWaze.Controllers
     {
         private static List<Airline> airlineEntities = new List<Airline>();
 
+        Airline testAirline = new Airline
+        {
+            Number = "55",
+            PhoneNumber = "777888999",
+            CurrentPlanes = new List<Plane>(),
+            AccountNumber = "111222333",
+            Adress = "Koekoekstraat",
+            City = "Melle",
+            AirlineID = Guid.NewGuid(),
+            CompanyNumber = "5555555",
+            Email = "ikke@virgin.com",
+            Name = "H0r0ld Airways",
+            NameTag = "HAR",
+        };
 
-        //Gets All Entities of Airlines - Will do For all uses!
-        //public AirlineController(IDatabase mydatabase)
-        //{
-        //    _myDatabase = mydatabase;
-        //    AirlineEntities = _myDatabase.GetAirlines();           
-        //}
+
+        //Gets All Entities of Airlines Later on - Will do For all uses!
+        public AirlineController()
+        {
+            if (airlineEntities.Count == 0)
+            {
+                airlineEntities.Add(testAirline);
+            }           
+        }
 
         //Airline Role
         public IActionResult Index()
-        {          
-            return View();
+        {
+            AirlineIndexViewModel mymodel = new AirlineIndexViewModel();
+            mymodel.Airline = airlineEntities[0];
+            return View(mymodel);
         }
 
         //Only ADMINS
@@ -39,7 +58,7 @@ namespace AirWaze.Controllers
             return View(thislist);
         }
 
-        //Airline Role DIE NOG NIET BESTAAT, indien al bestaande NOOIT NAAR HIER + Admin
+        //Guest Role + Admin
         [HttpGet]
         public IActionResult Create()
         {
@@ -48,7 +67,7 @@ namespace AirWaze.Controllers
             return View(airlineCreateViewModel);
         }
 
-        //Airline Role DIE NOG NIET BESTAAT, indien al bestaande NOOIT NAAR HIER+ Admin
+        //Guest Role + Admin
         [AutoValidateAntiforgeryToken]
         [HttpPost]
         public async Task<IActionResult> Create(AirlineCreateViewModel airlineViewModel)

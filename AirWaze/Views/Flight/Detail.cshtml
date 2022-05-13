@@ -1,3 +1,31 @@
 ﻿@model FlightDetailViewModel
 
 
+<h1>Flight Details</h1>
+
+<!-- Possible Notifications: Delayed?, Cancelled, Boarding, In Transit, Arrived At Destination, Fully Booked -->
+
+<h2>Flight Number</h2>
+<p>@Model.FlightNr</p>
+<h2>Destination</h2>
+<p>@Model.Destination</p>
+<h2>Departure</h2>
+<p>@Model.Departure.ToString("R")</p>
+<h2></h2>
+<h2>Flight Duration</h2>
+<p>@Model.FlightTime</p>
+<h2>Gate</h2>
+<p>@Model.CurrentGate</p>
+
+<!-- For Airport staff-->
+<h2>Plane</h2>
+<p>@Model.CurrentPlane</p>
+<h2>Runway</h2>
+<p>@Model.CurrentRunway</p>
+<!-- TODO: route button to page with tickets only for this flight -->
+<a asp-controller="Ticket" asp-action="Index">Booked Tickets</a>
+
+
+<a asp-controller="Flight" asp-action="Index">Go Back</a>
+
+

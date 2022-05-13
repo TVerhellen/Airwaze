@@ -1,3 +1,37 @@
 ﻿@model FlightCreateViewModel
 
+<h1>Create New Flight</h1>
 
+<form asp-controller="Flight" asp-action="Create" method="post">
+    
+      <div class="form-group">
+        <label asp-for="Destination"></label>
+        <input class="form-control" asp-for="Destination" />
+        <span asp-validation-for="Destination"></span>
+    </div>
+     <br />
+
+    <div class="form-group">
+        <label asp-for="FlightTime"></label>
+        <input class="form-control" asp-for="FlightTime" />
+        <span asp-validation-for="FlightTime"></span>
+    </div>
+    <br />
+
+    <div class="form-group">
+        <label asp-for="Departure"></label>
+        <input class="form-control" asp-for="Departure" />
+        <span asp-validation-for="Departure"></span>
+    </div>
+     <br />
+
+    <div class="form-group">
+        <label asp-for="Distance"></label>
+        <input class="form-control" asp-for="Distance" />
+        <span asp-validation-for="Distance"></span>
+    </div>
+     <br />
+
+
+    <button class="btn btn-primary" type="submit">Create Flight</button>
+</form>

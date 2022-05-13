@@ -1,0 +1,43 @@
+﻿@model UserDetailViewModel
+
+
+@if (Model != null)
+{
+    <h1>My profile</h1>
+    <br />
+    <h2>@Model.FirstName @Model.LastName</h2>
+    <br />
+    <strong>Address:</strong>
+    <br />
+    <p>@Model.StreetName @Model.HouseNumber  @Model.Bus</p>
+    <p>@Model.Zipcode @Model.City</p>
+    <p>@Model.Country</p>
+    <br />
+    <strong>Email:</strong>
+    <p>@Model.Email</p>
+    <br />
+    <strong>Phonenumber:</strong>
+    <p>@Model.PhoneNumber</p>
+    <br />
+    <strong>Milestones:</strong>
+@*    @if(Model.Milestones.Count != 0)
+    {
+        @foreach(var milestone in @Model.Milestones)
+        {
+            <p>milestone.Milestones</p>
+        }
+    }
+    else
+    {
+        <p>There are no milestones yet. Keep flying with us to get more milestones!</p>
+    }
+    <br />*@
+}
+else
+{
+    <h1>The user is not found.</h1>    
+}
+<br />
+<a class="btn btn-primary asp-controller="User" asp-action="Index">Go back</a>
+
+

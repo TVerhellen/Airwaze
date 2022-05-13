@@ -57,18 +57,16 @@ namespace AirWaze.Controllers
         {
             new Flight()
             {
-                FlightID = 1,
                 FlightNr = "2",
                 CurrentPlane = testplane,
                 FlightTime = TimeSpan.FromHours(5),
                 Departure = DateTime.Now.AddDays(5),
-                ListTickets = new List<Ticket>(),
+                //ListTickets = new List<Ticket>(),
                 Distance = 1000,
                 Destination = "Berlin",
-                IsCancelled = false,
                 CurrentGate = new Gate(),
                 CurrentRunway = new Runway(),
-                IsCompleted = false
+                Status = 0
             }
         };
 

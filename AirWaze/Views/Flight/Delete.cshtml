@@ -1,1 +1,28 @@
 ﻿@model FlightDeleteViewModel
+
+<p>Are you sure you want to delete Flight @Model.FlightNr?</p>
+<br />
+<p>Destination: @Model.Destination - Departure: @Model.Departure.ToString("R")</p>
+@switch(@Model.Status)
+{
+    case 1:
+        <p>Status: Delayed</p>
+        break;
+    case 2:
+        <p>Status: Boarding</p>
+        break;
+    case 3:
+        <p>Status: Departed</p>
+        break;
+    case 4:
+        <p>Status: Arrived</p>
+        break;
+    case 5:
+        <p>Status: Cancelled</p>
+        break;
+    default:
+        break;
+}
+
+<a asp-controller="Flight" asp-action="Index">Go Back</a>
+<input type="button" class=btn-danger value="Delete" onclick="location.href='@Url.Action("DeleteConfirm", "Flight", new { flightnr = @Model.FlightNr })'" />

@@ -19,51 +19,94 @@ namespace AirWaze.Controllers
         //Gets All Entities of Planes - Will do For all uses!
         public PlaneController()
         {
-            Airline testAirline = new Airline
+            if (planeEntities.Count == 0)
             {
-                Number = "55",
-                PhoneNumber = "777888999",
-                CurrentPlanes = new List<Plane>(),
-                AccountNumber = "111222333",
-                Adress = "Koekoekstraat",
-                City = "Melle",
-                AirlineID = Guid.NewGuid(),
-                CompanyNumber = "5555555",
-                Email = "ikke@virgin.com",
-                Name = "Harald Airways",
-                NameTag = "HAR",
-            };
-            Plane testplane = new Plane
-            {
-                PlaneNr = "6666",
-                CurrentAirline = testAirline,
-                PassengerCapacity = 200,
-                FuelUsagePerKM = 500,
-                FirstClassCapacity = 100,
-                FlightRegion = "EUR",
-                FuelCapacity = 5000,
-                IsAvailable = true,
-                LoadCapacity = 10000,
-                Manufacturer = "Boeing",
-                Type = "747",
-                SeatDiagram = new string[5,40],                                        
-            };
-            planeEntities.Add(testplane);
+                Airline testAirline = new Airline
+                {
+                    Number = "55",
+                    PhoneNumber = "777888999",
+                    CurrentPlanes = new List<Plane>(),
+                    AccountNumber = "111222333",
+                    Adress = "Koekoekstraat",
+                    City = "Melle",
+                    AirlineID = Guid.NewGuid(),
+                    CompanyNumber = "5555555",
+                    Email = "ikke@virgin.com",
+                    Name = "Harald Airways",
+                    NameTag = "HAR",
+                };
+                Plane testplane = new Plane
+                {
+                    PlaneNr = "6666",
+                    CurrentAirline = testAirline,
+                    PassengerCapacity = 200,
+                    FuelUsagePerKM = 500,
+                    FirstClassCapacity = 100,
+                    FlightRegion = "EUR",
+                    FuelCapacity = 5000,
+                    IsAvailable = true,
+                    LoadCapacity = 10000,
+                    Manufacturer = "Boeing",
+                    Type = "747",
+                    SeatDiagram = new string[5, 40],
+                };
+                planeEntities.Add(testplane);
+            }
+            
         }
-        public async Task<IActionResult> Index()
+
+        // AIRLINE ROLE
+        [HttpGet]
+        public async Task<IActionResult> Index(Guid ID)
+        {
+            //ID nodig via login...
+            
+            List<Plane> planelistAirline = new List<Plane>();
+            foreach (Plane x in planeEntities)
+            {
+                if (x.CurrentAirline.AirlineID == planeEntities[0].CurrentAirline.AirlineID)
+                {
+                    planelistAirline.Add(x);
+                }
+            }                 
+            List<PlaneListViewModel> thislist = new List<PlaneListViewModel>();
+            foreach (var plane in planelistAirline)
+            {
+                thislist.Add(new PlaneListViewModel()
+                {
+                    PlaneNr = plane.PlaneNr,                    
+                    CurrentAirline = plane.CurrentAirline,
+                    PassengerCapacity = plane.PassengerCapacity,                    
+                    FlightRegion = plane.FlightRegion,                    
+                    IsAvailable = plane.IsAvailable, 
+                    Manufacturer = plane.Manufacturer,
+                    Type = plane.Type,
+                });
+            }
+            return View(thislist);
+        }
+
+        //ADMIN ROLE
+        public async Task<IActionResult> List()
         {
             List<PlaneListViewModel> thislist = new List<PlaneListViewModel>();
             foreach (var plane in planeEntities)
             {
                 thislist.Add(new PlaneListViewModel()
                 {
-                    PlaneNr = plane.PlaneNr
-                    //TO DO ADD PROPS
+                    PlaneNr = plane.PlaneNr,
+                    CurrentAirline = plane.CurrentAirline,
+                    PassengerCapacity = plane.PassengerCapacity,
+                    FlightRegion = plane.FlightRegion,
+                    IsAvailable = plane.IsAvailable,
+                    Manufacturer = plane.Manufacturer,
+                    Type = plane.Type,
                 });
             }
             return View(thislist);
         }
 
+        //ADMIN
         [HttpGet]
         public IActionResult Create()
         {
@@ -71,11 +114,21 @@ namespace AirWaze.Controllers
 
             return View(planeCreateViewModel);
         }
+        //Airline
+        [HttpGet]
+        public IActionResult AddPlane(Airline ID)
+        {
+            var planeCreateViewModel = new PlaneCreateViewModel();
 
+            planeCreateViewModel.CurrentAirline = ID;
+            return View(planeCreateViewModel);
+        }
+        //AIRLINE + ADMIN
         [AutoValidateAntiforgeryToken]
         [HttpPost]
         public async Task<IActionResult> Create(PlaneCreateViewModel planeViewModel)
         {
+            planeViewModel.CurrentAirline = planeEntities[0].CurrentAirline;
             var isValid = TryValidateModel(planeViewModel);
             Random generator = new Random();
             if (isValid)
@@ -87,25 +140,44 @@ namespace AirWaze.Controllers
                 {
                     
                     PlaneNr = tempPlaneNr,
-                    //FROM Cmb box
-                    FlightRegion = planeViewModel.FlightRegion,
-                    //TO DO ADD PROPS                
+                    FlightRegion = planeViewModel.FlightRegion,      
+                    CurrentAirline = planeViewModel.CurrentAirline,
+                    PassengerCapacity = planeViewModel.PassengerCapacity,
+                    FuelUsagePerKM = planeViewModel.FuelUsagePerKM,
+                    FirstClassCapacity = planeViewModel.FirstClassCapacity,                   
+                    FuelCapacity = planeViewModel.FuelCapacity,
+                    IsAvailable = planeViewModel.IsAvailable,
+                    LoadCapacity = planeViewModel.LoadCapacity,
+                    Manufacturer = planeViewModel.Manufacturer,
+                    Type = planeViewModel.Type                   
                 };
                 planeEntities.Add(newEntity);
                 //await _myDatabase.AddPlane(newEntity);  
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", newEntity.CurrentAirline.AirlineID);
             }
             return View(planeViewModel);
         }
 
+        //AIRLINE + ADMIN
         [HttpGet]
         public IActionResult Detail(string ID)
         {
+            ID = ID.Replace('%', '/');
             var thisPlane = planeEntities.FirstOrDefault(x => x.PlaneNr == ID);
             var planeDetailViewModel = new PlaneDetailViewModel()
             {
                 PlaneNr = thisPlane.PlaneNr,
-                //ADD PROPS
+                FlightRegion = thisPlane.FlightRegion,
+                CurrentAirline = thisPlane.CurrentAirline,
+                PassengerCapacity = thisPlane.PassengerCapacity,
+                FuelUsagePerKM = thisPlane.FuelUsagePerKM,
+                FirstClassCapacity = thisPlane.FirstClassCapacity,
+                FuelCapacity = thisPlane.FuelCapacity,
+                IsAvailable = thisPlane.IsAvailable,
+                LoadCapacity = thisPlane.LoadCapacity,
+                Manufacturer = thisPlane.Manufacturer,
+                Type = thisPlane.Type
+
             };
             var isValid = TryValidateModel(planeDetailViewModel);
             if (isValid)
@@ -115,21 +187,34 @@ namespace AirWaze.Controllers
             return RedirectToAction("Index");
         }
 
+        //AIRLINE + ADMIN
         [HttpGet]
         public IActionResult Update(string ID)
         {
+            ID = ID.Replace('%', '/');
             PlaneEditViewModel planeUpdateViewModel = new PlaneEditViewModel();
             foreach (var plane in planeEntities)
             {
                 if (plane.PlaneNr == ID)
                 {
-                    //ADD PROPS
+                    planeUpdateViewModel.PlaneNr = plane.PlaneNr;
+                    planeUpdateViewModel.FlightRegion = plane.FlightRegion;
+                    planeUpdateViewModel.CurrentAirline = plane.CurrentAirline;
+                    planeUpdateViewModel.PassengerCapacity = plane.PassengerCapacity;
+                    planeUpdateViewModel.FuelUsagePerKM = plane.FuelUsagePerKM;
+                    planeUpdateViewModel.FirstClassCapacity = plane.FirstClassCapacity;
+                    planeUpdateViewModel.FuelCapacity = plane.FuelCapacity;
+                    planeUpdateViewModel.IsAvailable = plane.IsAvailable;
+                    planeUpdateViewModel.LoadCapacity = plane.LoadCapacity;
+                    planeUpdateViewModel.Manufacturer = plane.Manufacturer;
+                    planeUpdateViewModel.Type = plane.Type;
                     break;
                 }
             }
             return View(planeUpdateViewModel);
         }
 
+        //AIRLINE + ADMIN
         [AutoValidateAntiforgeryToken]
         [HttpPost]
         public async Task<IActionResult> Update(PlaneEditViewModel planeUpdateViewModel)
@@ -138,14 +223,25 @@ namespace AirWaze.Controllers
             var isValid = TryValidateModel(planeUpdateViewModel);
             if (isValid)
             {
+                
                 Plane myplane = planeEntities.FirstOrDefault(x => x.PlaneNr ==planeUpdateViewModel.PlaneNr);
-                planeEntities.Remove(planeEntities.FirstOrDefault(x => x.PlaneNr == planeUpdateViewModel.PlaneNr));
+                planeUpdateViewModel.CurrentAirline = myplane.CurrentAirline;
+                planeEntities.Remove(myplane);
                 var newEntity = new Plane
                 {
 
-                    PlaneNr = myplane.PlaneNr,
-                    //ADD PROPS
-                    
+                    PlaneNr = planeUpdateViewModel.PlaneNr,
+                    FlightRegion = planeUpdateViewModel.FlightRegion,
+                    CurrentAirline = planeUpdateViewModel.CurrentAirline,
+                    PassengerCapacity = planeUpdateViewModel.PassengerCapacity,
+                    FuelUsagePerKM = planeUpdateViewModel.FuelUsagePerKM,
+                    FirstClassCapacity = planeUpdateViewModel.FirstClassCapacity,
+                    FuelCapacity = planeUpdateViewModel.FuelCapacity,
+                    IsAvailable = planeUpdateViewModel.IsAvailable,
+                    LoadCapacity = planeUpdateViewModel.LoadCapacity,
+                    Manufacturer = planeUpdateViewModel.Manufacturer,
+                    Type = planeUpdateViewModel.Type
+
                 };
                 planeEntities.Add(newEntity);
                 //await _myDatabase.UpdatePlanes(newEntity);
@@ -154,17 +250,23 @@ namespace AirWaze.Controllers
             return View(planeUpdateViewModel);
         }
 
+        //AIRLINE + ADMIN
         [HttpGet]
         public IActionResult Delete(string ID)
         {
+            ID = ID.Replace('%', '/');
             var plane = planeEntities.FirstOrDefault(x => x.PlaneNr == ID);
             PlaneDeleteViewModel planeDeleteViewModel = new PlaneDeleteViewModel
             {
                 PlaneNr = plane.PlaneNr,
-                //ADD PROPS
+                CurrentAirline = plane.CurrentAirline,
+                Manufacturer = plane.Manufacturer,
+                Type = plane.Type
             };
             return View(planeDeleteViewModel);
         }
+
+        //AIRLINE + ADMIN
         public async Task<IActionResult> DeleteConfirm(string ID)
         {
             var plane = planeEntities.FirstOrDefault(x => x.PlaneNr == ID);

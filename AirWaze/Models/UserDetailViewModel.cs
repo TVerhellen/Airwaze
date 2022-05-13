@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AirWaze.Entities;
 
-namespace AirWaze.Entities
+namespace AirWaze.Models
 {
-    public class User : IdentityUser
+    public class UserDetailViewModel
     {
         public Guid UserID { get; set; }
         public string Name { get; set; }
