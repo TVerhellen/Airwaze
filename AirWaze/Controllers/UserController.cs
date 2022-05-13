@@ -12,22 +12,7 @@ namespace AirWaze.Controllers
         {
             _airWazeDatabase = airWazeDatabase;
         }
-        //private static readonly List<User> userEntities = new List<User>()
-        //{
-        //    new User
-        //    {
-        //            UserID = Guid.NewGuid(),
-        //            FirstName = "Toinon",
-        //            LastName = "Naesen",
-        //            Email = "toinon.naesen@gmail.com",
-        //            StreetName = "Zeelaan",
-        //            HouseNumber = "2",
-        //            Zipcode = "8450",
-        //            City = "Bredene",
-        //            Country = "Belgium",
-        //            PhoneNumber = "0472/43.95.43"
-        //     }
-        //};
+        
 
         //only user + admin
         [HttpGet]
@@ -39,18 +24,7 @@ namespace AirWaze.Controllers
                 userViewModels.Add(new UserListViewModel() { UserID = user.UserID, FirstName = user.FirstName, LastName = user.LastName });
             }
             return View(userViewModels);
-
-            //List<UserListViewModel> userList = new List<UserListViewModel>();
-            //foreach (var user in userEntities)
-            //{
-            //    userList.Add(new UserListViewModel()
-            //    {
-            //        UserID = user.UserID,
-            //        FirstName = user.FirstName,
-            //        LastName = user.LastName,
-            //    });
-            //}
-            //return View(userList);
+            
         }
 
         //only user + admin
@@ -79,25 +53,6 @@ namespace AirWaze.Controllers
             }
             return View();
 
-            //UserDetailViewModel newUser = new UserDetailViewModel();
-            //foreach (User user in userEntities)
-            //{
-            //    if (user.UserID == UserID)
-            //    {
-            //        newUser.FirstName = user.FirstName;
-            //        newUser.LastName = user.LastName;
-            //        newUser.Email = user.Email;
-            //        newUser.StreetName = user.StreetName;
-            //        newUser.HouseNumber = user.HouseNumber;
-            //        newUser.Zipcode = user.Zipcode;
-            //        newUser.Bus = user.Bus;
-            //        newUser.City = user.City;
-            //        newUser.Country = user.Country;
-            //        newUser.PhoneNumber = user.PhoneNumber;
-            //        break;
-            //    }
-            //}
-            //return View(newUser);
         }
 
         //only user + admin
@@ -136,28 +91,6 @@ namespace AirWaze.Controllers
             }
             return View(userViewModel);
 
-            //var isModelValid = TryValidateModel(newUser);
-
-
-            //if (isModelValid)
-            //{
-            //    userEntities.Add(new User()
-            //    {
-            //        UserID = Guid.NewGuid(),
-            //        FirstName = newUser.FirstName,
-            //        LastName = newUser.LastName,
-            //        StreetName = newUser.StreetName,
-            //        HouseNumber = newUser.HouseNumber,
-            //        Bus = newUser.Bus,
-            //        Zipcode = newUser.Zipcode,
-            //        Country = newUser.Country,
-            //        City = newUser.City,
-            //        PhoneNumber  = newUser.PhoneNumber,
-            //        Email = newUser.Email,
-            //    });
-            //    return RedirectToAction("Index");
-            //}
-            //return View(newUser);
         }
 
         //only user + admin
@@ -184,22 +117,6 @@ namespace AirWaze.Controllers
             };
             return View(userEditViewModel);
 
-            //var user = userEntities.FirstOrDefault(x => x.UserID == UserID);
-            //UserEditViewModel myUser = new UserEditViewModel()
-            //{
-            //    UserID = user.UserID,
-            //    FirstName = user.FirstName,
-            //    LastName = user.LastName,
-            //    StreetName = user.StreetName,
-            //    HouseNumber = user.HouseNumber,
-            //    Bus = user.Bus,
-            //    Zipcode = user.Zipcode,
-            //    Country = user.Country,
-            //    City = user.City,
-            //    PhoneNumber = user.PhoneNumber,
-            //    Email = user.Email,
-            //};
-            //return View(myUser);
         }
         //only user + admin
         [HttpPost]
@@ -226,25 +143,6 @@ namespace AirWaze.Controllers
 
             return RedirectToAction("Index");
 
-            //User myUser = new User()
-            //{
-            //    UserID = newUser.UserID,
-            //    FirstName = newUser.FirstName,
-            //    LastName = newUser.LastName,
-            //    StreetName = newUser.StreetName,
-            //    HouseNumber = newUser.HouseNumber,
-            //    Bus = newUser.Bus,
-            //    Zipcode = newUser.Zipcode,
-            //    Country = newUser.Country,
-            //    City = newUser.City,
-            //    PhoneNumber = newUser.PhoneNumber,
-            //    Email = newUser.Email,
-            //};
-            //var user = userEntities.FirstOrDefault(x => x.UserID == newUser.UserID);
-            //var index = userEntities.IndexOf(user);
-            //userEntities[index] = myUser;
-
-            //return RedirectToAction("Index");
         }
 
         
@@ -263,14 +161,6 @@ namespace AirWaze.Controllers
             };
             return View(deleteViewModel);
 
-            //var user = userEntities.FirstOrDefault(x => x.UserID == UserID);
-            //UserDeleteViewModel userDeleteViewModel = new UserDeleteViewModel
-            //{
-            //    UserID = user.UserID,
-            //    FirstName = user.FirstName,
-            //    LastName = user.LastName,
-            //};
-            //return View(userDeleteViewModel);
         }
 
         //only user + admin
@@ -283,10 +173,6 @@ namespace AirWaze.Controllers
             _airWazeDatabase.RemoveUser(existingUser);
             return RedirectToAction("Index");
 
-            //var user = userEntities.FirstOrDefault(x => x.UserID == UserID);
-            //userEntities.Remove(user);
-            ////await _myDatabase.RemoveUser(user);
-            //return RedirectToAction("Index");
         }
     }
 }
