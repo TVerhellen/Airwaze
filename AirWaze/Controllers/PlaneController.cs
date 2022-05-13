@@ -38,11 +38,21 @@ namespace AirWaze.Controllers
         public async Task<IActionResult> Index(Guid ID)
         {
             LoggedInAirline = airlineEntities.FirstOrDefault(x => x.AirlineID == ID);
-            
+            if (LoggedInAirline == null)
+            {
+
+                LoggedInAirline = new Airline
+                {
+                    Name = "Harald Airways",
+                };
+                LoggedInAirline = airlineEntities.FirstOrDefault(x => x.Name == LoggedInAirline.Name);
+
+            }
+
             List<Plane> planelistAirline = new List<Plane>();
             foreach (Plane x in planeEntities)
             {
-                if (x.CurrentAirline.AirlineID == ID) 
+                if (x.CurrentAirline.AirlineID == LoggedInAirline.AirlineID) 
                 {
                     planelistAirline.Add(x);
                 }
@@ -106,7 +116,7 @@ namespace AirWaze.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(PlaneCreateViewModel planeViewModel)
         {
-            planeViewModel.CurrentAirline = planeEntities[0].CurrentAirline;
+            planeViewModel.CurrentAirline = LoggedInAirline;
             var isValid = TryValidateModel(planeViewModel);
             Random generator = new Random();
             if (isValid)
@@ -140,7 +150,7 @@ namespace AirWaze.Controllers
         [HttpGet]
         public IActionResult Detail(string ID)
         {
-            ID = ID.Replace('%', '/');
+            ID = ID.Replace("%2F", "/");
             var thisPlane = planeEntities.FirstOrDefault(x => x.PlaneNr == ID);
             var planeDetailViewModel = new PlaneDetailViewModel()
             {
@@ -169,7 +179,7 @@ namespace AirWaze.Controllers
         [HttpGet]
         public IActionResult Update(string ID)
         {
-            ID = ID.Replace('%', '/');
+            ID = ID.Replace("%2F", "/");
             PlaneEditViewModel planeUpdateViewModel = new PlaneEditViewModel();
             foreach (var plane in planeEntities)
             {
@@ -232,7 +242,7 @@ namespace AirWaze.Controllers
         [HttpGet]
         public IActionResult Delete(string ID)
         {
-            ID = ID.Replace('%', '/');
+            ID = ID.Replace("%2F", "/");
             var plane = planeEntities.FirstOrDefault(x => x.PlaneNr == ID);
             PlaneDeleteViewModel planeDeleteViewModel = new PlaneDeleteViewModel
             {
@@ -247,6 +257,7 @@ namespace AirWaze.Controllers
         //AIRLINE + ADMIN
         public async Task<IActionResult> DeleteConfirm(string ID)
         {
+            ID = ID.Replace("%2F", "/");
             var plane = planeEntities.FirstOrDefault(x => x.PlaneNr == ID);
             planeEntities.Remove(plane);
             _myDatabase.RemovePlane(plane);
