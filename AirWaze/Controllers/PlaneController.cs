@@ -8,7 +8,7 @@ namespace AirWaze.Controllers
     public class PlaneController : Controller
     {       
         
-        private static List<Plane> planeEntities = new List<Plane>();
+        public static List<Plane> planeEntities = new List<Plane>();
 
         private static List<string> regionList = new List<string>
         {

@@ -11,12 +11,14 @@
         <tr>
             <th>Ticket Number</th>
             <th>Name</th>
+            <th>Status</th>
         </tr>
         @foreach(var ticket in Model)
         {
             <tr>
                 <td>@ticket.TicketNr</td>
-                <td>@ticket.LastName @ticket.FirstName           </td>
+                <td>@ticket.LastName @ticket.FirstName</td>
+                <td>@ticket.Status</td>
                 <td><a class="btn btn-primary" asp-action="Edit" asp-route-ID="@ticket.TicketNr">Edit</a></td>
                 <td><a class="btn btn-danger"asp-action="Delete" asp-route-ID="@ticket.TicketNr">Delete</a></td>
             </tr>

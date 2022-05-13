@@ -1,0 +1,23 @@
+﻿@using AirWaze.Entities
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model TicketFlightPickerViewModel
+
+<table>
+    <tr>
+        <th>Destination</th>
+        <th>Departure time</th>
+    </tr>
+    @foreach (var flight in Model.flightList)
+    {
+        <tr>
+            <td>@flight.Destination</td>
+            <td>@flight.Departure</td>
+            <td><a asp-action="Payment" asp-route-ID="@flight.FlightNr" asp-route-ticket="@Model.TicketNr">Select</a></td>
+        </tr>
+    }
+</table>
+<a class="btn btn-primary" asp-action="Create">Go Back</a>

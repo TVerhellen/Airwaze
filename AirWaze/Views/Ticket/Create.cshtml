@@ -19,12 +19,17 @@
         <input class="form-control" asp-for="FirstName"/>
         <span class="text-danger" asp-validation-for="FirstName"></span>
     </div>
-    <div>
-        <label asp-for="CurrentFlightNr">Flight</label>
-        <select asp-for="CurrentFlightNr" asp-items="@(new SelectList(@TicketController.allFlights, nameof(Flight.FlightNr), nameof(Flight.Destination)))">
-            <option>Select a flight</option>
-        </select>
+    <p>Flight Information</p>
+    <div class="form-group">
+        <label asp-for="Destination">Destination</label>
+        <input asp-for="Destination"/>
     </div>
+    <div class="form-group">
+        <label asp-for="FirstClass">Preferred time of departure</label>
+        <input asp-for="Departure"/>
+    </div>
+
+
     <div class="form-group">
         <input asp-for="FirstClass"/>
         <label asp-for="FirstClass">First Class?</label>

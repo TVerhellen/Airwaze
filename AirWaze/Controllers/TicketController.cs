@@ -4,9 +4,40 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AirWaze.Controllers
 {
+    // SUGGEST USING ACCOUNT CREDIT FOR REFUNDS
+
     public class TicketController : Controller
     {
         static User myUser = new User();
+        static Airline testAirline = new Airline
+        {
+            Number = "55",
+            PhoneNumber = "777888999",
+            CurrentPlanes = new List<Plane>(),
+            AccountNumber = "111222333",
+            Adress = "Koekoekstraat",
+            City = "Melle",
+            AirlineID = Guid.NewGuid(),
+            CompanyNumber = "5555555",
+            Email = "ikke@virgin.com",
+            Name = "Harald Airways",
+            NameTag = "HAR",
+        };
+        static Plane testplane = new Plane
+        {
+            PlaneNr = "6666",
+            CurrentAirline = testAirline,
+            PassengerCapacity = 200,
+            FuelUsagePerKM = 500,
+            FirstClassCapacity = 100,
+            FlightRegion = "EUR",
+            FuelCapacity = 5000,
+            IsAvailable = true,
+            LoadCapacity = 10000,
+            Manufacturer = "Boeing",
+            Type = "747",
+            SeatDiagram = new string[5, 40],
+        };
         public static readonly List<Ticket> allTickets = new List<Ticket>
         {
             new Ticket()
@@ -28,7 +59,7 @@ namespace AirWaze.Controllers
             {
                 FlightID = 1,
                 FlightNr = "2",
-                CurrentPlane = new Plane(),
+                CurrentPlane = testplane,
                 FlightTime = TimeSpan.FromHours(5),
                 Departure = DateTime.Now.AddDays(5),
                 ListTickets = new List<Ticket>(),
@@ -40,6 +71,8 @@ namespace AirWaze.Controllers
                 IsCompleted = false
             }
         };
+
+        public static List<TicketCreateViewModel> ticketsToHandle = new List<TicketCreateViewModel>();
 
         public IActionResult Index()
         {
@@ -58,7 +91,8 @@ namespace AirWaze.Controllers
                         TicketNr = ticket.TicketNr,
                         CurrentFlight = ticket.CurrentFlight,
                         LastName = ticket.LastName,
-                        FirstName = ticket.FirstName
+                        FirstName = ticket.FirstName,
+                        Status = ticket.Status
                     });
                 }
 
@@ -78,42 +112,47 @@ namespace AirWaze.Controllers
         {
             if (TryValidateModel(newTicket))
             {
-                Flight flight = allFlights.Single(x => x.FlightNr == newTicket.CurrentFlightNr);
-                newTicket.Price = newTicket.FirstClass ? (newTicket.ExtraLuggage ? flight.Distance * (decimal)1.2 + 75 : flight.Distance * (decimal)1.2) : (newTicket.ExtraLuggage ? flight.Distance + 75 : flight.Distance);
-                string ticketNr = GenerateTicketNumber(flight);
-                string seat = GenerateSeatNumber(flight);
-                allTickets.Add(new Ticket()
-                {
-                    TicketNr = ticketNr,
-                    CurrentFlight = flight,
-                    CurrentUser = myUser,
-                    LastName = newTicket.LastName,
-                    FirstName = newTicket.FirstName,
-                    Price = newTicket.Price,
-                    FirstClass = newTicket.FirstClass,
-                    Seat = seat,
-                    ExtraLuggage = newTicket.ExtraLuggage,
-                    Status = 0
-                });
-                TicketEditViewModel editTicket = new TicketEditViewModel()
-                {
-                    TicketNr = ticketNr,
-                    CurrentFlight = flight,
-                    LastName = newTicket.LastName,
-                    FirstName = newTicket.FirstName,
-                    Price = newTicket.Price,
-                    FirstClass = newTicket.FirstClass,
-                    Seat = seat,
-                    ExtraLuggage = newTicket.ExtraLuggage
-                };
-                if (TryValidateModel(editTicket))
-                {
-                    return RedirectToAction("Payment", editTicket);
-                }
-
+                newTicket.TicketNr = $"NOTASSIGNED{ticketsToHandle.Count}";
+                ticketsToHandle.Add(newTicket);
+                return Redirect($"FlightPicker/{newTicket.TicketNr}");
             }
             return View(newTicket);
         }
+
+        [HttpGet]
+        [Route("Ticket/FlightPicker/{ticketNr}")]
+        public IActionResult FlightPicker(string ticketNr)
+        {
+            TicketCreateViewModel toHandle = ticketsToHandle.Single(x => x.TicketNr == ticketNr);
+            TicketFlightPickerViewModel flightPicker = new TicketFlightPickerViewModel()
+            {
+                flightList = new List<Flight>(),
+                TicketNr = ticketNr
+            };
+
+            foreach(Flight flight in allFlights)
+            {
+                if(flight.Destination == toHandle.Destination)
+                {
+                    if((toHandle.Departure - flight.Departure).Duration() <= TimeSpan.FromDays(3))
+                    {
+                        // I should use FlightDetailViewModel here but I dont want to
+                        flightPicker.flightList.Add(flight);
+                    }
+                }
+            }
+            if(flightPicker.flightList.Count > 0)
+            {
+                return View(flightPicker);
+            }
+            else
+            {
+                ticketsToHandle.Remove(toHandle);
+                return RedirectToAction("Create", toHandle);
+            }
+            
+        }
+
 
         public IActionResult Detail(string ID)
         {
@@ -123,29 +162,79 @@ namespace AirWaze.Controllers
         [HttpGet]
         public IActionResult Edit(string ID)
         {
-            return View();
+            Ticket loadedTicket = allTickets.Single(x => x.TicketNr == ID);
+            TicketEditViewModel editTicket = new TicketEditViewModel()
+            {
+                TicketNr = loadedTicket.TicketNr,
+                CurrentFlight = loadedTicket.CurrentFlight,
+                LastName = loadedTicket.LastName,
+                FirstName = loadedTicket.FirstName,
+                Price = loadedTicket.Price,
+                FirstClass = loadedTicket.FirstClass,
+                Seat = loadedTicket.Seat,
+                ExtraLuggage = loadedTicket.ExtraLuggage,
+            };
+            return View(editTicket);
         }
 
         [ValidateAntiForgeryToken]
         [HttpPost]
         public IActionResult Edit(string ID, TicketEditViewModel editedTicket)
         {
-            return View();
+            Ticket loadedTicket = allTickets.Single(x => x.TicketNr == ID);
+            loadedTicket.LastName = loadedTicket.LastName;
+            loadedTicket.FirstName = editedTicket.FirstName;
+            return RedirectToAction("List");
         }
 
         public IActionResult Delete(string ID)
         {
-            return View();
+            Ticket loadedTicket = allTickets.Single(x => x.TicketNr == ID);
+            TicketDeleteViewModel deleteTicket = new TicketDeleteViewModel()
+            {
+                TicketNr = loadedTicket.TicketNr,
+                CurrentFlight = loadedTicket.CurrentFlight,
+                LastName = loadedTicket.LastName,
+                FirstName = loadedTicket.FirstName
+            };
+            return View(deleteTicket);
         }
 
         public IActionResult ConfirmedDelete(string ID)
         {
-            return View();
+            return RedirectToAction("List");
         }
 
-        public IActionResult Payment(TicketEditViewModel editTicket)
+        public IActionResult Payment(string ID, string ticket)
         {
-            return View(editTicket);
+            TicketCreateViewModel toHandle = ticketsToHandle.Single(x => x.TicketNr == ticket);
+            Flight chosenFlight = allFlights.Single(x => x.FlightNr == ID);
+            string ticketnr = GenerateTicketNumber(chosenFlight);
+            string seat = GenerateSeatNumber(chosenFlight);
+            toHandle.Price = toHandle.FirstClass ? (toHandle.ExtraLuggage ? chosenFlight.Distance * (decimal)1.2 + 75 : chosenFlight.Distance * (decimal)1.2) : (toHandle.ExtraLuggage ? chosenFlight.Distance + 75 : chosenFlight.Distance);
+
+            allTickets.Add(new Ticket()
+            {
+                TicketNr = ticketnr,
+                CurrentFlight = chosenFlight,
+                CurrentUser = myUser,
+                LastName = toHandle.LastName,
+                FirstName = toHandle.FirstName,
+                Price = toHandle.Price,
+                FirstClass = toHandle.FirstClass,
+                Seat = seat,
+                ExtraLuggage = toHandle.ExtraLuggage,
+                Status = 0
+            });
+            TicketPaymentViewModel payTicket = new TicketPaymentViewModel()
+            {
+                TicketNr = ticketnr,
+                CurrentFlight = chosenFlight,
+                Price = toHandle.Price,
+                FirstClass = toHandle.FirstClass,
+                ExtraLuggage = toHandle.ExtraLuggage
+            };
+            return View(payTicket);
         }
 
         public IActionResult ConfirmedPayment(string ID)

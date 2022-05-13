@@ -3,4 +3,13 @@
 *@
 @{
 }
-delete
+@model TicketDeleteViewModel
+
+<h1>Cancelling your ticket</h1>
+<h2>Ticket Information</h2>
+<p>Name: @Model.LastName @Model.FirstName</p>
+<p>Flight Destination: @Model.CurrentFlight.Destination</p>
+<p>Flight Departure: @Model.CurrentFlight.Departure</p>
+
+<a class="btn btn-danger" asp-action="ConfirmedDelete" asp-route-ID="@Model.TicketNr">Cancel Ticket</a>
+<a class="btn btn-primary" asp-action="List">Go Back</a>
