@@ -9,34 +9,40 @@ namespace AirWaze.Controllers
     public class PlaneController : Controller
     {
 
-
         private IAirWazeDatabase _myDatabase;
-
+              
         public static List<Plane> planeEntities = new List<Plane>();
+
+        private static List<Airline> airlineEntities = new List<Airline>();
 
         private static List<string> regionList = new List<string>
         {
             "EUR","NA","SA","ASI","ME","AF","OC"
         };
 
+        public static Airline LoggedInAirline;
 
         //Gets All Entities of Planes - Will do For all uses!
         public PlaneController(IAirWazeDatabase mydatabase)
         {
-            _myDatabase = mydatabase;
-            planeEntities = _myDatabase.GetPlanes();          
+            if (_myDatabase == null)
+            {
+                _myDatabase = mydatabase;
+                planeEntities = _myDatabase.GetPlanes();
+                airlineEntities = _myDatabase.GetAirlines();
+            }                                             
         }
-
+        
         // AIRLINE ROLE
         [HttpGet]
         public async Task<IActionResult> Index(Guid ID)
         {
-            //ID nodig via login...
+            LoggedInAirline = airlineEntities.FirstOrDefault(x => x.AirlineID == ID);
             
             List<Plane> planelistAirline = new List<Plane>();
             foreach (Plane x in planeEntities)
             {
-                if (x.CurrentAirline.AirlineID == planeEntities[0].CurrentAirline.AirlineID)
+                if (x.CurrentAirline.AirlineID == ID) 
                 {
                     planelistAirline.Add(x);
                 }

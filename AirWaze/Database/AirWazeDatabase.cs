@@ -78,7 +78,8 @@ namespace AirWaze.Database
 
         public void UpdateAirline(Airline airline)
         {
-            _dbContext.Airlines.Update(airline);
+            _dbContext.Airlines.Remove(airline);
+            _dbContext.Airlines.Add(airline);
             _dbContext.SaveChanges();
         }
 
@@ -89,7 +90,8 @@ namespace AirWaze.Database
 
         public void UpdatePlane(Plane plane)
         {
-            _dbContext.Planes.Update(plane);
+            _dbContext.Planes.Remove(plane);
+            _dbContext.Planes.Add(plane);
             _dbContext.SaveChanges();
         }
     }
