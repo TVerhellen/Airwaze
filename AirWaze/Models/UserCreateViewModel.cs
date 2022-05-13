@@ -56,8 +56,7 @@ namespace AirWaze.Models
 
         [Required(ErrorMessage = "You must provide a phonenumber")]
         [Display(Name = "Homephone")]
-        [DataType(DataType.PhoneNumber)]
-        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid phonenumber")]
+        [DataType(DataType.PhoneNumber)]        
         public string PhoneNumber { get; set; }
     }
 }

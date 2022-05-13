@@ -13,5 +13,15 @@ namespace AirWaze.Database.Design
         void UpdateFlight(Flight flight);
 
         void RemoveFlight(Flight flight);
+
+        List<User> GetUsers();
+
+        User FindUserByID(Guid id);
+
+        void AddUser(User user);
+
+        void UpdateUser(User user);
+
+        void RemoveUser(User user);
     }
 }
