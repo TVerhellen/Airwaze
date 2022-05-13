@@ -1,4 +1,5 @@
-﻿using AirWaze.Entities;
+﻿using AirWaze.Database.Design;
+using AirWaze.Entities;
 using AirWaze.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,31 +7,14 @@ namespace AirWaze.Controllers
 {
     public class AirlineController : Controller
     {
-        private static List<Airline> airlineEntities = new List<Airline>();
 
-        Airline testAirline = new Airline
-        {
-            Number = "55",
-            PhoneNumber = "777888999",
-            CurrentPlanes = new List<Plane>(),
-            AccountNumber = "111222333",
-            Adress = "Koekoekstraat",
-            City = "Melle",
-            AirlineID = Guid.NewGuid(),
-            CompanyNumber = "5555555",
-            Email = "ikke@virgin.com",
-            Name = "H0r0ld Airways",
-            NameTag = "HAR",
-        };
-
-
+        private IAirWazeDatabase _myDatabase;
+        private static List<Airline> airlineEntities = new List<Airline>();      
         //Gets All Entities of Airlines Later on - Will do For all uses!
-        public AirlineController()
+        public AirlineController(IAirWazeDatabase mydatabase)
         {
-            if (airlineEntities.Count == 0)
-            {
-                airlineEntities.Add(testAirline);
-            }           
+            _myDatabase = mydatabase;
+            airlineEntities = _myDatabase.GetAirlines();            
         }
 
         //Airline Role
@@ -95,7 +79,7 @@ namespace AirWaze.Controllers
                 };
 
                 airlineEntities.Add(newEntity);
-                //await _myDatabase.AddAirline(newEntity);  
+                _myDatabase.AddAirline(newEntity);  
                 return RedirectToAction("Index");
             }          
             return View(airlineViewModel);
@@ -183,7 +167,7 @@ namespace AirWaze.Controllers
                 };
                 airlineEntities.Remove(myairline);
                 airlineEntities.Add(newEntity);                
-                //await _myDatabase.UpdateAirline(newEntity);
+                _myDatabase.UpdateAirline(newEntity);
                 return RedirectToAction("List");
             }
             return View(airlineUpdateViewModel);
@@ -211,7 +195,7 @@ namespace AirWaze.Controllers
         {
             var airline = airlineEntities.FirstOrDefault(x => x.AirlineID == ID);
             airlineEntities.Remove(airline);
-            //await _myDatabase.RemoveAirline(airline);
+            _myDatabase.RemoveAirline(airline);
             return RedirectToAction("List");
         }
     }
