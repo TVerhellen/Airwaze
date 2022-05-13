@@ -1,7 +1,12 @@
-﻿namespace AirWaze.Entities
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace AirWaze.Entities
 {
     public class Plane
-    {     
+    {
+        [Key]
+        public int PlaneID { get; set; }
         public string PlaneNr { get; set; }
 
         public Airline CurrentAirline { get; set; }
@@ -21,8 +26,8 @@
         public decimal LoadCapacity { get; set; }
 
         public decimal FuelUsagePerKM { get; set; }
-
-        public string[,] SeatDiagram { get; set; }
+        [NotMapped]
+        public string[,]? SeatDiagram { get; set; }
 
         public bool IsAvailable { get; set; }
     }

@@ -1,7 +1,11 @@
-﻿namespace AirWaze.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AirWaze.Entities
 {
     public class Ticket
     {
+        [Key]
+        public int TicketID { get; set; }
         public string TicketNr { get; set; }
         public Flight CurrentFlight { get; set; }
         public User CurrentUser { get; set; }

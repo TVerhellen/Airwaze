@@ -1,7 +1,10 @@
-﻿namespace AirWaze.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AirWaze.Entities
 {
     public class Airline
     {
+        [Key]
         public Guid AirlineID { get; set; }
 
         public string Name { get; set; }
