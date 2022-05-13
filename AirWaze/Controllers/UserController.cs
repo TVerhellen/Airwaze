@@ -8,9 +8,11 @@ namespace AirWaze.Controllers
     public class UserController : Controller
     {
         private readonly IAirWazeDatabase _airWazeDatabase;
+        private static List<User> userEntities = new List<User>();
         public UserController(IAirWazeDatabase airWazeDatabase)
         {
             _airWazeDatabase = airWazeDatabase;
+            userEntities = _airWazeDatabase.GetUsers();
         }
         
 
@@ -66,7 +68,7 @@ namespace AirWaze.Controllers
         //only user + admin
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult Create(UserCreateViewModel userViewModel)
+        public async Task<IActionResult> Create(UserCreateViewModel userViewModel)
         {
             var isModelValid = TryValidateModel(userViewModel);
 
@@ -75,6 +77,8 @@ namespace AirWaze.Controllers
                 var newEntity = new User
                 {
                     UserID = userViewModel.UserID,
+                    Name = userViewModel.Name,
+                    Password = userViewModel.Password,
                     FirstName = userViewModel.FirstName,
                     LastName = userViewModel.LastName,
                     StreetName = userViewModel.StreetName,
@@ -86,6 +90,7 @@ namespace AirWaze.Controllers
                     Email = userViewModel.Email,
                     PhoneNumber = userViewModel.PhoneNumber,
                 };
+                //userEntities.Add(newEntity);
                 _airWazeDatabase.AddUser(newEntity);
                 return RedirectToAction("Index");
             }
@@ -119,8 +124,9 @@ namespace AirWaze.Controllers
 
         }
         //only user + admin
+        [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult Edit(Guid UserID, [FromForm]UserEditViewModel newUser)
+        public async Task<IActionResult> Edit(Guid UserID, [FromForm]UserEditViewModel newUser)
         {
             if (!TryValidateModel(newUser)) return View(newUser);
 
@@ -172,7 +178,6 @@ namespace AirWaze.Controllers
             if (existingUser == null) return new NotFoundResult();
             _airWazeDatabase.RemoveUser(existingUser);
             return RedirectToAction("Index");
-
         }
     }
 }
