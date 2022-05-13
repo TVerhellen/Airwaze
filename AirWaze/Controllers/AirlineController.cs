@@ -9,19 +9,35 @@ namespace AirWaze.Controllers
     {
 
         private IAirWazeDatabase _myDatabase;
+
+        public static Airline LoggedInAirline;
+
         private static List<Airline> airlineEntities = new List<Airline>();      
         //Gets All Entities of Airlines Later on - Will do For all uses!
         public AirlineController(IAirWazeDatabase mydatabase)
         {
-            _myDatabase = mydatabase;
-            airlineEntities = _myDatabase.GetAirlines();            
+            if (_myDatabase == null)
+            {
+                _myDatabase = mydatabase;
+                airlineEntities = _myDatabase.GetAirlines();
+            }                      
         }
 
         //Airline Role
         public IActionResult Index()
         {
-            AirlineIndexViewModel mymodel = new AirlineIndexViewModel();
-            mymodel.Airline = airlineEntities[0];
+            AirlineIndexViewModel mymodel = new AirlineIndexViewModel();          
+            if (LoggedInAirline == null)
+            {
+                
+                LoggedInAirline = new Airline
+                {
+                    Name = "Harald Airways",
+                };
+                LoggedInAirline = airlineEntities.FirstOrDefault(x => x.Name == LoggedInAirline.Name);
+                
+            }
+            mymodel.Airline = LoggedInAirline;
             return View(mymodel);
         }
 
