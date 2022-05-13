@@ -140,7 +140,9 @@ namespace AirWaze.Controllers
                     Type = planeViewModel.Type                   
                 };
                 planeEntities.Add(newEntity);
-                _myDatabase.AddPlane(newEntity);  
+                _myDatabase.AddPlane(newEntity);
+                planeEntities = _myDatabase.GetPlanes();
+                airlineEntities = _myDatabase.GetAirlines();
                 return RedirectToAction("Index", newEntity.CurrentAirline.AirlineID);
             }
             return View(planeViewModel);
@@ -213,11 +215,11 @@ namespace AirWaze.Controllers
             {
                 
                 Plane myplane = planeEntities.FirstOrDefault(x => x.PlaneNr ==planeUpdateViewModel.PlaneNr);
-                planeUpdateViewModel.CurrentAirline = myplane.CurrentAirline;
-                planeEntities.Remove(myplane);
+                planeUpdateViewModel.CurrentAirline = myplane.CurrentAirline;              
                 var newEntity = new Plane
                 {
 
+                    PlaneID = myplane.PlaneID,
                     PlaneNr = planeUpdateViewModel.PlaneNr,
                     FlightRegion = planeUpdateViewModel.FlightRegion,
                     CurrentAirline = planeUpdateViewModel.CurrentAirline,
@@ -230,9 +232,10 @@ namespace AirWaze.Controllers
                     Manufacturer = planeUpdateViewModel.Manufacturer,
                     Type = planeUpdateViewModel.Type
 
-                };
-                planeEntities.Add(newEntity);
+                };               
                 _myDatabase.UpdatePlane(newEntity);
+                planeEntities = _myDatabase.GetPlanes();
+                airlineEntities = _myDatabase.GetAirlines();
                 return RedirectToAction("Index");
             }
             return View(planeUpdateViewModel);
