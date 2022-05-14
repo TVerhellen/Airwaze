@@ -45,5 +45,6 @@ namespace AirWaze.Database.Design
         void UpdateUser(User user);
 
         void RemoveUser(User user);
+        public List<Ticket> GetTicketsByFlight(string flightnr);
     }
 }

@@ -73,6 +73,12 @@ namespace AirWaze.Database
         {
             return _dbContext.Planes.ToList();
         }
+        public List<Ticket> GetTicketsByFlight(string flightnr)
+        {
+
+            List<Ticket> ticketList = new List<Ticket>();
+            return ticketList;
+        }
 
         public void RemoveAirline(Airline airline)
         {
