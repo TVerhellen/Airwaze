@@ -20,7 +20,8 @@ namespace AirWaze.Database
 
         public void AddFlight(Flight flight)
         {
-            throw new NotImplementedException();
+            _dbContext.Flights.Add(flight);
+            _dbContext.SaveChanges();
         }
 
         public void AddPlane(Plane plane)
@@ -55,12 +56,12 @@ namespace AirWaze.Database
 
         public Flight GetFlightByNr(string nr)
         {
-            throw new NotImplementedException();
+            return _dbContext.Flights.SingleOrDefault(flight => flight.FlightNr.Equals(nr));
         }
 
         public List<Flight> GetFlights()
         {
-            throw new NotImplementedException();
+            return _dbContext.Flights.ToList();
         }
 
         public Plane GetPlaneByNr(string nr)
@@ -86,7 +87,8 @@ namespace AirWaze.Database
 
         public void RemoveFlight(Flight flight)
         {
-            throw new NotImplementedException();
+            _dbContext.Flights.Remove(flight);
+            _dbContext.SaveChanges();
         }
 
         public void RemovePlane(Plane plane)
@@ -110,7 +112,8 @@ namespace AirWaze.Database
 
         public void UpdateFlight(Flight flight)
         {
-            throw new NotImplementedException();
+            _dbContext.Flights.Update(flight);
+            _dbContext.SaveChanges();
         }
 
         public void UpdatePlane(Plane plane)

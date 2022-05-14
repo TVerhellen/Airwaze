@@ -4,6 +4,7 @@ namespace AirWaze.Models
 {
     public class FlightDetailViewModel
     {
+        public int FlightID { get; set; }
         public string FlightNr { get; set; }
         public Plane CurrentPlane { get; set; }
         public TimeSpan FlightTime { get; set; }
