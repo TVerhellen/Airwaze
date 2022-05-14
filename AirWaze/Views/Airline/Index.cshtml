@@ -6,6 +6,12 @@
 @model AirlineIndexViewModel
 
 <p>Dit is Hardcoded tot Login er is</p>
+@if (Model.Airline.Logo != null)
+{
+    <div style="position:center;" >
+        <img src="@Url.Content(@Model.Airline.Logo)" alt="Sample Image" width="400" height="400"/>
+    </div>
+}
 
 <h1>Hello @Model.Airline.Name</h1>
 
