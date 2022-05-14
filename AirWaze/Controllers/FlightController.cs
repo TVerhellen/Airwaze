@@ -119,7 +119,7 @@ namespace AirWaze.Controllers
                 };
                 _airwazeDatabase.AddFlight(newEntity);
                 //flights.Add(newEntity);
-                return RedirectToAction("List");
+                return RedirectToAction("Index");
             }
             else
             {
@@ -209,7 +209,7 @@ namespace AirWaze.Controllers
             else
             {
                 //TODO: throw message "cannot delete existing flight with booked tickets, please change flight status to "Cancelled"
-                return RedirectToAction("List");
+                return RedirectToAction("Index");
             }
 
 
