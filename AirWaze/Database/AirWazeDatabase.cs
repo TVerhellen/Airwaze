@@ -25,7 +25,7 @@ namespace AirWaze.Database
 
         public void AddPlane(Plane plane)
         {
-            ;
+            
             _dbContext.Airlines.Remove(_dbContext.Airlines.FirstOrDefault(x => x.AirlineID == plane.CurrentAirline.AirlineID));
             _dbContext.Airlines.Update(plane.CurrentAirline);
             _dbContext.Planes.Add(plane);
@@ -97,8 +97,9 @@ namespace AirWaze.Database
 
         public void UpdateAirline(Airline airline)
         {
-          
-            _dbContext.Airlines.Update(airline);
+
+            _dbContext.Airlines.Remove(_dbContext.Airlines.FirstOrDefault(x => x.AirlineID == airline.AirlineID));
+            _dbContext.Airlines.Add(airline);
             _dbContext.SaveChanges();
         }
 
@@ -115,10 +116,8 @@ namespace AirWaze.Database
 
         public void UpdatePlane(Plane plane)
         {
-
-
-            _dbContext.Airlines.Update(plane.CurrentAirline);
-            _dbContext.Planes.Update(plane);
+            _dbContext.Planes.Remove(_dbContext.Planes.FirstOrDefault(x => x.PlaneID == plane.PlaneID));
+            _dbContext.Planes.Add(plane);
             _dbContext.SaveChanges();
         }
 

@@ -121,6 +121,22 @@ namespace AirWaze.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(PlaneCreateViewModel planeViewModel)
         {
+            if (LoggedInAirline == null)
+            {
+
+                LoggedInAirline = new Airline
+                {
+                    Name = "Harald Airways",
+                };
+                LoggedInAirline = airlineEntities.FirstOrDefault(x => x.Name == LoggedInAirline.Name);
+
+
+            }
+
+            if (LoggedInAirline.CurrentPlanes == null)
+            {
+                LoggedInAirline.CurrentPlanes = new List<Plane>();
+            }
             planeViewModel.CurrentAirline = LoggedInAirline;
             var isValid = TryValidateModel(planeViewModel);
             Random generator = new Random();
