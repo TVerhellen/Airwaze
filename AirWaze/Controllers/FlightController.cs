@@ -101,9 +101,9 @@ namespace AirWaze.Controllers
 
         //Roles: everyone
         [HttpGet]
-        public IActionResult Detail(string flightnr)
+        public IActionResult Detail(string id)
         {
-            var flightEntity = flights.FirstOrDefault(x => x.FlightNr == flightnr);
+            var flightEntity = flights.FirstOrDefault(x => x.FlightNr == id);
 
             //var flightEntity = _airwazeDatabase.GetFlightByNr(flightnr);
 
@@ -175,11 +175,11 @@ namespace AirWaze.Controllers
 
         //Roles: Admin + Airport Staff
         [HttpGet]
-        public IActionResult Edit(string flightnr)
+        public IActionResult Edit(string id)
         {
             //var flightEntity = _airwazeDatabase.GetFlightByNr(flightnr);
 
-            var flightEntity = flights.FirstOrDefault(x => x.FlightNr == flightnr);
+            var flightEntity = flights.FirstOrDefault(x => x.FlightNr == id);
 
             if (flightEntity == null) return new NotFoundResult();
 
@@ -203,13 +203,13 @@ namespace AirWaze.Controllers
         //Roles: Admin + Airport Staff
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult Edit(string flightnr, FlightEditViewModel flightViewModel)
+        public IActionResult Edit(string id, FlightEditViewModel flightViewModel)
         {
             if (!TryValidateModel(flightViewModel)) return View(flightViewModel);
 
             //var flightEntity = _airwazeDatabase.GetFlightByNr(flightnr);
 
-            var flightEntity = flights.FirstOrDefault(x => x.FlightNr == flightnr);
+            var flightEntity = flights.FirstOrDefault(x => x.FlightNr == id);
 
             if (flightEntity == null) return new NotFoundResult();
 
@@ -227,16 +227,16 @@ namespace AirWaze.Controllers
 
             flights.Add(flightEntity);
             _airwazeDatabase.UpdateFlight(flightEntity);
-            return RedirectToAction("Detail", new { flightnr = flightnr });
+            return RedirectToAction("Detail", new { flightnr = id });
         }
 
         //Roles: Admin + Airport Staff
         [HttpGet]
-        public IActionResult Delete(string flightnr)
+        public IActionResult Delete(string id)
         {
             //var flightEntity = _airwazeDatabase.GetFlightByNr(flightnr);
 
-            var flightEntity = flights.FirstOrDefault(x => x.FlightNr == flightnr);
+            var flightEntity = flights.FirstOrDefault(x => x.FlightNr == id);
 
             if (flightEntity == null) return new NotFoundResult();
 
@@ -264,9 +264,9 @@ namespace AirWaze.Controllers
 
         //Roles: Admin + Airport Staff
         [HttpGet]
-        public IActionResult DeleteConfirm(string flightnr)
+        public IActionResult DeleteConfirm(string id)
         {
-            var flightEntity = flights.FirstOrDefault(x => x.FlightNr == flightnr);
+            var flightEntity = flights.FirstOrDefault(x => x.FlightNr == id);
             //var flightEntity = _airwazeDatabase.GetFlightByNr(flightnr);
 
             if (flightEntity != null)
