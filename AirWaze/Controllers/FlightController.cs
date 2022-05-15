@@ -9,21 +9,64 @@ namespace AirWaze.Controllers
     {
         //private readonly List<Flight> flights = new List<Flight>();
         private readonly IAirWazeDatabase _airwazeDatabase;
+        private static List<Flight> flights = new List<Flight>();
         Random _random = new Random();
+
+        static User myUser = new User();
+        static Airline testAirline = new Airline
+        {
+            Number = "55",
+            PhoneNumber = "777888999",
+            CurrentPlanes = new List<Plane>(),
+            AccountNumber = "111222333",
+            Adress = "Koekoekstraat",
+            City = "Melle",
+            AirlineID = Guid.NewGuid(),
+            CompanyNumber = "5555555",
+            Email = "ikke@virgin.com",
+            Name = "Harald Airways",
+            NameTag = "HAR",
+        };
+        static Plane testplane = new Plane
+        {
+            PlaneNr = "6666",
+            CurrentAirline = testAirline,
+            PassengerCapacity = 200,
+            FuelUsagePerKM = 500,
+            FirstClassCapacity = 100,
+            FlightRegion = "EUR",
+            FuelCapacity = 5000,
+            IsAvailable = true,
+            LoadCapacity = 10000,
+            Manufacturer = "Boeing",
+            Type = "747",
+            SeatDiagram = new string[5, 40],
+        };
+        public static readonly List<Ticket> allTickets = new List<Ticket>
+        {
+            new Ticket()
+            {
+                TicketNr = "1",
+                CurrentFlight = new Flight(),
+                CurrentUser = myUser,
+                LastName = "Verhellen",
+                FirstName = "Tijs",
+                Price = 50,
+                FirstClass = false,
+                Seat = "15C",
+                ExtraLuggage = false
+            }
+        };
 
         public FlightController(IAirWazeDatabase airwazeDatabase)
         {
             _airwazeDatabase = airwazeDatabase;
+            flights = _airwazeDatabase.GetFlights();
         }
 
+        //Roles: Everyone
         [HttpGet]
         public IActionResult Index()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public IActionResult List()
         {
             var flightViewModels = new List<FlightListViewModel>();
 
@@ -40,7 +83,7 @@ namespace AirWaze.Controllers
             //    });
             //}
 
-            foreach (var flight in _airwazeDatabase.GetFlights())
+            foreach (var flight in flights)
             {
                 flightViewModels.Add(new FlightListViewModel()
                 {
@@ -56,12 +99,13 @@ namespace AirWaze.Controllers
             return View(flightViewModels);
         }
 
+        //Roles: everyone
         [HttpGet]
         public IActionResult Detail(string flightnr)
         {
-            //var flightEntity = flights.FirstOrDefault(x => x.FlightNr == flightnr);
+            var flightEntity = flights.FirstOrDefault(x => x.FlightNr == flightnr);
 
-            var flightEntity = _airwazeDatabase.GetFlightByNr(flightnr);
+            //var flightEntity = _airwazeDatabase.GetFlightByNr(flightnr);
 
             if (flightEntity != null)
             {
@@ -82,7 +126,8 @@ namespace AirWaze.Controllers
             }
             return View();
         }
-
+        
+        //Roles: Admin + Airport Staff
         [HttpGet]
         public IActionResult Create()
         {
@@ -90,6 +135,7 @@ namespace AirWaze.Controllers
             return View(flightCreateViewModel);
         }
 
+        //Roles: Admin + Airport Staff
         [ValidateAntiForgeryToken]
         [HttpPost]
         public IActionResult Create(FlightCreateViewModel flightViewModel)
@@ -97,7 +143,7 @@ namespace AirWaze.Controllers
             flightViewModel.FlightNr = CreateFlightNr(flightViewModel);
             flightViewModel.CurrentGate = new Gate();
             flightViewModel.CurrentRunway = new Runway();
-            flightViewModel.CurrentPlane = new Plane();
+            flightViewModel.CurrentPlane = testplane;
             flightViewModel.Status = 0;
 
             var isModelValid = TryValidateModel(flightViewModel);
@@ -118,7 +164,7 @@ namespace AirWaze.Controllers
                     Status = flightViewModel.Status
                 };
                 _airwazeDatabase.AddFlight(newEntity);
-                //flights.Add(newEntity);
+                flights.Add(newEntity);
                 return RedirectToAction("Index");
             }
             else
@@ -127,12 +173,13 @@ namespace AirWaze.Controllers
             }
         }
 
+        //Roles: Admin + Airport Staff
         [HttpGet]
         public IActionResult Edit(string flightnr)
         {
-            var flightEntity = _airwazeDatabase.GetFlightByNr(flightnr);
+            //var flightEntity = _airwazeDatabase.GetFlightByNr(flightnr);
 
-            //var flightEntity = flights.FirstOrDefault(x => x.FlightNr == flightnr);
+            var flightEntity = flights.FirstOrDefault(x => x.FlightNr == flightnr);
 
             if (flightEntity == null) return new NotFoundResult();
 
@@ -153,19 +200,20 @@ namespace AirWaze.Controllers
             return View(flightEdit);
         }
 
+        //Roles: Admin + Airport Staff
         [ValidateAntiForgeryToken]
         [HttpPost]
         public IActionResult Edit(string flightnr, FlightEditViewModel flightViewModel)
         {
             if (!TryValidateModel(flightViewModel)) return View(flightViewModel);
 
-            var flightEntity = _airwazeDatabase.GetFlightByNr(flightnr);
+            //var flightEntity = _airwazeDatabase.GetFlightByNr(flightnr);
 
-            //var flightEntity = flights.FirstOrDefault(x => x.FlightNr == flightnr);
+            var flightEntity = flights.FirstOrDefault(x => x.FlightNr == flightnr);
 
             if (flightEntity == null) return new NotFoundResult();
 
-            //flights.Remove(flightEntity);
+            flights.Remove(flightEntity);
             flightEntity.FlightID = flightViewModel.FlightID;
             flightEntity.FlightNr = flightViewModel.FlightNr;
             flightEntity.CurrentPlane = flightViewModel.CurrentPlane;
@@ -177,17 +225,18 @@ namespace AirWaze.Controllers
             flightEntity.CurrentRunway = flightViewModel.CurrentRunway;
             flightEntity.Status = flightViewModel.Status;
 
-            //flights.Add(flightEntity);
+            flights.Add(flightEntity);
             _airwazeDatabase.UpdateFlight(flightEntity);
             return RedirectToAction("Detail", new { flightnr = flightnr });
         }
 
+        //Roles: Admin + Airport Staff
         [HttpGet]
         public IActionResult Delete(string flightnr)
         {
-            var flightEntity = _airwazeDatabase.GetFlightByNr(flightnr);
+            //var flightEntity = _airwazeDatabase.GetFlightByNr(flightnr);
 
-            //var flightEntity = flights.FirstOrDefault(x => x.FlightNr == flightnr);
+            var flightEntity = flights.FirstOrDefault(x => x.FlightNr == flightnr);
 
             if (flightEntity == null) return new NotFoundResult();
 
@@ -211,17 +260,18 @@ namespace AirWaze.Controllers
                 //TODO: throw message "cannot delete existing flight with booked tickets, please change flight status to "Cancelled"
                 return RedirectToAction("Index");
             }
-
-
         }
 
+        //Roles: Admin + Airport Staff
         [HttpGet]
         public IActionResult DeleteConfirm(string flightnr)
         {
-            var flightEntity = _airwazeDatabase.GetFlightByNr(flightnr);
+            var flightEntity = flights.FirstOrDefault(x => x.FlightNr == flightnr);
+            //var flightEntity = _airwazeDatabase.GetFlightByNr(flightnr);
 
             if (flightEntity != null)
             {
+                flights.Remove(flightEntity);
                 _airwazeDatabase.RemoveFlight(flightEntity);
             }
 
@@ -240,7 +290,7 @@ namespace AirWaze.Controllers
             string tempFlightNrFull = tempFlightNr1 + tempFlightNr2.ToString("D2");
 
             //keep checking database for flight with same flightnr, if present->increment random(max 99) and recheck
-            while (_airwazeDatabase.GetFlightByNr(tempFlightNrFull) != null)
+            while (flights.FirstOrDefault(x => x.FlightNr == flightmodel.FlightNr) != null)
             {
                 if (tempFlightNr2 == 99)
                 {
