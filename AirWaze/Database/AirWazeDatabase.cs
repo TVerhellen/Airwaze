@@ -1,5 +1,6 @@
 ﻿using AirWaze.Database.Design;
 using AirWaze.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace AirWaze.Database
 {
@@ -56,12 +57,18 @@ namespace AirWaze.Database
 
         public Flight GetFlightByNr(string nr)
         {
-            return _dbContext.Flights.SingleOrDefault(flight => flight.FlightNr.Equals(nr));
+            return _dbContext.Flights
+                .Include(x => x.CurrentPlane)
+                .Include(x => x.CurrentPlane.CurrentAirline)
+                .SingleOrDefault(flight => flight.FlightNr.Equals(nr));
         }
 
         public List<Flight> GetFlights()
         {
-            return _dbContext.Flights.ToList();
+            return _dbContext.Flights
+                .Include(x => x.CurrentPlane)
+                .Include(x => x.CurrentPlane.CurrentAirline)
+                .ToList();
         }
 
         public Plane GetPlaneByNr(string nr)

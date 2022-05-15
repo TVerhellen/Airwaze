@@ -19,7 +19,9 @@
 
 <!-- For Airport staff-->
 <h2>Plane</h2>
-<p>@Model.CurrentPlane</p>
+<p>@Model.CurrentPlane.PlaneNr</p>
+<h2>Airline</h2>
+<p>@Model.CurrentPlane.CurrentAirline.Name</p>
 <h2>Runway</h2>
 <p>@Model.CurrentRunway</p>
 <!-- TODO: route button to page with tickets only for this flight -->
