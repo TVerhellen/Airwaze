@@ -90,7 +90,7 @@ namespace AirWaze.Controllers
                     PhoneNumber = airlineViewModel.PhoneNumber,                   
                     AccountNumber = airlineViewModel.AccountNumber,
                     //ListInvoices = airlineViewModel.ListInvoices,
-                    //Logo = airlineViewModel.Logo,
+                    Logo = airlineViewModel.Logo,
                     
                 };
 
@@ -214,5 +214,29 @@ namespace AirWaze.Controllers
             _myDatabase.RemoveAirline(airline);
             return RedirectToAction("List");
         }
+
+        //Airliner + Admine Role
+        [AutoValidateAntiforgeryToken]
+        [HttpPost]
+        public async Task<IActionResult> CreateImg(IFormFile uploadFile)
+        {
+            if (uploadFile != null && uploadFile.Length > 0)
+            {
+                var fileName = Path.GetFileName(uploadFile.FileName);
+
+                var filePath = Path.Combine(@"wwwroot\Images\", fileName);
+                string[] subbie = filePath.Split('\\');
+                AirlineCreateViewModel mymodel = new AirlineCreateViewModel();
+                mymodel.Logo = "~/" + subbie[1] + "/" + subbie[2]; 
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await uploadFile.CopyToAsync(fileStream);
+
+                }
+                return View(mymodel);
+            }
+            return RedirectToAction("Create");
+        }
+
     }
 }
