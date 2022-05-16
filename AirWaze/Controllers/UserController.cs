@@ -77,8 +77,8 @@ namespace AirWaze.Controllers
                 var newEntity = new User
                 {
                     UserID = userViewModel.UserID,
-                    Name = userViewModel.Name,
-                    Password = userViewModel.Password,
+                    //Name = userViewModel.Name,
+                    //Password = userViewModel.Password,
                     FirstName = userViewModel.FirstName,
                     LastName = userViewModel.LastName,
                     StreetName = userViewModel.StreetName,
