@@ -113,7 +113,12 @@ namespace AirWaze.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var planeCreateViewModel = planesToAdd[0];          
+            var planeCreateViewModel  = new PlaneCreateViewModel();
+            if (planesToAdd.Count != 0)
+            {
+                planeCreateViewModel = planesToAdd[0];
+            }
+                      
             return View(planeCreateViewModel);
         }
         //Airline

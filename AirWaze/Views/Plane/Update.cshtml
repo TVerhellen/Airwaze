@@ -69,16 +69,16 @@
         <span class="text-danger" asp-validation-for="FuelUsagePerKM"></span>
     </div>
      <div class="form-group">
-        <label asp-for="ConstructionYear" readonly="readonly"></label>
-        <input class ="form-control" asp-for="ConstructionYear" />
+        <label asp-for="ConstructionYear" ></label>
+        <input class ="form-control" asp-for="ConstructionYear" readonly="readonly" />
         <span class="text-danger" asp-validation-for="ConstructionYear"></span>
     </div>
-    <div class="form-group" readonly="readonly">
+    <div class="form-group" >
         <label asp-for="AirMiles"></label>
-        <input class ="form-control" asp-for="AirMiles" />
+        <input class ="form-control" asp-for="AirMiles" readonly="readonly"/>
         <span class="text-danger" asp-validation-for="AirMiles"></span>
     </div>
-    <div class="form-group" hidden="hidden" readonly="readonly">
+    <div class="form-group" hidden="hidden" >
         <label asp-for="FlightHours"></label>
         <input class ="form-control" asp-for="FlightHours" />
         <span class="text-danger" asp-validation-for="AirMiles"></span>
