@@ -15,7 +15,6 @@ namespace AirWaze.Models
         public string City { get; set; }
         public string Country { get; set; }
         public string PhoneNumber { get; set; }
-        public bool IsVerified { get; set; }
         public List<Ticket> ListCurrentTickets { get; set; }
         public List<Ticket> ListPastTickets { get; set; }
         public List<bool> Milestones { get; set; }

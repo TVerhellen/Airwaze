@@ -20,7 +20,7 @@ namespace AirWaze.Entities
         public string City { get; set; }
         public string Country { get; set; }
         public string PhoneNumber { get; set; }
-        public bool IsVerified { get; set; }
+        //public bool IsVerified { get; set; }
         public List<Ticket>? ListCurrentTickets { get; set; }
         [NotMapped]
         public List<Ticket>? ListPastTickets { get; set; }
