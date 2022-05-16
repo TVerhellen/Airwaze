@@ -69,14 +69,18 @@ namespace AirWaze.Controllers
             {
                 thislist.Add(new PlaneListViewModel()
                 {
-                    PlaneNr = plane.PlaneNr,                    
+                    PlaneNr = plane.PlaneNr,
                     CurrentAirline = plane.CurrentAirline,
-                    PassengerCapacity = plane.PassengerCapacity,                    
-                    FlightRegion = plane.FlightRegion,                    
-                    IsAvailable = plane.IsAvailable, 
+                    PassengerCapacity = plane.PassengerCapacity,
+                    FlightRegion = plane.FlightRegion,
+                    IsAvailable = plane.IsAvailable,
                     Manufacturer = plane.Manufacturer,
                     Type = plane.Type,
-                });
+                    AirMiles = plane.AirMiles,
+                    ConstructionYear = plane.ConstructionYear,
+                    FlightHours = plane.FlightHours,
+                    NextMainentance = plane.NextMainentance,
+                }) ;
             }
             return View(thislist);
         }
@@ -96,6 +100,10 @@ namespace AirWaze.Controllers
                     IsAvailable = plane.IsAvailable,
                     Manufacturer = plane.Manufacturer,
                     Type = plane.Type,
+                    AirMiles = plane.AirMiles,
+                    ConstructionYear = plane.ConstructionYear,
+                    FlightHours = plane.FlightHours,
+                    NextMainentance = plane.NextMainentance,
                 });
             }
             return View(thislist);
@@ -159,8 +167,12 @@ namespace AirWaze.Controllers
                     LoadCapacity = planeViewModel.LoadCapacity,
                     Manufacturer = planeViewModel.Manufacturer,
                     Type = planeViewModel.Type  ,
-                    SeatDiagramPic = planeViewModel.SeatDiagramPic
-                    
+                    SeatDiagramPic = planeViewModel.SeatDiagramPic,
+                    AirMiles = planeViewModel.AirMiles,
+                    ConstructionYear = planeViewModel.ConstructionYear,
+                    FlightHours = planeViewModel.FlightHours,
+                    NextMainentance = planeViewModel.NextMainentance,
+
                 };
                 planesToAdd.Clear();
                 planeEntities.Add(newEntity);
@@ -191,7 +203,11 @@ namespace AirWaze.Controllers
                 LoadCapacity = thisPlane.LoadCapacity,
                 Manufacturer = thisPlane.Manufacturer,
                 Type = thisPlane.Type,
-                SeatDiagramPic = thisPlane.SeatDiagramPic
+                SeatDiagramPic = thisPlane.SeatDiagramPic,
+                AirMiles = thisPlane.AirMiles,
+                ConstructionYear = thisPlane.ConstructionYear,
+                FlightHours = thisPlane.FlightHours,
+                NextMainentance = thisPlane.NextMainentance,
 
             };
             var isValid = TryValidateModel(planeDetailViewModel);
@@ -222,7 +238,11 @@ namespace AirWaze.Controllers
                     planeUpdateViewModel.IsAvailable = plane.IsAvailable;
                     planeUpdateViewModel.LoadCapacity = plane.LoadCapacity;
                     planeUpdateViewModel.Manufacturer = plane.Manufacturer;
-                    planeUpdateViewModel.Type = plane.Type;                  
+                    planeUpdateViewModel.Type = plane.Type;
+                    planeUpdateViewModel.AirMiles = plane.AirMiles;
+                    planeUpdateViewModel.ConstructionYear = plane.ConstructionYear;
+                    planeUpdateViewModel.FlightHours = plane.FlightHours;
+                    planeUpdateViewModel.NextMainentance = plane.NextMainentance;
                     break;
                 }
             }
@@ -255,7 +275,11 @@ namespace AirWaze.Controllers
                     IsAvailable = planeUpdateViewModel.IsAvailable,
                     LoadCapacity = planeUpdateViewModel.LoadCapacity,
                     Manufacturer = planeUpdateViewModel.Manufacturer,
-                    Type = planeUpdateViewModel.Type
+                    Type = planeUpdateViewModel.Type,
+                    AirMiles = planeUpdateViewModel.AirMiles,
+                    ConstructionYear = planeUpdateViewModel.ConstructionYear,
+                    FlightHours = planeUpdateViewModel.FlightHours,
+                    NextMainentance = planeUpdateViewModel.NextMainentance,
 
                 };               
                 _myDatabase.UpdatePlane(newEntity);

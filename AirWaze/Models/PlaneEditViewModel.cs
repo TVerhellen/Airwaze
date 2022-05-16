@@ -31,5 +31,13 @@ namespace AirWaze.Models
 
         public bool IsAvailable { get; set; }
 
+        public DateTime ConstructionYear { get; set; }
+
+        public int AirMiles { get; set; }
+
+        public int FlightHours { get; set; }
+
+        public int NextMainentance { get; set; }
+
     }
 }

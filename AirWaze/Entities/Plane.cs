@@ -32,5 +32,13 @@ namespace AirWaze.Entities
         public bool IsAvailable { get; set; }
         [NotMapped]
         public string? SeatDiagramPic { get; set; }
+        [NotMapped]
+        public DateTime ConstructionYear { get; set; }
+        [NotMapped]
+        public int AirMiles { get; set; }
+        [NotMapped]
+        public int FlightHours { get; set; }
+        [NotMapped]
+        public int NextMainentance { get; set; }
     }
 }

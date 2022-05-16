@@ -99,9 +99,11 @@ else
             <img src="PlaneLayout/767.jpg" alt="Sample Image" width="800" height="400"/> 
             break;
          case "Standard":
-            <img src="PlaneLayout/Gulf.jpg" alt="Sample Image" width="800" height="400"/> 
-            break;
-    }
+                <img src="PlaneLayout/Gulf.jpg" alt="Sample Image" width="800" height="400"/>
+                break;
+            default:
+                break;
+        }
     </div>   
 
       <a class="btn btn-primary" @onclick="BindPic" href="/Plane/AddPlane">Confirm</a>
@@ -115,16 +117,53 @@ else
     public void BindType()
     {
         mymodel.Type = SelectedType;
+
         SelectedPath = $"~/PlaneLayout/{SelectedType}.jpg";
     } 
-     public void BindPic()
+    public void BindPic()
     {
         mymodel.SeatDiagramPic = SelectedPath;
+        switch (mymodel.Type)
+        {
+            case "737":
+                mymodel.FirstClassCapacity = 30;
+                mymodel.PassengerCapacity = 120;              
+                break;
+        case "767":
+            mymodel.FirstClassCapacity = 36;
+                mymodel.PassengerCapacity = 192;                
+            break;
+        case "787":
+            mymodel.FirstClassCapacity = 30;
+                mymodel.PassengerCapacity = 156;               
+            break;
+        case "A318":
+            mymodel.FirstClassCapacity =32;
+                mymodel.PassengerCapacity = 32;               
+            break;
+        case "A319":
+            mymodel.FirstClassCapacity = 0;
+                mymodel.PassengerCapacity = 138;                
+            break;
+        case "A321":
+            mymodel.FirstClassCapacity = 32;
+                mymodel.PassengerCapacity = 164;             
+            break;
+         case "Standard":
+               mymodel.FirstClassCapacity = 10;
+                mymodel.PassengerCapacity = 10;                
+                break;
+            default:
+                break;
+        }
+        mymodel.FlightHours = 0;
+        mymodel.NextMainentance = 200000;
         PlaneController.planesToAdd.Add(mymodel);
     } 
     public string SelectedManufacturer = "";
     public string SelectedType = "";
     public string SelectedPath = "";
+    
 
 
     

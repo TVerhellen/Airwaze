@@ -22,7 +22,8 @@
                     <th>Available</th>
                     <th>Manufacturer</th>
                     <th>Type</th>
-                    @*<th>Airliner</th>*@
+                    <th>Airliner</th>
+                    <th>ConstructionYear</th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -38,7 +39,8 @@
                         <td>@plane.IsAvailable</td>
                         <td>@plane.Manufacturer</td>
                         <td>@plane.Type</td>   
-                        @*<td>@plane.CurrentAirline.NameTag</td>*@
+                        <td>@plane.CurrentAirline.NameTag</td>
+                        <td>@plane.ConstructionYear</td>
                         <td><a class="btn btn-primary" asp-action="Detail" asp-controller="Plane" asp-route-ID=@plane.PlaneNr>Detail</a></td>
                         <td><a class="btn btn-secondary" asp-action="Update" asp-controller="Plane" asp-route-ID=@plane.PlaneNr>Edit</a></td>
                         <td><a class="btn btn-secondary" asp-action="Delete" asp-controller="Plane" asp-route-ID=@plane.PlaneNr>Delete</a></td>
