@@ -1,4 +1,5 @@
-﻿using AirWaze.Database.Design;
+﻿using AirWaze.Data;
+using AirWaze.Database.Design;
 using AirWaze.Entities;
 using AirWaze.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ namespace AirWaze.Controllers
 {
     public class UserController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
         private readonly IAirWazeDatabase _airWazeDatabase;
         private static List<User> userEntities = new List<User>();
         public UserController(IAirWazeDatabase airWazeDatabase)
@@ -27,6 +29,14 @@ namespace AirWaze.Controllers
             }
             return View(userViewModels);
             
+        }
+
+        [HttpGet]
+        public IActionResult CustomerHome()
+        {
+
+            return View();
+
         }
 
         //only user + admin
@@ -74,11 +84,17 @@ namespace AirWaze.Controllers
 
             if (isModelValid)
             {
+                var pasinfo = db.Users.FirstOrDefault(d => d.Email == userViewModel.Email);
+                if (pasinfo == null)
+                {
+                    //pasinfo = db.Users.Create();
+                    pasinfo.Email = userViewModel.Email;
+                    db.SaveChanges();
+                }
+
                 var newEntity = new User
                 {
                     UserID = userViewModel.UserID,
-                    //Name = userViewModel.Name,
-                    //Password = userViewModel.Password,
                     FirstName = userViewModel.FirstName,
                     LastName = userViewModel.LastName,
                     StreetName = userViewModel.StreetName,
@@ -87,7 +103,7 @@ namespace AirWaze.Controllers
                     City = userViewModel.City,
                     Zipcode = userViewModel.Zipcode,
                     Country = userViewModel.Country,
-                    Email = userViewModel.Email,
+                    Email = pasinfo.Email,
                     PhoneNumber = userViewModel.PhoneNumber,
                 };
                 //userEntities.Add(newEntity);
