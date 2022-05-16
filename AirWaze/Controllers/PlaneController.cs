@@ -287,7 +287,8 @@ namespace AirWaze.Controllers
             _myDatabase.RemovePlane(plane);
             return RedirectToAction("Index");
         }
-        [Route("")]
+       
+        [Route("Kippen")]
         public IActionResult Type()
         {
             
