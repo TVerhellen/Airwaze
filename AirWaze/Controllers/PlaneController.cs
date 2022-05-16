@@ -10,6 +10,8 @@ namespace AirWaze.Controllers
     {
 
         private IAirWazeDatabase _myDatabase;
+
+        public static List<PlaneCreateViewModel> planesToAdd = new List<PlaneCreateViewModel>();
               
         public static List<Plane> planeEntities = new List<Plane>();
 
@@ -103,16 +105,14 @@ namespace AirWaze.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var planeCreateViewModel = new PlaneCreateViewModel();
-
+            var planeCreateViewModel = planesToAdd[0];          
             return View(planeCreateViewModel);
         }
         //Airline
         [HttpGet]
         public IActionResult AddPlane(Airline ID)
         {
-            var planeCreateViewModel = new PlaneCreateViewModel();
-
+            var planeCreateViewModel = planesToAdd[0];
             planeCreateViewModel.CurrentAirline = ID;
             return View(planeCreateViewModel);
         }
@@ -158,12 +158,15 @@ namespace AirWaze.Controllers
                     IsAvailable = planeViewModel.IsAvailable,
                     LoadCapacity = planeViewModel.LoadCapacity,
                     Manufacturer = planeViewModel.Manufacturer,
-                    Type = planeViewModel.Type                   
+                    Type = planeViewModel.Type  ,
+                    SeatDiagramPic = planeViewModel.SeatDiagramPic
+                    
                 };
+                planesToAdd.Clear();
                 planeEntities.Add(newEntity);
                 _myDatabase.AddPlane(newEntity);
-                planeEntities = _myDatabase.GetPlanes();
-                airlineEntities = _myDatabase.GetAirlines();
+                //planeEntities = _myDatabase.GetPlanes();
+                //airlineEntities = _myDatabase.GetAirlines();
                 return RedirectToAction("Index", newEntity.CurrentAirline.AirlineID);
             }
             return View(planeViewModel);
@@ -187,7 +190,8 @@ namespace AirWaze.Controllers
                 IsAvailable = thisPlane.IsAvailable,
                 LoadCapacity = thisPlane.LoadCapacity,
                 Manufacturer = thisPlane.Manufacturer,
-                Type = thisPlane.Type
+                Type = thisPlane.Type,
+                SeatDiagramPic = thisPlane.SeatDiagramPic
 
             };
             var isValid = TryValidateModel(planeDetailViewModel);
@@ -218,7 +222,7 @@ namespace AirWaze.Controllers
                     planeUpdateViewModel.IsAvailable = plane.IsAvailable;
                     planeUpdateViewModel.LoadCapacity = plane.LoadCapacity;
                     planeUpdateViewModel.Manufacturer = plane.Manufacturer;
-                    planeUpdateViewModel.Type = plane.Type;
+                    planeUpdateViewModel.Type = plane.Type;                  
                     break;
                 }
             }
@@ -287,5 +291,13 @@ namespace AirWaze.Controllers
             _myDatabase.RemovePlane(plane);
             return RedirectToAction("Index");
         }
+       
+        [Route("Kippen")]
+        public IActionResult Type()
+        {          
+            return View();
+        }
+
+      
     }
 }

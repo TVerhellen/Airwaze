@@ -9,4 +9,9 @@
 
  <p>@Model.FuelUsagePerKM @Model.Type @Model.CurrentAirline.Email @Model.PlaneNr @Model.Manufacturer</p>
 
+  <div style="padding-top:20px;">
+    <img src=@Model.SeatDiagramPic alt="Sample Image" width="800" height="400"/>
+</div>
+
+
  <a class="btn btn-primary" asp-action="Index" asp-controller="Plane">Back</a>

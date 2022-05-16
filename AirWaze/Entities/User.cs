@@ -8,8 +8,8 @@ namespace AirWaze.Entities
     {
         [Key]
         public Guid UserID { get; set; }
-        public string Name { get; set; }
-        public string Password { get; set; }
+        //public string Name { get; set; }
+        //public string Password { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public string Email { get; set; }
@@ -20,7 +20,7 @@ namespace AirWaze.Entities
         public string City { get; set; }
         public string Country { get; set; }
         public string PhoneNumber { get; set; }
-        public bool IsVerified { get; set; }
+        //public bool IsVerified { get; set; }
         public List<Ticket>? ListCurrentTickets { get; set; }
         [NotMapped]
         public List<Ticket>? ListPastTickets { get; set; }

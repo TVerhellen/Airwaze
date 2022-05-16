@@ -12,13 +12,20 @@ namespace AirWaze.Controllers
         {
             _logger = logger;
         }
-
+       
         public IActionResult Index()
         {
             return View();
         }
 
+        
         public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        [Route("/test")]
+        public IActionResult Blazortest()
         {
             return View();
         }
@@ -28,5 +35,7 @@ namespace AirWaze.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+    
     }
 }

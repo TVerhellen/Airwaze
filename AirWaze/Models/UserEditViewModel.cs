@@ -37,7 +37,7 @@ namespace AirWaze.Models
         public string? Bus { get; set; }
 
         [Required(ErrorMessage = "Zipcode is Required")]
-        [RegularExpression(@"^\d{5}(-\d{4})?$", ErrorMessage = "Invalid Zipcode")]
+        [DataType(DataType.PostalCode)]
         public string Zipcode { get; set; }
 
         [MinLength(1, ErrorMessage = "Minimum 1 character!")]

@@ -31,4 +31,37 @@ else
     <p>There are no passengers yet. Create one!</p>
 }
 <br />
-<a href="/User/Create" class="btn btn-primary btn-lg">Create new passenger </a>
+<a href="/User/Create" class="btn btn-primary btn-lg">Create new passenger</a>
+<a href="/User/CustomerHome" class="btn btn-primary btn-lg">CustomerHome</a>
+
+
+
+@*@using AirWaze.Models
+
+@{
+    if (User.IsInRole("Customer"))
+    {
+        ViewBag.Title = "Customer Home Page";
+    }
+    else if(User.IsInRole("Airline"))
+    {
+        ViewBag.Title = "Airline Home Page";
+    }
+
+
+}
+<link href="~/Content/dashboard.css" rel="stylesheet" />
+
+@if (User.IsInRole("Admin"))
+{
+    Html.RenderPartial("AdminHome");
+}
+else if (User.IsInRole("Customer"))
+{
+    Html.RenderPartial("CustomerHome");
+}
+else
+{
+    Html.RenderPartial("AirlineHomePartial");
+}*@
+
