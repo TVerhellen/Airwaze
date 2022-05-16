@@ -18,7 +18,10 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
+
+
 builder.Services.AddControllersWithViews();
+builder.Services.AddServerSideBlazor();
 
 builder.Services.AddScoped<IAirWazeDatabase, AirWazeDatabase>();
 
@@ -50,5 +53,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+app.MapBlazorHub();
 
 app.Run();
