@@ -1,0 +1,30 @@
+﻿@using AirWaze.Controllers
+@model FlightCreateViewModel
+
+<!-- add method to make list of available planes for that flight - check flight region (destination), and Departure date/time -->
+
+<h2>Please select the plane for this flight</h2>
+
+@if(@FlightController.planes.Count > 0)
+{
+
+<form asp-controller="Flight" asp-action="FlightPicker" asp-route-id=@Model.FlightNr method="post">
+
+ <div class="form-group">
+        <label>Available Planes:</label>
+        <br />
+        <select name="selectedPlaneNr">
+            @foreach(var item in @FlightController.planes)
+            {
+                 <option value=@item.PlaneNr>@item.CurrentAirline.Name - @item.PlaneNr</option>
+            }
+        </select>
+    </div>
+    <button class="btn btn-primary" type="submit">Confirm Plane</button>
+    </form>
+}
+else
+{
+    <p>There are currently no planes available for this flight.</p>
+    <p>Please try again later or select another Departure Time.</p>
+}

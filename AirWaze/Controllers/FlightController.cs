@@ -9,59 +9,47 @@ namespace AirWaze.Controllers
     {
         //private readonly List<Flight> flights = new List<Flight>();
         private readonly IAirWazeDatabase _airwazeDatabase;
-        private static List<Flight> flights = new List<Flight>();
+        public static List<Flight> flights = new List<Flight>();
+        public static List<Plane> planes = new List<Plane>();
+        public static List<FlightCreateViewModel> tempFlights = new List<FlightCreateViewModel>();
         Random _random = new Random();
 
-        static User myUser = new User();
+        //testplane (and linked testAirline) is used for new FlightCreateViewModels, before going to FlightPicker
         static Airline testAirline = new Airline
         {
-            Number = "55",
-            PhoneNumber = "777888999",
+            Number = "00000",
+            PhoneNumber = "XXXXXXXXXX",
             CurrentPlanes = new List<Plane>(),
-            AccountNumber = "111222333",
-            Adress = "Koekoekstraat",
-            City = "Melle",
+            AccountNumber = "XXXXXXXX",
+            Adress = "Teststraat",
+            City = "Test",
             AirlineID = Guid.NewGuid(),
-            CompanyNumber = "5555555",
-            Email = "ikke@virgin.com",
-            Name = "Harald Airways",
-            NameTag = "HAR",
+            CompanyNumber = "1111111",
+            Email = "test@email.com",
+            Name = "TestAirWays",
+            NameTag = "TEST",
         };
         static Plane testplane = new Plane
         {
-            PlaneNr = "6666",
+            PlaneNr = "TestPlane",
             CurrentAirline = testAirline,
-            PassengerCapacity = 200,
-            FuelUsagePerKM = 500,
-            FirstClassCapacity = 100,
+            PassengerCapacity = 1,
+            FuelUsagePerKM = 1,
+            FirstClassCapacity = 1,
             FlightRegion = "EUR",
-            FuelCapacity = 5000,
+            FuelCapacity = 1,
             IsAvailable = true,
-            LoadCapacity = 10000,
-            Manufacturer = "Boeing",
-            Type = "747",
+            LoadCapacity = 1,
+            Manufacturer = "Tester",
+            Type = "111",
             SeatDiagram = new string[5, 40],
-        };
-        public static readonly List<Ticket> allTickets = new List<Ticket>
-        {
-            new Ticket()
-            {
-                TicketNr = "1",
-                CurrentFlight = new Flight(),
-                CurrentUser = myUser,
-                LastName = "Verhellen",
-                FirstName = "Tijs",
-                Price = 50,
-                FirstClass = false,
-                Seat = "15C",
-                ExtraLuggage = false
-            }
         };
 
         public FlightController(IAirWazeDatabase airwazeDatabase)
         {
             _airwazeDatabase = airwazeDatabase;
             flights = _airwazeDatabase.GetFlights();
+            planes = _airwazeDatabase.GetPlanes();
         }
 
         //Roles: Everyone
@@ -131,8 +119,8 @@ namespace AirWaze.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var flightCreateViewModel = new FlightCreateViewModel();
-            return View(flightCreateViewModel);
+            var flightViewModel = new FlightCreateViewModel();
+            return View(flightViewModel);
         }
 
         //Roles: Admin + Airport Staff
@@ -142,13 +130,37 @@ namespace AirWaze.Controllers
         {
             flightViewModel.FlightNr = CreateFlightNr(flightViewModel);
             flightViewModel.CurrentGate = new Gate();
-            flightViewModel.CurrentRunway = new Runway();
             flightViewModel.CurrentPlane = testplane;
+            flightViewModel.CurrentRunway = new Runway();
             flightViewModel.Status = 0;
 
-            var isModelValid = TryValidateModel(flightViewModel);
+            if (TryValidateModel(flightViewModel))
+            {
+                tempFlights.Add(flightViewModel);   
+                return RedirectToAction("FlightPicker", new { flightNr = flightViewModel.FlightNr });
+            }
+            else
+            {
+                return View(flightViewModel);
+            }
+        }
 
-            if (isModelValid)
+        [HttpGet]
+        public IActionResult FlightPicker(string flightNr)
+        {
+            var flightCreateViewModel = tempFlights.SingleOrDefault(x => x.FlightNr == flightNr);
+            
+            return View(flightCreateViewModel);      
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public IActionResult FlightPicker(FlightCreateViewModel flightViewModel, string id)
+        {
+            flightViewModel = tempFlights.SingleOrDefault(x => x.FlightNr == id);
+            flightViewModel.CurrentPlane = planes.FirstOrDefault(x => x.PlaneNr == Request.Form["selectedPlaneNr"]);
+
+            if (TryValidateModel(flightViewModel))
             {
                 var newEntity = new Flight
                 {
@@ -165,6 +177,7 @@ namespace AirWaze.Controllers
                 };
                 _airwazeDatabase.AddFlight(newEntity);
                 flights.Add(newEntity);
+                tempFlights.Remove(flightViewModel);
                 return RedirectToAction("Index");
             }
             else
@@ -179,6 +192,8 @@ namespace AirWaze.Controllers
         {
             //var flightEntity = _airwazeDatabase.GetFlightByNr(flightnr);
 
+
+            //
             var flightEntity = flights.FirstOrDefault(x => x.FlightNr == id);
 
             if (flightEntity == null) return new NotFoundResult();
@@ -205,6 +220,9 @@ namespace AirWaze.Controllers
         [HttpPost]
         public IActionResult Edit(string id, FlightEditViewModel flightViewModel)
         {
+            flightViewModel.CurrentPlane = planes.FirstOrDefault(x => x.PlaneNr == Request.Form["selectedPlaneNr"]);
+            flightViewModel.Status = Convert.ToInt32(Request.Form["selectedStatus"]);
+
             if (!TryValidateModel(flightViewModel)) return View(flightViewModel);
 
             //var flightEntity = _airwazeDatabase.GetFlightByNr(flightnr);
@@ -214,6 +232,7 @@ namespace AirWaze.Controllers
             if (flightEntity == null) return new NotFoundResult();
 
             flights.Remove(flightEntity);
+
             flightEntity.FlightID = flightViewModel.FlightID;
             flightEntity.FlightNr = flightViewModel.FlightNr;
             flightEntity.CurrentPlane = flightViewModel.CurrentPlane;
