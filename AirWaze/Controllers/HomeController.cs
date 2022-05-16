@@ -18,6 +18,7 @@ namespace AirWaze.Controllers
             return View();
         }
 
+        
         public IActionResult Privacy()
         {
             return View();
@@ -28,5 +29,7 @@ namespace AirWaze.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+    
     }
 }

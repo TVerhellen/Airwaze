@@ -287,5 +287,12 @@ namespace AirWaze.Controllers
             _myDatabase.RemovePlane(plane);
             return RedirectToAction("Index");
         }
+        [Route("")]
+        public IActionResult Type()
+        {
+            
+
+            return View();
+        }
     }
 }
