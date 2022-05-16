@@ -7,11 +7,8 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers;
 @using Microsoft.JSInterop
 
-@inject ILogger<Blazortest> Logger
-
+@inject ILogger<Planetypepicker> Logger
 @inject IJSRuntime jsRuntime
-@page "/Home/Type"
-
 
 @if(mymodel.Manufacturer == null)
 {
@@ -84,29 +81,28 @@ else
     @switch (mymodel.Type)
     {
         case "737":
-            <img src="PlaneLayout/737.jpg" alt="Sample Image" width="400" height="400"/> 
+            <img src="PlaneLayout/737.jpg" alt="Sample Image" width="800" height="400"/> 
             break;
         case "767":
-            <img src="PlaneLayout/767.jpg" alt="Sample Image" width="200" height="400"/> 
+            <img src="PlaneLayout/767.jpg" alt="Sample Image" width="800" height="400"/> 
             break;
         case "787":
-            <img src="PlaneLayout/787.jpg" alt="Sample Image" width="200" height="400"/> 
+            <img src="PlaneLayout/787.jpg" alt="Sample Image" width="800" height="400"/> 
             break;
         case "A318":
-            <img src="PlaneLayout/A318.jpg" alt="Sample Image" width="200" height="400"/> 
+            <img src="PlaneLayout/A318.jpg" alt="Sample Image" width="800" height="400"/> 
             break;
         case "A319":
-            <img src="PlaneLayout/A319.jpg" alt="Sample Image" width="200" height="400"/> 
+            <img src="PlaneLayout/A319.jpg" alt="Sample Image" width="800" height="400"/> 
             break;
         case "A321":
-            <img src="PlaneLayout/767.jpg" alt="Sample Image" width="200" height="400"/> 
+            <img src="PlaneLayout/767.jpg" alt="Sample Image" width="800" height="400"/> 
             break;
          case "Standard":
-            <img src="PlaneLayout/Gulf.jpg" alt="Sample Image" width="200" height="400"/> 
+            <img src="PlaneLayout/Gulf.jpg" alt="Sample Image" width="800" height="400"/> 
             break;
     }
-    </div>
-     <button >Confirm</button>
+    </div>   
 
       <a class="btn btn-primary" @onclick="BindPic" href="/Plane/AddPlane">Confirm</a>
 }

@@ -105,8 +105,7 @@ namespace AirWaze.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var planeCreateViewModel = planesToAdd[0];
-
+            var planeCreateViewModel = planesToAdd[0];          
             return View(planeCreateViewModel);
         }
         //Airline
@@ -114,7 +113,6 @@ namespace AirWaze.Controllers
         public IActionResult AddPlane(Airline ID)
         {
             var planeCreateViewModel = planesToAdd[0];
-
             planeCreateViewModel.CurrentAirline = ID;
             return View(planeCreateViewModel);
         }
@@ -164,10 +162,11 @@ namespace AirWaze.Controllers
                     SeatDiagramPic = planeViewModel.SeatDiagramPic
                     
                 };
+                planesToAdd.Clear();
                 planeEntities.Add(newEntity);
                 _myDatabase.AddPlane(newEntity);
-                planeEntities = _myDatabase.GetPlanes();
-                airlineEntities = _myDatabase.GetAirlines();
+                //planeEntities = _myDatabase.GetPlanes();
+                //airlineEntities = _myDatabase.GetAirlines();
                 return RedirectToAction("Index", newEntity.CurrentAirline.AirlineID);
             }
             return View(planeViewModel);
@@ -191,7 +190,8 @@ namespace AirWaze.Controllers
                 IsAvailable = thisPlane.IsAvailable,
                 LoadCapacity = thisPlane.LoadCapacity,
                 Manufacturer = thisPlane.Manufacturer,
-                Type = thisPlane.Type
+                Type = thisPlane.Type,
+                SeatDiagramPic = thisPlane.SeatDiagramPic
 
             };
             var isValid = TryValidateModel(planeDetailViewModel);
@@ -222,7 +222,7 @@ namespace AirWaze.Controllers
                     planeUpdateViewModel.IsAvailable = plane.IsAvailable;
                     planeUpdateViewModel.LoadCapacity = plane.LoadCapacity;
                     planeUpdateViewModel.Manufacturer = plane.Manufacturer;
-                    planeUpdateViewModel.Type = plane.Type;
+                    planeUpdateViewModel.Type = plane.Type;                  
                     break;
                 }
             }
