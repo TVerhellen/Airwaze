@@ -10,6 +10,8 @@ namespace AirWaze.Controllers
     {
 
         private IAirWazeDatabase _myDatabase;
+
+        public static List<PlaneCreateViewModel> planesToAdd = new List<PlaneCreateViewModel>();
               
         public static List<Plane> planeEntities = new List<Plane>();
 
@@ -103,7 +105,7 @@ namespace AirWaze.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var planeCreateViewModel = new PlaneCreateViewModel();
+            var planeCreateViewModel = planesToAdd[0];
 
             return View(planeCreateViewModel);
         }
@@ -111,7 +113,7 @@ namespace AirWaze.Controllers
         [HttpGet]
         public IActionResult AddPlane(Airline ID)
         {
-            var planeCreateViewModel = new PlaneCreateViewModel();
+            var planeCreateViewModel = planesToAdd[0];
 
             planeCreateViewModel.CurrentAirline = ID;
             return View(planeCreateViewModel);
@@ -158,7 +160,9 @@ namespace AirWaze.Controllers
                     IsAvailable = planeViewModel.IsAvailable,
                     LoadCapacity = planeViewModel.LoadCapacity,
                     Manufacturer = planeViewModel.Manufacturer,
-                    Type = planeViewModel.Type                   
+                    Type = planeViewModel.Type  ,
+                    SeatDiagramPic = planeViewModel.SeatDiagramPic
+                    
                 };
                 planeEntities.Add(newEntity);
                 _myDatabase.AddPlane(newEntity);
@@ -290,10 +294,10 @@ namespace AirWaze.Controllers
        
         [Route("Kippen")]
         public IActionResult Type()
-        {
-            
-
+        {          
             return View();
         }
+
+      
     }
 }

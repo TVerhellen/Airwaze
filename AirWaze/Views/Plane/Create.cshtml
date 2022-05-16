@@ -6,16 +6,21 @@
 @model PlaneCreateViewModel
 
 <form asp-controller="Plane" asp-action="Create" method="post">
-    <div class="form-group">
+    <div class="form-group" hidden="hidden">
         <label asp-for="Type"></label>
         <input class ="form-control" asp-for="Type" />
         <span class="text-danger" asp-validation-for="Type"></span>
     </div>
     
-    <div class="form-group">
-        <label asp-for="Manufacturer"></label>
+    <div class="form-group"  hidden="hidden">
+        <label asp-for="Manufacturer" ></label>
         <input class ="form-control" asp-for="Manufacturer" />
         <span class="text-danger" asp-validation-for="Manufacturer"></span>
+    </div>
+     <div class="form-group"  hidden="hidden">
+        <label asp-for="SeatDiagramPic" ></label>
+        <input class ="form-control" asp-for="SeatDiagramPic" />
+        <span class="text-danger" asp-validation-for="SeatDiagramPic"></span>
     </div>
     <div class="form-group">
         <label asp-for="PassengerCapacity"></label>

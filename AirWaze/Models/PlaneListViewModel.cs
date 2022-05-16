@@ -13,6 +13,7 @@ namespace AirWaze.Models
         public int PassengerCapacity { get; set; }
         public string FlightRegion { get; set; }
         public bool IsAvailable { get; set; }
+      
 
     }
 }

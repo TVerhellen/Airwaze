@@ -26,6 +26,8 @@ namespace AirWaze.Models
 
         public string[,]? SeatDiagram { get; set; }
 
+        public string? SeatDiagramPic { get; set; }
+
         public bool IsAvailable { get; set; }
     }
 }

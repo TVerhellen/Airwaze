@@ -2,7 +2,8 @@
 @using Microsoft.AspNetCore.Components.Web
 @using Microsoft.AspNetCore.Http.Extensions
 @using Microsoft.Extensions.Logging
-
+@using AirWaze.Models;
+@using AirWaze.Controllers;
 @using Microsoft.AspNetCore.Mvc.TagHelpers;
 @using Microsoft.JSInterop
 
@@ -11,36 +12,124 @@
 @inject IJSRuntime jsRuntime
 @page "/Home/Type"
 
-<h1>Timer</h1>
 
-<p>@counter</p>
-<button @onclick="StartTimer">Start</button>   
+@if(mymodel.Manufacturer == null)
+{
+    <p>
+    <label>
+        Select Manufacturer: 
+        <select @bind="SelectedManufacturer">
+            <option value="Boeing">Boeing</option>
+            <option value="Airbus">Airbus</option>
+            <option value="Gulfstream">Gulfstream</option>
+           
+        </select>
+    </label>
+</p>
 
-<br />
+<span>
+    Selected Manufacturer: @SelectedManufacturer
+</span>
+    <button @onclick="BindManufacturer">Confirm</button>
+}
+else if(mymodel.Type == null)
+{
+    if(SelectedManufacturer == "Boeing")
+    {
+    <p>
+    <label>
+        Select Type: 
+        <select @bind="SelectedType">
+            <option value="737">737</option>
+            <option value="767">767</option>
+            <option value="787">787</option>
+           
+        </select>
+    </label>
+    </p>
+    }
+    else if(SelectedManufacturer == "Airbus")
+    {
+    <p>
+    <label>
+        Select Type: 
+        <select @bind="SelectedType">
+            <option value="A318">A318</option>
+            <option value="A319">A319</option>
+            <option value="A321">A321</option>
+           
+        </select>
+    </label>
+    </p>
+    }
+    else
+    {
+    <p>
+    <label>
+        Select Type: 
+        <select @bind="SelectedType">
+            <option value="Standard">Standard</option>                      
+        </select>
+    </label>
+    </p>
+    }
+    <span>
+    Selected Type: @SelectedType
+</span>
+    <button @onclick="BindType">Confirm</button>
+}
+else
+{
+    <div style="padding-top:20px;">
+    @switch (mymodel.Type)
+    {
+        case "737":
+            <img src="PlaneLayout/737.jpg" alt="Sample Image" width="400" height="400"/> 
+            break;
+        case "767":
+            <img src="PlaneLayout/767.jpg" alt="Sample Image" width="200" height="400"/> 
+            break;
+        case "787":
+            <img src="PlaneLayout/787.jpg" alt="Sample Image" width="200" height="400"/> 
+            break;
+        case "A318":
+            <img src="PlaneLayout/A318.jpg" alt="Sample Image" width="200" height="400"/> 
+            break;
+        case "A319":
+            <img src="PlaneLayout/A319.jpg" alt="Sample Image" width="200" height="400"/> 
+            break;
+        case "A321":
+            <img src="PlaneLayout/767.jpg" alt="Sample Image" width="200" height="400"/> 
+            break;
+         case "Standard":
+            <img src="PlaneLayout/Gulf.jpg" alt="Sample Image" width="200" height="400"/> 
+            break;
+    }
+    </div>
+     <button >Confirm</button>
+
+      <a class="btn btn-primary" @onclick="BindPic" href="/Plane/AddPlane">Confirm</a>
+}
+
+
 
 @code{
-
-    private static System.Timers.Timer thisTimer;
-    private int counter = 100;   
-    public void StartTimer()
+    public static PlaneCreateViewModel mymodel = new PlaneCreateViewModel();
+    public void BindManufacturer() => mymodel.Manufacturer = SelectedManufacturer;
+    public void BindType()
     {
-        thisTimer = new System.Timers.Timer(100);
-        thisTimer.Elapsed += CountDownTimer;
-        thisTimer.Enabled = true;
-    }
-
-    public void CountDownTimer(Object source, System.Timers.ElapsedEventArgs e)
+        mymodel.Type = SelectedType;
+        SelectedPath = $"~/PlaneLayout/{SelectedType}.jpg";
+    } 
+     public void BindPic()
     {
-        if (counter > 0)
-        {
-            counter -= 1;          
-        }
-        else
-        {
-            thisTimer.Enabled = false;
-            thisTimer.Dispose();
-            counter = 100;
-        }
-        InvokeAsync(StateHasChanged);
-    }
+        mymodel.SeatDiagramPic = SelectedPath;
+        PlaneController.planesToAdd.Add(mymodel);
+    } 
+    public string SelectedManufacturer = "";
+    public string SelectedType = "";
+    public string SelectedPath = "";
+
+
+    
 }

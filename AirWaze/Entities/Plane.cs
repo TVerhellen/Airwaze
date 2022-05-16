@@ -30,5 +30,7 @@ namespace AirWaze.Entities
         public string[,]? SeatDiagram { get; set; }
 
         public bool IsAvailable { get; set; }
+
+        public string? SeatDiagramPic { get; set; }
     }
 }
