@@ -7,7 +7,7 @@ namespace AirWaze.Controllers
 {
     public class AdminController : Controller
     {
-        public static Schedule? scheduleToApprove = Airport.CurrentSchedule;
+        public static Schedule? scheduleToApprove;
         public static Schedule? scheduleApproved = Airport.CurrentSchedule;
         public static List<Flight> flights = new List<Flight>();
         
@@ -27,27 +27,60 @@ namespace AirWaze.Controllers
         [HttpGet]
         public IActionResult Schedule()
         {
+            return View();
+        }
 
-           ScheduleGenerateViewModel viewModel = new ScheduleGenerateViewModel
+        [HttpGet]
+        public IActionResult GenerateSchedule()
+        {
+            return View(new ScheduleGenerateViewModel());
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public IActionResult GenerateSchedule(ScheduleGenerateViewModel viewModel)
+        {
+            viewModel.IsValidated = false;
+            viewModel.Flights = new List<Flight>();
+
+            if(TryValidateModel(viewModel))
             {
-                Date = scheduleToApprove.Date,
-                Flights = scheduleToApprove.Flights,
-                IsValidated = scheduleToApprove.IsValidated
-            };
-
-            //
-
-            return View(viewModel);
+                scheduleToApprove = Airport.GenerateSchedule(viewModel.Date);
+                return RedirectToAction("Schedule");
+            }
+            else
+            {
+                return View(viewModel);
+            }
         }
 
         [HttpGet]
         public IActionResult ApproveSchedule()
+        {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult ConfirmApproveSchedule()
         {
             scheduleToApprove.IsValidated = true;
             Airport.CurrentSchedule = scheduleToApprove;
             scheduleToApprove = null;
 
             return RedirectToAction("Schedule");
+        }
+
+        [HttpGet]
+        public IActionResult DeleteSchedule()
+        {
+            scheduleToApprove = null;
+
+            return RedirectToAction("Schedule");
+        }
+
+        [HttpGet]
+        public IActionResult ListSchedule()
+        {
+            return View();
         }
     }
 }

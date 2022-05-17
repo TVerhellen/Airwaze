@@ -1,24 +1,31 @@
 ﻿@using AirWaze.Models
 @using AirWaze.Entities
 @using AirWaze.Controllers
-@model ScheduleGenerateViewModel
 
-@{
-    int schedCounter = 1;
+
+
+@if(@AdminController.scheduleToApprove == null)
+{
+    <a class="btn btn-primary" asp-controller="Admin" asp-action="GenerateSchedule" >Generate New Schedule</a>
 }
+
 
 <h1>Flight Schedule to Approve:</h1>
 @if(@AdminController.scheduleToApprove == null)
 {
-    <h2>No schedules are waiting to be approved.</h2>
+    <p>All schedules have been approved.</p>
 }
 else
 {
-<h2>@Model.Date.ToString("D") - @Model.Date.ToString("00"):</h2>
+<p>@AdminController.scheduleToApprove.Date.ToString("D") - @AdminController.scheduleToApprove.Date.ToString("00"):</p>
 <a class="btn btn-primary" asp-controller="Admin" asp-action="ApproveSchedule" >Approve Schedule</a>
 }
 
 
+<a class="btn btn-primary" asp-controller="Admin" asp-action="ListSchedule" >See All Approved Schedules</a>
+@*
+
+move to ListSchedules
 <h1>Approved Flight Schedules:</h1>
 @if(Airport.ApprovedSchedules.Count == 0)
 {
@@ -29,8 +36,9 @@ else
     
 @foreach(var schedule in Airport.ApprovedSchedules)
 {
-    <p>@schedCounter: @schedule.Flights[i].Departure - @Airport.CurrentSchedule.Flights[i].FlightNr - @Airport.CurrentSchedule.Flights[i].Destination - Gate @Airport.CurrentSchedule.Flights[i].CurrentGate</p>
-    switch (@Airport.CurrentSchedule.Flights[i].Status)
+    
+    <p>@schedCounter: @schedule.Flights[schedCounter].Departure - @Airport.CurrentSchedule.Flights[schedCounter].FlightNr - @Airport.CurrentSchedule.Flights[schedCounter].Destination - Gate @Airport.CurrentSchedule.Flights[schedCounter].CurrentGate</p>
+    switch (@Airport.CurrentSchedule.Flights[schedCounter].Status)
     {
         case 1:
             <p>Status: DELAYED</p>
@@ -51,29 +59,9 @@ else
             break;
     }
 }
-}
-
-<br />
-<br />
-
-<h1>Flight Schedule to Approve:</h1>
-@if(@AdminController.scheduleToApprove == null)
-{
-    <h2>No schedules are waiting to be approved.</h2>
-}
-else
-{
-<h2>@Model.Date.ToString("D") - @Model.Date.ToString("00"):</h2>
-
-<h2>Flights:</h2>
-@for(int i = 0; i < 25; i++)
-{
-    <p>@i: @Model.Flights[i].Departure - @Model.Flights[i].FlightNr - @Model.Flights[i].Destination - Gate @Model.Flights[i].CurrentGate</p>
-}
 
 
 
-}
 
 
 <table>
@@ -99,3 +87,5 @@ else
         }
     </tbody>
 </table>
+
+*@
