@@ -8,15 +8,35 @@ namespace AirWaze.Controllers
     public class TicketController : Controller
     {
         private readonly IAirWazeDatabase database;
+        private static List<Ticket> loadedTickets = new List<Ticket>();
 
         public TicketController(IAirWazeDatabase db)
         {
             database = db;
-            loadedTickets = database.GetTicketsByUser(myUser);
+            if(loadedTickets.Count == 0)
+            {
+                LoadTicketList(myUser);
+            }
+            
         }
 
 
-        static User myUser = new User();
+        static User myUser = new User()
+        {
+            UserID = Guid.Parse("549C7D76-AEBB-4956-BC79-BFF28F67D9CA"),
+            Name = "tverhel",
+            Password = "password",
+            LastName = "Verhellen",
+            FirstName = "Tijs",
+            Email = "tijsverhellen2@gmail.com",
+            StreetName = "Savaanstraat",
+            HouseNumber = "33",
+            Zipcode = "9000",
+            City = "Ghent",
+            Country = "Belgium",
+            PhoneNumber = "+32477777777",
+            IsVerified = true
+        };
         static Airline testAirline = new Airline
         {
             Number = "55",
@@ -46,7 +66,6 @@ namespace AirWaze.Controllers
             Type = "747",
             SeatDiagram = new string[5, 40],
         };
-        public static readonly List<Ticket> loadedTickets = new List<Ticket>();
         public static readonly List<Flight> allFlights = new List<Flight>
         {
             new Flight()
@@ -106,6 +125,7 @@ namespace AirWaze.Controllers
             {
                 newTicket.TicketNr = $"NOTASSIGNED{ticketsToHandle.Count}";
                 ticketsToHandle.Add(newTicket);
+                LoadTicketList(myUser);
                 return Redirect($"FlightPicker/{newTicket.TicketNr}");
             }
             return View(newTicket);
@@ -122,7 +142,7 @@ namespace AirWaze.Controllers
                 TicketNr = ticketNr
             };
 
-            foreach(Flight flight in allFlights)
+            foreach(Flight flight in allFlights) // TO BE REPLACED BY EITHER REFINED QUERY FUNCTION GetFlightsByDate(DateTime)
             {
                 if(flight.Destination == toHandle.Destination)
                 {
@@ -174,8 +194,9 @@ namespace AirWaze.Controllers
         public IActionResult Edit(string ID, TicketEditViewModel editedTicket)
         {
             Ticket loadedTicket = loadedTickets.Single(x => x.TicketNr == ID);
-            loadedTicket.LastName = loadedTicket.LastName;
+            loadedTicket.LastName = editedTicket.LastName;
             loadedTicket.FirstName = editedTicket.FirstName;
+            database.UpdateTicket(loadedTicket);
             return RedirectToAction("List");
         }
 
@@ -189,18 +210,20 @@ namespace AirWaze.Controllers
                 LastName = loadedTicket.LastName,
                 FirstName = loadedTicket.FirstName
             };
+            LoadTicketList(myUser);
             return View(deleteTicket);
         }
 
         public IActionResult ConfirmedDelete(string ID)
         {
-
+            database.RemoveTicket(loadedTickets.Single(x => x.TicketNr == ID));
             return RedirectToAction("List");
         }
 
         public IActionResult Payment(string ID, string ticket)
         {
             TicketCreateViewModel toHandle = ticketsToHandle.Single(x => x.TicketNr == ticket);
+            //Flight chosenFlight = database.GetFlightByNr(ID);
             Flight chosenFlight = allFlights.Single(x => x.FlightNr == ID);
             string ticketnr = GenerateTicketNumber(chosenFlight);
             string seat = GenerateSeatNumber(chosenFlight);
@@ -232,12 +255,15 @@ namespace AirWaze.Controllers
 
         public IActionResult ConfirmedPayment(string ID)
         {
-            loadedTickets.Single(x => x.TicketNr == ID).Status = 1;
+            Ticket newTicket = loadedTickets.Single(x => x.TicketNr == ID);
+            newTicket.Status = 1;
+            database.AddTicket(newTicket);
             return RedirectToAction("Index");
         }
 
         public IActionResult FailedPayment(TicketCreateViewModel newTicket)
         {
+
             return RedirectToAction("Create", newTicket);
         }
 
@@ -249,6 +275,11 @@ namespace AirWaze.Controllers
         public string GenerateSeatNumber(Flight flight)
         {
             return "15B";
+        }
+
+        public void LoadTicketList(User user)
+        {
+            loadedTickets = database.GetTicketsByUser(user);
         }
     }
 }
