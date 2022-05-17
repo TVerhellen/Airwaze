@@ -21,37 +21,43 @@
     </div>
     
     
-    <div class="form-group">
+   <div class="form-group" >
         <label asp-for="Type"></label>
-        <input class ="form-control" asp-for="Type" />
+        <input class ="form-control" asp-for="Type" readonly="readonly"/>
         <span class="text-danger" asp-validation-for="Type"></span>
     </div>
     
     <div class="form-group">
-        <label asp-for="Manufacturer"></label>
-        <input class ="form-control" asp-for="Manufacturer" />
+        <label asp-for="Manufacturer" ></label>
+        <input class ="form-control" asp-for="Manufacturer" readonly="readonly"/>
         <span class="text-danger" asp-validation-for="Manufacturer"></span>
+    </div>
+    <div class="form-group"  hidden="hidden">
+        <label asp-for="SeatDiagramPic" ></label>
+        <input class ="form-control" asp-for="SeatDiagramPic" />
+        <span class="text-danger" asp-validation-for="SeatDiagramPic"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PassengerCapacity"></label>
+        <input class ="form-control" asp-for="PassengerCapacity" readonly="readonly"/>
+        <span class="text-danger" asp-validation-for="PassengerCapacity"></span>
+    </div> 
+    <div class="form-group">
+        <label asp-for="FirstClassCapacity"></label>
+        <input class ="form-control" asp-for="FirstClassCapacity" readonly="readonly" />
+        <span class="text-danger" asp-validation-for="FirstClassCapacity"></span>
     </div>
     <div class="form-group">
         <label asp-for="FlightRegion"></label>
         <input class ="form-control" asp-for="FlightRegion" />
         <span class="text-danger" asp-validation-for="FlightRegion"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="PassengerCapacity"></label>
-        <input class ="form-control" asp-for="PassengerCapacity" />
-        <span class="text-danger" asp-validation-for="PassengerCapacity"></span>
-    </div>    
-    <div class="form-group">
+        <div class="form-group">
         <label asp-for="FuelCapacity"></label>
         <input class ="form-control" asp-for="FuelCapacity" />
         <span class="text-danger" asp-validation-for="FuelCapacity"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="FirstClassCapacity"></label>
-        <input class ="form-control" asp-for="FirstClassCapacity" />
-        <span class="text-danger" asp-validation-for="FirstClassCapacity"></span>
-    </div>
+    
     <div class="form-group">
         <label asp-for="LoadCapacity"></label>
         <input class ="form-control" asp-for="LoadCapacity" />
@@ -62,7 +68,26 @@
         <input class ="form-control" asp-for="FuelUsagePerKM" />
         <span class="text-danger" asp-validation-for="FuelUsagePerKM"></span>
     </div>
-   
+     <div class="form-group">
+        <label asp-for="ConstructionYear" ></label>
+        <input class ="form-control" asp-for="ConstructionYear" readonly="readonly" />
+        <span class="text-danger" asp-validation-for="ConstructionYear"></span>
+    </div>
+    <div class="form-group" >
+        <label asp-for="AirMiles"></label>
+        <input class ="form-control" asp-for="AirMiles" readonly="readonly"/>
+        <span class="text-danger" asp-validation-for="AirMiles"></span>
+    </div>
+    <div class="form-group" hidden="hidden" >
+        <label asp-for="FlightHours"></label>
+        <input class ="form-control" asp-for="FlightHours" />
+        <span class="text-danger" asp-validation-for="AirMiles"></span>
+    </div>
+     <div class="form-group" hidden="hidden">
+        <label asp-for="NextMainentance"></label>
+        <input class ="form-control" asp-for="NextMainentance" />
+        <span class="text-danger" asp-validation-for="NextMainentance"></span>
+    </div>
        <div class="form-group">
         <input asp-for="IsAvailable"/>
         <label asp-for="IsAvailable">Currently Available and Ready to Rock?</label>
