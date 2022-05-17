@@ -60,5 +60,17 @@ namespace AirWaze.Database.Design
         int UpdateTicket(Ticket ticket);
 
         int RemoveTicket(Ticket ticket);
+
+        List<Gate>GetGates();
+
+        Gate GetGateByID(Guid id);
+
+        void AddGate(Gate flight);
+
+        List<Runway> GetRunways();
+
+        Runway GetRuwaysByID(string nr);
+
+        void AddRunway(Runway runway);
     }
 }

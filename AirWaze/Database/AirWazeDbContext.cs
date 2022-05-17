@@ -15,5 +15,10 @@ namespace AirWaze.Database
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Airline> Airlines { get; set; }
         public DbSet<Plane> Planes { get; set; }
+
+        //public DbSet<Gate> Gates { get; set; }
+
+        //public DbSet<Runway> Runways { get; set; }
+
     }
 }
