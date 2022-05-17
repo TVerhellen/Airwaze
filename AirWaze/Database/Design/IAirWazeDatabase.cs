@@ -49,7 +49,7 @@ namespace AirWaze.Database.Design
 
         List<Ticket> GetTickets();
 
-        List<Ticket> GetTicketByFlight(Flight flight);
+        //List<Ticket> GetTicketByFlight(Flight flight);
 
         List<Ticket> GetTicketsByUser(User user);
 

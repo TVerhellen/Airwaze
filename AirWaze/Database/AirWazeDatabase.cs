@@ -19,13 +19,6 @@ namespace AirWaze.Database
             _dbContext.SaveChanges();
         }
 
-        private readonly AirWazeDbContext _dbContext;
-
-        public AirWazeDatabase(AirWazeDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
-
         public void AddFlight(Flight flight)
         {
             _dbContext.Flights.Add(flight);
@@ -95,9 +88,14 @@ namespace AirWaze.Database
         }
         public List<Ticket> GetTicketsByFlight(string flightnr)
         {
+            var query = from ticket in _dbContext.Tickets
+                        where ticket.CurrentFlight.FlightNr == flightnr
+                        select ticket;
+            return query
+                .Include(x => x.CurrentFlight)
+                .Include(x => x.CurrentUser)
+                .ToList();
 
-            List<Ticket> ticketList = new List<Ticket>();
-            return ticketList;
         }
 
         public void RemoveAirline(Airline airline)
@@ -111,13 +109,13 @@ namespace AirWaze.Database
             return _dbContext.Users.ToList();
         }
 
-        public List<Ticket> GetTicketByFlight(Flight flight)
-        {
-            var query = from ticket in _dbContext.Tickets
-                        where ticket.CurrentFlight == flight
-                        select ticket;
-            return query.ToList();
-        }
+        //public List<Ticket> GetTicketByFlight(Flight flight)
+        //{
+        //    var query = from ticket in _dbContext.Tickets
+        //                where ticket.CurrentFlight == flight
+        //                select ticket;
+        //    return query.ToList();
+        //}
 
         public Ticket GetTicketByNr(string nr)
         {
