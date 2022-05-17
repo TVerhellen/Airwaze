@@ -116,7 +116,7 @@ namespace AirWaze.Entities
         }
 
         //Alle Shedule Crud -- Admin resticted
-        public static void CreateShedule()
+        public static Schedule GenerateSchedule()
         {                    
             Schedule myshedule = new Schedule();
             myshedule.Date = _currenttime;
@@ -169,7 +169,6 @@ namespace AirWaze.Entities
         }
         public static void ViewScheduleAirliner()
         {
-        public static void ViewScheduleAirliner()
         }      
         public static Schedule ConfirmSchedule(Schedule thisschedule)
         {
