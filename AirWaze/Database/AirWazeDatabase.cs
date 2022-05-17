@@ -219,32 +219,34 @@ namespace AirWaze.Database
 
         public List<Gate> GetGates()
         {
-            throw new NotImplementedException();
+            return _dbContext.Gates.ToList();
         }
 
-        public Gate GetGateByID(Guid id)
+        public Gate GetGateByID(int id)
         {
-            throw new NotImplementedException();
+            return _dbContext.Gates.SingleOrDefault(gate => gate.GateID == id);
         }
 
-        public void AddGate(Gate flight)
+        public void AddGate(Gate gate)
         {
-            throw new NotImplementedException();
+            _dbContext.Gates.Add(gate);
+            _dbContext.SaveChanges();
         }
 
         public List<Runway> GetRunways()
         {
-            throw new NotImplementedException();
+            return _dbContext.Runways.ToList();
         }
 
-        public Runway GetRuwaysByID(string nr)
+        public Runway GetRuwaysByID(int id)
         {
-            throw new NotImplementedException();
+            return _dbContext.Runways.SingleOrDefault(runway => runway.RunwayID == id);
         }
 
         public void AddRunway(Runway runway)
         {
-            throw new NotImplementedException();
+            _dbContext.Runways.Add(runway);
+            _dbContext.SaveChanges();
         }
     }
 }

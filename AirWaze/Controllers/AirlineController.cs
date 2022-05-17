@@ -8,7 +8,7 @@ namespace AirWaze.Controllers
     public class AirlineController : Controller
     {
 
-        private IAirWazeDatabase _myDatabase;
+        public static IAirWazeDatabase _myDatabase;
 
         public static Airline LoggedInAirline;
 
