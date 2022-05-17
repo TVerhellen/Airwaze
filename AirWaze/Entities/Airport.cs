@@ -38,26 +38,26 @@
             //ExtraRunwaysAanmaken
         }
 
-        //Alle Shedule Crud -- Admin resticted
-        public static void CreateShedule()
+        //Alle Schedule Crud -- Admin resticted
+        public static Schedule CreateSchedule()
+        {
+            return new Schedule();
+        }
+        public static void UpdateSchedule()
         {
             //Shedules maken
         }
-        public static void UpdateShedule()
-        {
-            //Shedules maken
-        }
-        public static void DeleteShedule()
+        public static void DeleteSchedule()
         {
             //Shedules maken
         }
 
         //Methods voor Passenger/Airliner hier en dan aanroepen in controller?
-        public static void ViewShedulePassenger()
+        public static void ViewSchedulePassenger()
         {
 
         }
-        public static void ViewSheduleAirliner()
+        public static void ViewScheduleAirliner()
         {
 
         }
