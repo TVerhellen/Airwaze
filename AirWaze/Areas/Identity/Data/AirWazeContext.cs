@@ -12,6 +12,8 @@ public class AirWazeContext : IdentityDbContext<AirWazeUser>
     {
     }
 
+    public DbSet<AirWazeUser> AirWazeUsers { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
