@@ -58,6 +58,12 @@ namespace AirWaze.Database
         public int AddTicket(Ticket ticket)
         {
             _dbContext.Tickets.Add(ticket);
+            _dbContext.Entry(ticket.CurrentUser).State = EntityState.Detached;
+            _dbContext.Entry(ticket.CurrentFlight).State = EntityState.Detached;
+            _dbContext.Entry(ticket.CurrentFlight.CurrentGate).State = EntityState.Detached;
+            _dbContext.Entry(ticket.CurrentFlight.CurrentRunway).State = EntityState.Detached;
+            _dbContext.Entry(ticket.CurrentFlight.CurrentPlane).State = EntityState.Detached;
+            _dbContext.Entry(ticket.CurrentFlight.CurrentPlane.CurrentAirline).State = EntityState.Detached;
             return _dbContext.SaveChanges();
         }
 
@@ -67,6 +73,19 @@ namespace AirWaze.Database
                 .Include(x => x.CurrentPlane)
                 .Include(x => x.CurrentPlane.CurrentAirline)
                 .SingleOrDefault(flight => flight.FlightNr.Equals(nr));
+        }
+
+        public List<Flight> GetFlightsByDate(DateTime date, int range)
+        {
+            DateTime earliest = date;
+            earliest.AddDays(-range);
+            var query = from flight in _dbContext.Flights
+                        where flight.Departure >= earliest
+                        select flight;
+            return query
+                .Include(x => x.CurrentPlane)
+                .Include(x => x.CurrentPlane.CurrentAirline)
+                .ToList();
         }
 
         public List<Flight> GetFlights()
@@ -122,12 +141,12 @@ namespace AirWaze.Database
             var query = from ticket in _dbContext.Tickets
                         where ticket.TicketNr == nr
                         select ticket;
-            return query.FirstOrDefault();
+            return query.Include(x => x.CurrentUser).Include(x => x.CurrentFlight).FirstOrDefault();
         }
 
         public List<Ticket> GetTickets()
         {
-            return _dbContext.Tickets.ToList();
+            return _dbContext.Tickets.Include(x => x.CurrentUser).Include(x => x.CurrentFlight).ToList();
         }
 
         public List<Ticket> GetTicketsByUser(User user)
@@ -135,7 +154,10 @@ namespace AirWaze.Database
             var query = from ticket in _dbContext.Tickets
                         where ticket.CurrentUser == user
                         select ticket;
-            return query.ToList();
+            return query
+                .Include(x => x.CurrentUser)
+                .Include(x => x.CurrentFlight)
+                .ToList();
         }
 
         public void RemoveFlight(Flight flight)
