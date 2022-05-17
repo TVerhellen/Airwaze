@@ -46,7 +46,7 @@ namespace AirWaze.Controllers
             Type = "747",
             SeatDiagram = new string[5, 40],
         };
-        public static readonly List<Ticket> loadedTickets = new List<Ticket>();
+        public static List<Ticket> loadedTickets = new List<Ticket>();
         public static readonly List<Flight> allFlights = new List<Flight>
         {
             new Flight()
