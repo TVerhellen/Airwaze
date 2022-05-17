@@ -37,51 +37,8 @@ namespace AirWaze.Controllers
             PhoneNumber = "+32477777777",
             //IsVerified = true
         };
-        static Airline testAirline = new Airline
-        {
-            Number = "55",
-            PhoneNumber = "777888999",
-            CurrentPlanes = new List<Plane>(),
-            AccountNumber = "111222333",
-            Adress = "Koekoekstraat",
-            City = "Melle",
-            AirlineID = Guid.NewGuid(),
-            CompanyNumber = "5555555",
-            Email = "ikke@virgin.com",
-            Name = "Harald Airways",
-            NameTag = "HAR",
-        };
-        static Plane testplane = new Plane
-        {
-            PlaneNr = "6666",
-            CurrentAirline = testAirline,
-            PassengerCapacity = 200,
-            FuelUsagePerKM = 500,
-            FirstClassCapacity = 100,
-            FlightRegion = "EUR",
-            FuelCapacity = 5000,
-            IsAvailable = true,
-            LoadCapacity = 10000,
-            Manufacturer = "Boeing",
-            Type = "747",
-            SeatDiagram = new string[5, 40],
-        };
-        public static readonly List<Flight> allFlights = new List<Flight>
-        {
-            new Flight()
-            {
-                FlightNr = "2",
-                CurrentPlane = testplane,
-                FlightTime = TimeSpan.FromHours(5),
-                Departure = DateTime.Now.AddDays(5),
-                //ListTickets = new List<Ticket>(),
-                Distance = 1000,
-                Destination = "Berlin",
-                CurrentGate = new Gate(),
-                CurrentRunway = new Runway(),
-                Status = 0
-            }
-        };
+
+        public static List<Flight> allFlights = new List<Flight>();
 
         public static List<TicketCreateViewModel> ticketsToHandle = new List<TicketCreateViewModel>();
 
@@ -95,7 +52,7 @@ namespace AirWaze.Controllers
             List<TicketListViewModel> list = new List<TicketListViewModel>();
             foreach (var ticket in loadedTickets)
             {
-                if (ticket.CurrentUser == myUser)
+                if (ticket.CurrentUser.UserID == myUser.UserID)
                 {
                     list.Add(new TicketListViewModel()
                     {
@@ -138,21 +95,10 @@ namespace AirWaze.Controllers
             TicketCreateViewModel toHandle = ticketsToHandle.Single(x => x.TicketNr == ticketNr);
             TicketFlightPickerViewModel flightPicker = new TicketFlightPickerViewModel()
             {
-                flightList = new List<Flight>(),
+                flightList = database.GetFlightsByDate(toHandle.Departure, 3),
                 TicketNr = ticketNr
             };
 
-            foreach(Flight flight in allFlights) // TO BE REPLACED BY EITHER REFINED QUERY FUNCTION GetFlightsByDate(DateTime)
-            {
-                if(flight.Destination == toHandle.Destination)
-                {
-                    if((toHandle.Departure - flight.Departure).Duration() <= TimeSpan.FromDays(3))
-                    {
-                        // I should use FlightDetailViewModel here but I dont want to
-                        flightPicker.flightList.Add(flight);
-                    }
-                }
-            }
             if(flightPicker.flightList.Count > 0)
             {
                 return View(flightPicker);
@@ -215,14 +161,14 @@ namespace AirWaze.Controllers
         public IActionResult ConfirmedDelete(string ID)
         {
             database.RemoveTicket(loadedTickets.Single(x => x.TicketNr == ID));
+            LoadTicketList(myUser);
             return RedirectToAction("List");
         }
 
         public IActionResult Payment(string ID, string ticket)
         {
             TicketCreateViewModel toHandle = ticketsToHandle.Single(x => x.TicketNr == ticket);
-            //Flight chosenFlight = database.GetFlightByNr(ID);
-            Flight chosenFlight = allFlights.Single(x => x.FlightNr == ID);
+            Flight chosenFlight = database.GetFlightByNr(ID);
             string ticketnr = GenerateTicketNumber(chosenFlight);
             string seat = GenerateSeatNumber(chosenFlight);
             toHandle.Price = toHandle.FirstClass ? (toHandle.ExtraLuggage ? chosenFlight.Distance * (decimal)1.2 + 75 : chosenFlight.Distance * (decimal)1.2) : (toHandle.ExtraLuggage ? chosenFlight.Distance + 75 : chosenFlight.Distance);
@@ -255,7 +201,15 @@ namespace AirWaze.Controllers
         {
             Ticket newTicket = loadedTickets.Single(x => x.TicketNr == ID);
             newTicket.Status = 1;
-            database.AddTicket(newTicket);
+            if(database.AddTicket(newTicket) > 0)
+            {
+                LoadTicketList(myUser);
+            }
+            else
+            {
+                LoadTicketList(myUser);
+            }
+            
             return RedirectToAction("Index");
         }
 
@@ -267,7 +221,7 @@ namespace AirWaze.Controllers
 
         public string GenerateTicketNumber(Flight flight)
         {
-            return "ABCD";
+            return Guid.NewGuid().ToString();
         }
 
         public string GenerateSeatNumber(Flight flight)
