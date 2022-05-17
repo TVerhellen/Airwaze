@@ -1,4 +1,8 @@
-﻿namespace AirWaze.Entities
+﻿using AirWaze.Database;
+using AirWaze.Controllers;
+using AirWaze.Database.Design;
+
+namespace AirWaze.Entities
 {
     public static class Airport
     {
@@ -6,6 +10,7 @@
         private static string _name = "Batman Airport";
         private static string _adress = "Bosdreef 6 Istanbul Turkye";
         private static DateTime _currenttime = DateTime.Now;
+        public static IAirWazeDatabase myDatabase;
 
         public static string Name
         {
@@ -26,14 +31,18 @@
 
         public static void StartUpAirport()
         {
-            
+            myDatabase = AirlineController._myDatabase;
+            Runways = myDatabase.GetRunways();
+            Gates = myDatabase.GetGates();
         }
-        public static void AddGates()
+        public static void AddGate()
         {
-            //Extra Gates aanmaken 
+            Gate thisgate = new Gate();
+            thisgate.GateID = Guid.NewGuid();
+            thisgate.
         }
 
-        public static void AddRunways()
+        public static void AddRunway()
         {
             //ExtraRunwaysAanmaken
         }
@@ -60,6 +69,16 @@
         public static void ViewSheduleAirliner()
         {
 
+        }
+
+        public static Schedule GenerateSchedule()
+        {
+            Schedule myshedule = new Schedule();
+            return myshedule;
+        }
+        public static Schedule ConfirmSchedule(Schedule thisschedule)
+        {
+            return thisschedule;
         }
     }
 
