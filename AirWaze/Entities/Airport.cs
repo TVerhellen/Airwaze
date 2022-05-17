@@ -1,7 +1,6 @@
 ﻿using AirWaze.Database;
 using AirWaze.Controllers;
 using AirWaze.Database.Design;
-using Microsoft.EntityFrameworkCore;
 
 namespace AirWaze.Entities
 {
@@ -11,9 +10,6 @@ namespace AirWaze.Entities
         private static string _name = "Batman Airport";
         private static string _adress = "Bosdreef 6 Istanbul Turkye";
         private static DateTime _currenttime = DateTime.Now;
-        private static Random generator = new Random();
-        public static IAirWazeDatabase myDatabase = HomeController._myDatabase;
-        public static bool IsOnline = false;
 
         public static Timer aTimer;
 
@@ -43,68 +39,18 @@ namespace AirWaze.Entities
         
         public static void StartAirport()
         {
+            myDatabase = AirlineController._myDatabase;
             Runways = myDatabase.GetRunways();
-            foreach (Runway x in Runways)
-            {
-                x.IsAvailable = true;
-            }
             Gates = myDatabase.GetGates();
-            foreach (Gate x in Gates)
-            {
-                x.IsAvailable = true;
-            }
-            Flights = myDatabase.GetFlights();
-            Planes = myDatabase.GetPlanes();
-            Flights = Flights.FindAll(x => x.Status != 3 || x.Status != 5);
-            Flights = (List<Flight>)Flights.OrderBy(flight => flight.Departure);
-            IsOnline = true;
-            GenerateSchedule();
-            StartTimer(0);
-
-        }
-
-        public static void StartTimer(int dueTime)
-        {
-            aTimer = new Timer(new TimerCallback(TimerProc));
-            aTimer.Change(dueTime, 500);
-        }
-        private static void TimerProc(object state)
-        {          
-            Timer t = (Timer)state;
-            t.Dispose();
-            UpdateAirport();          
-        }
-        public static void UpdateAirport()
-        {
-            //foreach (Flight x in Flights)
-            //{
-            //    if (x.Departure.To <= _currenttime.Minute)
-            //    {
-            //        x.Status = 3;
-            //        myDatabase.UpdateFlight(x);
-            //        CurrentSchedule.Flights.Remove(x);
-            //    }
-            //    else if (x.Departure.Minute)
-            //}
-            Flights = myDatabase.GetFlights();
-            Planes = myDatabase.GetPlanes();
-            Flights = Flights.FindAll(x => x.Status != 3 || x.Status != 5);
-            Flights = (List<Flight>)Flights.OrderBy(flight => flight.Departure);
-            if (CurrentSchedule.Flights.Count != 25)
-            {
-                GenerateSchedule();
-            }
         }
         public static void AddGate()
         {
             Gate thisgate = new Gate();
-            thisgate.GateID = Gates.Count +1;
-            thisgate.Number = Gates.Count +1;
-            myDatabase.AddGate(thisgate);
-            Gates.Add(thisgate); 
+            thisgate.GateID = Guid.NewGuid();
+            thisgate.
         }
 
-        public static void AddRunway()
+        public static void AddRunways()
         {
             Runway thisRunway = new Runway();
             thisRunway.RunwayID = Runways.Count +1;
@@ -168,7 +114,13 @@ namespace AirWaze.Entities
         public static void ViewSheduleAirliner()
         {
 
-        }      
+        }
+
+        public static Schedule GenerateSchedule()
+        {
+            Schedule myshedule = new Schedule();
+            return myshedule;
+        }
         public static Schedule ConfirmSchedule(Schedule thisschedule)
         {
             return thisschedule;
