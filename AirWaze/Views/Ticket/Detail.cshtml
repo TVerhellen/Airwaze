@@ -3,3 +3,34 @@
 *@
 @{
 }
+@model TicketDetailViewModel
+
+<h1>Ticket @Model.TicketNr</h1>
+<p>Name: @Model.LastName @Model.FirstName</p>
+<p>Destination: @Model.CurrentFlight.Destination</p>
+<p>Departure: @Model.CurrentFlight.Departure</p>
+<p>Airline: @Model.CurrentFlight.CurrentPlane.CurrentAirline.Name</p>
+<p>Seat: @Model.Seat</p>
+@if (Model.FirstClass)
+    {
+        <p>Class: First Class</p>
+    }
+    else
+    {
+        <p>Class: Economy</p>
+    }
+@if (Model.ExtraLuggage)
+    {
+        <p>Extra Luggage: Yes</p>
+    }
+    else
+    {
+        <p>Extra Luggage: No</p>
+    }
+<p>Price: @Model.Price</p>
+
+<a class="btn btn-primary" asp-controller="Ticket" asp-action="Index">Return</a>
+<a class="btn btn-primary" asp-controller="Ticket" asp-action="Edit" asp-route-ID="@Model.TicketNr">Change Passenger Information</a>
+<a class="btn btn-danger" asp-controller="Ticket" asp-action="Delete" asp-route-ID="@Model.TicketNr">Delete</a>
+
+
