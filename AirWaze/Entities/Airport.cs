@@ -1,8 +1,7 @@
 ﻿using AirWaze.Database;
 using AirWaze.Controllers;
 using AirWaze.Database.Design;
-
-
+using Microsoft.EntityFrameworkCore;
 
 namespace AirWaze.Entities
 {
@@ -13,7 +12,7 @@ namespace AirWaze.Entities
         private static string _adress = "Bosdreef 6 Istanbul Turkye";
         private static DateTime _currenttime = DateTime.Now;
         private static Random generator = new Random();
-        public static IAirWazeDatabase myDatabase;
+        public static IAirWazeDatabase myDatabase = HomeController._myDatabase;
         public static bool IsOnline = false;
 
         public static Timer aTimer;
@@ -68,7 +67,7 @@ namespace AirWaze.Entities
         public static void StartTimer(int dueTime)
         {
             aTimer = new Timer(new TimerCallback(TimerProc));
-            aTimer.Change(dueTime, 12000);
+            aTimer.Change(dueTime, 500);
         }
         private static void TimerProc(object state)
         {          
@@ -92,7 +91,7 @@ namespace AirWaze.Entities
             Planes = myDatabase.GetPlanes();
             Flights = Flights.FindAll(x => x.Status != 3 || x.Status != 5);
             Flights = (List<Flight>)Flights.OrderBy(flight => flight.Departure);
-            if (Flights.Count != CurrentSchedule.Flights.Count)
+            if (CurrentSchedule.Flights.Count != 25)
             {
                 GenerateSchedule();
             }

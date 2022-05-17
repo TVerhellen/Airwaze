@@ -1,4 +1,6 @@
-﻿using AirWaze.Models;
+﻿using AirWaze.Database.Design;
+using AirWaze.Entities;
+using AirWaze.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -8,12 +10,22 @@ namespace AirWaze.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public static IAirWazeDatabase _myDatabase;
+
+        public HomeController(ILogger<HomeController> logger, IAirWazeDatabase mydatabase)
         {
             _logger = logger;
-        }
-       
-        public IActionResult Index()
+            if (_myDatabase == null)
+            {
+                _myDatabase = mydatabase;
+            }
+                //if (!Airport.IsOnline)
+                //{
+                //Airport.StartAirport();
+                //}
+        }       
+
+    public IActionResult Index()
         {
             return View();
         }

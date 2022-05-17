@@ -29,11 +29,10 @@ namespace AirWaze.Controllers
         {
             if (_myDatabase == null)
             {
-                _myDatabase = mydatabase;
-                planeEntities = _myDatabase.GetPlanes();
-                airlineEntities = _myDatabase.GetAirlines();
-
-            }                                             
+                _myDatabase = mydatabase;               
+            }
+            planeEntities = _myDatabase.GetPlanes();
+            airlineEntities = _myDatabase.GetAirlines();
         }
         
         // AIRLINE ROLE
@@ -50,7 +49,6 @@ namespace AirWaze.Controllers
                 };
                 LoggedInAirline = airlineEntities.FirstOrDefault(x => x.Name == LoggedInAirline.Name);
                
-
             }
 
             if (LoggedInAirline.CurrentPlanes == null)
