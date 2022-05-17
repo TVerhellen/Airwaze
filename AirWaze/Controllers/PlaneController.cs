@@ -1,4 +1,5 @@
-﻿using AirWaze.Entities;
+﻿using AirWaze.Database.Design;
+using AirWaze.Entities;
 using AirWaze.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
@@ -6,65 +7,59 @@ using System.Globalization;
 namespace AirWaze.Controllers
 {
     public class PlaneController : Controller
-    {       
-        
+    {
+
+        private IAirWazeDatabase _myDatabase;
+
+        public static List<PlaneCreateViewModel> planesToAdd = new List<PlaneCreateViewModel>();
+              
         public static List<Plane> planeEntities = new List<Plane>();
+
+        private static List<Airline> airlineEntities = new List<Airline>();
 
         private static List<string> regionList = new List<string>
         {
             "EUR","NA","SA","ASI","ME","AF","OC"
         };
 
+        public static Airline LoggedInAirline;
 
         //Gets All Entities of Planes - Will do For all uses!
-        public PlaneController()
+        public PlaneController(IAirWazeDatabase mydatabase)
         {
-            if (planeEntities.Count == 0)
+            if (_myDatabase == null)
             {
-                Airline testAirline = new Airline
-                {
-                    Number = "55",
-                    PhoneNumber = "777888999",
-                    CurrentPlanes = new List<Plane>(),
-                    AccountNumber = "111222333",
-                    Adress = "Koekoekstraat",
-                    City = "Melle",
-                    AirlineID = Guid.NewGuid(),
-                    CompanyNumber = "5555555",
-                    Email = "ikke@virgin.com",
-                    Name = "Harald Airways",
-                    NameTag = "HAR",
-                };
-                Plane testplane = new Plane
-                {
-                    PlaneNr = "6666",
-                    CurrentAirline = testAirline,
-                    PassengerCapacity = 200,
-                    FuelUsagePerKM = 500,
-                    FirstClassCapacity = 100,
-                    FlightRegion = "EUR",
-                    FuelCapacity = 5000,
-                    IsAvailable = true,
-                    LoadCapacity = 10000,
-                    Manufacturer = "Boeing",
-                    Type = "747",
-                    SeatDiagram = new string[5, 40],
-                };
-                planeEntities.Add(testplane);
-            }
-            
+                _myDatabase = mydatabase;
+                planeEntities = _myDatabase.GetPlanes();
+                airlineEntities = _myDatabase.GetAirlines();
+            }                                             
         }
-
+        
         // AIRLINE ROLE
         [HttpGet]
         public async Task<IActionResult> Index(Guid ID)
         {
-            //ID nodig via login...
-            
+            LoggedInAirline = airlineEntities.FirstOrDefault(x => x.AirlineID == ID);
+            if (LoggedInAirline == null)
+            {
+
+                LoggedInAirline = new Airline
+                {
+                    Name = "Harald Airways",
+                };
+                LoggedInAirline = airlineEntities.FirstOrDefault(x => x.Name == LoggedInAirline.Name);
+               
+
+            }
+
+            if (LoggedInAirline.CurrentPlanes == null)
+            {
+                LoggedInAirline.CurrentPlanes = new List<Plane>();
+            }
             List<Plane> planelistAirline = new List<Plane>();
             foreach (Plane x in planeEntities)
             {
-                if (x.CurrentAirline.AirlineID == planeEntities[0].CurrentAirline.AirlineID)
+                if (x.CurrentAirline.AirlineID == LoggedInAirline.AirlineID) 
                 {
                     planelistAirline.Add(x);
                 }
@@ -110,16 +105,14 @@ namespace AirWaze.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var planeCreateViewModel = new PlaneCreateViewModel();
-
+            var planeCreateViewModel = planesToAdd[0];          
             return View(planeCreateViewModel);
         }
         //Airline
         [HttpGet]
         public IActionResult AddPlane(Airline ID)
         {
-            var planeCreateViewModel = new PlaneCreateViewModel();
-
+            var planeCreateViewModel = planesToAdd[0];
             planeCreateViewModel.CurrentAirline = ID;
             return View(planeCreateViewModel);
         }
@@ -128,7 +121,23 @@ namespace AirWaze.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(PlaneCreateViewModel planeViewModel)
         {
-            planeViewModel.CurrentAirline = planeEntities[0].CurrentAirline;
+            if (LoggedInAirline == null)
+            {
+
+                LoggedInAirline = new Airline
+                {
+                    Name = "Harald Airways",
+                };
+                LoggedInAirline = airlineEntities.FirstOrDefault(x => x.Name == LoggedInAirline.Name);
+
+
+            }
+
+            if (LoggedInAirline.CurrentPlanes == null)
+            {
+                LoggedInAirline.CurrentPlanes = new List<Plane>();
+            }
+            planeViewModel.CurrentAirline = LoggedInAirline;
             var isValid = TryValidateModel(planeViewModel);
             Random generator = new Random();
             if (isValid)
@@ -149,10 +158,15 @@ namespace AirWaze.Controllers
                     IsAvailable = planeViewModel.IsAvailable,
                     LoadCapacity = planeViewModel.LoadCapacity,
                     Manufacturer = planeViewModel.Manufacturer,
-                    Type = planeViewModel.Type                   
+                    Type = planeViewModel.Type  ,
+                    SeatDiagramPic = planeViewModel.SeatDiagramPic
+                    
                 };
+                planesToAdd.Clear();
                 planeEntities.Add(newEntity);
-                //await _myDatabase.AddPlane(newEntity);  
+                _myDatabase.AddPlane(newEntity);
+                //planeEntities = _myDatabase.GetPlanes();
+                //airlineEntities = _myDatabase.GetAirlines();
                 return RedirectToAction("Index", newEntity.CurrentAirline.AirlineID);
             }
             return View(planeViewModel);
@@ -162,7 +176,7 @@ namespace AirWaze.Controllers
         [HttpGet]
         public IActionResult Detail(string ID)
         {
-            ID = ID.Replace('%', '/');
+            ID = ID.Replace("%2F", "/");
             var thisPlane = planeEntities.FirstOrDefault(x => x.PlaneNr == ID);
             var planeDetailViewModel = new PlaneDetailViewModel()
             {
@@ -176,7 +190,8 @@ namespace AirWaze.Controllers
                 IsAvailable = thisPlane.IsAvailable,
                 LoadCapacity = thisPlane.LoadCapacity,
                 Manufacturer = thisPlane.Manufacturer,
-                Type = thisPlane.Type
+                Type = thisPlane.Type,
+                SeatDiagramPic = thisPlane.SeatDiagramPic
 
             };
             var isValid = TryValidateModel(planeDetailViewModel);
@@ -191,7 +206,7 @@ namespace AirWaze.Controllers
         [HttpGet]
         public IActionResult Update(string ID)
         {
-            ID = ID.Replace('%', '/');
+            ID = ID.Replace("%2F", "/");
             PlaneEditViewModel planeUpdateViewModel = new PlaneEditViewModel();
             foreach (var plane in planeEntities)
             {
@@ -207,7 +222,7 @@ namespace AirWaze.Controllers
                     planeUpdateViewModel.IsAvailable = plane.IsAvailable;
                     planeUpdateViewModel.LoadCapacity = plane.LoadCapacity;
                     planeUpdateViewModel.Manufacturer = plane.Manufacturer;
-                    planeUpdateViewModel.Type = plane.Type;
+                    planeUpdateViewModel.Type = plane.Type;                  
                     break;
                 }
             }
@@ -225,11 +240,11 @@ namespace AirWaze.Controllers
             {
                 
                 Plane myplane = planeEntities.FirstOrDefault(x => x.PlaneNr ==planeUpdateViewModel.PlaneNr);
-                planeUpdateViewModel.CurrentAirline = myplane.CurrentAirline;
-                planeEntities.Remove(myplane);
+                planeUpdateViewModel.CurrentAirline = myplane.CurrentAirline;              
                 var newEntity = new Plane
                 {
 
+                    PlaneID = myplane.PlaneID,
                     PlaneNr = planeUpdateViewModel.PlaneNr,
                     FlightRegion = planeUpdateViewModel.FlightRegion,
                     CurrentAirline = planeUpdateViewModel.CurrentAirline,
@@ -242,9 +257,10 @@ namespace AirWaze.Controllers
                     Manufacturer = planeUpdateViewModel.Manufacturer,
                     Type = planeUpdateViewModel.Type
 
-                };
-                planeEntities.Add(newEntity);
-                //await _myDatabase.UpdatePlanes(newEntity);
+                };               
+                _myDatabase.UpdatePlane(newEntity);
+                planeEntities = _myDatabase.GetPlanes();
+                airlineEntities = _myDatabase.GetAirlines();
                 return RedirectToAction("Index");
             }
             return View(planeUpdateViewModel);
@@ -254,7 +270,7 @@ namespace AirWaze.Controllers
         [HttpGet]
         public IActionResult Delete(string ID)
         {
-            ID = ID.Replace('%', '/');
+            ID = ID.Replace("%2F", "/");
             var plane = planeEntities.FirstOrDefault(x => x.PlaneNr == ID);
             PlaneDeleteViewModel planeDeleteViewModel = new PlaneDeleteViewModel
             {
@@ -269,10 +285,19 @@ namespace AirWaze.Controllers
         //AIRLINE + ADMIN
         public async Task<IActionResult> DeleteConfirm(string ID)
         {
+            ID = ID.Replace("%2F", "/");
             var plane = planeEntities.FirstOrDefault(x => x.PlaneNr == ID);
             planeEntities.Remove(plane);
-            //await _myDatabase.RemovePlane(plane);
+            _myDatabase.RemovePlane(plane);
             return RedirectToAction("Index");
         }
+       
+        [Route("Kippen")]
+        public IActionResult Type()
+        {          
+            return View();
+        }
+
+      
     }
 }

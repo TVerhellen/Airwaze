@@ -4,7 +4,7 @@
 <h1>Flight Details</h1>
 
 <!-- Possible Notifications: Delayed?, Cancelled, Boarding, In Transit, Arrived At Destination, Fully Booked -->
-
+<!-- Calculate -->
 <h2>Flight Number</h2>
 <p>@Model.FlightNr</p>
 <h2>Destination</h2>
@@ -19,7 +19,9 @@
 
 <!-- For Airport staff-->
 <h2>Plane</h2>
-<p>@Model.CurrentPlane</p>
+<p>@Model.CurrentPlane.PlaneNr</p>
+<h2>Airline</h2>
+<p>@Model.CurrentPlane.CurrentAirline.Name</p>
 <h2>Runway</h2>
 <p>@Model.CurrentRunway</p>
 <!-- TODO: route button to page with tickets only for this flight -->

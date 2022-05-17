@@ -11,7 +11,11 @@
         <input class ="form-control" asp-for="AirlineID" />
         <span class="text-danger" asp-validation-for="AirlineID"></span>
     </div>
-
+    <div class="form-group" hidden="hidden">
+        <label asp-for="CurrentPlanes"></label>
+        <input class ="form-control" asp-for="CurrentPlanes" />
+        <span class="text-danger" asp-validation-for="CurrentPlanes"></span>
+    </div>
     
     <div class="form-group">
         <label asp-for="Name"></label>

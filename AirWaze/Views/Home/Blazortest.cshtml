@@ -1,0 +1,12 @@
+﻿@using AirWaze.Components
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<head>
+
+@* <script src="_content/Blazor.Extensions.Canvas/blazor.extensions.canvas.js"></script>*@
+ <script src="_framework/blazor.server.js"></script>
+</head>
+
+@(await Html.RenderComponentAsync<Planetypepicker>(RenderMode.Server))
