@@ -24,8 +24,8 @@ namespace AirWaze.Controllers
         static User myUser = new User()
         {
             UserID = Guid.Parse("549C7D76-AEBB-4956-BC79-BFF28F67D9CA"),
-            Name = "tverhel",
-            Password = "password",
+            //Name = "tverhel",
+            //Password = "password",
             LastName = "Verhellen",
             FirstName = "Tijs",
             Email = "tijsverhellen2@gmail.com",
@@ -35,7 +35,7 @@ namespace AirWaze.Controllers
             City = "Ghent",
             Country = "Belgium",
             PhoneNumber = "+32477777777",
-            IsVerified = true
+            //IsVerified = true
         };
         static Airline testAirline = new Airline
         {
