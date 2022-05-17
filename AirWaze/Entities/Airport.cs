@@ -22,7 +22,7 @@
         public static List<Gate> Gates { get; set; }
         public static List<Runway> Runways { get; set; }   
         public static Schedule CurrentSchedule { get; set; }
-        public static List<Schedule> ComingSchedules { get; set; }
+        public static List<Schedule> ApprovedSchedules { get; set; }
 
         public static void StartUpAirport()
         {
@@ -39,9 +39,18 @@
         }
 
         //Alle Schedule Crud -- Admin resticted
-        public static Schedule CreateSchedule()
+        public static Schedule GenerateSchedule()
         {
-            return new Schedule();
+            Schedule newSchedule = new Schedule
+            {
+                Date = DateTime.Now,
+                Flights = new List<Flight>(),
+                IsValidated = false                
+            };
+
+            foreach(var flight in )
+
+            return newSchedule;
         }
         public static void UpdateSchedule()
         {

@@ -1,5 +1,101 @@
-﻿
+﻿@using AirWaze.Models
+@using AirWaze.Entities
+@using AirWaze.Controllers
+@model ScheduleGenerateViewModel
 
-<h1>Current Flight Schedule</h1>
+@{
+    int schedCounter = 1;
+}
+
+<h1>Flight Schedule to Approve:</h1>
+@if(@AdminController.scheduleToApprove == null)
+{
+    <h2>No schedules are waiting to be approved.</h2>
+}
+else
+{
+<h2>@Model.Date.ToString("D") - @Model.Date.ToString("00"):</h2>
+<a class="btn btn-primary" asp-controller="Admin" asp-action="ApproveSchedule" >Approve Schedule</a>
+}
 
 
+<h1>Approved Flight Schedules:</h1>
+@if(Airport.ApprovedSchedules.Count == 0)
+{
+    <h2>There are no approved schedules yet.</h2>
+}
+else
+{
+    
+@foreach(var schedule in Airport.ApprovedSchedules)
+{
+    <p>@schedCounter: @schedule.Flights[i].Departure - @Airport.CurrentSchedule.Flights[i].FlightNr - @Airport.CurrentSchedule.Flights[i].Destination - Gate @Airport.CurrentSchedule.Flights[i].CurrentGate</p>
+    switch (@Airport.CurrentSchedule.Flights[i].Status)
+    {
+        case 1:
+            <p>Status: DELAYED</p>
+            break;
+        case 2:
+            <p>Status: BOARDING</p>
+            break;
+        case 3:
+            <p>Status: DEPARTED</p>
+            break;
+        case 4:
+            <p>Status: ARRIVED</p>
+            break;
+        case 5:
+            <p>Status: CANCELLED</p>
+            break;
+        default:
+            break;
+    }
+}
+}
+
+<br />
+<br />
+
+<h1>Flight Schedule to Approve:</h1>
+@if(@AdminController.scheduleToApprove == null)
+{
+    <h2>No schedules are waiting to be approved.</h2>
+}
+else
+{
+<h2>@Model.Date.ToString("D") - @Model.Date.ToString("00"):</h2>
+
+<h2>Flights:</h2>
+@for(int i = 0; i < 25; i++)
+{
+    <p>@i: @Model.Flights[i].Departure - @Model.Flights[i].FlightNr - @Model.Flights[i].Destination - Gate @Model.Flights[i].CurrentGate</p>
+}
+
+
+
+}
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Movies:</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var movie in Model)
+        {
+            <tr>
+                <td>
+                    @movie.Name
+                    <a asp-controller="Movie" asp-action="Detail" asp-route-id="@movie.MovieID">Details</a>
+                    <a asp-controller="Movie" asp-action="Edit" asp-route-id="@movie.MovieID">Edit</a>
+                    <a asp-controller="Movie" asp-action="Delete" asp-route-id="@movie.MovieID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
