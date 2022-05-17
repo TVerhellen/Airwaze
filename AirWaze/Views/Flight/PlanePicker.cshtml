@@ -3,11 +3,11 @@
 
 <!-- add method to make list of available planes for that flight - check flight region (destination), and Departure date/time -->
 
-<h2>Please select the plane for this flight</h2>
+
 
 @if(@FlightController.planes.Count > 0)
 {
-
+    <h2>Please select the plane for this flight</h2>
 <form asp-controller="Flight" asp-action="FlightPicker" asp-route-id=@Model.FlightNr method="post">
 
  <div class="form-group">
@@ -25,6 +25,8 @@
 }
 else
 {
-    <p>There are currently no planes available for this flight.</p>
+    <h2>There are currently no planes available for this flight.</h2>
     <p>Please try again later or select another Departure Time.</p>
+
+    <a asp-controller="Flight" asp-action="Create">Go Back</a>
 }
