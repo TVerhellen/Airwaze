@@ -19,10 +19,10 @@ namespace AirWaze.Controllers
             {
                 _myDatabase = mydatabase;
             }
-                if (!Airport.IsOnline)
-            {
-                Airport.StartAirport();
-            }
+                //if (!Airport.IsOnline)
+                //{
+                //Airport.StartAirport();
+                //}
         }       
 
     public IActionResult Index()
