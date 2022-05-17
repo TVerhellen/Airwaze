@@ -18,9 +18,9 @@ namespace AirWaze.Controllers
         {
             if (_myDatabase == null)
             {
-                _myDatabase = mydatabase;
-                airlineEntities = _myDatabase.GetAirlines();
-            }                      
+                _myDatabase = mydatabase;               
+            }
+            airlineEntities = _myDatabase.GetAirlines();
         }
 
         //Airline Role
