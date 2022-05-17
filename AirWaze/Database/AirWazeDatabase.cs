@@ -216,5 +216,35 @@ namespace AirWaze.Database
             _dbContext.Tickets.Update(ticket);
             return _dbContext.SaveChanges();
         }
+
+        public List<Gate> GetGates()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Gate GetGateByID(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddGate(Gate flight)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Runway> GetRunways()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Runway GetRuwaysByID(string nr)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddRunway(Runway runway)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
