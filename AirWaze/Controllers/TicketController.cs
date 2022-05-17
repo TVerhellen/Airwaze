@@ -147,10 +147,8 @@ namespace AirWaze.Controllers
             {
                 ticketsToHandle.Remove(toHandle);
                 return RedirectToAction("Create", toHandle);
-            }
-            
+            }           
         }
-
 
         public IActionResult Detail(string ID)
         {

@@ -32,6 +32,7 @@ namespace AirWaze.Controllers
                 _myDatabase = mydatabase;
                 planeEntities = _myDatabase.GetPlanes();
                 airlineEntities = _myDatabase.GetAirlines();
+
             }                                             
         }
         
