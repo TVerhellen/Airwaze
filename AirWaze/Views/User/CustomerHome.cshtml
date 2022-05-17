@@ -1,0 +1,65 @@
+﻿@model IEnumerable<AirWaze.Entities.User>
+@using AirWaze.Models
+
+
+
+<div class="container-fluid" style="padding: 0 0 0 0;">
+    <div class="row">
+        <div class="col-lg-2 bg-dark-blue d-none d-sm-block" style="padding-top: 10px; padding-bottom: 50px;">
+            <center><i class="fas fa-user fa-5x text-white" style="padding-bottom: 20px;"></i></center>
+
+            <center>
+                <button type="button" id="sidebarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-darkblue-sidebar dropdown-toggle btn-sm my-2 my-sm-0 mr-sm-2 text-white font-weight-bold">@User.Identity.Name</button>
+                <div class="dropdown-menu" aria-labelledby="sidebarDropdown">
+                    <a class="dropdown-item" href="#" onclick="location.href='@Url.Action("ManageDetails", "Account", new { id=ViewBag.UserID})'">My Details</a>
+                    <a class="dropdown-item" href="#" onclick="javascript:document.getElementById('logoutForm').submit()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+                <p class="text-white" style="font-size: small;">Customer ID: @ViewBag.UserID</p>
+            </center>
+
+            @*Managing dashboard customer navigation*@
+            <div class="list-group text-left font-weight-bold" style="padding-top: 30px;">
+@*                <a asp-controller="User" asp-action="Index" asp-route-UserID=@Model.UserID class = "list-group-item active">Dashboard</a>
+                <a asp-controller="User" asp-action="Detail" asp-route-UserID=@Model.UserID class = "list-group-item active">My Details</a>*@
+                @Html.ActionLink("Dashboard", "Index", "User", new { area = "" }, new { @class = "list-group-item active" })
+                @Html.ActionLink("My Details", "Detail", "User", new { UserID = ViewBag.UserID }, new { @class = "list-group-item" })
+                @Html.ActionLink("My Tickets", "Detail", "Ticket", new { UserID = ViewBag.UserID }, new { @class = "list-group-item" })
+            </div>
+        </div>
+
+        @*Middle of dashboard*@
+        <div class="col-lg-9" style="padding-bottom: 50px;">
+            <h3 class="font-weight-bold" style="padding-top: 50px; padding-bottom: 30px;">Dashboard</h3>
+            @if (TempData["Success"] != null)
+            {
+                <center>
+                    <div class="col-md-6 alert alert-success text-center my-2" role="alert">
+                        <strong>Success: </strong>@TempData["Success"]
+                    </div>
+                </center>
+            }
+            @if (TempData["Error"] != null)
+            {
+                <center>
+                    <div class="col-md-6 alert alert-danger text-center my-2" role="alert" style="margin-top: 15px;"><strong>Error: </strong>@TempData["Error"]</div>
+                </center>
+            }
+            @if (ViewBag.Notification != null)
+            {
+                <center>
+                    <div class="alert alert-warning col-md-6" role="alert">
+                        <i class="fas fa-exclamation-triangle"></i> @ViewBag.Notification <br>
+                        @Html.ActionLink("View My Invoices", "MyInvoices", "User")
+                    </div>
+                </center>
+            }
+            <p>
+                Hello @User.Identity.Name, Welcome to the Airwaze Customer dashboard.
+                <br><br>
+                <img src="~/Images/customerHome.png" alt="CustomerHome" style="height:300px; width:300px" class="center"/>
+            </p>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/umd/popper.min.js"></script>

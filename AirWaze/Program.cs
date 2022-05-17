@@ -18,7 +18,10 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
+
+
 builder.Services.AddControllersWithViews();
+builder.Services.AddServerSideBlazor();
 
 // Session stuff
 builder.Services.AddDistributedMemoryCache();
@@ -62,6 +65,8 @@ app.UseSession();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 app.MapRazorPages();
+app.MapBlazorHub();
 
 app.Run();

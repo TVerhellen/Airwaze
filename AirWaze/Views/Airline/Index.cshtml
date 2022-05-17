@@ -5,21 +5,25 @@
 }
 @model AirlineIndexViewModel
 
-<p>Guid/Model nodig Met Airline</p>
-<h1>Hello - insert name Airliner -</h1>
+<p>Dit is Hardcoded tot Login er is</p>
+@if (Model.Airline.Logo != null)
+{
+    <div style="position:center;" >
+        <img src="@Url.Content(@Model.Airline.Logo)" alt="Sample Image" width="400" height="400"/>
+    </div>
+}
+
+<h1>Hello @Model.Airline.Name</h1>
 
 <h1>Status Panel Here, For now Buttons will do</h1>
 
-
+<div>
 <a class="btn btn-primary" asp-action="Index" asp-controller="Plane" asp-route-ID="@Model.Airline.AirlineID">Your Current Planes</a>
-
+<a class="btn btn-primary" asp-action="Detail" asp-controller="Airline" asp-route-ID="@Model.Airline.AirlineID">Detail Pagina</a>
+<a class="btn btn-primary" asp-action="Update" asp-controller="Airline" asp-route-ID="@Model.Airline.AirlineID">Update perso gegevens</a>
+</div>
 <br />
 <p> These Dont work yet</p>
-<a class="btn btn-primary" asp-action="Detail" asp-controller="Airline" asp-route-ID="HierGUiDAirliner">Detail Pagina</a>
-
-<a class="btn btn-primary" asp-action="Update" asp-controller="Airline" asp-route-ID="HierGUiDAirliner">Update perso gegevens</a>
-
-
 
 <a class="btn btn-primary" asp-action="List" asp-controller="FLight" asp-route-ID="HierGUiDAirliner/Flights/Planes">Lijst VLuchten</a>
 

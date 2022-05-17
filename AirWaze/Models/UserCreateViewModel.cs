@@ -10,8 +10,8 @@ namespace AirWaze.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "ID is verplicht!")]
         public Guid UserID { get; set; }
 
-        //public string Name { get; set; }
-        //public string Password { get; set; }
+        public string Name { get; set; }
+        public string Password { get; set; }
 
         [MinLength(1, ErrorMessage = "Minimum 1 character!")]
         [MaxLength(20, ErrorMessage = "Maximum 20 characters!")]
@@ -56,8 +56,7 @@ namespace AirWaze.Models
 
         [Required(ErrorMessage = "You must provide a phonenumber")]
         [Display(Name = "Homephone")]
-        [DataType(DataType.PhoneNumber)]
-        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid phonenumber")]
+        [DataType(DataType.PhoneNumber)]        
         public string PhoneNumber { get; set; }
     }
 }

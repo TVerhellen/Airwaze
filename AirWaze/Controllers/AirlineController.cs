@@ -1,4 +1,5 @@
-﻿using AirWaze.Entities;
+﻿using AirWaze.Database.Design;
+using AirWaze.Entities;
 using AirWaze.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,38 +7,37 @@ namespace AirWaze.Controllers
 {
     public class AirlineController : Controller
     {
-        private static List<Airline> airlineEntities = new List<Airline>();
 
-        Airline testAirline = new Airline
-        {
-            Number = "55",
-            PhoneNumber = "777888999",
-            CurrentPlanes = new List<Plane>(),
-            AccountNumber = "111222333",
-            Adress = "Koekoekstraat",
-            City = "Melle",
-            AirlineID = Guid.NewGuid(),
-            CompanyNumber = "5555555",
-            Email = "ikke@virgin.com",
-            Name = "H0r0ld Airways",
-            NameTag = "HAR",
-        };
+        private IAirWazeDatabase _myDatabase;
 
+        public static Airline LoggedInAirline;
 
+        private static List<Airline> airlineEntities = new List<Airline>();      
         //Gets All Entities of Airlines Later on - Will do For all uses!
-        public AirlineController()
+        public AirlineController(IAirWazeDatabase mydatabase)
         {
-            if (airlineEntities.Count == 0)
+            if (_myDatabase == null)
             {
-                airlineEntities.Add(testAirline);
-            }           
+                _myDatabase = mydatabase;
+                airlineEntities = _myDatabase.GetAirlines();
+            }                      
         }
 
         //Airline Role
         public IActionResult Index()
         {
-            AirlineIndexViewModel mymodel = new AirlineIndexViewModel();
-            mymodel.Airline = airlineEntities[0];
+            AirlineIndexViewModel mymodel = new AirlineIndexViewModel();          
+            if (LoggedInAirline == null)
+            {
+                
+                LoggedInAirline = new Airline
+                {
+                    Name = "Harald Airways",
+                };
+                LoggedInAirline = airlineEntities.FirstOrDefault(x => x.Name == LoggedInAirline.Name);
+                
+            }
+            mymodel.Airline = LoggedInAirline;
             return View(mymodel);
         }
 
@@ -90,12 +90,12 @@ namespace AirWaze.Controllers
                     PhoneNumber = airlineViewModel.PhoneNumber,                   
                     AccountNumber = airlineViewModel.AccountNumber,
                     //ListInvoices = airlineViewModel.ListInvoices,
-                    //Logo = airlineViewModel.Logo,
+                    Logo = airlineViewModel.Logo,
                     
                 };
 
                 airlineEntities.Add(newEntity);
-                //await _myDatabase.AddAirline(newEntity);  
+                _myDatabase.AddAirline(newEntity);  
                 return RedirectToAction("Index");
             }          
             return View(airlineViewModel);
@@ -183,7 +183,7 @@ namespace AirWaze.Controllers
                 };
                 airlineEntities.Remove(myairline);
                 airlineEntities.Add(newEntity);                
-                //await _myDatabase.UpdateAirline(newEntity);
+                _myDatabase.UpdateAirline(newEntity);
                 return RedirectToAction("List");
             }
             return View(airlineUpdateViewModel);
@@ -211,8 +211,32 @@ namespace AirWaze.Controllers
         {
             var airline = airlineEntities.FirstOrDefault(x => x.AirlineID == ID);
             airlineEntities.Remove(airline);
-            //await _myDatabase.RemoveAirline(airline);
+            _myDatabase.RemoveAirline(airline);
             return RedirectToAction("List");
         }
+
+        //Airliner + Admine Role
+        [AutoValidateAntiforgeryToken]
+        [HttpPost]
+        public async Task<IActionResult> CreateImg(IFormFile uploadFile)
+        {
+            if (uploadFile != null && uploadFile.Length > 0)
+            {
+                var fileName = Path.GetFileName(uploadFile.FileName);
+
+                var filePath = Path.Combine(@"wwwroot\Images\", fileName);
+                string[] subbie = filePath.Split('\\');
+                AirlineCreateViewModel mymodel = new AirlineCreateViewModel();
+                mymodel.Logo = "~/" + subbie[1] + "/" + subbie[2]; 
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await uploadFile.CopyToAsync(fileStream);
+
+                }
+                return View(mymodel);
+            }
+            return RedirectToAction("Create");
+        }
+
     }
 }
