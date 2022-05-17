@@ -58,12 +58,10 @@ namespace AirWaze.Database
         public int AddTicket(Ticket ticket)
         {
             _dbContext.Tickets.Add(ticket);
-            _dbContext.Entry(ticket.CurrentUser).State = EntityState.Detached;
-            _dbContext.Entry(ticket.CurrentFlight).State = EntityState.Detached;
-            _dbContext.Entry(ticket.CurrentFlight.CurrentGate).State = EntityState.Detached;
-            _dbContext.Entry(ticket.CurrentFlight.CurrentRunway).State = EntityState.Detached;
-            _dbContext.Entry(ticket.CurrentFlight.CurrentPlane).State = EntityState.Detached;
-            _dbContext.Entry(ticket.CurrentFlight.CurrentPlane.CurrentAirline).State = EntityState.Detached;
+            _dbContext.Entry(ticket.CurrentUser).State = EntityState.Unchanged;
+            _dbContext.Entry(ticket.CurrentFlight).State = EntityState.Unchanged;
+            _dbContext.Entry(ticket.CurrentFlight.CurrentPlane).State = EntityState.Unchanged;
+            _dbContext.Entry(ticket.CurrentFlight.CurrentPlane.CurrentAirline).State = EntityState.Unchanged;
             return _dbContext.SaveChanges();
         }
 
@@ -157,6 +155,8 @@ namespace AirWaze.Database
             return query
                 .Include(x => x.CurrentUser)
                 .Include(x => x.CurrentFlight)
+                .Include(x => x.CurrentFlight.CurrentPlane)
+                .Include(x => x.CurrentFlight.CurrentPlane.CurrentAirline)
                 .ToList();
         }
 

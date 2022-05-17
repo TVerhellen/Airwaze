@@ -112,7 +112,19 @@ namespace AirWaze.Controllers
 
         public IActionResult Detail(string ID)
         {
-            return View();
+            Ticket loadedTicket = loadedTickets.Single(x => x.TicketNr == ID);
+            TicketDetailViewModel detailTicket = new TicketDetailViewModel()
+            {
+                TicketNr = loadedTicket.TicketNr,
+                CurrentFlight = loadedTicket.CurrentFlight,
+                LastName = loadedTicket.LastName,
+                FirstName = loadedTicket.FirstName,
+                Price = loadedTicket.Price,
+                FirstClass = loadedTicket.FirstClass,
+                Seat = loadedTicket.Seat,
+                ExtraLuggage = loadedTicket.ExtraLuggage
+            };
+            return View(detailTicket);
         }
 
         [HttpGet]
@@ -202,9 +214,7 @@ namespace AirWaze.Controllers
             Ticket newTicket = loadedTickets.Single(x => x.TicketNr == ID);
             newTicket.Status = 1;
             if(database.AddTicket(newTicket) > 0)
-            {
-                LoadTicketList(myUser);
-            }
+            { }
             else
             {
                 LoadTicketList(myUser);
