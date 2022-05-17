@@ -1,21 +1,18 @@
-﻿@model FlightCreateViewModel
+﻿@using AirWaze.Controllers
+@using AirWaze.Models
+
+@model FlightCreateViewModel
 
 <h1>Create New Flight</h1>
 
 <form asp-controller="Flight" asp-action="Create" method="post">
     
-      <div class="form-group">
-        <label asp-for="Destination"></label>
-        <input class="form-control" asp-for="Destination" />
-        <span asp-validation-for="Destination"></span>
+     <div class="form-group">
+       <label asp-for="Destination"></label>
+       <input class="form-control" asp-for="Destination" />
+       <span asp-validation-for="Destination"></span>
     </div>
-     <br />
-     <!--
-       <div class="form-group">
-        <label asp-for="Plane"></label>
-        PlanePicker: Combobox(all planes listed by airline): Airline - PlaneNr
-    </div>
-     <br /> -->
+    <br />
     <div class="form-group">
         <label asp-for="FlightTime"></label>
         <input class="form-control" asp-for="FlightTime" />
@@ -37,6 +34,6 @@
     </div>
      <br />
 
-
+     <a class="btn btn-primary" asp-controller="Flight" asp-action="Index">Go Back</a>
     <button class="btn btn-primary" type="submit">Create Flight</button>
 </form>

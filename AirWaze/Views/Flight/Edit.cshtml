@@ -1,3 +1,77 @@
-﻿@model FlightEditViewModel
+﻿@using AirWaze.Controllers
+@model FlightEditViewModel
 
 
+<h1>Edit Flight Details</h1>
+<h2>Flight Nr.: @Model.FlightNr</h2>
+<br />
+
+<form asp-controller="Flight" asp-action="Edit" asp-route-id="@Model.FlightNr" method="post">
+    
+     <div class="form-group">
+       <label asp-for="Destination"></label>
+       <input class="form-control" asp-for="Destination" value="@Model.Destination"/>
+       <span asp-validation-for="Destination"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <label asp-for="FlightTime"></label>
+        <input class="form-control" asp-for="FlightTime" value="@Model.FlightTime"/>
+        <span asp-validation-for="FlightTime"></span>
+    </div>
+    <br />
+    <!-- look up fill in datetimepicker with value -->
+    <div class="form-group">
+        <label asp-for="Departure"></label>
+        <input class="form-control" asp-for="Departure" value="@Model.Departure"/>
+        <span asp-validation-for="Departure"></span>
+    </div>
+     <br />
+
+    <div class="form-group">
+        <label asp-for="Distance"></label>
+        <input class="form-control" asp-for="Distance" value="@Model.Distance"/>
+        <span asp-validation-for="Distance"></span>
+    </div>
+     <br />
+
+     <div class="form-group">
+        <label asp-for="CurrentGate"></label>
+        <input class="form-control" asp-for="CurrentGate" value="@Model.CurrentGate"/>
+        <span asp-validation-for="CurrentGate"></span>
+    </div>
+     <br />
+
+     <div class="form-group">
+        <label asp-for="CurrentRunway"></label>
+        <input class="form-control" asp-for="CurrentRunway" value="@Model.CurrentRunway"/>
+        <span asp-validation-for="CurrentRunway"></span>
+    </div>
+     <br />
+
+     <div class="form-group">
+        <label>Plane</label>
+        <br />
+        <select name="selectedPlaneNr">
+            @foreach(var item in @FlightController.planes)
+            {
+                 <option value=@item.PlaneNr>@item.CurrentAirline.Name - @item.PlaneNr</option>
+            }
+        </select>
+    </div>
+
+     <div class="form-group">
+        <label>Status</label>
+        <br />
+        <select name="selectedStatus">
+                 <option value=0>0 - Generated</option>
+                 <option value=1>1 - Delayed</option>
+                 <option value=2>2 - Boarding</option>
+                 <option value=3>3 - Departed</option>
+                 <option value=4>4 - Arrived</option>
+                 <option value=5>5 - Cancelled</option>
+        </select>
+    </div>
+     <a class="btn btn-primary" asp-controller="Flight" asp-action="Index">Go Back</a>
+    <button class="btn btn-primary" type="submit">Edit Flight</button>
+</form>
