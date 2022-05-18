@@ -5,8 +5,10 @@
 }
  @model AirlineDetailViewModel
 
- <h1>Detail Pagina</h1>
-
- <p>@Model.PhoneNumber @Model.Adress @Model.Email @Model.Name</p>
+ <h1>Detail Pagina: @Model.NameTag</h1>
+ <p>@Model.Name</p>
+ <p> @Model.Adress  @Model.Number, @Model.City</p>
+ <p>@Model.PhoneNumber</p>
+ <p>@Model.Email </p>
 
  <a class="btn btn-primary" asp-action="Index" asp-controller="Airline">Back</a>
