@@ -41,35 +41,35 @@ namespace AirWaze.Entities
         
         public static void StartAirport()
         {
-            //Runways = myDatabase.GetRunways();
-            //foreach (Runway x in Runways)
-            //{
-            //    x.IsAvailable = true;
-            //}
-            //Gates = myDatabase.GetGates();
-            //foreach (Gate x in Gates)
-            //{
-            //    x.IsAvailable = true;
-            //}
-            //Flights = myDatabase.GetFlights();
-            //Planes = myDatabase.GetPlanes();
-            //Flights = Flights.FindAll(x => x.Status != 3 || x.Status != 5);
-            //Flights = (List<Flight>)Flights.OrderBy(flight => flight.Departure);
+            Runways = myDatabase.GetRunways();
+            foreach (Runway x in Runways)
+            {
+                x.IsAvailable = true;
+            }
+            Gates = myDatabase.GetGates();
+            foreach (Gate x in Gates)
+            {
+                x.IsAvailable = true;
+            }
+            Flights = myDatabase.GetFlights();
+            Planes = myDatabase.GetPlanes();
+            Flights = Flights.FindAll(x => x.Status != 3 || x.Status != 5);
+            //Flights = Flights.OrderBy(flight => flight.Departure);
             IsOnline = true;
-            //GenerateSchedule();
-            StartTimer(0);
+            GenerateSchedule();
+            StartTimer(60000);
 
         }
 
         public static void StartTimer(int dueTime)
         {
             aTimer = new Timer(new TimerCallback(TimerProc));
-            aTimer.Change(dueTime, 500);
+            aTimer.Change(dueTime, 60000);
         }
         private static void TimerProc(object state)
         {
             Timer t = (Timer)state;
-            t.Dispose();
+            //t.Dispose();
             UpdateAirport();
         }
         public static void UpdateAirport()
@@ -84,14 +84,14 @@ namespace AirWaze.Entities
             //    }
             //    else if (x.Departure.Minute)
             //}
-            //Flights = myDatabase.GetFlights();
-            //Planes = myDatabase.GetPlanes();
-            //Flights = Flights.FindAll(x => x.Status != 3 || x.Status != 5);
-            //Flights = (List<Flight>)Flights.OrderBy(flight => flight.Departure);
-            //if (CurrentSchedule.Flights.Count != 25)
-            //{
-            //    GenerateSchedule();
-            //}
+            Flights = myDatabase.GetFlights();
+            Planes = myDatabase.GetPlanes();
+            Flights = Flights.FindAll(x => x.Status != 3 || x.Status != 5);
+            Flights = (List<Flight>)Flights.OrderBy(flight => flight.Departure);
+            if (CurrentSchedule.Flights.Count != 25)
+            {
+                CurrentSchedule =  GenerateSchedule();
+            }
         }
         public static void AddGate()
         {
