@@ -19,42 +19,44 @@ namespace AirWaze.Entities
 
         public static string Name
         {
-            get { return _name; }           
-        }      
+            get { return _name; }
+        }
         public static string Adress
         {
-            get { return _adress; }            
+            get { return _adress; }
         }
-        public static DateTime CurrentTime 
-        { 
+        public static DateTime CurrentTime
+        {
             get { return _currenttime; }
-        }       
+        }
         public static List<Gate> Gates { get; set; }
         public static List<Flight> Flights { get; set; }
         public static List<Runway> Runways { get; set; }
-        public static List<Plane> Planes { get; set; }   
+
+        public static List<Plane> Planes { get; set; }
         public static Schedule CurrentSchedule { get; set; }
         public static Schedule ScheduleToApprove { get; set; }
-        public static List<Schedule> ApprovedSchedules { get; set; }
+
+        public static List<Schedule> ComingSchedules { get; set; }
         
         public static void StartAirport()
         {
-            Runways = myDatabase.GetRunways();
-            foreach (Runway x in Runways)
-            {
-                x.IsAvailable = true;
-            }
-            Gates = myDatabase.GetGates();
-            foreach (Gate x in Gates)
-            {
-                x.IsAvailable = true;
-            }
-            Flights = myDatabase.GetFlights();
-            Planes = myDatabase.GetPlanes();
-            Flights = Flights.FindAll(x => x.Status != 3 || x.Status != 5);
-            Flights = (List<Flight>)Flights.OrderBy(flight => flight.Departure);
+            //Runways = myDatabase.GetRunways();
+            //foreach (Runway x in Runways)
+            //{
+            //    x.IsAvailable = true;
+            //}
+            //Gates = myDatabase.GetGates();
+            //foreach (Gate x in Gates)
+            //{
+            //    x.IsAvailable = true;
+            //}
+            //Flights = myDatabase.GetFlights();
+            //Planes = myDatabase.GetPlanes();
+            //Flights = Flights.FindAll(x => x.Status != 3 || x.Status != 5);
+            //Flights = (List<Flight>)Flights.OrderBy(flight => flight.Departure);
             IsOnline = true;
-            GenerateSchedule();
+            //GenerateSchedule();
             StartTimer(0);
 
         }
@@ -65,10 +67,10 @@ namespace AirWaze.Entities
             aTimer.Change(dueTime, 500);
         }
         private static void TimerProc(object state)
-        {          
+        {
             Timer t = (Timer)state;
             t.Dispose();
-            UpdateAirport();          
+            UpdateAirport();
         }
         public static void UpdateAirport()
         {
@@ -82,36 +84,36 @@ namespace AirWaze.Entities
             //    }
             //    else if (x.Departure.Minute)
             //}
-            Flights = myDatabase.GetFlights();
-            Planes = myDatabase.GetPlanes();
-            Flights = Flights.FindAll(x => x.Status != 3 || x.Status != 5);
-            Flights = (List<Flight>)Flights.OrderBy(flight => flight.Departure);
-            if (CurrentSchedule.Flights.Count != 25)
-            {
-                GenerateSchedule();
-            }
+            //Flights = myDatabase.GetFlights();
+            //Planes = myDatabase.GetPlanes();
+            //Flights = Flights.FindAll(x => x.Status != 3 || x.Status != 5);
+            //Flights = (List<Flight>)Flights.OrderBy(flight => flight.Departure);
+            //if (CurrentSchedule.Flights.Count != 25)
+            //{
+            //    GenerateSchedule();
+            //}
         }
         public static void AddGate()
         {
             Gate thisgate = new Gate();
-            thisgate.GateID = Gates.Count +1;
-            thisgate.Number = Gates.Count +1;
+            thisgate.GateID = Gates.Count + 1;
+            thisgate.Number = Gates.Count + 1;
             myDatabase.AddGate(thisgate);
-            Gates.Add(thisgate); 
+            Gates.Add(thisgate);
         }
 
         public static void AddRunway()
         {
             Runway thisRunway = new Runway();
-            thisRunway.RunwayID = Runways.Count +1;
-            thisRunway.Number = Runways.Count +1;
+            thisRunway.RunwayID = Runways.Count + 1;
+            thisRunway.Number = Runways.Count + 1;
             myDatabase.AddRunway(thisRunway);
             Runways.Add(thisRunway);
         }
 
         //Alle Shedule Crud -- Admin resticted
         public static Schedule GenerateSchedule()
-        {                    
+        {
             Schedule myshedule = new Schedule();
             myshedule.Date = _currenttime;
             myshedule.ScheduleID = generator.Next(0, 10000);
@@ -129,7 +131,7 @@ namespace AirWaze.Entities
                     theseflights[i].CurrentGate = Gates[i];
                     Gates[i].IsAvailable = false;
                     Gates[i].CurrentFlight = theseflights[i];
-                }               
+                }
             }
             for (int i = 0; i < Runways.Count; i++)
             {
@@ -195,6 +197,7 @@ namespace AirWaze.Entities
         }
         public static void ViewScheduleAirliner()
         {
+
         }      
         public static Schedule ConfirmSchedule(Schedule thisschedule)
         {

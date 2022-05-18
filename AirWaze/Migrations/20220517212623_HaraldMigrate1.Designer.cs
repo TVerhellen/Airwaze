@@ -4,6 +4,7 @@ using AirWaze.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AirWaze.Migrations
 {
     [DbContext(typeof(AirWazeDbContext))]
-    partial class AirWazeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220517212623_HaraldMigrate1")]
+    partial class HaraldMigrate1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -136,7 +138,7 @@ namespace AirWaze.Migrations
 
                     b.HasKey("GateID");
 
-                    b.ToTable("Gates");
+                    b.ToTable("Gate");
                 });
 
             modelBuilder.Entity("AirWaze.Entities.Plane", b =>
@@ -219,7 +221,7 @@ namespace AirWaze.Migrations
 
                     b.HasKey("RunwayID");
 
-                    b.ToTable("Runways");
+                    b.ToTable("Runway");
                 });
 
             modelBuilder.Entity("AirWaze.Entities.Ticket", b =>
