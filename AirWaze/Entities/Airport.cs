@@ -54,10 +54,10 @@ namespace AirWaze.Entities
             Flights = myDatabase.GetFlights();
             Planes = myDatabase.GetPlanes();
             Flights = Flights.FindAll(x => x.Status != 3 || x.Status != 5);
-            //Flights = Flights.OrderBy(flight => flight.Departure);
+            Flights = Flights.OrderBy(flight => flight.Departure).ToList();
             IsOnline = true;
-            GenerateSchedule();
-            StartTimer(60000);
+            
+            StartTimer(10000);
 
         }
 
@@ -69,6 +69,7 @@ namespace AirWaze.Entities
         private static void TimerProc(object state)
         {
             Timer t = (Timer)state;
+            
             //t.Dispose();
             UpdateAirport();
         }
@@ -84,14 +85,14 @@ namespace AirWaze.Entities
             //    }
             //    else if (x.Departure.Minute)
             //}
-            Flights = myDatabase.GetFlights();
-            Planes = myDatabase.GetPlanes();
+            Flights = FlightController.flights.ToList();
+            Planes = PlaneController.planeEntities.ToList();
             Flights = Flights.FindAll(x => x.Status != 3 || x.Status != 5);
-            Flights = (List<Flight>)Flights.OrderBy(flight => flight.Departure);
-            if (CurrentSchedule.Flights.Count != 25)
-            {
-                CurrentSchedule =  GenerateSchedule();
-            }
+            Flights = Flights.OrderBy(flight => flight.Departure).ToList();
+            //if (CurrentSchedule.Flights.Count != 25)
+            //{
+            //    CurrentSchedule = GenerateSchedule();
+            //}
         }
         public static void AddGate()
         {
@@ -118,7 +119,7 @@ namespace AirWaze.Entities
             myshedule.Date = _currenttime;
             myshedule.ScheduleID = generator.Next(0, 10000);
             List<Flight> theseflights = new List<Flight>();
-           // Flights = (List<Flight>)Flights.OrderBy(flight => flight.Departure);
+           Flights = Flights.OrderBy(flight => flight.Departure).ToList();
 
             for (int i = 0; i < Flights.Count; i++)
             {
