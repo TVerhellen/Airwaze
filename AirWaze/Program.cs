@@ -40,7 +40,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IAirWazeDatabase, AirWazeDatabase>();
 
 builder.Services.AddDbContext<AirWazeDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+     options.UseSqlServer(connectionString));
 
 builder.Services.AddServerSideBlazor();
 
