@@ -81,6 +81,21 @@ namespace AirWaze.Entities
             foreach (Flight x in Flights)
             {
                 TimeSpan myspan = _currenttime - x.Departure;
+                if (myspan.TotalMinutes < 120 && x.CurrentPlane.IsAvailable == true)
+                {
+                    if (x.CurrentPlane != null)
+                    {
+                        x.CurrentPlane.IsAvailable = false;
+                        foreach (Plane y in Planes)
+                        {
+                            if(y.PlaneID == x.CurrentPlane.PlaneID)
+                            {
+                                y.IsAvailable = false;
+                                PlaneController.planeEntities = Planes.ToList();                               
+                            }
+                        }                       
+                    }                    
+                }              
                 if (myspan.TotalMinutes < 0)
                 {                
                     x.Status = 3;
@@ -91,7 +106,7 @@ namespace AirWaze.Entities
                     {
                         CurrentSchedule.Flights.Remove(x);
                     }
-                }
+                }               
             }
             Flights = FlightController.flights.ToList();
             Planes = PlaneController.planeEntities.ToList();
