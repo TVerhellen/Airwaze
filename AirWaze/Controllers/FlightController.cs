@@ -11,7 +11,6 @@ namespace AirWaze.Controllers
         //private readonly List<Flight> flights = new List<Flight>();
         public readonly IAirWazeDatabase _airwazeDatabase;
         public static List<Flight> flights = new List<Flight>();
-        public static List<Plane> planes = new List<Plane>();
         public static List<FlightCreateViewModel> tempFlights = new List<FlightCreateViewModel>();
         Random _random = new Random();
 
@@ -66,7 +65,7 @@ namespace AirWaze.Controllers
                     }
                 }
             }
-            planes = _airwazeDatabase.GetPlanes();
+            //planes = _airwazeDatabase.GetPlanes();
         }
 
         //Roles: Everyone
@@ -180,7 +179,7 @@ namespace AirWaze.Controllers
         public IActionResult PlanePicker(FlightCreateViewModel flightViewModel, string id)
         {
             flightViewModel = tempFlights.SingleOrDefault(x => x.FlightNr == id);
-            flightViewModel.CurrentPlane = planes.FirstOrDefault(x => x.PlaneNr == Request.Form["selectedPlaneNr"]);
+            flightViewModel.CurrentPlane = PlaneController.planeEntities.FirstOrDefault(x => x.PlaneNr == Request.Form["selectedPlaneNr"]);
 
             if (TryValidateModel(flightViewModel))
             {
@@ -244,7 +243,7 @@ namespace AirWaze.Controllers
         [HttpPost]
         public IActionResult Edit(string id, FlightEditViewModel flightViewModel)
         {
-            flightViewModel.CurrentPlane = planes.FirstOrDefault(x => x.PlaneNr == Request.Form["selectedPlaneNr"]);
+            flightViewModel.CurrentPlane = PlaneController.planeEntities.FirstOrDefault(x => x.PlaneNr == Request.Form["selectedPlaneNr"]);
             flightViewModel.Status = Convert.ToInt32(Request.Form["selectedStatus"]);
             flightViewModel.FlightNr = id;
 
@@ -288,8 +287,8 @@ namespace AirWaze.Controllers
             //TODO: review below check if Database is implemented
             //Flight can only be deleted if flight status is 0 - Generated and there are 0 booked tickets for this flight
             //Otherwise -> Cancel flight via Edit Action (need record of this flight)
-            if (flightEntity.Status == 0 && _airwazeDatabase.GetTicketsByFlight(flightEntity.FlightNr).Count == 0)
-            {
+            //if (flightEntity.Status == 0 && _airwazeDatabase.GetTicketsByFlight(flightEntity.FlightNr).Count == 0)
+            //{
                 var flightViewModel = new FlightDeleteViewModel
                 {
                     FlightID = flightEntity.FlightID,
@@ -299,12 +298,12 @@ namespace AirWaze.Controllers
                 };
 
                 return View(flightViewModel);
-            }
-            else
-            {
-                //TODO: throw message "cannot delete existing flight with booked tickets, please change flight status to "Cancelled"
-                return RedirectToAction("Index");
-            }
+            //}
+            //else
+            //{
+            //    //TODO: throw message "cannot delete existing flight with booked tickets, please change flight status to "Cancelled"
+            //    return RedirectToAction("Index");
+            //}
         }
 
         [Authorize(Roles = "Admin")]
@@ -346,35 +345,6 @@ namespace AirWaze.Controllers
                 }
                 tempFlightNrFull = tempFlightNr1 + tempFlightNr2.ToString("D2");
             }
-
-            //bool flightNrExists;
-
-            //do
-            //{
-            //    flightNrExists = false;
-
-            //    foreach(var flight in flights)
-            //    {
-            //        if(tempFlightNrFull == flight.FlightNr)
-            //        {
-            //            flightNrExists = true;
-            //        }
-            //    }
-
-            //    if(flightNrExists == true)
-            //    {
-            //        if (tempFlightNr2 == 99)
-            //        {
-            //            tempFlightNr2 = 0;
-            //        }
-            //        else
-            //        {
-            //            tempFlightNr2++;
-            //        }
-            //        tempFlightNrFull = tempFlightNr1 + tempFlightNr2.ToString("D2");
-            //    }
-
-            //} while (flightNrExists == true);
 
             return tempFlightNrFull;
         }

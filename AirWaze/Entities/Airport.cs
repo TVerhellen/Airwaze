@@ -41,8 +41,8 @@ namespace AirWaze.Entities
         public static Schedule CurrentSchedule { get; set; }
         public static Schedule ScheduleToApprove { get; set; }
 
-        public static List<Schedule> ComingSchedules { get; set; }
-
+        public static List<Schedule>? ApprovedSchedules { get; set; }
+        
         public static void StartAirport()
         {
            
@@ -174,30 +174,41 @@ namespace AirWaze.Entities
             myshedule.Date = chosenDate;
             myshedule.ScheduleID = generator.Next(0, 10000);
             List<Flight> theseflights = new List<Flight>();
-            Flights = (List<Flight>)Flights.OrderBy(flight => flight.Departure);
+            Flights = Flights.OrderBy(flight => flight.Departure).ToList();
 
-            for (int i = 0; i < 25; i++)
+            for (int i = 0; i < Flights.Count; i++)
             {
-                theseflights.Add(Flights[i]);
-            }
-            for (int i = 0; i < Gates.Count; i++)
-            {
-                if (Gates[i].IsAvailable == true)
+                if(Flights[i].Departure >= chosenDate)
                 {
-                    theseflights[i].CurrentGate = Gates[i];
-                    Gates[i].IsAvailable = false;
-                    Gates[i].CurrentFlight = theseflights[i];
+                    theseflights.Add(Flights[i]);
+                }
+                
+            }
+
+            if(theseflights.Count == 4)
+            {
+                for (int i = 0; i < Flights.Count; i++)
+                {
+                    if (Gates[i].IsAvailable == true)
+                    {
+                        theseflights[i].CurrentGate = Gates[i];
+                        Gates[i].IsAvailable = false;
+                        Gates[i].CurrentFlight = theseflights[i];
+                    }
+                }
+                for (int i = 0; i < Runways.Count; i++)
+                {
+                    if (Runways[i].IsAvailable == true)
+                    {
+                        theseflights[i].CurrentRunway = Runways[i];
+                        Runways[i].IsAvailable = false;
+                        Runways[i].CurrentFlight = theseflights[i];
+                    }
                 }
             }
-            for (int i = 0; i < Runways.Count; i++)
-            {
-                if (Runways[i].IsAvailable == true)
-                {
-                    theseflights[i].CurrentRunway = Runways[i];
-                    Runways[i].IsAvailable = false;
-                    Runways[i].CurrentFlight = theseflights[i];
-                }
-            }
+
+            myshedule.Flights = theseflights;
+
             return myshedule;
         }
 

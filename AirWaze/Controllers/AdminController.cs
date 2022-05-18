@@ -10,7 +10,6 @@ namespace AirWaze.Controllers
     public class AdminController : Controller
     {
         public static Schedule? scheduleToApprove;
-        public static Schedule? scheduleApproved = Airport.CurrentSchedule;
         public static List<Flight> flights = new List<Flight>();
         
         private readonly IAirWazeDatabase _airwazeDatabase;
@@ -48,6 +47,7 @@ namespace AirWaze.Controllers
             if(TryValidateModel(viewModel))
             {
                 scheduleToApprove = Airport.GenerateSchedule(viewModel.Date);
+
                 return RedirectToAction("Schedule");
             }
             else
@@ -66,6 +66,11 @@ namespace AirWaze.Controllers
         {
             scheduleToApprove.IsValidated = true;
             Airport.CurrentSchedule = scheduleToApprove;
+            if(Airport.ApprovedSchedules == null)
+            {
+                Airport.ApprovedSchedules = new List<Schedule>();
+            }
+            Airport.ApprovedSchedules.Add(scheduleToApprove);
             scheduleToApprove = null;
 
             return RedirectToAction("Schedule");
@@ -80,9 +85,33 @@ namespace AirWaze.Controllers
         }
 
         [HttpGet]
-        public IActionResult ListSchedule()
+        public IActionResult ListSchedules()
         {
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult DetailSchedule(int index)
+        {
+            ScheduleGenerateViewModel viewModel = new ScheduleGenerateViewModel();
+            viewModel.Flights = new List<Flight>();
+
+            if (index == -1)
+            {
+                viewModel.Date = scheduleToApprove.Date;
+                viewModel.Flights = scheduleToApprove.Flights;
+                viewModel.IsValidated = scheduleToApprove.IsValidated;
+            }
+            else
+            {
+                viewModel.Date = Airport.ApprovedSchedules[index].Date;
+                foreach(var flight in Airport.ApprovedSchedules[index].Flights)
+                {
+                    viewModel.Flights.Add(flight);
+                }
+                viewModel.IsValidated = Airport.ApprovedSchedules[index].IsValidated;
+            }
+            return View(viewModel);
         }
     }
 }

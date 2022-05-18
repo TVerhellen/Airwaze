@@ -272,6 +272,7 @@ namespace AirWaze.Controllers
                     planeUpdateViewModel.ConstructionYear = plane.ConstructionYear;
                     planeUpdateViewModel.FlightHours = plane.FlightHours;
                     planeUpdateViewModel.NextMainentance = plane.NextMainentance;
+                    planeUpdateViewModel.SeatDiagramPic = plane.SeatDiagramPic;
                     break;
                 }
             }
@@ -310,7 +311,7 @@ namespace AirWaze.Controllers
                     ConstructionYear = planeUpdateViewModel.ConstructionYear,
                     FlightHours = planeUpdateViewModel.FlightHours,
                     NextMainentance = planeUpdateViewModel.NextMainentance,
-
+                    SeatDiagramPic = planeUpdateViewModel?.SeatDiagramPic
                 };               
                 _myDatabase.UpdatePlane(newEntity);
                 planeEntities = _myDatabase.GetPlanes();
