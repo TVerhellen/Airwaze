@@ -41,23 +41,23 @@ namespace AirWaze.Entities
         
         public static void StartAirport()
         {
-            //Runways = myDatabase.GetRunways();
-            //foreach (Runway x in Runways)
-            //{
-            //    x.IsAvailable = true;
-            //}
-            //Gates = myDatabase.GetGates();
-            //foreach (Gate x in Gates)
-            //{
-            //    x.IsAvailable = true;
-            //}
-            //Flights = myDatabase.GetFlights();
-            //Planes = myDatabase.GetPlanes();
-            //Flights = Flights.FindAll(x => x.Status != 3 || x.Status != 5);
-            ////Flights = Flights.OrderBy(flight => flight.Departure);
-            //IsOnline = true;
-            //GenerateSchedule();
-            //StartTimer(60000);
+            Runways = myDatabase.GetRunways();
+            foreach (Runway x in Runways)
+            {
+                x.IsAvailable = true;
+            }
+            Gates = myDatabase.GetGates();
+            foreach (Gate x in Gates)
+            {
+                x.IsAvailable = true;
+            }
+            Flights = myDatabase.GetFlights();
+            Planes = myDatabase.GetPlanes();
+            Flights = Flights.FindAll(x => x.Status != 3 || x.Status != 5);
+            //Flights = Flights.OrderBy(flight => flight.Departure);
+            IsOnline = true;
+            GenerateSchedule();
+            StartTimer(60000);
 
         }
 
@@ -120,11 +120,11 @@ namespace AirWaze.Entities
             List<Flight> theseflights = new List<Flight>();
            // Flights = (List<Flight>)Flights.OrderBy(flight => flight.Departure);
 
-            for (int i = 0; i < 25; i++)
+            for (int i = 0; i < Flights.Count; i++)
             {
                 theseflights.Add(Flights[i]);
             }
-            for (int i = 0; i < Gates.Count; i++)
+            for (int i = 0; i < Flights.Count; i++)
             {
                 if (Gates[i].IsAvailable == true)
                 {
