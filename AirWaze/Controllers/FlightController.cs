@@ -1,6 +1,7 @@
 ﻿using AirWaze.Database.Design;
 using AirWaze.Entities;
 using AirWaze.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirWaze.Controllers
@@ -12,6 +13,8 @@ namespace AirWaze.Controllers
         public static List<Flight> flights = new List<Flight>();
         public static List<FlightCreateViewModel> tempFlights = new List<FlightCreateViewModel>();
         Random _random = new Random();
+
+        
 
         //testplane (and linked testAirline) is used for new FlightCreateViewModels, before going to FlightPicker
         static Airline testAirline = new Airline
@@ -43,11 +46,27 @@ namespace AirWaze.Controllers
             Type = "111",
             SeatDiagram = new string[5, 40],
         };
-
         public FlightController(IAirWazeDatabase airwazeDatabase)
         {
+            List<Flight> oldlist = flights.ToList();
             _airwazeDatabase = airwazeDatabase;
             flights = _airwazeDatabase.GetFlights();
+            foreach (Flight x in flights)
+            {
+                foreach(Flight y in oldlist)
+                {
+                    if (x.FlightID == y.FlightID)
+                    {
+                        if (x.Status != y.Status)
+                        {
+                            x.Status = y.Status;
+                            _airwazeDatabase.UpdateFlight(x);
+                        }
+                        
+                    }
+                }
+            }
+            planes = _airwazeDatabase.GetPlanes();
         }
 
         //Roles: Everyone
@@ -87,6 +106,7 @@ namespace AirWaze.Controllers
 
         //Roles: everyone
         [HttpGet]
+        [Route("Flight/Detail/{id}")]
         public IActionResult Detail(string id)
         {
             var flightEntity = flights.FirstOrDefault(x => x.FlightNr == id);
@@ -112,7 +132,8 @@ namespace AirWaze.Controllers
             }
             return View();
         }
-        
+
+        [Authorize(Roles = "Admin")]
         //Roles: Admin + Airport Staff
         [HttpGet]
         public IActionResult Create()
@@ -121,6 +142,7 @@ namespace AirWaze.Controllers
             return View(flightViewModel);
         }
 
+        [Authorize(Roles = "Admin")]
         //Roles: Admin + Airport Staff
         [ValidateAntiForgeryToken]
         [HttpPost]
@@ -143,6 +165,7 @@ namespace AirWaze.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         //[Route("Flight/PlanePicker/{flightNr}")]
         public IActionResult PlanePicker(string flightNr)
@@ -185,6 +208,7 @@ namespace AirWaze.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         //Roles: Admin + Airport Staff
         [HttpGet]
         public IActionResult Edit(string id)
@@ -214,6 +238,7 @@ namespace AirWaze.Controllers
             return View(flightEdit);
         }
 
+        [Authorize(Roles = "Admin")]
         //Roles: Admin + Airport Staff
         [ValidateAntiForgeryToken]
         [HttpPost]
@@ -221,8 +246,9 @@ namespace AirWaze.Controllers
         {
             flightViewModel.CurrentPlane = PlaneController.planeEntities.FirstOrDefault(x => x.PlaneNr == Request.Form["selectedPlaneNr"]);
             flightViewModel.Status = Convert.ToInt32(Request.Form["selectedStatus"]);
+            flightViewModel.FlightNr = id;
 
-            if (!TryValidateModel(flightViewModel)) return View(flightViewModel);
+            //if (!TryValidateModel(flightViewModel)) return View(flightViewModel);
 
             //var flightEntity = _airwazeDatabase.GetFlightByNr(flightnr);
 
@@ -232,7 +258,7 @@ namespace AirWaze.Controllers
 
             flights.Remove(flightEntity);
 
-            flightEntity.FlightID = flightViewModel.FlightID;
+            //flightEntity.FlightID = flightViewModel.FlightID;
             flightEntity.FlightNr = flightViewModel.FlightNr;
             flightEntity.CurrentPlane = flightViewModel.CurrentPlane;
             flightEntity.FlightTime = flightViewModel.FlightTime;
@@ -245,9 +271,10 @@ namespace AirWaze.Controllers
 
             flights.Add(flightEntity);
             _airwazeDatabase.UpdateFlight(flightEntity);
-            return RedirectToAction("Detail", new { flightnr = id });
+            return RedirectToAction("Index", "Flight");
         }
 
+        [Authorize(Roles = "Admin")]
         //Roles: Admin + Airport Staff
         [HttpGet]
         public IActionResult Delete(string id)
@@ -280,6 +307,7 @@ namespace AirWaze.Controllers
             //}
         }
 
+        [Authorize(Roles = "Admin")]
         //Roles: Admin + Airport Staff
         [HttpGet]
         public IActionResult DeleteConfirm(string id)
@@ -295,8 +323,6 @@ namespace AirWaze.Controllers
 
             return RedirectToAction("Index");
         }
-
-
 
         private string CreateFlightNr(FlightCreateViewModel flightmodel)
         {
@@ -323,5 +349,10 @@ namespace AirWaze.Controllers
 
             return tempFlightNrFull;
         }
+        public static void UpdateDB(Flight myflight)
+        {
+            
+        }
     }
+    
 }

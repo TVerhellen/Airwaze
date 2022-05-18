@@ -1,10 +1,12 @@
 ﻿using AirWaze.Database.Design;
 using AirWaze.Entities;
 using AirWaze.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirWaze.Controllers
 {
+    [Authorize(Roles="Admin")]
     public class AdminController : Controller
     {
         public static Schedule? scheduleToApprove;

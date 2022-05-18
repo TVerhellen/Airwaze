@@ -1,6 +1,7 @@
 ﻿using AirWaze.Database.Design;
 using AirWaze.Entities;
 using AirWaze.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirWaze.Controllers
@@ -23,6 +24,7 @@ namespace AirWaze.Controllers
             airlineEntities = _myDatabase.GetAirlines();
         }
 
+        [Authorize(Roles = "Airline")]
         //Airline Role
         public IActionResult Index()
         {
@@ -41,6 +43,7 @@ namespace AirWaze.Controllers
             return View(mymodel);
         }
 
+        [Authorize(Roles = "Admin")]
         //Only ADMINS
         public async Task<IActionResult> List()
         {
@@ -58,6 +61,7 @@ namespace AirWaze.Controllers
             return View(thislist);
         }
 
+        [Authorize(Roles = "Admin")]
         //Guest Role + Admin
         [HttpGet]
         public IActionResult Create()
@@ -67,6 +71,7 @@ namespace AirWaze.Controllers
             return View(airlineCreateViewModel);
         }
 
+        [Authorize(Roles = "Admin")]
         //Guest Role + Admin
         [AutoValidateAntiforgeryToken]
         [HttpPost]
@@ -110,6 +115,7 @@ namespace AirWaze.Controllers
             return View(airlineViewModel);
         }
 
+        [Authorize(Roles = "Admin, Airline")]
         //Airline Role + Admin
         [HttpGet]
         public IActionResult Detail(Guid ID)
@@ -136,7 +142,8 @@ namespace AirWaze.Controllers
            
         }
 
-        //Airline?? Zeker Admin
+        [Authorize(Roles = "Admin")]
+        //Airline?? Zeker Admin   //evt minder laten editen indien airline - Tijs
         [HttpGet]
         public IActionResult Update(Guid ID)
         {  
@@ -163,7 +170,8 @@ namespace AirWaze.Controllers
             return View(airlineUpdateViewModel);
         }
 
-        //Airline?? Zeker Admin
+        [Authorize(Roles = "Admin")]
+        //Airline?? Zeker Admin   //evt minder laten editen indien airline - Tijs
         [AutoValidateAntiforgeryToken]
         [HttpPost]
         public async Task<IActionResult> Update(AirlineEditViewModel airlineUpdateViewModel)
@@ -198,6 +206,7 @@ namespace AirWaze.Controllers
             return View(airlineUpdateViewModel);
         }
 
+        [Authorize(Roles = "Admin")]
         //Admin Role
         [HttpGet]
         public IActionResult Delete(Guid ID)
@@ -215,6 +224,7 @@ namespace AirWaze.Controllers
             return View(airlineDeleteViewModel);
         }
 
+        [Authorize(Roles = "Admin")]
         //ADMIN role
         public async Task<IActionResult> DeleteConfirm(Guid ID)
         {
@@ -224,6 +234,7 @@ namespace AirWaze.Controllers
             return RedirectToAction("List");
         }
 
+        [Authorize(Roles = "Admin, Airliner")]
         //Airliner + Admine Role
         [AutoValidateAntiforgeryToken]
         [HttpPost]
