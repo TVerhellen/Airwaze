@@ -8,7 +8,7 @@ namespace AirWaze.Controllers
     public class AirlineController : Controller
     {
 
-        public static IAirWazeDatabase _myDatabase;
+        private IAirWazeDatabase _myDatabase;
 
         public static Airline LoggedInAirline;
 
@@ -72,17 +72,26 @@ namespace AirWaze.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(AirlineCreateViewModel airlineViewModel)
         {
+            if (airlineViewModel.AirlineID == null)
+            {
+                airlineViewModel.AirlineID = Guid.NewGuid();
+            }
+            if (airlineViewModel.CurrentPlanes == null)
+            {
+                airlineViewModel.CurrentPlanes = new List<Plane>();
+            }        
             var isValid = TryValidateModel(airlineViewModel);
 
             if (isValid)
             {
                 var newEntity = new Airline
                 {
-                    AirlineID = Guid.NewGuid(),
+                    
                     Name = airlineViewModel.Name,
                     NameTag = airlineViewModel.NameTag,
                     CompanyNumber = airlineViewModel.CompanyNumber,
-                    CurrentPlanes = new List<Plane>(),
+                    CurrentPlanes  = airlineViewModel.CurrentPlanes,
+                    AirlineID = (Guid)airlineViewModel.AirlineID,
                     Adress = airlineViewModel.Adress,
                     Number = airlineViewModel.Number,
                     City = airlineViewModel.City,

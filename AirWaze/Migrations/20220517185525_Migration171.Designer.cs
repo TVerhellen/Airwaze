@@ -4,6 +4,7 @@ using AirWaze.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AirWaze.Migrations
 {
     [DbContext(typeof(AirWazeDbContext))]
-    partial class AirWazeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220517185525_Migration171")]
+    partial class Migration171
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -147,19 +149,10 @@ namespace AirWaze.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PlaneID"), 1L, 1);
 
-                    b.Property<int>("AirMiles")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ConstructionYear")
-                        .HasColumnType("datetime2");
-
                     b.Property<Guid>("CurrentAirlineAirlineID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("FirstClassCapacity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FlightHours")
                         .HasColumnType("int");
 
                     b.Property<string>("FlightRegion")
@@ -182,17 +175,11 @@ namespace AirWaze.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("NextMainentance")
-                        .HasColumnType("int");
-
                     b.Property<int>("PassengerCapacity")
                         .HasColumnType("int");
 
                     b.Property<string>("PlaneNr")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SeatDiagramPic")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Type")
