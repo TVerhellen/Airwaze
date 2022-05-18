@@ -41,23 +41,23 @@ namespace AirWaze.Entities
         
         public static void StartAirport()
         {
-            Runways = myDatabase.GetRunways();
-            foreach (Runway x in Runways)
-            {
-                x.IsAvailable = true;
-            }
-            Gates = myDatabase.GetGates();
-            foreach (Gate x in Gates)
-            {
-                x.IsAvailable = true;
-            }
-            Flights = myDatabase.GetFlights();
-            Planes = myDatabase.GetPlanes();
-            Flights = Flights.FindAll(x => x.Status != 3 || x.Status != 5);
-            //Flights = Flights.OrderBy(flight => flight.Departure);
-            IsOnline = true;
-            GenerateSchedule();
-            StartTimer(60000);
+            //Runways = myDatabase.GetRunways();
+            //foreach (Runway x in Runways)
+            //{
+            //    x.IsAvailable = true;
+            //}
+            //Gates = myDatabase.GetGates();
+            //foreach (Gate x in Gates)
+            //{
+            //    x.IsAvailable = true;
+            //}
+            //Flights = myDatabase.GetFlights();
+            //Planes = myDatabase.GetPlanes();
+            //Flights = Flights.FindAll(x => x.Status != 3 || x.Status != 5);
+            ////Flights = Flights.OrderBy(flight => flight.Departure);
+            //IsOnline = true;
+            //GenerateSchedule();
+            //StartTimer(60000);
 
         }
 
@@ -118,7 +118,7 @@ namespace AirWaze.Entities
             myshedule.Date = _currenttime;
             myshedule.ScheduleID = generator.Next(0, 10000);
             List<Flight> theseflights = new List<Flight>();
-            Flights = (List<Flight>)Flights.OrderBy(flight => flight.Departure);
+           // Flights = (List<Flight>)Flights.OrderBy(flight => flight.Departure);
 
             for (int i = 0; i < 25; i++)
             {
