@@ -16,6 +16,7 @@ namespace AirWaze.Database
         public void AddAirline(Airline airline)
         {
             _dbContext.Airlines.Add(airline);
+            //_dbContext.Entry(airline.CurrentPlanes).State = EntityState.Unchanged;
             _dbContext.SaveChanges();
         }
 

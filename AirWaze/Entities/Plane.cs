@@ -28,7 +28,6 @@ namespace AirWaze.Entities
         public decimal FuelUsagePerKM { get; set; }
         [NotMapped]
         public string[,]? SeatDiagram { get; set; }
-
         public bool IsAvailable { get; set; }
         [NotMapped]
         public string? SeatDiagramPic { get; set; }

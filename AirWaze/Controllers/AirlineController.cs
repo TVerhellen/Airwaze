@@ -127,7 +127,7 @@ namespace AirWaze.Controllers
            
         }
 
-        //Airline?? Zeker Admin
+        //Airline?? Zeker Admin   //evt minder laten editen indien airline - Tijs
         [HttpGet]
         public IActionResult Update(Guid ID)
         {  
@@ -154,7 +154,7 @@ namespace AirWaze.Controllers
             return View(airlineUpdateViewModel);
         }
 
-        //Airline?? Zeker Admin
+        //Airline?? Zeker Admin   //evt minder laten editen indien airline - Tijs
         [AutoValidateAntiforgeryToken]
         [HttpPost]
         public async Task<IActionResult> Update(AirlineEditViewModel airlineUpdateViewModel)
