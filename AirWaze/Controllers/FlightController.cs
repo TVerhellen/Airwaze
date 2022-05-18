@@ -14,6 +14,8 @@ namespace AirWaze.Controllers
         public static List<FlightCreateViewModel> tempFlights = new List<FlightCreateViewModel>();
         Random _random = new Random();
 
+        
+
         //testplane (and linked testAirline) is used for new FlightCreateViewModels, before going to FlightPicker
         static Airline testAirline = new Airline
         {
@@ -44,7 +46,6 @@ namespace AirWaze.Controllers
             Type = "111",
             SeatDiagram = new string[5, 40],
         };
-
         public FlightController(IAirWazeDatabase airwazeDatabase)
         {
             _airwazeDatabase = airwazeDatabase;
@@ -356,5 +357,10 @@ namespace AirWaze.Controllers
 
             return tempFlightNrFull;
         }
+        public static void UpdateDB(Flight myflight)
+        {
+            
+        }
     }
+    
 }

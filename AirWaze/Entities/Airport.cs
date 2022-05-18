@@ -12,7 +12,7 @@ namespace AirWaze.Entities
         private static string _adress = "Bosdreef 6 Istanbul Turkye";
         private static DateTime _currenttime = DateTime.Now;
         private static Random generator = new Random();
-        public static IAirWazeDatabase myDatabase = HomeController._myDatabase;
+        public static readonly IAirWazeDatabase myDatabase = HomeController._myDatabase;
         public static bool IsOnline = false;
 
         public static Timer aTimer;
@@ -57,34 +57,36 @@ namespace AirWaze.Entities
             Flights = Flights.OrderBy(flight => flight.Departure).ToList();
             IsOnline = true;
             
-            StartTimer(10000);
+            StartTimer(6000);
 
         }
 
         public static void StartTimer(int dueTime)
         {
             aTimer = new Timer(new TimerCallback(TimerProc));
-            aTimer.Change(dueTime, 60000);
+            aTimer.Change(dueTime, 6000);
         }
         private static void TimerProc(object state)
         {
-            Timer t = (Timer)state;
-            
-            //t.Dispose();
+            Timer t = (Timer)state;                     
             UpdateAirport();
         }
         public static void UpdateAirport()
         {
-            //foreach (Flight x in Flights)
-            //{
-            //    if (x.Departure.To <= _currenttime.Minute)
-            //    {
-            //        x.Status = 3;
-            //        myDatabase.UpdateFlight(x);
-            //        CurrentSchedule.Flights.Remove(x);
-            //    }
-            //    else if (x.Departure.Minute)
-            //}
+            foreach (Flight x in Flights)
+            {               
+                TimeSpan myspan = _currenttime - x.Departure;
+                if ( myspan.TotalMinutes < 0)
+                {                  
+                    x.Status = 3;                    
+                    FlightController.flights = Flights.ToList();                                  
+                    
+                    if (CurrentSchedule != null)
+                    {
+                        CurrentSchedule.Flights.Remove(x);
+                    }                    
+                }                             
+            }
             Flights = FlightController.flights.ToList();
             Planes = PlaneController.planeEntities.ToList();
             Flights = Flights.FindAll(x => x.Status != 3 || x.Status != 5);
