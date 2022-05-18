@@ -146,6 +146,7 @@ namespace AirWaze.Controllers
         }
 
         [HttpGet]
+        //[Route("Flight/PlanePicker/{flightNr}")]
         public IActionResult PlanePicker(string flightNr)
         {
             var flightCreateViewModel = tempFlights.SingleOrDefault(x => x.FlightNr == flightNr);
