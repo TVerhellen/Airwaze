@@ -8,7 +8,7 @@ namespace AirWaze.Controllers
     public class FlightController : Controller
     {
         //private readonly List<Flight> flights = new List<Flight>();
-        private readonly IAirWazeDatabase _airwazeDatabase;
+        public readonly IAirWazeDatabase _airwazeDatabase;
         public static List<Flight> flights = new List<Flight>();
         public static List<Plane> planes = new List<Plane>();
         public static List<FlightCreateViewModel> tempFlights = new List<FlightCreateViewModel>();

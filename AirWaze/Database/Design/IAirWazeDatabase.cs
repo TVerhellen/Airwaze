@@ -7,6 +7,7 @@ namespace AirWaze.Database.Design
 
        
         List<Flight> GetFlights();
+      
 
         Flight GetFlightByNr(string nr);
 
