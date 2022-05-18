@@ -8,7 +8,7 @@
 @if(@FlightController.planes.Count > 0)
 {
     <h2>Please select the plane for this flight</h2>
-<form asp-controller="Flight" asp-action="FlightPicker" asp-route-id=@Model.FlightNr method="post">
+<form asp-controller="Flight" asp-action="PlanePicker" asp-route-id=@Model.FlightNr method="post">
 
  <div class="form-group">
         <label>Available Planes:</label>

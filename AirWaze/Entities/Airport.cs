@@ -54,22 +54,22 @@ namespace AirWaze.Entities
             //Flights = myDatabase.GetFlights();
             //Planes = myDatabase.GetPlanes();
             //Flights = Flights.FindAll(x => x.Status != 3 || x.Status != 5);
-            //Flights = (List<Flight>)Flights.OrderBy(flight => flight.Departure);
-            IsOnline = true;
+            ////Flights = Flights.OrderBy(flight => flight.Departure);
+            //IsOnline = true;
             //GenerateSchedule();
-            StartTimer(0);
+            //StartTimer(60000);
 
         }
 
         public static void StartTimer(int dueTime)
         {
             aTimer = new Timer(new TimerCallback(TimerProc));
-            aTimer.Change(dueTime, 500);
+            aTimer.Change(dueTime, 60000);
         }
         private static void TimerProc(object state)
         {
             Timer t = (Timer)state;
-            t.Dispose();
+            //t.Dispose();
             UpdateAirport();
         }
         public static void UpdateAirport()
@@ -84,14 +84,14 @@ namespace AirWaze.Entities
             //    }
             //    else if (x.Departure.Minute)
             //}
-            //Flights = myDatabase.GetFlights();
-            //Planes = myDatabase.GetPlanes();
-            //Flights = Flights.FindAll(x => x.Status != 3 || x.Status != 5);
-            //Flights = (List<Flight>)Flights.OrderBy(flight => flight.Departure);
-            //if (CurrentSchedule.Flights.Count != 25)
-            //{
-            //    GenerateSchedule();
-            //}
+            Flights = myDatabase.GetFlights();
+            Planes = myDatabase.GetPlanes();
+            Flights = Flights.FindAll(x => x.Status != 3 || x.Status != 5);
+            Flights = (List<Flight>)Flights.OrderBy(flight => flight.Departure);
+            if (CurrentSchedule.Flights.Count != 25)
+            {
+                CurrentSchedule =  GenerateSchedule();
+            }
         }
         public static void AddGate()
         {
@@ -118,7 +118,7 @@ namespace AirWaze.Entities
             myshedule.Date = _currenttime;
             myshedule.ScheduleID = generator.Next(0, 10000);
             List<Flight> theseflights = new List<Flight>();
-            Flights = (List<Flight>)Flights.OrderBy(flight => flight.Departure);
+           // Flights = (List<Flight>)Flights.OrderBy(flight => flight.Departure);
 
             for (int i = 0; i < 25; i++)
             {
