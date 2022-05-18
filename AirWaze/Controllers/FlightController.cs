@@ -61,8 +61,7 @@ namespace AirWaze.Controllers
                         {
                             x.Status = y.Status;
                             _airwazeDatabase.UpdateFlight(x);
-                        }
-                        
+                        }                       
                     }
                 }
             }

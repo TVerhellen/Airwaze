@@ -28,11 +28,26 @@ namespace AirWaze.Controllers
         //Gets All Entities of Planes - Will do For all uses!
         public PlaneController(IAirWazeDatabase mydatabase)
         {
+            List<Plane> oldlist = planeEntities.ToList();
             if (_myDatabase == null)
             {
                 _myDatabase = mydatabase;               
             }
             planeEntities = _myDatabase.GetPlanes();
+            foreach (Plane x in planeEntities)
+            {
+                foreach (Plane y in oldlist)
+                {
+                    if (x.PlaneID == y.PlaneID)
+                    {
+                        if (x.IsAvailable != y.IsAvailable)
+                        {
+                            x.IsAvailable = y.IsAvailable;
+                            _myDatabase.UpdatePlane(x);
+                        }
+                    }
+                }
+            }
             airlineEntities = _myDatabase.GetAirlines();
         }
 
