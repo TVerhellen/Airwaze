@@ -22,6 +22,9 @@ namespace AirWaze.Database
         public void AddFlight(Flight flight)
         {
             _dbContext.Flights.Add(flight);
+            _dbContext.Entry(flight.CurrentPlane).State = EntityState.Unchanged;
+            //_dbContext.Entry(flight.CurrentGate).State = EntityState.Unchanged;
+            //_dbContext.Entry(flight.CurrentRunway).State = EntityState.Unchanged;
             _dbContext.SaveChanges();
         }
 
@@ -101,7 +104,7 @@ namespace AirWaze.Database
 
         public List<Plane> GetPlanes()
         {
-            return _dbContext.Planes.ToList();
+            return _dbContext.Planes.Include(x => x.CurrentAirline).ToList();
         }
         public List<Ticket> GetTicketsByFlight(string flightnr)
         {
@@ -243,6 +246,16 @@ namespace AirWaze.Database
         }
 
         public void AddRunway(Runway runway)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Gate GetGateByID(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Runway GetRuwaysByID(int nr)
         {
             throw new NotImplementedException();
         }

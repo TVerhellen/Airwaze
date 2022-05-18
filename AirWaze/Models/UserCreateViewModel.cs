@@ -10,8 +10,8 @@ namespace AirWaze.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "ID is verplicht!")]
         public Guid UserID { get; set; }
 
-        public string Name { get; set; }
-        public string Password { get; set; }
+        //public string Name { get; set; }
+        //public string Password { get; set; }
 
         [MinLength(1, ErrorMessage = "Minimum 1 character!")]
         [MaxLength(20, ErrorMessage = "Maximum 20 characters!")]
@@ -41,7 +41,7 @@ namespace AirWaze.Models
         public string? Bus { get; set; }
 
         [Required(ErrorMessage = "Zipcode is Required")]
-        [DataType(DataType.PostalCode)]
+        //[DataType(DataType.PostalCode)]
         public string Zipcode { get; set; }
 
         [MinLength(1, ErrorMessage = "Minimum 1 character!")]
@@ -56,7 +56,7 @@ namespace AirWaze.Models
 
         [Required(ErrorMessage = "You must provide a phonenumber")]
         [Display(Name = "Homephone")]
-        [DataType(DataType.PhoneNumber)]        
+        //[DataType(DataType.PhoneNumber)]        
         public string PhoneNumber { get; set; }
     }
 }
