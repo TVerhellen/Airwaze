@@ -89,6 +89,7 @@ namespace AirWaze.Controllers
 
         //Roles: everyone
         [HttpGet]
+        [Route("Flight/Detail/{id}")]
         public IActionResult Detail(string id)
         {
             var flightEntity = flights.FirstOrDefault(x => x.FlightNr == id);
@@ -223,8 +224,9 @@ namespace AirWaze.Controllers
         {
             flightViewModel.CurrentPlane = planes.FirstOrDefault(x => x.PlaneNr == Request.Form["selectedPlaneNr"]);
             flightViewModel.Status = Convert.ToInt32(Request.Form["selectedStatus"]);
+            flightViewModel.FlightNr = id;
 
-            if (!TryValidateModel(flightViewModel)) return View(flightViewModel);
+            //if (!TryValidateModel(flightViewModel)) return View(flightViewModel);
 
             //var flightEntity = _airwazeDatabase.GetFlightByNr(flightnr);
 
@@ -234,7 +236,7 @@ namespace AirWaze.Controllers
 
             flights.Remove(flightEntity);
 
-            flightEntity.FlightID = flightViewModel.FlightID;
+            //flightEntity.FlightID = flightViewModel.FlightID;
             flightEntity.FlightNr = flightViewModel.FlightNr;
             flightEntity.CurrentPlane = flightViewModel.CurrentPlane;
             flightEntity.FlightTime = flightViewModel.FlightTime;
@@ -247,7 +249,7 @@ namespace AirWaze.Controllers
 
             flights.Add(flightEntity);
             _airwazeDatabase.UpdateFlight(flightEntity);
-            return RedirectToAction("Detail", new { flightnr = id });
+            return RedirectToAction("Index", "Flight");
         }
 
         //Roles: Admin + Airport Staff

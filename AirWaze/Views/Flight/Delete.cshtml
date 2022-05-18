@@ -25,4 +25,4 @@
 }
 
 <a asp-controller="Flight" asp-action="Index">Go Back</a>
-<input type="button" class=btn-danger value="Delete" onclick="location.href='@Url.Action("DeleteConfirm", "Flight", new { flightnr = @Model.FlightNr })'" />
+<a class="btn btn-danger"  asp-controller="Flight" asp-action="DeleteConfirm" asp-route-id="@Model.FlightNr">Delete</a>
