@@ -138,11 +138,11 @@ namespace AirWaze.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-                    var defaultrole = _roleManager.FindByNameAsync("Customer").Result;
-                    if (defaultrole != null)
-                    {
-                        IdentityResult roleresult = await _userManager.AddToRoleAsync(user, defaultrole.Name);
-                    }
+                    //var defaultrole = _roleManager.FindByNameAsync("Customer").Result;
+                    //if (defaultrole != null)
+                    //{
+                    //    IdentityResult roleresult = await _userManager.AddToRoleAsync(user, defaultrole.Name);
+                    //}
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

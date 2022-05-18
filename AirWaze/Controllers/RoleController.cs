@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AirWaze.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
