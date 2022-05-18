@@ -43,7 +43,7 @@ namespace AirWaze.Controllers
                         if (x.IsAvailable != y.IsAvailable)
                         {
                             x.IsAvailable = y.IsAvailable;
-                            _myDatabase.UpdatePlane(x);
+                            //_myDatabase.UpdatePlane(x);
                         }
                     }
                 }

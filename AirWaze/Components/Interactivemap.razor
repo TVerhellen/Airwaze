@@ -55,7 +55,7 @@
                 {
                     <tr>
                         <td>@x.Coords.Latitude</td>
-                        <td>@x.Coords.Latitude</td>                       
+                        <td>@x.Coords.Longitude</td>                       
                         <td>@x.Coords.Accuracy</td>
                         <td>@x.Coords.Heading</td>
                         <td>@x.Coords.Speed</td>
@@ -70,15 +70,15 @@
         <br />
     @if (distancestation != null)
     {
-        <h1>Afstand vs StationSintNiklaas : @distancestation km</h1>       
+        <p>Afstand vs StationSintNiklaas : @distancestation km</p>       
     }
     @if (distancegang != null)
     {
-        <h1>Afstand vs de Gang in dit gebouw verderop:  @distancegang km</h1>       
+        <p>Afstand vs de Gang in dit gebouw verderop:  @distancegang km</p>       
     }
     @if (distancewhitehouse != null)
     {
-        <h1>Afstand vs Witte Huis : @distancewhitehouse km</h1>       
+        <p>Afstand vs Witte Huis : @distancewhitehouse km</p>     
     }
 }
 <button class="btn btn-primary" @onclick="KillEvents">Dispose Events + Timer -- BELANGRIJK -- klik mij maar 1 keer</button>
