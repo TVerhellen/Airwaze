@@ -1,6 +1,7 @@
 ﻿using AirWaze.Database.Design;
 using AirWaze.Entities;
 using AirWaze.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirWaze.Controllers
@@ -10,7 +11,6 @@ namespace AirWaze.Controllers
         //private readonly List<Flight> flights = new List<Flight>();
         public readonly IAirWazeDatabase _airwazeDatabase;
         public static List<Flight> flights = new List<Flight>();
-        public static List<Plane> planes = new List<Plane>();
         public static List<FlightCreateViewModel> tempFlights = new List<FlightCreateViewModel>();
         Random _random = new Random();
 
@@ -48,9 +48,24 @@ namespace AirWaze.Controllers
         };
         public FlightController(IAirWazeDatabase airwazeDatabase)
         {
+            List<Flight> oldlist = flights.ToList();
             _airwazeDatabase = airwazeDatabase;
             flights = _airwazeDatabase.GetFlights();
-            planes = _airwazeDatabase.GetPlanes();
+            foreach (Flight x in flights)
+            {
+                foreach(Flight y in oldlist)
+                {
+                    if (x.FlightID == y.FlightID)
+                    {
+                        if (x.Status != y.Status)
+                        {
+                            x.Status = y.Status;
+                            _airwazeDatabase.UpdateFlight(x);
+                        }                       
+                    }
+                }
+            }
+            //planes = _airwazeDatabase.GetPlanes();
         }
 
         //Roles: Everyone
@@ -116,7 +131,8 @@ namespace AirWaze.Controllers
             }
             return View();
         }
-        
+
+        [Authorize(Roles = "Admin")]
         //Roles: Admin + Airport Staff
         [HttpGet]
         public IActionResult Create()
@@ -125,6 +141,7 @@ namespace AirWaze.Controllers
             return View(flightViewModel);
         }
 
+        [Authorize(Roles = "Admin")]
         //Roles: Admin + Airport Staff
         [ValidateAntiForgeryToken]
         [HttpPost]
@@ -147,6 +164,7 @@ namespace AirWaze.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         //[Route("Flight/PlanePicker/{flightNr}")]
         public IActionResult PlanePicker(string flightNr)
@@ -161,7 +179,7 @@ namespace AirWaze.Controllers
         public IActionResult PlanePicker(FlightCreateViewModel flightViewModel, string id)
         {
             flightViewModel = tempFlights.SingleOrDefault(x => x.FlightNr == id);
-            flightViewModel.CurrentPlane = planes.FirstOrDefault(x => x.PlaneNr == Request.Form["selectedPlaneNr"]);
+            flightViewModel.CurrentPlane = PlaneController.planeEntities.FirstOrDefault(x => x.PlaneNr == Request.Form["selectedPlaneNr"]);
 
             if (TryValidateModel(flightViewModel))
             {
@@ -189,6 +207,7 @@ namespace AirWaze.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         //Roles: Admin + Airport Staff
         [HttpGet]
         public IActionResult Edit(string id)
@@ -218,12 +237,13 @@ namespace AirWaze.Controllers
             return View(flightEdit);
         }
 
+        [Authorize(Roles = "Admin")]
         //Roles: Admin + Airport Staff
         [ValidateAntiForgeryToken]
         [HttpPost]
         public IActionResult Edit(string id, FlightEditViewModel flightViewModel)
         {
-            flightViewModel.CurrentPlane = planes.FirstOrDefault(x => x.PlaneNr == Request.Form["selectedPlaneNr"]);
+            flightViewModel.CurrentPlane = PlaneController.planeEntities.FirstOrDefault(x => x.PlaneNr == Request.Form["selectedPlaneNr"]);
             flightViewModel.Status = Convert.ToInt32(Request.Form["selectedStatus"]);
             flightViewModel.FlightNr = id;
 
@@ -253,6 +273,7 @@ namespace AirWaze.Controllers
             return RedirectToAction("Index", "Flight");
         }
 
+        [Authorize(Roles = "Admin")]
         //Roles: Admin + Airport Staff
         [HttpGet]
         public IActionResult Delete(string id)
@@ -266,8 +287,8 @@ namespace AirWaze.Controllers
             //TODO: review below check if Database is implemented
             //Flight can only be deleted if flight status is 0 - Generated and there are 0 booked tickets for this flight
             //Otherwise -> Cancel flight via Edit Action (need record of this flight)
-            if (flightEntity.Status == 0 && _airwazeDatabase.GetTicketsByFlight(flightEntity.FlightNr).Count == 0)
-            {
+            //if (flightEntity.Status == 0 && _airwazeDatabase.GetTicketsByFlight(flightEntity.FlightNr).Count == 0)
+            //{
                 var flightViewModel = new FlightDeleteViewModel
                 {
                     FlightID = flightEntity.FlightID,
@@ -277,14 +298,15 @@ namespace AirWaze.Controllers
                 };
 
                 return View(flightViewModel);
-            }
-            else
-            {
-                //TODO: throw message "cannot delete existing flight with booked tickets, please change flight status to "Cancelled"
-                return RedirectToAction("Index");
-            }
+            //}
+            //else
+            //{
+            //    //TODO: throw message "cannot delete existing flight with booked tickets, please change flight status to "Cancelled"
+            //    return RedirectToAction("Index");
+            //}
         }
 
+        [Authorize(Roles = "Admin")]
         //Roles: Admin + Airport Staff
         [HttpGet]
         public IActionResult DeleteConfirm(string id)
@@ -300,8 +322,6 @@ namespace AirWaze.Controllers
 
             return RedirectToAction("Index");
         }
-
-
 
         private string CreateFlightNr(FlightCreateViewModel flightmodel)
         {
@@ -325,35 +345,6 @@ namespace AirWaze.Controllers
                 }
                 tempFlightNrFull = tempFlightNr1 + tempFlightNr2.ToString("D2");
             }
-
-            //bool flightNrExists;
-
-            //do
-            //{
-            //    flightNrExists = false;
-
-            //    foreach(var flight in flights)
-            //    {
-            //        if(tempFlightNrFull == flight.FlightNr)
-            //        {
-            //            flightNrExists = true;
-            //        }
-            //    }
-
-            //    if(flightNrExists == true)
-            //    {
-            //        if (tempFlightNr2 == 99)
-            //        {
-            //            tempFlightNr2 = 0;
-            //        }
-            //        else
-            //        {
-            //            tempFlightNr2++;
-            //        }
-            //        tempFlightNrFull = tempFlightNr1 + tempFlightNr2.ToString("D2");
-            //    }
-
-            //} while (flightNrExists == true);
 
             return tempFlightNrFull;
         }

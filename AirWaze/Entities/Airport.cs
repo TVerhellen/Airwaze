@@ -5,18 +5,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AirWaze.Entities
 {
-    public static class Airport
+    public static class Airport 
     {
 
         private static string _name = "Batman Airport";
         private static string _adress = "Bosdreef 6 Istanbul Turkye";
         private static DateTime _currenttime = DateTime.Now;
         private static Random generator = new Random();
-        public static readonly IAirWazeDatabase myDatabase = HomeController._myDatabase;
+        public static  IAirWazeDatabase myDatabase;      
         public static bool IsOnline = false;
 
         public static Timer aTimer;
 
+        static Airport()
+        {
+            myDatabase = CrazyMethod(HomeController._myDatabase);
+        }
         public static string Name
         {
             get { return _name; }
@@ -37,10 +41,11 @@ namespace AirWaze.Entities
         public static Schedule CurrentSchedule { get; set; }
         public static Schedule ScheduleToApprove { get; set; }
 
-        public static List<Schedule> ComingSchedules { get; set; }
+        public static List<Schedule>? ApprovedSchedules { get; set; }
         
         public static void StartAirport()
         {
+           
             Runways = myDatabase.GetRunways();
             foreach (Runway x in Runways)
             {
@@ -51,41 +56,57 @@ namespace AirWaze.Entities
             {
                 x.IsAvailable = true;
             }
+            
             Flights = myDatabase.GetFlights();
             Planes = myDatabase.GetPlanes();
             Flights = Flights.FindAll(x => x.Status != 3 || x.Status != 5);
             Flights = Flights.OrderBy(flight => flight.Departure).ToList();
             IsOnline = true;
-            
-            StartTimer(6000);
+            StartTimer(1);
 
         }
 
         public static void StartTimer(int dueTime)
         {
             aTimer = new Timer(new TimerCallback(TimerProc));
-            aTimer.Change(dueTime, 6000);
+            aTimer.Change(dueTime, 30000);
         }
         private static void TimerProc(object state)
         {
-            Timer t = (Timer)state;                     
+            Timer t = (Timer)state;
             UpdateAirport();
         }
         public static void UpdateAirport()
         {
             foreach (Flight x in Flights)
-            {               
+            {
                 TimeSpan myspan = _currenttime - x.Departure;
-                if ( myspan.TotalMinutes < 0)
-                {                  
-                    x.Status = 3;                    
-                    FlightController.flights = Flights.ToList();                                  
-                    
+                if (myspan.TotalMinutes < 120 && x.CurrentPlane.IsAvailable == true)
+                {
+                    if (x.CurrentPlane != null)
+                    {
+                        x.CurrentPlane.IsAvailable = false;
+                        foreach (Plane y in Planes)
+                        {
+                            if(y.PlaneID == x.CurrentPlane.PlaneID)
+                            {
+                                y.IsAvailable = false;
+                                PlaneController.planeEntities = Planes.ToList();                               
+                            }
+                        }                       
+                    }                    
+                }              
+                if (myspan.TotalMinutes < 0)
+                {                
+                    x.Status = 3;
+                    myDatabase = CrazyMethod(HomeController._myDatabase);                                      
+                    FlightController.flights = Flights.ToList();
+
                     if (CurrentSchedule != null)
                     {
                         CurrentSchedule.Flights.Remove(x);
-                    }                    
-                }                             
+                    }
+                }               
             }
             Flights = FlightController.flights.ToList();
             Planes = PlaneController.planeEntities.ToList();
@@ -121,7 +142,7 @@ namespace AirWaze.Entities
             myshedule.Date = _currenttime;
             myshedule.ScheduleID = generator.Next(0, 10000);
             List<Flight> theseflights = new List<Flight>();
-           Flights = Flights.OrderBy(flight => flight.Departure).ToList();
+            Flights = Flights.OrderBy(flight => flight.Departure).ToList();
 
             for (int i = 0; i < Flights.Count; i++)
             {
@@ -153,30 +174,41 @@ namespace AirWaze.Entities
             myshedule.Date = chosenDate;
             myshedule.ScheduleID = generator.Next(0, 10000);
             List<Flight> theseflights = new List<Flight>();
-            Flights = (List<Flight>)Flights.OrderBy(flight => flight.Departure);
+            Flights = Flights.OrderBy(flight => flight.Departure).ToList();
 
-            for (int i = 0; i < 25; i++)
+            for (int i = 0; i < Flights.Count; i++)
             {
-                theseflights.Add(Flights[i]);
-            }
-            for (int i = 0; i < Gates.Count; i++)
-            {
-                if (Gates[i].IsAvailable == true)
+                if(Flights[i].Departure >= chosenDate)
                 {
-                    theseflights[i].CurrentGate = Gates[i];
-                    Gates[i].IsAvailable = false;
-                    Gates[i].CurrentFlight = theseflights[i];
+                    theseflights.Add(Flights[i]);
+                }
+                
+            }
+
+            if(theseflights.Count == 4)
+            {
+                for (int i = 0; i < Flights.Count; i++)
+                {
+                    if (Gates[i].IsAvailable == true)
+                    {
+                        theseflights[i].CurrentGate = Gates[i];
+                        Gates[i].IsAvailable = false;
+                        Gates[i].CurrentFlight = theseflights[i];
+                    }
+                }
+                for (int i = 0; i < Runways.Count; i++)
+                {
+                    if (Runways[i].IsAvailable == true)
+                    {
+                        theseflights[i].CurrentRunway = Runways[i];
+                        Runways[i].IsAvailable = false;
+                        Runways[i].CurrentFlight = theseflights[i];
+                    }
                 }
             }
-            for (int i = 0; i < Runways.Count; i++)
-            {
-                if (Runways[i].IsAvailable == true)
-                {
-                    theseflights[i].CurrentRunway = Runways[i];
-                    Runways[i].IsAvailable = false;
-                    Runways[i].CurrentFlight = theseflights[i];
-                }
-            }
+
+            myshedule.Flights = theseflights;
+
             return myshedule;
         }
 
@@ -201,11 +233,18 @@ namespace AirWaze.Entities
         public static void ViewScheduleAirliner()
         {
 
-        }      
+        }
         public static Schedule ConfirmSchedule(Schedule thisschedule)
         {
             return thisschedule;
         }
-    }
+        public static IAirWazeDatabase CrazyMethod(IAirWazeDatabase myDatabase)
+        {
+            List<IAirWazeDatabase> myList = new List<IAirWazeDatabase>();
+            myList.Add(myDatabase);
+            var goocheltruc = myList.ToList();
+            return goocheltruc[0];
 
+        }
+    }
 }

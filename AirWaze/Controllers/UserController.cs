@@ -2,6 +2,7 @@
 using AirWaze.Database.Design;
 using AirWaze.Entities;
 using AirWaze.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirWaze.Controllers
@@ -16,8 +17,8 @@ namespace AirWaze.Controllers
             _airWazeDatabase = airWazeDatabase;
             userEntities = _airWazeDatabase.GetUsers();
         }
-        
 
+        [Authorize(Roles = "Admin, Customer")]
         //only user + admin
         [HttpGet]
         public IActionResult Index()
@@ -31,6 +32,7 @@ namespace AirWaze.Controllers
             
         }
 
+        [Authorize(Roles = "Admin, Customer")]
         [HttpGet]
         public IActionResult CustomerHome()
         {
@@ -39,6 +41,7 @@ namespace AirWaze.Controllers
 
         }
 
+        [Authorize(Roles = "Admin, Customer")]
         //only user + admin
         [Route("User/Detail/{UserID:Guid}")]
         [HttpGet]
@@ -67,6 +70,7 @@ namespace AirWaze.Controllers
 
         }
 
+        [Authorize(Roles = "Admin, Customer")]
         //only user + admin
         [HttpGet]
         public IActionResult Create()
@@ -75,6 +79,7 @@ namespace AirWaze.Controllers
             return View(userCreateViewModel);
         }
 
+        [Authorize(Roles = "Admin, Customer")]
         //only user + admin
         [ValidateAntiForgeryToken]
         [HttpPost]
@@ -114,6 +119,7 @@ namespace AirWaze.Controllers
 
         }
 
+        [Authorize(Roles = "Admin, Customer")]
         //only user + admin
         [Route("User/Edit/{UserID:Guid}")]
         [HttpGet]
@@ -139,6 +145,8 @@ namespace AirWaze.Controllers
             return View(userEditViewModel);
 
         }
+
+        [Authorize(Roles = "Admin, Customer")]
         //only user + admin
         [ValidateAntiForgeryToken]
         [HttpPost]
@@ -167,7 +175,7 @@ namespace AirWaze.Controllers
 
         }
 
-        
+        [Authorize(Roles = "Admin, Customer")]
         //only user + admin
         [Route("User/Delete/{UserID:Guid}")]
         [HttpGet]
@@ -185,6 +193,7 @@ namespace AirWaze.Controllers
 
         }
 
+        [Authorize(Roles = "Admin, Customer")]
         //only user + admin
         [Route("User/Delete/{UserID:Guid}")]
         [HttpPost]
