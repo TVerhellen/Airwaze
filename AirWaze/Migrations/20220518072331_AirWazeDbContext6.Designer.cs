@@ -4,6 +4,7 @@ using AirWaze.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AirWaze.Migrations
 {
     [DbContext(typeof(AirWazeDbContext))]
-    partial class AirWazeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220518072331_AirWazeDbContext6")]
+    partial class AirWazeDbContext6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

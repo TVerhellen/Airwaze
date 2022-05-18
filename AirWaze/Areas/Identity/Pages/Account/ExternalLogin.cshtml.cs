@@ -78,6 +78,46 @@ namespace AirWaze.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
+            [Required]
+            [StringLength(255, ErrorMessage = "The firstname field should have a maximum of 255 characters.")]
+            [Display(Name = "Firstname")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [StringLength(255, ErrorMessage = "The lastname field should have a maximum of 255 characters.")]
+            [Display(Name = "Lastname")]
+            public string LastName { get; set; }
+
+            //[MinLength(1, ErrorMessage = "Minimum 1 character!")]
+            //[MaxLength(50, ErrorMessage = "Maximum 50 characters!")]
+            //[Required(AllowEmptyStrings = false, ErrorMessage = "Streetname is required!")]
+            //public string StreetName { get; set; }
+
+            //[Range(0, int.MaxValue, ErrorMessage = "Housenumber error")]
+            //[Required(AllowEmptyStrings = false, ErrorMessage = "Housenumber is required!")]
+            //public string HouseNumber { get; set; }
+
+            //[Range(0, int.MaxValue, ErrorMessage = "Bus error")]
+            //public string? Bus { get; set; }
+
+            //[Required(ErrorMessage = "Zipcode is Required")]
+            //[DataType(DataType.PostalCode)]
+            //public string Zipcode { get; set; }
+
+            //[MinLength(1, ErrorMessage = "Minimum 1 character!")]
+            //[MaxLength(50, ErrorMessage = "Maximum 50 characters!")]
+            //[Required(AllowEmptyStrings = false, ErrorMessage = "City is required!")]
+            //public string City { get; set; }
+
+            //[MinLength(1, ErrorMessage = "Minimum 1 character!")]
+            //[MaxLength(50, ErrorMessage = "Maximum 50 characters!")]
+            //[Required(AllowEmptyStrings = false, ErrorMessage = "Country is required!")]
+            //public string Country { get; set; }
+
+            //[Required(ErrorMessage = "You must provide a phonenumber")]
+            //[Display(Name = "Phonenumber")]
+            //[DataType(DataType.PhoneNumber)]
+            //public string PhoneNumber { get; set; }
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -153,6 +193,9 @@ namespace AirWaze.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+
+                user.FirstName = Input.FirstName;
+                user.LastName = Input.LastName;
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
