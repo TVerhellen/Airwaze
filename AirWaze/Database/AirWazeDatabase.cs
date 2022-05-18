@@ -219,7 +219,7 @@ namespace AirWaze.Database
 
         public List<Gate> GetGates()
         {
-            throw new NotImplementedException();
+            return _dbContext.Gates.ToList();
         }
 
         public Gate GetGateByID(Guid id)
@@ -234,7 +234,7 @@ namespace AirWaze.Database
 
         public List<Runway> GetRunways()
         {
-            throw new NotImplementedException();
+            return _dbContext.Runways.ToList();
         }
 
         public Runway GetRuwaysByID(string nr)
