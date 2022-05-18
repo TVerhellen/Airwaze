@@ -1,0 +1,91 @@
+﻿@using AirWaze.Models
+@using AirWaze.Entities
+@using AirWaze.Controllers
+
+
+
+@if(@AdminController.scheduleToApprove == null)
+{
+    <a class="btn btn-primary" asp-controller="Admin" asp-action="GenerateSchedule" >Generate New Schedule</a>
+}
+
+
+<h1>Flight Schedule to Approve:</h1>
+@if(@AdminController.scheduleToApprove == null)
+{
+    <p>All schedules have been approved.</p>
+}
+else
+{
+<p>@AdminController.scheduleToApprove.Date.ToString("D") - @AdminController.scheduleToApprove.Date.ToString("00"):</p>
+<a class="btn btn-primary" asp-controller="Admin" asp-action="ApproveSchedule" >Approve Schedule</a>
+}
+
+
+<a class="btn btn-primary" asp-controller="Admin" asp-action="ListSchedule" >See All Approved Schedules</a>
+@*
+
+move to ListSchedules
+<h1>Approved Flight Schedules:</h1>
+@if(Airport.ApprovedSchedules.Count == 0)
+{
+    <h2>There are no approved schedules yet.</h2>
+}
+else
+{
+    
+@foreach(var schedule in Airport.ApprovedSchedules)
+{
+    
+    <p>@schedCounter: @schedule.Flights[schedCounter].Departure - @Airport.CurrentSchedule.Flights[schedCounter].FlightNr - @Airport.CurrentSchedule.Flights[schedCounter].Destination - Gate @Airport.CurrentSchedule.Flights[schedCounter].CurrentGate</p>
+    switch (@Airport.CurrentSchedule.Flights[schedCounter].Status)
+    {
+        case 1:
+            <p>Status: DELAYED</p>
+            break;
+        case 2:
+            <p>Status: BOARDING</p>
+            break;
+        case 3:
+            <p>Status: DEPARTED</p>
+            break;
+        case 4:
+            <p>Status: ARRIVED</p>
+            break;
+        case 5:
+            <p>Status: CANCELLED</p>
+            break;
+        default:
+            break;
+    }
+}
+
+
+
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Movies:</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var movie in Model)
+        {
+            <tr>
+                <td>
+                    @movie.Name
+                    <a asp-controller="Movie" asp-action="Detail" asp-route-id="@movie.MovieID">Details</a>
+                    <a asp-controller="Movie" asp-action="Edit" asp-route-id="@movie.MovieID">Edit</a>
+                    <a asp-controller="Movie" asp-action="Delete" asp-route-id="@movie.MovieID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+*@

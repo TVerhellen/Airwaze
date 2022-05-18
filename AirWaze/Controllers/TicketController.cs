@@ -23,18 +23,19 @@ namespace AirWaze.Controllers
 
         static User myUser = new User()
         {
-            UserID = Guid.Parse("549C7D76-AEBB-4956-BC79-BFF28F67D9CA"),
+            UserID = Guid.Parse("7B1A9A6C-658A-4391-8149-1184FAC528BE"),
             //Name = "tverhel",
             //Password = "password",
             LastName = "Verhellen",
             FirstName = "Tijs",
-            Email = "tijsverhellen2@gmail.com",
-            StreetName = "Savaanstraat",
-            HouseNumber = "33",
-            Zipcode = "9000",
-            City = "Ghent",
+            Email = "tijs@milehighclub.com",
+            StreetName = "Koperstraat",
+            HouseNumber = "894",
+            Bus = "4",
+            Zipcode = "1000",
+            City = "Brussel",
             Country = "Belgium",
-            PhoneNumber = "+32477777777",
+            PhoneNumber = "0456789456",
             //IsVerified = true
         };
 

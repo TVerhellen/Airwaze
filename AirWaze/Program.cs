@@ -1,29 +1,50 @@
+using AirWaze.Areas.Identity.Data;
 using AirWaze.Data;
 using AirWaze.Database;
 using AirWaze.Database.Design;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'AirWazeContextConnection' not found.");
 
-// Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+//builder.Services.AddDbContext<AirWazeContext>(options =>
+//    options.UseSqlServer(connectionString));;
+
+//builder.Services.AddDefaultIdentity<AirWazeUser>(options => options.SignIn.RequireConfirmedAccount = true)
+//    .AddEntityFrameworkStores<AirWazeContext>();;
+//var connectionString = builder.Configuration.GetConnectionString("AirWazeContextConnection") ?? throw new InvalidOperationException("Connection string 'AirWazeContextConnection' not found.");
+
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<AirWazeUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-
+//login Google
+builder.Services.AddAuthentication()
+    .AddGoogle(googleOptions =>
+    {
+        googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+        googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+    });
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IAirWazeDatabase, AirWazeDatabase>();
+
+builder.Services.AddDbContext<AirWazeDbContext>(options =>
+     options.UseSqlServer(connectionString));
+
 builder.Services.AddServerSideBlazor();
 
-// Session stuff
+//// Session stuff
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
@@ -32,12 +53,6 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
-
-
-builder.Services.AddScoped<IAirWazeDatabase, AirWazeDatabase>();
-
-builder.Services.AddDbContext<AirWazeDbContext>(options =>
-    options.UseSqlServer(connectionString));
 
 var app = builder.Build();
 

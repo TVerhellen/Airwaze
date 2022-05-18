@@ -23,12 +23,15 @@ namespace AirWaze.Database
         public void AddFlight(Flight flight)
         {
             _dbContext.Flights.Add(flight);
+            _dbContext.Entry(flight.CurrentPlane).State = EntityState.Unchanged;
+            //_dbContext.Entry(flight.CurrentGate).State = EntityState.Unchanged;
+            //_dbContext.Entry(flight.CurrentRunway).State = EntityState.Unchanged;
             _dbContext.SaveChanges();
         }
 
         public void AddPlane(Plane plane)
         {
-            
+
             _dbContext.Airlines.Remove(_dbContext.Airlines.FirstOrDefault(x => x.AirlineID == plane.CurrentAirline.AirlineID));
             _dbContext.Airlines.Update(plane.CurrentAirline);
             _dbContext.Planes.Add(plane);
@@ -36,7 +39,7 @@ namespace AirWaze.Database
         }
 
         public Airline GetAirlineByID(Guid ID)
-        { 
+        {
             return _dbContext.Airlines.SingleOrDefault(airline => airline.AirlineID == ID);
         }
 
@@ -102,7 +105,7 @@ namespace AirWaze.Database
 
         public List<Plane> GetPlanes()
         {
-            return _dbContext.Planes.ToList();
+            return _dbContext.Planes.Include(x => x.CurrentAirline).ToList();
         }
         public List<Ticket> GetTicketsByFlight(string flightnr)
         {
@@ -118,7 +121,7 @@ namespace AirWaze.Database
 
         public void RemoveAirline(Airline airline)
         {
-            _dbContext.Airlines.Remove(airline);           
+            _dbContext.Airlines.Remove(airline);
             _dbContext.SaveChanges();
         }
 
@@ -223,15 +226,14 @@ namespace AirWaze.Database
             return _dbContext.Gates.ToList();
         }
 
-        public Gate GetGateByID(int id)
+        public Gate GetGateByID(Guid id)
         {
-            return _dbContext.Gates.SingleOrDefault(gate => gate.GateID == id);
+            throw new NotImplementedException();
         }
 
-        public void AddGate(Gate gate)
+        public void AddGate(Gate flight)
         {
-            _dbContext.Gates.Add(gate);
-            _dbContext.SaveChanges();
+            throw new NotImplementedException();
         }
 
         public List<Runway> GetRunways()
@@ -239,15 +241,24 @@ namespace AirWaze.Database
             return _dbContext.Runways.ToList();
         }
 
-        public Runway GetRuwaysByID(int id)
+        public Runway GetRuwaysByID(string nr)
         {
-            return _dbContext.Runways.SingleOrDefault(runway => runway.RunwayID == id);
+            throw new NotImplementedException();
         }
 
         public void AddRunway(Runway runway)
         {
-            _dbContext.Runways.Add(runway);
-            _dbContext.SaveChanges();
+            throw new NotImplementedException();
         }
-    }
+
+        public Gate GetGateByID(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Runway GetRuwaysByID(int nr)
+        {
+            throw new NotImplementedException();
+        }
+    } 
 }

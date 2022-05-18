@@ -8,7 +8,7 @@ namespace AirWaze.Controllers
     public class FlightController : Controller
     {
         //private readonly List<Flight> flights = new List<Flight>();
-        private readonly IAirWazeDatabase _airwazeDatabase;
+        public readonly IAirWazeDatabase _airwazeDatabase;
         public static List<Flight> flights = new List<Flight>();
         public static List<Plane> planes = new List<Plane>();
         public static List<FlightCreateViewModel> tempFlights = new List<FlightCreateViewModel>();
@@ -137,7 +137,7 @@ namespace AirWaze.Controllers
             if (TryValidateModel(flightViewModel))
             {
                 tempFlights.Add(flightViewModel);   
-                return RedirectToAction("FlightPicker", new { flightNr = flightViewModel.FlightNr });
+                return RedirectToAction("PlanePicker", new { flightNr = flightViewModel.FlightNr });
             }
             else
             {
@@ -146,7 +146,8 @@ namespace AirWaze.Controllers
         }
 
         [HttpGet]
-        public IActionResult FlightPicker(string flightNr)
+        //[Route("Flight/PlanePicker/{flightNr}")]
+        public IActionResult PlanePicker(string flightNr)
         {
             var flightCreateViewModel = tempFlights.SingleOrDefault(x => x.FlightNr == flightNr);
             
@@ -155,7 +156,7 @@ namespace AirWaze.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult FlightPicker(FlightCreateViewModel flightViewModel, string id)
+        public IActionResult PlanePicker(FlightCreateViewModel flightViewModel, string id)
         {
             flightViewModel = tempFlights.SingleOrDefault(x => x.FlightNr == id);
             flightViewModel.CurrentPlane = planes.FirstOrDefault(x => x.PlaneNr == Request.Form["selectedPlaneNr"]);
