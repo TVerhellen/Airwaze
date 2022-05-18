@@ -125,6 +125,7 @@
         var window = await jsRuntime.Window();
         var navigator = await window.Navigator();
         geolocationWrapper = navigator.Geolocation;
+         StartTimer();
     }
     public async Task GetGeolocation()
     {
@@ -135,12 +136,13 @@
             TimeoutTimeSpan = TimeSpan.FromMinutes(1)
 
         })).Location;
-        StartTimer();
+       await Task.Delay(2000);
     }
 
-    public void StartTimer()
+    public async Task StartTimer()
     {
-        GetGeolocation();   
+        await GetGeolocation();   
+        
         thisTimer = new System.Timers.Timer(1000);
         thisTimer.Elapsed += CountDownTimer;
         thisTimer.Enabled = true;
@@ -151,6 +153,9 @@
     {
         if (counter % 5 == 0 || counter < 5)
         {
+             GetDistanceVsStation();
+            GetDistanceVsGang();
+            GetDistanceVsWH();       
             counter += 1;
             GetGeolocation();  
             WatchPosition();
@@ -183,7 +188,7 @@
     public async Task WatchPosition(){
         geopositionWatcher = await geolocationWrapper.WatchPosition(async (p) =>
         {
-            if (p.Location.Coords != positioHistory.Last().Coords)
+            if (positioHistory.Count == 0)
             {
                 positioHistory.Add(p.Location);
                 distancevsstationlist.Add(distancestation);
@@ -191,7 +196,14 @@
                 distancevswhlist.Add(distancewhitehouse);
                 StateHasChanged();
             }
-
+            else if (p.Location.Coords.Longitude != positioHistory.Last().Coords.Longitude && p.Location.Coords.Latitude != positioHistory.Last().Coords.Latitude)
+            {
+                positioHistory.Add(p.Location);
+                distancevsstationlist.Add(distancestation);
+                distancevsganglist.Add(distancegang);
+                distancevswhlist.Add(distancewhitehouse);
+                StateHasChanged();
+            }
         }
         );
     }
