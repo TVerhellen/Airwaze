@@ -1,6 +1,7 @@
 ﻿using AirWaze.Database.Design;
 using AirWaze.Entities;
 using AirWaze.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirWaze.Controllers
@@ -132,7 +133,8 @@ namespace AirWaze.Controllers
             }
             return View();
         }
-        
+
+        [Authorize(Roles = "Admin")]
         //Roles: Admin + Airport Staff
         [HttpGet]
         public IActionResult Create()
@@ -141,6 +143,7 @@ namespace AirWaze.Controllers
             return View(flightViewModel);
         }
 
+        [Authorize(Roles = "Admin")]
         //Roles: Admin + Airport Staff
         [ValidateAntiForgeryToken]
         [HttpPost]
@@ -163,6 +166,7 @@ namespace AirWaze.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         //[Route("Flight/PlanePicker/{flightNr}")]
         public IActionResult PlanePicker(string flightNr)
@@ -205,6 +209,7 @@ namespace AirWaze.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         //Roles: Admin + Airport Staff
         [HttpGet]
         public IActionResult Edit(string id)
@@ -234,6 +239,7 @@ namespace AirWaze.Controllers
             return View(flightEdit);
         }
 
+        [Authorize(Roles = "Admin")]
         //Roles: Admin + Airport Staff
         [ValidateAntiForgeryToken]
         [HttpPost]
@@ -269,6 +275,7 @@ namespace AirWaze.Controllers
             return RedirectToAction("Index", "Flight");
         }
 
+        [Authorize(Roles = "Admin")]
         //Roles: Admin + Airport Staff
         [HttpGet]
         public IActionResult Delete(string id)
@@ -301,6 +308,7 @@ namespace AirWaze.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         //Roles: Admin + Airport Staff
         [HttpGet]
         public IActionResult DeleteConfirm(string id)
@@ -316,8 +324,6 @@ namespace AirWaze.Controllers
 
             return RedirectToAction("Index");
         }
-
-
 
         private string CreateFlightNr(FlightCreateViewModel flightmodel)
         {
