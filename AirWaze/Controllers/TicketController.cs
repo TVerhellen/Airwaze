@@ -28,13 +28,14 @@ namespace AirWaze.Controllers
             //Password = "password",
             LastName = "Verhellen",
             FirstName = "Tijs",
-            Email = "tijsverhellen2@gmail.com",
-            StreetName = "Savaanstraat",
-            HouseNumber = "33",
-            Zipcode = "9000",
-            City = "Ghent",
+            Email = "tijs@milehighclub.com",
+            StreetName = "Koperstraat",
+            HouseNumber = "894",
+            Bus = "4",
+            Zipcode = "1000",
+            City = "Brussel",
             Country = "Belgium",
-            PhoneNumber = "+32477777777",
+            PhoneNumber = "0456789456",
             //IsVerified = true
         };
 
