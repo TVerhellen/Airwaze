@@ -30,13 +30,15 @@ namespace AirWaze.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<AirWazeUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
             UserManager<AirWazeUser> userManager,
             IUserStore<AirWazeUser> userStore,
             SignInManager<AirWazeUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -44,6 +46,7 @@ namespace AirWaze.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
         }
 
         /// <summary>
@@ -81,36 +84,6 @@ namespace AirWaze.Areas.Identity.Pages.Account
             [Display(Name = "Lastname")]
             public string LastName { get; set; }
 
-            //[MinLength(1, ErrorMessage = "Minimum 1 character!")]
-            //[MaxLength(50, ErrorMessage = "Maximum 50 characters!")]
-            //[Required(AllowEmptyStrings = false, ErrorMessage = "Streetname is required!")]
-            //public string StreetName { get; set; }
-
-            //[Range(0, int.MaxValue, ErrorMessage = "Housenumber error")]
-            //[Required(AllowEmptyStrings = false, ErrorMessage = "Housenumber is required!")]
-            //public string HouseNumber { get; set; }
-
-            //[Range(0, int.MaxValue, ErrorMessage = "Bus error")]
-            //public string? Bus { get; set; }
-
-            //[Required(ErrorMessage = "Zipcode is Required")]
-            //[DataType(DataType.PostalCode)]
-            //public string Zipcode { get; set; }
-
-            //[MinLength(1, ErrorMessage = "Minimum 1 character!")]
-            //[MaxLength(50, ErrorMessage = "Maximum 50 characters!")]
-            //[Required(AllowEmptyStrings = false, ErrorMessage = "City is required!")]
-            //public string City { get; set; }
-
-            //[MinLength(1, ErrorMessage = "Minimum 1 character!")]
-            //[MaxLength(50, ErrorMessage = "Maximum 50 characters!")]
-            //[Required(AllowEmptyStrings = false, ErrorMessage = "Country is required!")]
-            //public string Country { get; set; }
-
-            //[Required(ErrorMessage = "You must provide a phonenumber")]
-            //[Display(Name = "Phonenumber")]
-            //[DataType(DataType.PhoneNumber)]
-            //public string PhoneNumber { get; set; }
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -165,6 +138,11 @@ namespace AirWaze.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+                    var defaultrole = _roleManager.FindByNameAsync("Customer").Result;
+                    if (defaultrole != null)
+                    {
+                        IdentityResult roleresult = await _userManager.AddToRoleAsync(user, defaultrole.Name);
+                    }
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
