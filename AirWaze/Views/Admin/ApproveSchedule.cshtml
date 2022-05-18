@@ -5,13 +5,25 @@
 <br />
 <h2>@AdminController.scheduleToApprove.Date.ToString("D") - @AdminController.scheduleToApprove.Date.Hour.ToString("00"): @AdminController.scheduleToApprove.Date.Minute.ToString("00")</h2>
 <br />
-<h2>Flights:</h2>
+@if(@AdminController.scheduleToApprove.Flights.Count == 0)
+{
+    <p>There are no flights in this schedule.</p>
+}
+else
+{
+    <h2>Flights:</h2>
 @for(int i = 0; i < @AdminController.scheduleToApprove.Flights.Count; i++)
 {
-    <p>@i: @AdminController.scheduleToApprove.Flights[i].Departure - @AdminController.scheduleToApprove.Flights[i].FlightNr - @AdminController.scheduleToApprove.Flights[i].Destination - Gate @AdminController.scheduleToApprove.Flights[i].CurrentGate</p>
+    <p>@i: @AdminController.scheduleToApprove.Flights[i].Departure - @AdminController.scheduleToApprove.Flights[i].FlightNr - @AdminController.scheduleToApprove.Flights[i].Destination - Gate @AdminController.scheduleToApprove.Flights[i].CurrentGate.Number</p>
+}
 }
 <br />
-<a class="btn btn-primary" asp-controller="Admin" asp-action="ConfirmApproveSchedule">Yes - Approve</a>
+@if(@AdminController.scheduleToApprove.Flights.Count > 0)
+{
+    <a class="btn btn-success" asp-controller="Admin" asp-action="ConfirmApproveSchedule">Yes - Approve</a>
 <a class="btn btn-warning" asp-controller="Admin" asp-action="Schedule">No - Go Back</a>
+}
 <a class="btn btn-danger" asp-controller="Admin" asp-action="DeleteSchedule">No - Delete this Schedule</a>
+
+
 

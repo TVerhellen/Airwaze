@@ -66,7 +66,7 @@ namespace AirWaze.Controllers
                     }
                 }
             }
-            planes = _airwazeDatabase.GetPlanes();
+            //planes = _airwazeDatabase.GetPlanes();
         }
 
         //Roles: Everyone

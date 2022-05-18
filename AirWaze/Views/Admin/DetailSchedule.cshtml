@@ -8,7 +8,7 @@
 
         @foreach(var flight in @Model.Flights)
         {
-            <p>@flightCounter: @Model.Flights[flightCounter-1].Departure - @Model.Flights[flightCounter-1].FlightNr - @Model.Flights[flightCounter-1].Destination - Gate @Model.Flights[flightCounter-1].CurrentGate</p>
+            <p>@flightCounter: @Model.Flights[flightCounter-1].Departure - @Model.Flights[flightCounter-1].FlightNr - @Model.Flights[flightCounter-1].Destination - Gate @Model.Flights[flightCounter-1].CurrentGate.Number</p>
             switch (@Model.Flights[flightCounter-1].Status)
             {
                 case 1:

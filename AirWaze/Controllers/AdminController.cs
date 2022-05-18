@@ -94,6 +94,7 @@ namespace AirWaze.Controllers
         public IActionResult DetailSchedule(int index)
         {
             ScheduleGenerateViewModel viewModel = new ScheduleGenerateViewModel();
+            viewModel.Flights = new List<Flight>();
 
             if (index == -1)
             {
@@ -104,7 +105,10 @@ namespace AirWaze.Controllers
             else
             {
                 viewModel.Date = Airport.ApprovedSchedules[index].Date;
-                viewModel.Flights = Airport.ApprovedSchedules[index].Flights;
+                foreach(var flight in Airport.ApprovedSchedules[index].Flights)
+                {
+                    viewModel.Flights.Add(flight);
+                }
                 viewModel.IsValidated = Airport.ApprovedSchedules[index].IsValidated;
             }
             return View(viewModel);
