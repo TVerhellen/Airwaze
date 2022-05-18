@@ -48,8 +48,19 @@ namespace AirWaze.Controllers
         };
         public FlightController(IAirWazeDatabase airwazeDatabase)
         {
+            List<Flight> oldlist = flights.ToList();
             _airwazeDatabase = airwazeDatabase;
             flights = _airwazeDatabase.GetFlights();
+            foreach (Flight x in flights)
+            {
+                foreach(Flight y in oldlist)
+                {
+                    if (x.FlightID == y.FlightID)
+                    {
+                        x.Status = y.Status;
+                    }
+                }
+            }
             planes = _airwazeDatabase.GetPlanes();
         }
 
