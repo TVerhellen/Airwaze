@@ -53,7 +53,7 @@
         <label>Plane</label>
         <br />
         <select name="selectedPlaneNr">
-            @foreach(var item in @FlightController.planes)
+            @foreach(var item in @PlaneController.planeEntities)
             {
                  <option value=@item.PlaneNr>@item.CurrentAirline.Name - @item.PlaneNr</option>
             }

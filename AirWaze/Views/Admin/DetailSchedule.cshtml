@@ -1,0 +1,37 @@
+﻿@using AirWaze.Models
+@model ScheduleGenerateViewModel
+
+@{
+    int flightCounter = 1;
+}
+<h1>Schedule for @Model.Date.ToString("D") - @Model.Date.Hour.ToString("00") : @Model.Date.Minute.ToString("00")</h1>
+
+        @foreach(var flight in @Model.Flights)
+        {
+            <p>@flightCounter: @Model.Flights[flightCounter-1].Departure - @Model.Flights[flightCounter-1].FlightNr - @Model.Flights[flightCounter-1].Destination - Gate @Model.Flights[flightCounter-1].CurrentGate</p>
+            switch (@Model.Flights[flightCounter-1].Status)
+            {
+                case 1:
+                    <p>Status: DELAYED</p>
+                    break;
+                case 2:
+                    <p>Status: BOARDING</p>
+                    break;
+                case 3:
+                    <p>Status: DEPARTED</p>
+                    break;
+                case 4:
+                    <p>Status: ARRIVED</p>
+                    break;
+                case 5:
+                    <p>Status: CANCELLED</p>
+                    break;
+                default:
+                    break;
+            }
+            flightCounter++;
+        }       
+
+<br />
+<br />
+<a class="btn btn-primary" asp-controller="Admin" asp-action="Schedule" >Go Back</a>

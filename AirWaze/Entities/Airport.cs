@@ -37,7 +37,7 @@ namespace AirWaze.Entities
         public static Schedule CurrentSchedule { get; set; }
         public static Schedule ScheduleToApprove { get; set; }
 
-        public static List<Schedule> ComingSchedules { get; set; }
+        public static List<Schedule>? ApprovedSchedules { get; set; }
         
         public static void StartAirport()
         {
@@ -119,7 +119,8 @@ namespace AirWaze.Entities
             myshedule.Date = _currenttime;
             myshedule.ScheduleID = generator.Next(0, 10000);
             List<Flight> theseflights = new List<Flight>();
-           Flights = Flights.OrderBy(flight => flight.Departure).ToList();
+            //Flights = Flights.OrderBy(flight => flight.Departure).ToList();
+            Flights = FlightController.flights.OrderBy(flight => flight.Departure).ToList();
 
             for (int i = 0; i < Flights.Count; i++)
             {
@@ -151,13 +152,22 @@ namespace AirWaze.Entities
             myshedule.Date = chosenDate;
             myshedule.ScheduleID = generator.Next(0, 10000);
             List<Flight> theseflights = new List<Flight>();
-            Flights = (List<Flight>)Flights.OrderBy(flight => flight.Departure);
+            //Flights = (List<Flight>)Flights.OrderBy(flight => flight.Departure);
+            Flights = FlightController.flights.OrderBy(flight => flight.Departure).ToList();
 
-            for (int i = 0; i < 25; i++)
+
+            for (int i = 0; i < Flights.Count; i++)
             {
-                theseflights.Add(Flights[i]);
+                foreach(var flight in Flights)
+                {
+                    if(flight.Departure > chosenDate)
+                    {
+                        theseflights.Add(Flights[i]);
+                    }
+                }
+                
             }
-            for (int i = 0; i < Gates.Count; i++)
+            for (int i = 0; i < Flights.Count; i++)
             {
                 if (Gates[i].IsAvailable == true)
                 {
@@ -175,6 +185,9 @@ namespace AirWaze.Entities
                     Runways[i].CurrentFlight = theseflights[i];
                 }
             }
+
+            myshedule.Flights = theseflights;
+
             return myshedule;
         }
 
