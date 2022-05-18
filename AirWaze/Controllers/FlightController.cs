@@ -57,7 +57,12 @@ namespace AirWaze.Controllers
                 {
                     if (x.FlightID == y.FlightID)
                     {
-                        x.Status = y.Status;
+                        if (x.Status != y.Status)
+                        {
+                            x.Status = y.Status;
+                            _airwazeDatabase.UpdateFlight(x);
+                        }
+                        
                     }
                 }
             }
