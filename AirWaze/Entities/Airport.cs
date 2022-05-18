@@ -62,14 +62,14 @@ namespace AirWaze.Entities
             Flights = Flights.FindAll(x => x.Status != 3 || x.Status != 5);
             Flights = Flights.OrderBy(flight => flight.Departure).ToList();
             IsOnline = true;
-            StartTimer(6000);
+            StartTimer(1);
 
         }
 
         public static void StartTimer(int dueTime)
         {
             aTimer = new Timer(new TimerCallback(TimerProc));
-            aTimer.Change(dueTime, 6000);
+            aTimer.Change(dueTime, 30000);
         }
         private static void TimerProc(object state)
         {
