@@ -1,4 +1,5 @@
-﻿using AirWaze.Entities;
+﻿using AirWaze.Areas.Identity.Data;
+using AirWaze.Entities;
 using AirWaze.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -8,9 +9,9 @@ namespace AirWaze.Controllers
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<DefaultUser> _userManager;
+        private readonly UserManager<AirWazeUser> _userManager;
 
-        public RoleController(RoleManager<IdentityRole> roleManager, UserManager<DefaultUser> userManager)
+        public RoleController(RoleManager<IdentityRole> roleManager, UserManager<AirWazeUser> userManager)
         {
             _roleManager = roleManager;
             _userManager = userManager;
