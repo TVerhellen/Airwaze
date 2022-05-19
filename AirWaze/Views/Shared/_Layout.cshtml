@@ -63,9 +63,12 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="ListAllRoles">Roles</a>
                             </li>
                         }
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Map">Map Prototype</a>
-                        </li>
+                         @if (User.IsInRole("Customer") || !User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Map">Map Prototype</a>
+                            </li>
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
