@@ -8,6 +8,18 @@
 <h1>@Model.PlaneNr @Model.Manufacturer @Model.Type  </h1>
 <p>Delete this Plane??</p>
 
-<a class="btn btn-primary" asp-controller="Plane" asp-action="DeleteConfirm" asp-route-ID="@Model.PlaneNr" style="margin-left:10px;">Ja</a>
+<a class="btn btn-primary" onclick="message()" asp-controller="Plane" asp-action="DeleteConfirm" asp-route-ID="@Model.PlaneNr" style="margin-left:10px;">Ja</a>
     <a class="btn btn-primary" asp-controller="Plane" asp-action="Index" style="margin-left:10px;">Neen</a>
-    
+ 
+<script type="text/javascript">
+        function message()
+        {
+            Swal.fire({                   
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Plane Deleted',
+                    showConfirmButton: false,
+                    timer: 1500                 
+                    });
+        }
+    </script>

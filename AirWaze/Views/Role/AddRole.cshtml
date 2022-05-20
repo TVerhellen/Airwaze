@@ -16,9 +16,22 @@
     </div>
     </br>
     <div class="form-group col-4">
-        <button type="submit" class="btn btn-primary">Add role</button>
+        <button type="submit" class="btn btn-primary" onclick="message()">Add role</button>
         <div>
             <a asp-action="ListAllRoles" class="btn btn-warning my-3">Back</a>
         </div>
     </div>
 </form>
+
+<script type="text/javascript">
+        function message()
+        {
+            Swal.fire({                   
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Role Added',
+                    showConfirmButton: false,
+                    timer: 1500
+                    });
+        }
+    </script>

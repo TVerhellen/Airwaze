@@ -33,6 +33,7 @@
 
   <ItemGroup>
     <Folder Include="Scripts\" />
+    <Folder Include="wwwroot\js\limonte-sweetalert2\" />
   </ItemGroup>
 
 </Project>

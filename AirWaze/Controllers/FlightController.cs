@@ -52,25 +52,25 @@ namespace AirWaze.Controllers
             {
                 flights = _airwazeDatabase.GetFlights();
             }
-            
 
-            //foreach (Flight x in flights)
-            //{
-            //    foreach(Flight y in oldlist)
-            //    {
-            //        if (x.FlightID == y.FlightID)
-            //        {
-            //            if (x.Status != y.Status)
-            //            {
-            //                x.Status = y.Status;
-            //                //_airwazeDatabase.UpdateFlight(x);
-            //            }                       
-            //        }
-            //    }
-            
-            //planes = _airwazeDatabase.GetPlanes();
+
+            foreach (Flight x in flights)
+            {
+                foreach (Flight y in oldlist)
+                {
+                    if (x.FlightID == y.FlightID)
+                    {
+                        if (x.Status != y.Status)
+                        {
+                            x.Status = y.Status;
+                            //_airwazeDatabase.UpdateFlight(x);
+                        }
+                    }
+                }
+
+                //planes = _airwazeDatabase.GetPlanes();
+            }
         }
-
         //Roles: Everyone
         [HttpGet]
         public IActionResult Index()
