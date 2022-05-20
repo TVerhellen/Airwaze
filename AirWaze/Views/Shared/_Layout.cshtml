@@ -29,12 +29,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>            
-                        @if (User.IsInRole("Admin") )
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index"> Dashboard</a>
-                            </li>
-                        }
+
                         @if (User.IsInRole("Customer") || User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
@@ -72,8 +67,25 @@
     </div>
      <script src="_content/GeneralComponents/GeneralComponents.DOMHelpers.js"></script>
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - AirWaze - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <div class="container" style="padding-top: 20px;">
+                <div class="row">
+                    <div class="col-sm">
+                        <h6>About Us</h6>                        
+                    </div>
+                    <div class="col-sm">
+                        <h6>Address</h6>
+                        
+                        <p class="small">
+                            Airwaze
+                            <a href="https://g.page/luchthaven-antwerpen-anr?share">Luchthavenlei,
+                            2100 Antwerpen,</a>
+                            Belgium
+                        </p>                        
+                    </div>
+                    <div class="col-sm">
+                        <a  asp-action="Index" asp-controller="Contact"><h6>Contact us</h6></a>
+                    </div>
+                </div>
         </div>
     </footer>
      <script src="_content/BrowserInterop/scripts.js"></script>
