@@ -9,7 +9,10 @@ namespace AirWaze.Database
         {
 
         }
-
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.EnableSensitiveDataLogging();
+        }
         public DbSet<Flight> Flights { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
