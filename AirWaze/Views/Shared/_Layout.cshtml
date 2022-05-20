@@ -8,7 +8,8 @@
     <title>@ViewData["Title"] - AirWaze</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/AirWaze.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AirWaze.styles.css" asp-append-version="true" />   
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 </head>
 <body>
     <header>
@@ -27,19 +28,19 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>            
-                        @if (User.IsInRole("Airline"))
+                        @if (User.IsInRole("Airline, Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Airline" asp-action="Index">Airlines (Airline Role)</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Airline" asp-action="Index">Dashboard</a>
                             </li>
                         }
                         @if (User.IsInRole("Admin") )
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index"> Admin Role</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index"> Dashboard</a>
                             </li>
                         }
-                        @if (User.IsInRole("Admin") || User.IsInRole("Customer"))
+                        @if (User.IsInRole("Customer, Admin"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Ticket" asp-action="List">Tickets</a>
@@ -57,12 +58,6 @@
                         @*<li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Users</a>
                         </li>*@
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="ListAllRoles">Roles</a>
-                            </li>
-                        }
                          @if (User.IsInRole("Customer") || !User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
