@@ -29,19 +29,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>            
-                        @if (User.IsInRole("Airline, Admin"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Airline" asp-action="Index">Dashboard</a>
-                            </li>
-                        }
                         @if (User.IsInRole("Admin") )
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index"> Dashboard</a>
                             </li>
                         }
-                        @if (User.IsInRole("Customer, Admin"))
+                        @if (User.IsInRole("Customer") || User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Ticket" asp-action="List">Tickets</a>
