@@ -1,0 +1,217 @@
+﻿
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.AspNetCore.Http.Extensions
+@using Microsoft.Extensions.Logging
+@using Blazor.Extensions; 
+@using Blazor.Extensions.Canvas
+@using Blazor.Extensions.Canvas.Canvas2D;
+@using Microsoft.AspNetCore.Mvc.TagHelpers;
+@using Microsoft.JSInterop
+@using BrowserInterop.Extensions
+@using BrowserInterop.Geolocation
+@inject ILogger<Canvasformap> Logger
+
+@inject IJSRuntime jsRuntime
+
+
+<h1>Timer</h1>
+
+<p>@counter</p>
+<button @onclick="StartTimer">Start</button>   
+
+<br />
+
+@if (imageSource is not null)
+{
+    <div >
+        <img name="myImg" src="@imageSource" object-position="@position"/>
+    </div>
+}
+
+
+{
+    
+    <button @onclick="ShowImage">
+        Image
+    </button>
+    <button @onclick="SetRandomPoints">
+        Probeersel
+    </button>
+}
+
+<h1>Klik om vierkanten toe te voegen</h1>
+<div @onmousedown="ReportPointerLocation">
+<BECanvas Width="600" Height="400" @ref="_canvasReference">
+    
+</BECanvas>
+</div>
+
+
+
+
+@for (var i = 0; i < 4; i++)
+{
+    <p>
+        <button @onclick="ReportPointerLocation">
+            Where's my mouse pointer for this button?
+        </button>
+    </p>
+}
+<p>@mousePointerMessage</p>
+
+
+<h1>@currentHeading</h1>
+<p>
+    <label>
+        New title
+        <input @bind="newHeading" />
+    </label>
+    <button @onclick="UpdateHeading">
+        Update heading
+    </button>
+</p>
+ <a class="btn btn-primary" asp-controller="Movie" asp-action="Index" style="margin-left:10px;">Neen</a>
+
+ <a class="btn btn-primary" href="/">Haha</a>
+
+ <button class="btn btn-primary" @onclick="GetGeolocation">Get Current Position</button>
+
+@if(currentPosition != null){
+   <div>
+<p>Current position : </p>
+        <ul>
+           
+Latitude : @currentPosition.Coords.Latitude
+            <li>Longitude : @currentPosition.Coords.Longitude </li>
+            <li>Altitude : @currentPosition.Coords.Altitude </li>
+            <li>Accuracy : @currentPosition.Coords.Accuracy </li>
+            <li>Altitude Accuracy : @currentPosition.Coords.AltitudeAccuracy </li>
+            <li>Heading : @currentPosition.Coords.Heading </li>
+            <li>Speed : @currentPosition.Coords.Speed </li>
+        </ul>
+    </div>
+}
+
+@code {
+
+
+    private WindowNavigatorGeolocation geolocationWrapper;
+    private GeolocationPosition currentPosition;
+    private List<GeolocationResult> positioHistory = new List<GeolocationResult>();
+    protected override async Task OnInitializedAsync()
+    {
+        var window = await jsRuntime.Window();
+        var navigator = await window.Navigator();
+        geolocationWrapper = navigator.Geolocation;
+    }
+
+   
+    public async Task GetGeolocation()
+    {
+        currentPosition = (await geolocationWrapper.GetCurrentPosition(new PositionOptions()
+        {
+            EnableHighAccuracy = true,
+            MaximumAgeTimeSpan = TimeSpan.FromHours(1),
+            TimeoutTimeSpan = TimeSpan.FromMinutes(1)
+        })).Location;
+    }
+
+    private string? mousePointerMessage;
+
+    private async Task ReportPointerLocation(MouseEventArgs e)
+    {
+        mousePointerMessage = $"Mouse coordinates: {e.OffsetX}:{e.OffsetY}";
+        this._context = await this._canvasReference.CreateCanvas2DAsync();      
+        await this._context.SetFillStyleAsync("black");      
+        await this._context.FillRectAsync(e.OffsetX, e.OffsetY, 20, 20);
+        await this._context.SetFontAsync("38px Calibri");
+        await this._context.StrokeTextAsync("Hello Blazor!!!", 5, 100);   
+
+
+    }
+
+
+    private string currentHeading = "Initial heading";
+    private string? newHeading;
+
+    private async Task UpdateHeading()
+    {
+        await Task.Delay(2000);
+
+        currentHeading = $"{newHeading}!!!";
+    }
+
+    private Canvas2DContext _context;
+
+    protected BECanvasComponent _canvasReference;
+
+
+    protected async Task OnRenderAsync(bool firstRender)
+    {
+        this._context = await this._canvasReference.CreateCanvas2DAsync();
+        await this._context.SetFillStyleAsync("red");
+
+        await this._context.FillRectAsync(10, 100, 100, 100);
+        await this._context.SetFillStyleAsync("black");
+        await this._context.FillRectAsync(12, 110, 20, 20);
+        await this._context.SetFontAsync("38px Calibri");
+        await this._context.StrokeTextAsync("Hello Blazor!!!", 5, 100);           
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        this._context = await this._canvasReference.CreateCanvas2DAsync();
+
+        await this._context.SetFillStyleAsync("black");
+        await this._context.FillRectAsync(12, 110, 20, 20);
+        await this._context.SetFontAsync("38px Calibri");
+        await this._context.StrokeTextAsync("Hello Blazor!!!", 5, 100);
+    }
+
+    private static System.Timers.Timer thisTimer;
+    private int counter = 100;   
+    public void StartTimer()
+    {
+        thisTimer = new System.Timers.Timer(100);
+        thisTimer.Elapsed += CountDownTimer;
+        thisTimer.Enabled = true;
+    }
+
+    public void CountDownTimer(Object source, System.Timers.ElapsedEventArgs e)
+    {
+        if (counter > 0)
+        {
+            counter -= 1;          
+        }
+        else
+        {
+            thisTimer.Enabled = false;
+            thisTimer.Dispose();
+            counter = 100;
+        }
+        InvokeAsync(StateHasChanged);
+    }
+
+
+    private string? imageSource;
+
+    private void ShowImage()
+    {
+        imageSource = $"/Images/BenHur.jpg";
+    }
+    private string position;
+    private int X;
+    private int Y;
+
+   
+
+    private void SetRandomPoints()
+    {
+        Random generator = new Random();
+        X = generator.Next(0, 600);
+        Y = generator.Next(0, 400);
+        position = $"{X}px,{Y}px";
+
+    }
+ }
