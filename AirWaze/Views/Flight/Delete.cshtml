@@ -25,4 +25,17 @@
 }
 
 <a asp-controller="Flight" asp-action="Index">Go Back</a>
-<a class="btn btn-danger"  asp-controller="Flight" asp-action="DeleteConfirm" asp-route-id="@Model.FlightNr">Delete</a>
+<a class="btn btn-danger" onclick="message()" asp-controller="Flight" asp-action="DeleteConfirm" asp-route-id="@Model.FlightNr">Delete</a>
+
+<script type="text/javascript">
+        function message()
+        {
+            Swal.fire({                   
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Flight Deleted',
+                    showConfirmButton: false,
+                    timer: 1500                   
+                    });
+        }
+    </script>

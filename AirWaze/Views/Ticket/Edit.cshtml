@@ -19,5 +19,18 @@
         <span class="text-danger" asp-validation-for="FirstName"></span>
     </div>
 
-    <button class="btn btn-primary" type="submit">Save Ticket</button>
+    <button class="btn btn-primary" onclick="message()" type="submit">Save Ticket</button>
 </form>
+
+<script type="text/javascript">
+        function message()
+        {
+            Swal.fire({                   
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Ticket Modified',
+                    showConfirmButton: false,
+                    timer: 1500                 
+                    });
+        }
+    </script>

@@ -349,7 +349,7 @@ namespace AirWaze.Controllers
             return RedirectToAction("Index");
         }
        
-        [Route("Kippen")]
+        [Route("Type")]
         public IActionResult Type()
         {          
             return View();

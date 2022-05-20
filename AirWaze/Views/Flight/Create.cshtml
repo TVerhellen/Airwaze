@@ -35,5 +35,17 @@
      <br />
 
      <a class="btn btn-primary" asp-controller="Flight" asp-action="Index">Go Back</a>
-    <button class="btn btn-primary" type="submit">Create Flight</button>
+    <button class="btn btn-primary" onclick="message()" type="submit">Create Flight</button>
 </form>
+<script type="text/javascript">
+        function message()
+        {
+            Swal.fire({                   
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Flight Created',
+                    showConfirmButton: false,
+                    timer: 1500                   
+                    });
+        }
+    </script>
