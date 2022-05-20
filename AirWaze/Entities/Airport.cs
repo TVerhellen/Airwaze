@@ -63,7 +63,6 @@ namespace AirWaze.Entities
             Flights = Flights.OrderBy(flight => flight.Departure).ToList();
             IsOnline = true;
             StartTimer(1);
-
         }
 
         public static void StartTimer(int dueTime)

@@ -14,9 +14,7 @@ namespace AirWaze.Controllers
         public static List<FlightCreateViewModel> tempFlights = new List<FlightCreateViewModel>();
         Random _random = new Random();
 
-        
-
-        //testplane (and linked testAirline) is used for new FlightCreateViewModels, before going to FlightPicker
+        //testplane (and linked testAirline) is used for new FlightCreateViewModels, before going to PlanePicker
         static Airline testAirline = new Airline
         {
             Number = "00000",
