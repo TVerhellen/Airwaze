@@ -7,18 +7,18 @@
     <div class="row">
         <div class="col-lg-2 bg-dark-blue d-none d-sm-block" style="padding-top: 50px; padding-bottom: 20px;">
 
-            <div class="list-group text-left font-weight-bold" style="padding-top: 30px;">
+            <div class="list-group text-left font-weight-bold" style="padding-top: 30px;">  
+                <a class="list-group-item" asp-action="ListAllRoles" asp-controller="Role">Manage users</a>
                 <a class="list-group-item" asp-action="List" asp-controller="Airline">Manage airlines</a>
-                <a class="btn btn-primary" asp-action="List" asp-controller="Plane">Manage planes</a>
-                <a class="btn btn-primary" asp-action="Index" asp-controller="Flight">Manage flights</a> 
-                <a class="btn btn-primary" asp-action="Schedule" asp-controller="Admin">Manage schedule</a> 
-                <a class="btn btn-primary" asp-action="Role" asp-controller="ListAllRoles">Manage roles</a>               
+                <a class="list-group-item" asp-action="List" asp-controller="Plane">Manage planes</a>
+                <a class="list-group-item" asp-action="Index" asp-controller="Flight">Manage flights</a> 
+                <a class="list-group-item" asp-action="Schedule" asp-controller="Admin">Manage schedule</a>                
             </div>
         </div>
         <div class="col-lg-9" style="padding-bottom: 50px;">
             <h2 class="font-weight-bold" style="padding-top: 70px; padding-bottom: 30px;">Dashboard</h2>            
             <p>
-                Hello @User.Identity.Name, welcome to the Airwaze dashboard.
+                Hello @User.Identity.Name, welcome to the Airwaze admin dashboard.
                 </br>
                 What would you like to do?
             </p>
