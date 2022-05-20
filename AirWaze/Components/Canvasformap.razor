@@ -17,23 +17,8 @@
 
 
 
-@if (imageSource is not null)
-{
-    <div >
-        <img name="myImg" src="@imageSource" object-position="@position"/>
-    </div>
-}
 
 
-{
-    
-    <button @onclick="ShowImage">
-        Image
-    </button>
-    <button @onclick="SetRandomPoints">
-        Probeersel
-    </button>
-}
 
 <h1>Klik om vierkanten toe te voegen</h1>
 <div @onmousedown="ReportPointerLocation">
@@ -56,19 +41,6 @@
 <p>@mousePointerMessage</p>
 
 
-<h1>@currentHeading</h1>
-<p>
-    <label>
-        New title
-        <input @bind="newHeading" />
-    </label>
-    <button @onclick="UpdateHeading">
-        Update heading
-    </button>
-</p>
- <a class="btn btn-primary" asp-controller="Movie" asp-action="Index" style="margin-left:10px;">Neen</a>
-
- <a class="btn btn-primary" href="/">Haha</a>
 
  <button class="btn btn-primary" @onclick="GetGeolocation">Get Current Position</button>
 
@@ -121,22 +93,11 @@ Latitude : @currentPosition.Coords.Latitude
         await this._context.SetFillStyleAsync("black");      
         await this._context.FillRectAsync(e.OffsetX, e.OffsetY, 20, 20);
         await this._context.SetFontAsync("38px Calibri");
-        await this._context.StrokeTextAsync("Hello Blazor!!!", 5, 100);   
+        await this._context.StrokeTextAsync("AirWaze Toinon Harald Tijs Bart", 5, 100);   
 
 
     }
-
-
-    private string currentHeading = "Initial heading";
-    private string? newHeading;
-
-    private async Task UpdateHeading()
-    {
-        await Task.Delay(2000);
-
-        currentHeading = $"{newHeading}!!!";
-    }
-
+        
     private Canvas2DContext _context;
 
     protected BECanvasComponent _canvasReference;
@@ -151,7 +112,7 @@ Latitude : @currentPosition.Coords.Latitude
         await this._context.SetFillStyleAsync("black");
         await this._context.FillRectAsync(12, 110, 20, 20);
         await this._context.SetFontAsync("38px Calibri");
-        await this._context.StrokeTextAsync("Hello Blazor!!!", 5, 100);           
+        await this._context.StrokeTextAsync("AirWaze Toinon Harald Tijs Bart", 5, 100);           
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -161,18 +122,10 @@ Latitude : @currentPosition.Coords.Latitude
         await this._context.SetFillStyleAsync("black");
         await this._context.FillRectAsync(12, 110, 20, 20);
         await this._context.SetFontAsync("38px Calibri");
-        await this._context.StrokeTextAsync("Hello Blazor!!!", 5, 100);
+        await this._context.StrokeTextAsync("AirWaze Toinon Harald Tijs Bart", 5, 100);
     }
 
-   
-
-
-    private string? imageSource;
-
-    private void ShowImage()
-    {
-        imageSource = $"/Images/BenHur.jpg";
-    }
+ 
     private string position;
     private int X;
     private int Y;
