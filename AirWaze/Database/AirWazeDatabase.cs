@@ -26,7 +26,7 @@ namespace AirWaze.Database
             _dbContext.Entry(flight.CurrentPlane).State = EntityState.Unchanged;
             //_dbContext.Entry(flight.CurrentGate).State = EntityState.Unchanged;
             //_dbContext.Entry(flight.CurrentRunway).State = EntityState.Unchanged;
-            _dbContext.SaveChanges();
+            //_dbContext.SaveChanges();
         }
 
         public void AddPlane(Plane plane)

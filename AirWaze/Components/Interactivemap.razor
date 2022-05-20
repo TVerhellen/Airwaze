@@ -89,6 +89,7 @@
 
     private WindowNavigatorGeolocation geolocationWrapper;
     private GeolocationPosition currentPosition;
+    private GeolocationPosition oldPosition;
     private double stationlon = 4.144092;
     private double stationlat = 51.171666;
     private double ganglon = 4.140948;
@@ -127,10 +128,19 @@
         var window = await jsRuntime.Window();
         var navigator = await window.Navigator();
         geolocationWrapper = navigator.Geolocation;
-         StartTimer();
+        
     }
     public async Task GetGeolocation()
     {
+        
+        if (positioHistory.Count != 0)
+        {
+            oldPosition = currentPosition; 
+            positioHistory.Add(oldPosition);
+            distancevsstationlist.Add(distancestation);
+            distancevsganglist.Add(distancegang);
+            distancevswhlist.Add(distancewhitehouse);
+        }       
         currentPosition = (await geolocationWrapper.GetCurrentPosition(new PositionOptions()
         {
             EnableHighAccuracy = true,
@@ -138,7 +148,28 @@
             TimeoutTimeSpan = TimeSpan.FromMinutes(1)
 
         })).Location;
-       await Task.Delay(2000);
+            GetDistanceVsStation();
+            GetDistanceVsGang();
+            GetDistanceVsWH();
+        if (positioHistory.Count == 0)
+        {
+            oldPosition = currentPosition;
+             positioHistory.Add(oldPosition);
+             distancevsstationlist.Add(distancestation);
+            distancevsganglist.Add(distancegang);
+            distancevswhlist.Add(distancewhitehouse);
+
+        }
+        if (currentPosition.Coords != oldPosition.Coords)
+        {           
+            positioHistory.Add(oldPosition);
+            distancevsstationlist.Add(distancestation);
+            distancevsganglist.Add(distancegang);
+            distancevswhlist.Add(distancewhitehouse);
+        }
+           
+        await Task.Delay(2000);
+        
     }
 
     public async Task StartTimer()
@@ -148,19 +179,16 @@
         thisTimer = new System.Timers.Timer(1000);
         thisTimer.Elapsed += CountDownTimer;
         thisTimer.Enabled = true;
-        WatchPosition();
+        
     }
 
     public void CountDownTimer(Object source, System.Timers.ElapsedEventArgs e)
     {
         if (counter % 5 == 0 || counter < 5)
-        {
-             GetDistanceVsStation();
-            GetDistanceVsGang();
-            GetDistanceVsWH();       
+        {                
             counter += 1;
             GetGeolocation();  
-            WatchPosition();
+            
         }
         else
         {
@@ -185,28 +213,7 @@
         distancewhitehouse = DistanceBetweenPlaces(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, whitehouselon, whitehouselat);
     }    
 
-    public async Task WatchPosition(){
-        geopositionWatcher = await geolocationWrapper.WatchPosition(async (p) =>
-        {
-            if (positioHistory.Count == 0)
-            {
-                positioHistory.Add(p.Location);
-                distancevsstationlist.Add(distancestation);
-                distancevsganglist.Add(distancegang);
-                distancevswhlist.Add(distancewhitehouse);
-                StateHasChanged();
-            }
-            else if (p.Location.Coords.Longitude != positioHistory.Last().Coords.Longitude && p.Location.Coords.Latitude != positioHistory.Last().Coords.Latitude)
-            {
-                positioHistory.Add(p.Location);
-                distancevsstationlist.Add(distancestation);
-                distancevsganglist.Add(distancegang);
-                distancevswhlist.Add(distancewhitehouse);
-                StateHasChanged();
-            }
-        }
-        );
-    }
+   
     public async Task KillEvents(){
         await geopositionWatcher.DisposeAsync();
         geopositionWatcher = null;
