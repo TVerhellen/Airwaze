@@ -11,7 +11,7 @@ namespace AirWaze.Controllers
         private readonly ILogger<HomeController> _logger;
 
         public static IAirWazeDatabase _myDatabase;
-
+      
         public HomeController(ILogger<HomeController> logger, IAirWazeDatabase mydatabase)
         {
             _logger = logger;
