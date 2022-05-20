@@ -15,12 +15,7 @@
 @inject IJSRuntime jsRuntime
 
 
-<h1>Timer</h1>
 
-<p>@counter</p>
-<button @onclick="StartTimer">Start</button>   
-
-<br />
 
 @if (imageSource is not null)
 {
@@ -169,29 +164,7 @@ Latitude : @currentPosition.Coords.Latitude
         await this._context.StrokeTextAsync("Hello Blazor!!!", 5, 100);
     }
 
-    private static System.Timers.Timer thisTimer;
-    private int counter = 100;   
-    public void StartTimer()
-    {
-        thisTimer = new System.Timers.Timer(100);
-        thisTimer.Elapsed += CountDownTimer;
-        thisTimer.Enabled = true;
-    }
-
-    public void CountDownTimer(Object source, System.Timers.ElapsedEventArgs e)
-    {
-        if (counter > 0)
-        {
-            counter -= 1;          
-        }
-        else
-        {
-            thisTimer.Enabled = false;
-            thisTimer.Dispose();
-            counter = 100;
-        }
-        InvokeAsync(StateHasChanged);
-    }
+   
 
 
     private string? imageSource;
