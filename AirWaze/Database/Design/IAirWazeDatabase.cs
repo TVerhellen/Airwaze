@@ -66,13 +66,13 @@ namespace AirWaze.Database.Design
 
         List<Gate>GetGates();
 
-        Gate GetGateByID(Guid id);
+        Gate GetGateByNr(int nr);
 
         void AddGate(Gate flight);
 
         List<Runway> GetRunways();
 
-        Runway GetRuwaysByID(string nr);
+        Runway GetRunwayByNr(int nr);
 
         void AddRunway(Runway runway);
     }

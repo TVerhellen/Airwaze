@@ -12,10 +12,19 @@
 <h2>Departure</h2>
 <p>@Model.Departure.ToString("R")</p>
 <h2></h2>
-<h2>Flight Duration</h2>
+<h2>Flight Duration (hh:mm)</h2>
 <p>@Model.FlightTime</p>
+<h2>Distance</h2>
+<p>@Model.Distance km</p>
 <h2>Gate</h2>
-<p>@Model.CurrentGate</p>
+@if(Model.CurrentGate.Number == 0)
+{
+    <p>No Gate assigned yet.</p>
+}
+else
+{
+    <p>@Model.CurrentGate.Number</p>
+}
 
 <!-- For Airport staff-->
 <h2>Plane</h2>
@@ -23,7 +32,14 @@
 <h2>Airline</h2>
 <p>@Model.CurrentPlane.CurrentAirline.Name</p>
 <h2>Runway</h2>
-<p>@Model.CurrentRunway</p>
+@if(Model.CurrentRunway.Number == 0)
+{
+    <p>No Runway assigned yet.</p>
+}
+else
+{
+    <p>@Model.CurrentRunway.Number</p>
+}
 <!-- TODO: route button to page with tickets only for this flight -->
 <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index">Booked Tickets</a>
 

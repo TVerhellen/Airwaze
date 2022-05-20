@@ -13,6 +13,7 @@ namespace AirWaze.Controllers
         public static List<Flight> flights = new List<Flight>();
         public static List<FlightCreateViewModel> tempFlights = new List<FlightCreateViewModel>();
         Random _random = new Random();
+        public static List<Plane> planes = new List<Plane>();
 
         //testplane (and linked testAirline) is used for new FlightCreateViewModels, before going to PlanePicker
         static Airline testAirline = new Airline
@@ -68,7 +69,7 @@ namespace AirWaze.Controllers
             //        }
             //    }
             
-            //planes = _airwazeDatabase.GetPlanes();
+            planes = _airwazeDatabase.GetPlanes();
         }
 
         //Roles: Everyone
@@ -151,9 +152,9 @@ namespace AirWaze.Controllers
         public IActionResult Create(FlightCreateViewModel flightViewModel)
         {
             flightViewModel.FlightNr = CreateFlightNr(flightViewModel);
-            flightViewModel.CurrentGate = new Gate();
+            flightViewModel.CurrentGate = _airwazeDatabase.GetGateByNr(0);
             flightViewModel.CurrentPlane = testplane;
-            flightViewModel.CurrentRunway = new Runway();
+            flightViewModel.CurrentRunway = _airwazeDatabase.GetRunwayByNr(0);
             flightViewModel.Status = 0;
 
             if (TryValidateModel(flightViewModel))
@@ -182,7 +183,7 @@ namespace AirWaze.Controllers
         public IActionResult PlanePicker(FlightCreateViewModel flightViewModel, string id)
         {
             flightViewModel = tempFlights.SingleOrDefault(x => x.FlightNr == id);
-            flightViewModel.CurrentPlane = PlaneController.planeEntities.FirstOrDefault(x => x.PlaneNr == Request.Form["selectedPlaneNr"]);
+            flightViewModel.CurrentPlane = planes.FirstOrDefault(x => x.PlaneNr == Request.Form["selectedPlaneNr"]);
 
             if (TryValidateModel(flightViewModel))
             {
@@ -246,7 +247,7 @@ namespace AirWaze.Controllers
         [HttpPost]
         public IActionResult Edit(string id, FlightEditViewModel flightViewModel)
         {
-            flightViewModel.CurrentPlane = PlaneController.planeEntities.FirstOrDefault(x => x.PlaneNr == Request.Form["selectedPlaneNr"]);
+            flightViewModel.CurrentPlane = planes.FirstOrDefault(x => x.PlaneNr == Request.Form["selectedPlaneNr"]);
             flightViewModel.Status = Convert.ToInt32(Request.Form["selectedStatus"]);
             flightViewModel.FlightNr = id;
 

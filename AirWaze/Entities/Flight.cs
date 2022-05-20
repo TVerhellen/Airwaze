@@ -13,8 +13,8 @@ namespace AirWaze.Entities
         public DateTime Departure { get; set; }
         public decimal Distance { get; set; }
         public string Destination { get; set; }
-        public Gate? CurrentGate { get; set; }
-        public Runway? CurrentRunway { get; set; }
+        public Gate CurrentGate { get; set; }
+        public Runway CurrentRunway { get; set; }
         public int Status { get; set; }
         /* 
           0 = Generated

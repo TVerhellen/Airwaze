@@ -25,8 +25,8 @@ namespace AirWaze.Database
             _dbContext.Flights.Add(flight);
             _dbContext.Entry(flight.CurrentPlane).State = EntityState.Unchanged;
             _dbContext.Entry(flight.CurrentPlane.CurrentAirline).State = EntityState.Unchanged;
-            //_dbContext.Entry(flight.CurrentGate).State = EntityState.Unchanged;
-            //_dbContext.Entry(flight.CurrentRunway).State = EntityState.Unchanged;
+            _dbContext.Entry(flight.CurrentGate).State = EntityState.Unchanged;
+            _dbContext.Entry(flight.CurrentRunway).State = EntityState.Unchanged;
             _dbContext.SaveChanges();
         }
 
@@ -76,6 +76,8 @@ namespace AirWaze.Database
                 .AsNoTracking()
                 .Include(x => x.CurrentPlane)
                 .Include(x => x.CurrentPlane.CurrentAirline)
+                .Include(x => x.CurrentGate)
+                .Include(x => x.CurrentRunway)
                 .SingleOrDefault(flight => flight.FlightNr.Equals(nr));
         }
 
@@ -98,6 +100,8 @@ namespace AirWaze.Database
                 .AsNoTracking()
                 .Include(x => x.CurrentPlane)
                 .Include(x => x.CurrentPlane.CurrentAirline)
+                .Include(x => x.CurrentGate)
+                .Include(x => x.CurrentRunway)
                 .ToList();
         }
 
@@ -229,12 +233,7 @@ namespace AirWaze.Database
             return _dbContext.Gates.ToList();
         }
 
-        public Gate GetGateByID(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddGate(Gate flight)
+        public void AddGate(Gate gate)
         {
             throw new NotImplementedException();
         }
@@ -244,24 +243,21 @@ namespace AirWaze.Database
             return _dbContext.Runways.ToList();
         }
 
-        public Runway GetRuwaysByID(string nr)
-        {
-            throw new NotImplementedException();
-        }
-
         public void AddRunway(Runway runway)
         {
             throw new NotImplementedException();
         }
 
-        public Gate GetGateByID(int id)
+        public Gate GetGateByNr(int nr)
         {
-            throw new NotImplementedException();
+            return _dbContext.Gates
+                .SingleOrDefault(gate => gate.Number.Equals(nr));
         }
 
-        public Runway GetRuwaysByID(int nr)
+        public Runway GetRunwayByNr(int nr)
         {
-            throw new NotImplementedException();
+            return _dbContext.Runways
+               .SingleOrDefault(runway => runway.Number.Equals(nr));
         }
     } 
 }
