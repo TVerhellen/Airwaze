@@ -23,14 +23,14 @@ namespace AirWaze.Controllers
             {
                 Airport.StartAirport();
             }
-        }       
+        }
 
-    public IActionResult Index()
+        public IActionResult Index()
         {
             return View();
         }
 
-        
+
         public IActionResult Privacy()
         {
             return View();
@@ -52,7 +52,5 @@ namespace AirWaze.Controllers
         {
             return View();
         }
-
-
     }
 }
