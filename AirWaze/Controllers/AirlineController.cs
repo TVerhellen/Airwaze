@@ -177,6 +177,7 @@ namespace AirWaze.Controllers
         public async Task<IActionResult> Update(AirlineEditViewModel airlineUpdateViewModel)
         {
 
+            await Task.Delay(1500);
             var isValid = TryValidateModel(airlineUpdateViewModel);
             if (isValid)
             {
