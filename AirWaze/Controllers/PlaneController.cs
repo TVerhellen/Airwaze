@@ -64,7 +64,7 @@ namespace AirWaze.Controllers
                 {
                     Name = "Harald Airways",
                 };
-                LoggedInAirline = airlineEntities.FirstOrDefault(x => x.Name == LoggedInAirline.Name);
+                LoggedInAirline =  airlineEntities.FirstOrDefault(x => x.Name == LoggedInAirline.Name);
                
             }
 
@@ -83,7 +83,7 @@ namespace AirWaze.Controllers
             List<PlaneListViewModel> thislist = new List<PlaneListViewModel>();
             foreach (var plane in planelistAirline)
             {
-                thislist.Add(new PlaneListViewModel()
+               thislist.Add(new PlaneListViewModel()
                 {
                     PlaneNr = plane.PlaneNr,
                     CurrentAirline = plane.CurrentAirline,
