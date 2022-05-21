@@ -53,8 +53,25 @@ namespace AirWaze.Controllers
             {
                 flights = _airwazeDatabase.GetFlights();
             }
-            
 
+
+            foreach (Flight x in flights)
+            {
+                foreach (Flight y in oldlist)
+                {
+                    if (x.FlightID == y.FlightID)
+                    {
+                        if (x.Status != y.Status)
+                        {
+                            x.Status = y.Status;
+                            //_airwazeDatabase.UpdateFlight(x);
+                        }
+                    }
+                }
+
+                //planes = _airwazeDatabase.GetPlanes();
+            }
+        }
             //foreach (Flight x in flights)
             //{
             //    foreach(Flight y in oldlist)
@@ -149,8 +166,9 @@ namespace AirWaze.Controllers
         //Roles: Admin + Airport Staff
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult Create(FlightCreateViewModel flightViewModel)
+        public async Task<IActionResult> Create(FlightCreateViewModel flightViewModel)
         {
+            await Task.Delay(1500);
             flightViewModel.FlightNr = CreateFlightNr(flightViewModel);
             flightViewModel.CurrentGate = _airwazeDatabase.GetGateByNr(0);
             flightViewModel.CurrentPlane = testplane;
@@ -245,8 +263,10 @@ namespace AirWaze.Controllers
         //Roles: Admin + Airport Staff
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult Edit(string id, FlightEditViewModel flightViewModel)
+        public async Task<IActionResult> Edit(string id, FlightEditViewModel flightViewModel)
         {
+            await Task.Delay(1500);
+            flightViewModel.CurrentPlane = PlaneController.planeEntities.FirstOrDefault(x => x.PlaneNr == Request.Form["selectedPlaneNr"]);
             flightViewModel.CurrentPlane = planes.FirstOrDefault(x => x.PlaneNr == Request.Form["selectedPlaneNr"]);
             flightViewModel.Status = Convert.ToInt32(Request.Form["selectedStatus"]);
             flightViewModel.FlightNr = id;
@@ -313,8 +333,9 @@ namespace AirWaze.Controllers
         [Authorize(Roles = "Admin")]
         //Roles: Admin + Airport Staff
         [HttpGet]
-        public IActionResult DeleteConfirm(string id)
+        public async Task<IActionResult> DeleteConfirm(string id)
         {
+            await Task.Delay(1500);
             var flightEntity = flights.FirstOrDefault(x => x.FlightNr == id);
             //var flightEntity = _airwazeDatabase.GetFlightByNr(flightnr);
 

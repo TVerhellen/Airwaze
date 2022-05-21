@@ -9,48 +9,69 @@
 
 @model List<AirlineListViewModel>
 
-<div>
-    <h1 style="color:red;">VOOR AIRPORT/ADMIN AUTH ONLY</h1>
+<div class="container-fluid" style="padding: 0 0 0 0;">
+    <div class="row">
+        <div class="col-lg-2 bg-dark-blue d-none d-sm-block" style="padding-top: 50px; padding-bottom: 20px;">
+
+            <div class="list-group text-left font-weight-bold" style="padding-top: 30px;">  
+                <a class="list-group-item" asp-action="ListAllRoles" asp-controller="Role">Manage roles</a>
+                <a class="list-group-item" asp-action="List" asp-controller="Airline">Manage airlines</a>
+                <a class="list-group-item" asp-action="List" asp-controller="Plane">Manage planes</a>
+                <a class="list-group-item" asp-action="Index" asp-controller="Flight">Manage flights</a> 
+                <a class="list-group-item" asp-action="Schedule" asp-controller="Admin">Manage schedule</a>                
+            </div>
+        </div>
+        <div class="col-lg-9" style="padding-bottom: 50px;">
+            <div>
+                <h1>Manage airlines</h1>
     
-    @if (Model.Count != 0)
-    {
-        <h1>Overzicht Airlines:</h1>  
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>NameTag</th>
-                    
-                    <th>Logo</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>            
-                @foreach (var airline in Model)
+                @if (Model.Count != 0)
                 {
-                    <tr>
-                        <td>@airline.Name</td>
-                        <td>@airline.NameTag</td>                                             
-                        <td>
-                            <img src="@Url.Content(@airline.Logo)" alt="Sample Image" width="100" height="100" />
-                        </td>
-                        <td><a class="btn btn-primary" asp-action="Detail" asp-controller="Airline" asp-route-ID=@airline.AirlineID>Detail</a></td>
-                        <td><a class="btn btn-secondary" asp-action="Update" asp-controller="Airline" asp-route-ID=@airline.AirlineID>Edit</a></td>
-                        <td><a class="btn btn-secondary" asp-action="Delete" asp-controller="Airline" asp-route-ID=@airline.AirlineID>Delete</a></td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
-    else
-    {
-        <h1>No Airlines Currently Available</h1>
-    }
-    <div style="margin:100px;">
- <a class="btn btn-secondary" asp-area="" asp-controller="Airline" asp-action="Create" style="margin-left:250px;width:600px;">Create New Airline</a>
-  </div> 
+                    <h1>Overzicht Airlines:</h1>  
 
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>NameTag</th>
+                    
+                                    <th>Logo</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>            
+                                @foreach (var airline in Model)
+                                {
+                                     <tr>
+                                        <td>@airline.Name</td>
+                                        <td>@airline.NameTag</td>                                             
+                                        <td>
+                                            <img src="@Url.Content(@airline.Logo)" alt="Sample Image" width="100" height="100" />
+                                        </td>
+                                        <td><a class="btn btn-primary" asp-action="Detail" asp-controller="Airline" asp-route-ID=@airline.AirlineID>Detail</a></td>
+                                        <td><a class="btn btn-secondary" asp-action="Update" asp-controller="Airline" asp-route-ID=@airline.AirlineID>Edit</a></td>
+                                        <td><a class="btn btn-secondary" asp-action="Delete" asp-controller="Airline" asp-route-ID=@airline.AirlineID>Delete</a></td>
+                                    </tr>
+                                }
+                        </tbody>
+                    </table>
+                 }
+                else
+                {
+                    <h1>No Airlines Currently Available</h1>
+                }
+            <div style="margin:100px;">
+                <a class="btn btn-secondary" asp-area="" asp-controller="Airline" asp-action="Create" style="margin-left:250px;width:600px;">Create New Airline</a>
+            </div> 
+            </div>
+    </div>
 </div>
+
+
+
+
+
+
+

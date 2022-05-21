@@ -64,7 +64,7 @@ namespace AirWaze.Controllers
                 {
                     Name = "Harald Airways",
                 };
-                LoggedInAirline = airlineEntities.FirstOrDefault(x => x.Name == LoggedInAirline.Name);
+                LoggedInAirline =  airlineEntities.FirstOrDefault(x => x.Name == LoggedInAirline.Name);
                
             }
 
@@ -83,7 +83,7 @@ namespace AirWaze.Controllers
             List<PlaneListViewModel> thislist = new List<PlaneListViewModel>();
             foreach (var plane in planelistAirline)
             {
-                thislist.Add(new PlaneListViewModel()
+               thislist.Add(new PlaneListViewModel()
                 {
                     PlaneNr = plane.PlaneNr,
                     CurrentAirline = plane.CurrentAirline,
@@ -156,6 +156,7 @@ namespace AirWaze.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(PlaneCreateViewModel planeViewModel)
         {
+            await Task.Delay(1500);
             if (LoggedInAirline == null)
             {
 
@@ -285,7 +286,7 @@ namespace AirWaze.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(PlaneEditViewModel planeUpdateViewModel)
         {
-
+            await Task.Delay(1500);
             var isValid = TryValidateModel(planeUpdateViewModel);
             if (isValid)
             {
@@ -342,6 +343,7 @@ namespace AirWaze.Controllers
         //AIRLINE + ADMIN
         public async Task<IActionResult> DeleteConfirm(string ID)
         {
+            await Task.Delay(1500);
             ID = ID.Replace("%2F", "/");
             var plane = planeEntities.FirstOrDefault(x => x.PlaneNr == ID);
             planeEntities.Remove(plane);
@@ -349,7 +351,7 @@ namespace AirWaze.Controllers
             return RedirectToAction("Index");
         }
        
-        [Route("Kippen")]
+        [Route("Type")]
         public IActionResult Type()
         {          
             return View();

@@ -8,6 +8,18 @@
 <h1>@Model.Name @Model.Adress @Model.CompanyNumber</h1>
 <p>Wilt u deze Airliner verwijderen?</p>
 
-<a class="btn btn-primary" asp-controller="Airline" asp-action="DeleteConfirm" asp-route-ID="@Model.AirlineID" style="margin-left:10px;">Ja</a>
+<a class="btn btn-primary" onclick="message()" asp-controller="Airline" asp-action="DeleteConfirm" asp-route-ID="@Model.AirlineID" style="margin-left:10px;">Ja</a>
     <a class="btn btn-primary" asp-controller="Airline" asp-action="List" style="margin-left:10px;">Neen</a>
-    
+ 
+    <script type="text/javascript">
+        function message()
+        {
+            Swal.fire({                   
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Airline Deleted',
+                    showConfirmButton: false,
+                    timer: 1500                   
+                    });
+        }
+    </script>

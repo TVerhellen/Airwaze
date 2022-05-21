@@ -8,7 +8,9 @@
     <title>@ViewData["Title"] - AirWaze</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/AirWaze.styles.css" asp-append-version="true" />   
+    <link rel="stylesheet" href="~/AirWaze.styles.css" asp-append-version="true" /> 
+     <link rel="stylesheet" href="~/js/sweetalert2.min.css" />
+     <link href="css/styles.css" rel="stylesheet" asp-append-version="true" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 </head>
 <body>
@@ -26,21 +28,10 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Blazortest">Privacy</a>
                         </li>            
-                        @if (User.IsInRole("Airline, Admin"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Airline" asp-action="Index">Dashboard</a>
-                            </li>
-                        }
-                        @if (User.IsInRole("Admin") )
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index"> Dashboard</a>
-                            </li>
-                        }
-                        @if (User.IsInRole("Customer, Admin"))
+
+                        @if (User.IsInRole("Customer") || User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Ticket" asp-action="List">Tickets</a>
@@ -68,7 +59,7 @@
                     <partial name="_LoginPartial" />
                 </div>
             </div>
-        </nav>
+        </nav>       
     </header>
     <div class="container">
         <main role="main" class="pb-3">
@@ -77,14 +68,33 @@
     </div>
      <script src="_content/GeneralComponents/GeneralComponents.DOMHelpers.js"></script>
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - AirWaze - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <div class="container" style="padding-top: 20px;">
+                <div class="row">
+                    <div class="col-sm">
+                        <h6>About Us</h6>                        
+                    </div>
+                    <div class="col-sm">
+                        <h6>Address</h6>
+                        
+                        <p class="small">
+                            Airwaze
+                            <a href="https://g.page/luchthaven-antwerpen-anr?share">Luchthavenlei,
+                            2100 Antwerpen,</a>
+                            Belgium
+                        </p>                        
+                    </div>
+                    <div class="col-sm">
+                        <a  asp-action="Index" asp-controller="Contact"><h6>Contact us</h6></a>
+                    </div>
+                </div>
         </div>
     </footer>
      <script src="_content/BrowserInterop/scripts.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/sweetalert2.all.min.js"></script>  
     @await RenderSectionAsync("Scripts", required: false)
+    
 </body>
 </html>

@@ -11,5 +11,18 @@
 <p>Flight Destination: @Model.CurrentFlight.Destination</p>
 <p>Flight Departure: @Model.CurrentFlight.Departure</p>
 
-<a class="btn btn-danger" asp-action="ConfirmedDelete" asp-route-ID="@Model.TicketNr">Cancel Ticket</a>
+<a class="btn btn-danger" onclick="message()" asp-action="ConfirmedDelete" asp-route-ID="@Model.TicketNr">Cancel Ticket</a>
 <a class="btn btn-primary" asp-action="List">Go Back</a>
+
+<script type="text/javascript">
+        function message()
+        {
+            Swal.fire({                   
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Ticket Deleted',
+                    showConfirmButton: false,
+                    timer: 1500                 
+                    });
+        }
+    </script>

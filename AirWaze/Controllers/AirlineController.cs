@@ -77,6 +77,7 @@ namespace AirWaze.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(AirlineCreateViewModel airlineViewModel)
         {
+            await Task.Delay(1500);
             if (airlineViewModel.AirlineID == null)
             {
                 airlineViewModel.AirlineID = Guid.NewGuid();
@@ -177,6 +178,7 @@ namespace AirWaze.Controllers
         public async Task<IActionResult> Update(AirlineEditViewModel airlineUpdateViewModel)
         {
 
+            await Task.Delay(1500);
             var isValid = TryValidateModel(airlineUpdateViewModel);
             if (isValid)
             {
@@ -228,6 +230,7 @@ namespace AirWaze.Controllers
         //ADMIN role
         public async Task<IActionResult> DeleteConfirm(Guid ID)
         {
+            await Task.Delay(1500);
             var airline = airlineEntities.FirstOrDefault(x => x.AirlineID == ID);
             airlineEntities.Remove(airline);
             _myDatabase.RemoveAirline(airline);

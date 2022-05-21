@@ -8,7 +8,7 @@ namespace AirWaze.Entities
     public static class Airport 
     {
 
-        private static string _name = "Batman Airport";
+        private static string _name = "Airwaze";
         private static string _adress = "Bosdreef 6 Istanbul Turkye";
         private static DateTime _currenttime = DateTime.Now;
         private static Random generator = new Random();
