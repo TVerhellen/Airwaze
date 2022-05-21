@@ -29,7 +29,7 @@
             else
             {
                 <p>@AdminController.scheduleToApprove.Date.ToString("D") - @AdminController.scheduleToApprove.Date.Hour.ToString("00") : @AdminController.scheduleToApprove.Date.Minute.ToString("00")</p>
-                <a class="btn btn-primary" asp-controller="Admin" asp-action="DetailSchedule" asp-route-index="-1">Detail</a>
+                <a class="btn btn-primary" asp-controller="Admin" asp-action="DetailSchedule" asp-route-id="-1">Detail</a>
                 <a class="btn btn-success" asp-controller="Admin" asp-action="ApproveSchedule" >Approve Schedule</a>
             }
             <br />

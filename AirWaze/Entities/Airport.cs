@@ -14,6 +14,7 @@ namespace AirWaze.Entities
         private static Random generator = new Random();
         public static  IAirWazeDatabase myDatabase;      
         public static bool IsOnline = false;
+        public static List<Schedule> _approvedschedules = new List<Schedule>();
 
         public static Timer aTimer;
 
@@ -41,7 +42,11 @@ namespace AirWaze.Entities
         public static Schedule CurrentSchedule { get; set; }
         public static Schedule ScheduleToApprove { get; set; }
 
-        public static List<Schedule>? ApprovedSchedules { get; set; }
+        public static List<Schedule> ApprovedSchedules { get
+            { return _approvedschedules; } set
+            {
+                _approvedschedules = value;
+            } }
         
         public static void StartAirport()
         {

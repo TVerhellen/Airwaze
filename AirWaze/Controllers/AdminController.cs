@@ -70,8 +70,19 @@ namespace AirWaze.Controllers
             {
                 Airport.ApprovedSchedules = new List<Schedule>();
             }
-            
-            Airport.ApprovedSchedules.Add(scheduleToApprove);
+
+            List<Flight> listflights = new List<Flight>();
+            foreach(var flight in scheduleToApprove.Flights)
+            {
+                listflights.Add(flight);
+            }
+            Airport.ApprovedSchedules.Add(new Schedule
+            {
+                Date = scheduleToApprove.Date,
+                Flights = listflights,
+                IsValidated = scheduleToApprove.IsValidated
+            });
+
             scheduleToApprove = null;
 
             return RedirectToAction("Schedule");
@@ -95,7 +106,6 @@ namespace AirWaze.Controllers
         public IActionResult DetailSchedule(int id)
         {
             ScheduleGenerateViewModel viewModel = new ScheduleGenerateViewModel();
-            viewModel.Flights = new List<Flight>();
 
             if (id == -1)
             {
@@ -107,6 +117,7 @@ namespace AirWaze.Controllers
             {
                 Schedule chosenSchedule = Airport.ApprovedSchedules.FirstOrDefault(x => x.ScheduleID == id);
                 viewModel.Date = chosenSchedule.Date;
+                viewModel.Flights = new List<Flight>();
                 foreach(var flight in chosenSchedule.Flights)
                 {
                     viewModel.Flights.Add(flight);
