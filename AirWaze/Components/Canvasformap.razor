@@ -90,7 +90,8 @@ Latitude : @currentPosition.Coords.Latitude
         await this._context.SetFillStyleAsync("black");      
         await this._context.FillRectAsync(e.OffsetX, e.OffsetY, 20, 20);
         await this._context.SetFontAsync("38px Calibri");
-        await this._context.StrokeTextAsync("AirWaze Toinon Harald Tijs Bart", 5, 100);   
+        await this._context.StrokeTextAsync("Hier ben Ik Als Ik klik", e.OffsetX, e.OffsetY);
+
 
 
     }
@@ -107,39 +108,7 @@ Latitude : @currentPosition.Coords.Latitude
 
     protected async Task OnRenderAsync(bool firstRender)
     {
-        this._context = await this._canvasReference.CreateCanvas2DAsync();
-        await this._context.SetFillStyleAsync("red");
-
-        await this._context.FillRectAsync(10, 100, 100, 100);
-        await this._context.SetFillStyleAsync("black");
-        await this._context.FillRectAsync(12, 110, 20, 20);
-        await this._context.SetFontAsync("38px Calibri");
-        await this._context.StrokeTextAsync("AirWaze Toinon Harald Tijs Bart", 5, 100);           
+        this._context = await this._canvasReference.CreateCanvas2DAsync();        
     }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        this._context = await this._canvasReference.CreateCanvas2DAsync();
-
-        await this._context.SetFillStyleAsync("black");
-        await this._context.FillRectAsync(12, 110, 20, 20);
-        await this._context.SetFontAsync("38px Calibri");
-        await this._context.StrokeTextAsync("AirWaze Toinon Harald Tijs Bart", 5, 100);
-    }
-
- 
-    private string position;
-    private int X;
-    private int Y;
-
-   
-
-    private void SetRandomPoints()
-    {
-        Random generator = new Random();
-        X = generator.Next(0, 600);
-        Y = generator.Next(0, 400);
-        position = $"{X}px,{Y}px";
-
-    }
+       
  }
