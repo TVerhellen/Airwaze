@@ -14,23 +14,23 @@
 @inject IJSRuntime jsRuntime
 
 
-
+<h1>Klik op areas voor mee info</h1>
 <section class="page-section">
             <div class="container">
                 <div class="product-item">
                     @if (selectedService != 0)
             {
-                <div class="product-item-title d-flex" style="width:200px;margin-left:800px;margin-top:200px;">
+                <div class="product-item-title d-flex" style="width:200px;margin-left:900px;">
                     <div class="bg-faded p-5 d-flex ms-auto rounded">
                         @switch (@selectedService)
                         {
                             case 1:
                                 <span class="section-heading-upper">Gate 1 - 4</span>
-                                <div style="margin-top:10px;margin-bottom:10px">
+                                <div style="margin-bottom:10px">
                                     <img src="Images/gates.jpg" alt="Sample Image" width="100" height="50"/>
                                 </div>
                                 <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">Lorem Gates</span>
+                                    <span class="section-heading-lower">@distancegang.ToString("0,00"); m distance from your current position</span>
                                 </h2>
                                 break;
                             case 2:
@@ -39,7 +39,7 @@
                                     <img src="Images/gates.jpg" alt="Sample Image" width="100" height="50"/>
                                 </div>
                                 <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">Lorem Gates</span>
+                                    <span class="section-heading-lower">@distancegang.ToString("0,00"); m distance from your current position</span>
                                 </h2>
                                 break;
                             case 3:
@@ -48,7 +48,7 @@
                                     <img src="Images/gates.jpg" alt="Sample Image" width="100" height="50"/>
                                 </div>
                                 <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">Lorem Gates</span>
+                                    <span class="section-heading-lower">@distancegang.ToString("0,00"); m distance from your current position</span>
                                 </h2>
                                 break;
                             case 4:
@@ -57,7 +57,7 @@
                                     <img src="Images/gates.jpg" alt="Sample Image" width="100" height="50"/>
                                 </div>
                                 <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">Lorem Gates</span>
+                                    <span class="section-heading-lower">@distancegang.ToString("0,00"); m distance from your current position</span>
                                 </h2>
                                 break;
                             case 5:
@@ -66,7 +66,7 @@
                                     <img src="Images/gates.jpg" alt="Sample Image" width="100" height="50"/>
                                 </div>
                                 <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">Lorem Gates</span>
+                                    <span class="section-heading-lower">@distancegang.ToString("0,00"); m distance from your current position</span>
                                 </h2>
                                 break;
                             case 6:
@@ -75,7 +75,7 @@
                                     <img src="Images/burgerking.jpg" alt="Sample Image" width="100" height="50"/>
                                 </div>
                                 <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">Lorem BurgerKing</span>
+                                   <span class="section-heading-lower">@distancestation.ToString("0,00"); m distance from your current position</span>
                                 </h2>
                                 break;
                             case 7:
@@ -84,7 +84,7 @@
                                     <img src="Images/Dutyfree.jpg" alt="Sample Image" width="100" height="50"/>
                                 </div>
                                 <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">Lorem Taxfree</span>
+                                    <span class="section-heading-lower">@distancewhitehouse.ToString("0,00"); m distance from your current position</span>
                                 </h2>
                                 break;
                             default:
@@ -111,7 +111,7 @@
                                     <img src="Images/gates.jpg" alt="Sample Image" width="100" height="50"/>
                                 </div>
                                 <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">Lorem Gates</span>
+                                    <span class="section-heading-lower">@distancegang.ToString("0,00"); m distance from your current position</span>
                                 </h2>
                                 break;
                             case 2:
@@ -120,7 +120,7 @@
                                     <img src="Images/gates.jpg" alt="Sample Image" width="100" height="50"/>
                                 </div>
                                 <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">Lorem Gates</span>
+                                    <span class="section-heading-lower">@distancegang.ToString("0,00"); m distance from your current position</span>
                                 </h2>
                                 break;
                             case 3:
@@ -129,7 +129,7 @@
                                     <img src="Images/gates.jpg" alt="Sample Image" width="100" height="50"/>
                                 </div>
                                 <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">Lorem Gates</span>
+                                    <span class="section-heading-lower">@distancegang.ToString("0,00"); m distance from your current position</span>
                                 </h2>
                                 break;
                             case 4:
@@ -138,7 +138,7 @@
                                     <img src="Images/gates.jpg" alt="Sample Image" width="100" height="50"/>
                                 </div>
                                 <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">Lorem Gates</span>
+                                    <span class="section-heading-lower">@distancegang.ToString("0,00"); m distance from your current position</span>
                                 </h2>
                                 break;
                             case 5:
@@ -147,7 +147,7 @@
                                     <img src="Images/gates.jpg" alt="Sample Image" width="100" height="50"/>
                                 </div>
                                 <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">Lorem Gates</span>
+                                    <span class="section-heading-lower"@distancegang.ToString("0,00"); m distance from your current position></span>
                                 </h2>
                                 break;
                             case 6:
@@ -156,7 +156,7 @@
                                     <img src="Images/burgerking.jpg" alt="Sample Image" width="100" height="50"/>
                                 </div>
                                 <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">Lorem BurgerKing</span>
+                                    <span class="section-heading-lower">@distancestation.ToString("0,00"); m distance from your current position</span>
                                 </h2>
                                 break;
                             case 7:
@@ -165,7 +165,7 @@
                                     <img src="Images/Dutyfree.jpg" alt="Sample Image" width="100" height="50"/>
                                 </div>
                                 <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">Lorem Taxfree</span>
+                                    <span class="section-heading-lower">@distancewhitehouse.ToString("0,00"); m distance from your current position</span>
                                 </h2>
                                 break;
                             default:
@@ -236,6 +236,18 @@ Latitude : @currentPosition.Coords.Latitude
     private WindowNavigatorGeolocation geolocationWrapper;
     private GeolocationPosition currentPosition;
     private List<GeolocationResult> positioHistory = new List<GeolocationResult>();
+    private Canvas2DContext _context;
+    protected BECanvasComponent _canvasReference;
+    private string? mousePointerMessage;
+    private double stationlon = 4.144092;
+    private double stationlat = 51.171666;
+    private double ganglon = 4.140948;
+    private double ganglat = 51.170052;
+    private double whitehouselon = -77.036533;
+    private double whitehouselat = 38.897668;
+    private double distancestation;
+    private double distancegang;
+    private double distancewhitehouse;
 
 
     protected override async Task OnInitializedAsync()
@@ -256,7 +268,7 @@ Latitude : @currentPosition.Coords.Latitude
         })).Location;
     }
 
-    private string? mousePointerMessage;
+
 
     private async Task ReportPointerLocation(MouseEventArgs e)
     {
@@ -293,8 +305,11 @@ Latitude : @currentPosition.Coords.Latitude
         {
             selectedService = 0;
         }
-        this._context = await this._canvasReference.CreateCanvas2DAsync(); 
-        
+        this._context = await this._canvasReference.CreateCanvas2DAsync();
+        await GetGeolocation();
+        await GetDistanceVsGang();
+        await GetDistanceVsStation();
+        await GetDistanceVsWH();
 
         //await this._context.SetFillStyleAsync("black");      
         //await this._context.FillRectAsync(e.OffsetX, e.OffsetY, 20, 20);
@@ -302,20 +317,45 @@ Latitude : @currentPosition.Coords.Latitude
         //await this._context.StrokeTextAsync("Hier ben Ik Als Ik klik", e.OffsetX, e.OffsetY);
 
     }
-    private async Task ReportPointerLocationOnMap(MouseEventArgs e)
-    {
-        mousePointerMessage = $"Mouse coordinates: {e.OffsetX}:{e.OffsetY}";        
-    }
-
-        
-    private Canvas2DContext _context;
-
-    protected BECanvasComponent _canvasReference;
-
+            
+  
 
     protected async Task OnRenderAsync(bool firstRender)
     {
         this._context = await this._canvasReference.CreateCanvas2DAsync();        
     }
+
+    public static double Radians(double x)
+    {
+        double PIx = 3.141592653589793;
+        return x * PIx / 180;
+    }
+    public static double DistanceBetweenPlaces(double lon1, double lat1, double lon2, double lat2)
+    {
+        double RADIUS = 6378.16;
+        double dlon = Radians(lon2 - lon1);
+        double dlat = Radians(lat2 - lat1);
+        double a = (Math.Sin(dlat / 2) * Math.Sin(dlat / 2)) + Math.Cos(Radians(lat1)) * Math.Cos(Radians(lat2)) * (Math.Sin(dlon / 2) * Math.Sin(dlon / 2));
+        double angle = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+        return angle * RADIUS;
+    }
+
+      public async Task GetDistanceVsStation()
+    {
+        distancestation = DistanceBetweenPlaces(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, stationlon, stationlat) *1000;
+
+    }
+    public async Task GetDistanceVsGang()
+    {
+        distancegang = DistanceBetweenPlaces(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, ganglon, ganglat) * 1000;
+    }
+    public async Task GetDistanceVsWH()
+    {
+        distancewhitehouse = DistanceBetweenPlaces(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, whitehouselon, whitehouselat) * 1000; 
+    }    
+
+   
+   
+
        
  }
