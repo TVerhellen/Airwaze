@@ -9,15 +9,9 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers;
 @using Microsoft.JSInterop
 @using BrowserInterop.Extensions
-@using BrowserInterop.Geolocation
+@using BrowserInterop.Geolocation   
 @inject ILogger<Canvasformap> Logger
-
 @inject IJSRuntime jsRuntime
-
-
-
-
-
 
 <div class="haraldcontainer">
     <div @onmousedown="ReportPointerLocation">
@@ -27,14 +21,37 @@
 </div>
 </div>
 
-@for (var i = 0; i < 4; i++)
+@if (selectedService != 0)
 {
-    <p>
-        <button @onclick="ReportPointerLocation">
-            Where's my mouse pointer for this button?
-        </button>
-    </p>
+    @switch (@selectedService)
+{
+    case 1:
+    <alert>Gate 1- 4 Selected</alert>
+        break;
+    case 2:
+    <p>Gate 5- 8 Selected</p>
+        break;
+    case 3:
+    <p>Gate 9- 12 Selected</p>
+        break;
+    case 4:
+    <p>Gate 13- 16 Selected</p>
+        break;
+    case 5:
+    <p>Gate 16- 20 Selected</p>
+        break;
+    case 6:
+    <p>BurgerKing Selected</p>
+        break;
+    case 7:
+        <p>DutyFreeShop Selected</p>
+        break;
+    default:
+        break;
+
 }
+}
+
 <p>@mousePointerMessage</p>
 
 
@@ -58,11 +75,13 @@ Latitude : @currentPosition.Coords.Latitude
 }
 
 @code {
-
+    private int selectedService = 0;
 
     private WindowNavigatorGeolocation geolocationWrapper;
     private GeolocationPosition currentPosition;
     private List<GeolocationResult> positioHistory = new List<GeolocationResult>();
+
+
     protected override async Task OnInitializedAsync()
     {
         var window = await jsRuntime.Window();
@@ -70,7 +89,7 @@ Latitude : @currentPosition.Coords.Latitude
         geolocationWrapper = navigator.Geolocation;
     }
 
-   
+
     public async Task GetGeolocation()
     {
         currentPosition = (await geolocationWrapper.GetCurrentPosition(new PositionOptions()
@@ -86,13 +105,45 @@ Latitude : @currentPosition.Coords.Latitude
     private async Task ReportPointerLocation(MouseEventArgs e)
     {
         mousePointerMessage = $"Mouse coordinates: {e.OffsetX}:{e.OffsetY}";
-        this._context = await this._canvasReference.CreateCanvas2DAsync();      
-        await this._context.SetFillStyleAsync("black");      
-        await this._context.FillRectAsync(e.OffsetX, e.OffsetY, 20, 20);
-        await this._context.SetFontAsync("38px Calibri");
-        await this._context.StrokeTextAsync("Hier ben Ik Als Ik klik", e.OffsetX, e.OffsetY);
+        if (330 < e.OffsetX && 360 > e.OffsetX && 54 < e.OffsetY && 90 > e.OffsetY)
+        {
+            selectedService = 1;
+        }
+        else if (547 < e.OffsetX && 578 > e.OffsetX && 49 < e.OffsetY && 90 > e.OffsetY)
+        {
+            selectedService = 2;
+        }
+        else if (321 < e.OffsetX && 351 > e.OffsetX && 262 < e.OffsetY && 305 > e.OffsetY)
+        {
+            selectedService = 3;
+        }
+        else if (550 < e.OffsetX && 582 > e.OffsetX && 263 < e.OffsetY && 306 > e.OffsetY)
+        {
+            selectedService = 4;
+        }
+        else if (322 < e.OffsetX && 350 > e.OffsetX && 474 < e.OffsetY && 518 > e.OffsetY)
+        {
+            selectedService = 5;
+        }
+        else if (482 < e.OffsetX && 538 > e.OffsetX && 590 < e.OffsetY && 649 > e.OffsetY)
+        {
+            selectedService = 6;
+        }
+        else if (106 < e.OffsetX && 150 > e.OffsetX && 720 < e.OffsetY && 748 > e.OffsetY)
+        {
+            selectedService = 7;
+        }
+        else
+        {
+            selectedService = 0;
+        }
+        this._context = await this._canvasReference.CreateCanvas2DAsync(); 
+        
 
-
+        //await this._context.SetFillStyleAsync("black");      
+        //await this._context.FillRectAsync(e.OffsetX, e.OffsetY, 20, 20);
+        //await this._context.SetFontAsync("38px Calibri");
+        //await this._context.StrokeTextAsync("Hier ben Ik Als Ik klik", e.OffsetX, e.OffsetY);
 
     }
     private async Task ReportPointerLocationOnMap(MouseEventArgs e)
