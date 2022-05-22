@@ -16,3 +16,10 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.haraldcontainer {
+    background-image: url('../Images/TerminalEdit.png');
+    background-size: contain;
+    height: 800px;
+    width : 600px;
+}

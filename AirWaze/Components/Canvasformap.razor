@@ -19,16 +19,13 @@
 
 
 
-
-<h1>Klik om vierkanten toe te voegen</h1>
-<div @onmousedown="ReportPointerLocation">
-<BECanvas Width="600" Height="400" @ref="_canvasReference">
+<div class="haraldcontainer">
+    <div @onmousedown="ReportPointerLocation">
+<BECanvas Width="600" Height="800" @ref="_canvasReference" >
     
 </BECanvas>
 </div>
-
-
-
+</div>
 
 @for (var i = 0; i < 4; i++)
 {
@@ -97,6 +94,11 @@ Latitude : @currentPosition.Coords.Latitude
 
 
     }
+    private async Task ReportPointerLocationOnMap(MouseEventArgs e)
+    {
+        mousePointerMessage = $"Mouse coordinates: {e.OffsetX}:{e.OffsetY}";        
+    }
+
         
     private Canvas2DContext _context;
 
