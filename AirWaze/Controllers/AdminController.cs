@@ -78,6 +78,7 @@ namespace AirWaze.Controllers
             }
             Airport.ApprovedSchedules.Add(new Schedule
             {
+                ScheduleID = scheduleToApprove.ScheduleID,
                 Date = scheduleToApprove.Date,
                 Flights = listflights,
                 IsValidated = scheduleToApprove.IsValidated
@@ -109,6 +110,7 @@ namespace AirWaze.Controllers
 
             if (id == -1)
             {
+                viewModel.ScheduleID = scheduleToApprove.ScheduleID;
                 viewModel.Date = scheduleToApprove.Date;
                 viewModel.Flights = scheduleToApprove.Flights;
                 viewModel.IsValidated = scheduleToApprove.IsValidated;
@@ -116,6 +118,7 @@ namespace AirWaze.Controllers
             else
             {
                 Schedule chosenSchedule = Airport.ApprovedSchedules.FirstOrDefault(x => x.ScheduleID == id);
+                viewModel.ScheduleID = chosenSchedule.ScheduleID;
                 viewModel.Date = chosenSchedule.Date;
                 viewModel.Flights = new List<Flight>();
                 foreach(var flight in chosenSchedule.Flights)

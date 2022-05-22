@@ -1,4 +1,5 @@
 ﻿@using AirWaze.Models
+@using AirWaze.Controllers
 @model ScheduleGenerateViewModel
 
 @{
@@ -9,7 +10,7 @@
         @foreach(var flight in @Model.Flights)
         {
             <p>@flightCounter: @Model.Flights[flightCounter-1].Departure - @Model.Flights[flightCounter-1].FlightNr - @Model.Flights[flightCounter-1].Destination - Gate @Model.Flights[flightCounter-1].CurrentGate.Number</p>
-            switch (@Model.Flights[flightCounter-1].Status)
+            switch (Model.Flights[flightCounter-1].Status)
             {
                 case 1:
                     <p>Status: DELAYED</p>
@@ -34,4 +35,11 @@
 
 <br />
 <br />
-<a class="btn btn-primary" asp-controller="Admin" asp-action="Schedule" >Go Back</a>
+@if(AdminController.scheduleToApprove == null)
+{
+    <a class="btn btn-primary" asp-controller="Admin" asp-action="ListSchedules">Go Back</a>
+}
+else
+{
+    <a class="btn btn-primary" asp-controller="Admin" asp-action="Schedule">Go Back</a>
+}
