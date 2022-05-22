@@ -39,22 +39,22 @@ namespace AirWaze.Database.Design
 
         void RemoveAirline(Airline airline);
 
-        List<User> GetUsers();
+        List<AspNetUser> GetUsers();
 
-        User FindUserByID(Guid id);
+        AspNetUser GetUserByID(string id);
 
-        void AddUser(User user);
+        //void AddUser(User user);
 
-        void UpdateUser(User user);
+        //void UpdateUser(User user);
 
-        void RemoveUser(User user);
+        //void RemoveUser(User user);
         public List<Ticket> GetTicketsByFlight(string flightnr);
 
         List<Ticket> GetTickets();
 
         //List<Ticket> GetTicketByFlight(Flight flight);
 
-        List<Ticket> GetTicketsByUser(User user);
+        List<Ticket> GetTicketsByUser(AspNetUser user);
 
         Ticket GetTicketByNr(string nr);
 

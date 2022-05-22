@@ -12,6 +12,7 @@ namespace AirWaze.Database
 
         public DbSet<Flight> Flights { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<AspNetUser> AspNetUsers { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Airline> Airlines { get; set; }
         public DbSet<Plane> Planes { get; set; }

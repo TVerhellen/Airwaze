@@ -48,15 +48,15 @@ namespace AirWaze.Database
             return _dbContext.Airlines.ToList();
         }
 
-        public void AddUser(User user)
-        {
-            _dbContext.Users.Add(user);
-            _dbContext.SaveChanges();
-        }
+        //public void AddUser(User user)
+        //{
+        //    _dbContext.Users.Add(user);
+        //    _dbContext.SaveChanges();
+        //}
 
-        public User FindUserByID(Guid id)
+        public AspNetUser GetUserByID(string id)
         {
-            return _dbContext.Users.SingleOrDefault(user => user.UserID.Equals(id));
+            return _dbContext.AspNetUsers.SingleOrDefault(user => user.Id.Equals(id));
         }
 
         public int AddTicket(Ticket ticket)
@@ -125,9 +125,9 @@ namespace AirWaze.Database
             _dbContext.SaveChanges();
         }
 
-        public List<User> GetUsers()
+        public List<AspNetUser> GetUsers()
         {
-            return _dbContext.Users.ToList();
+            return _dbContext.AspNetUsers.ToList();
         }
 
         //public List<Ticket> GetTicketByFlight(Flight flight)
@@ -151,7 +151,7 @@ namespace AirWaze.Database
             return _dbContext.Tickets.Include(x => x.CurrentUser).Include(x => x.CurrentFlight).ToList();
         }
 
-        public List<Ticket> GetTicketsByUser(User user)
+        public List<Ticket> GetTicketsByUser(AspNetUser user)
         {
             var query = from ticket in _dbContext.Tickets
                         where ticket.CurrentUser == user
@@ -184,11 +184,11 @@ namespace AirWaze.Database
             _dbContext.SaveChanges();
         }
 
-        public void RemoveUser(User user)
-        {
-            _dbContext.Users.Remove(user);
-            _dbContext.SaveChanges();
-        }
+        //public void RemoveUser(User user)
+        //{
+        //    _dbContext.Users.Remove(user);
+        //    _dbContext.SaveChanges();
+        //}
 
         public int RemoveTicket(Ticket ticket)
         {
@@ -209,11 +209,11 @@ namespace AirWaze.Database
             _dbContext.SaveChanges();
         }
 
-        public void UpdateUser(User user)
-        {
-            _dbContext.Users.Update(user);
-            _dbContext.SaveChanges();
-        }
+        //public void UpdateUser(User user)
+        //{
+        //    _dbContext.Users.Update(user);
+        //    _dbContext.SaveChanges();
+        //}
 
         public int UpdateTicket(Ticket ticket)
         {

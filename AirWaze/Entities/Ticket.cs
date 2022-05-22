@@ -8,7 +8,7 @@ namespace AirWaze.Entities
         public int TicketID { get; set; }
         public string TicketNr { get; set; }
         public Flight CurrentFlight { get; set; }
-        public User CurrentUser { get; set; }
+        public AspNetUser CurrentUser { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public decimal Price { get; set; }

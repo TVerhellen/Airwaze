@@ -1,18 +1,22 @@
 ﻿using AirWaze.Database.Design;
 using AirWaze.Entities;
 using AirWaze.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirWaze.Controllers
 {
+    [Authorize(Roles = "Admin, Customer")]
     public class TicketController : Controller
     {
         private readonly IAirWazeDatabase database;
         private static List<Ticket> loadedTickets = new List<Ticket>();
+        static AspNetUser myUser;
 
         public TicketController(IAirWazeDatabase db)
         {
             database = db;
+            myUser = database.GetUserByID(HttpContext.Session.GetString("UserID"));
             if(loadedTickets.Count == 0)
             {
                 LoadTicketList(myUser);
@@ -21,27 +25,28 @@ namespace AirWaze.Controllers
         }
 
 
-        static User myUser = new User()
-        {
-            UserID = Guid.Parse("7B1A9A6C-658A-4391-8149-1184FAC528BE"),
-            //Name = "tverhel",
-            //Password = "password",
-            LastName = "Verhellen",
-            FirstName = "Tijs",
-            Email = "tijs@milehighclub.com",
-            StreetName = "Koperstraat",
-            HouseNumber = "894",
-            Bus = "4",
-            Zipcode = "1000",
-            City = "Brussel",
-            Country = "Belgium",
-            PhoneNumber = "0456789456",
-            //IsVerified = true
-        };
+        
+        //{
+        //    UserID = Guid.Parse("7B1A9A6C-658A-4391-8149-1184FAC528BE"),
+        //    //Name = "tverhel",
+        //    //Password = "password",
+        //    LastName = "Verhellen",
+        //    FirstName = "Tijs",
+        //    Email = "tijs@milehighclub.com",
+        //    StreetName = "Koperstraat",
+        //    HouseNumber = "894",
+        //    Bus = "4",
+        //    Zipcode = "1000",
+        //    City = "Brussel",
+        //    Country = "Belgium",
+        //    PhoneNumber = "0456789456",
+        //    //IsVerified = true
+        //};
 
         public static List<Flight> allFlights = new List<Flight>();
 
         public static List<TicketCreateViewModel> ticketsToHandle = new List<TicketCreateViewModel>();
+
 
         public IActionResult Index()
         {
@@ -53,7 +58,7 @@ namespace AirWaze.Controllers
             List<TicketListViewModel> list = new List<TicketListViewModel>();
             foreach (var ticket in loadedTickets)
             {
-                if (ticket.CurrentUser.UserID == myUser.UserID)
+                if (ticket.CurrentUser.Id == myUser.Id)
                 {
                     list.Add(new TicketListViewModel()
                     {
@@ -240,7 +245,7 @@ namespace AirWaze.Controllers
             return "15B";
         }
 
-        public void LoadTicketList(User user)
+        public void LoadTicketList(AspNetUser user)
         {
             loadedTickets = database.GetTicketsByUser(user);
         }

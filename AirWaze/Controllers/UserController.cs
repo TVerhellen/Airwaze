@@ -11,7 +11,7 @@ namespace AirWaze.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private readonly IAirWazeDatabase _airWazeDatabase;
-        private static List<User> userEntities = new List<User>();
+        private static List<AspNetUser> userEntities = new List<AspNetUser>();
         public UserController(IAirWazeDatabase airWazeDatabase)
         {
             _airWazeDatabase = airWazeDatabase;
@@ -26,7 +26,7 @@ namespace AirWaze.Controllers
             var userViewModels = new List<UserListViewModel>();
             foreach (var user in _airWazeDatabase.GetUsers())
             {
-                userViewModels.Add(new UserListViewModel() { UserID = user.UserID, FirstName = user.FirstName, LastName = user.LastName });
+                userViewModels.Add(new UserListViewModel() { UserID = user.Id, FirstName = user.FirstName, LastName = user.LastName });
             }
             return View(userViewModels);
             
@@ -43,24 +43,24 @@ namespace AirWaze.Controllers
 
         [Authorize(Roles = "Admin, Customer")]
         //only user + admin
-        [Route("User/Detail/{UserID:Guid}")]
+        [Route("User/Detail/{UserID}")]
         [HttpGet]
-        public IActionResult Detail(Guid UserID)
+        public IActionResult Detail(string UserID)
         {
-            var users = _airWazeDatabase.FindUserByID(UserID);
+            var users = _airWazeDatabase.GetUserByID(UserID);
             if (users != null)
             {
                 var viewModel = new UserDetailViewModel
                 {
-                    UserID = users.UserID,
+                    UserID = users.Id,
                     FirstName = users.FirstName,
                     LastName = users.LastName,
-                    StreetName = users.StreetName,
-                    HouseNumber = users.HouseNumber,
-                    Bus = users.Bus,
-                    City = users.City,
-                    Zipcode = users.Zipcode,
-                    Country = users.Country,
+                    //StreetName = users.StreetName,
+                    //HouseNumber = users.HouseNumber,
+                    //Bus = users.Bus,
+                    //City = users.City,
+                    //Zipcode = users.Zipcode,
+                    //Country = users.Country,
                     Email = users.Email,
                     PhoneNumber = users.PhoneNumber,
                 };
@@ -112,7 +112,7 @@ namespace AirWaze.Controllers
                     PhoneNumber = userViewModel.PhoneNumber,
                 };
                 //userEntities.Add(newEntity);
-                _airWazeDatabase.AddUser(newEntity);
+                //_airWazeDatabase.AddUser(newEntity);
                 return RedirectToAction("Index");
             }
             return View(userViewModel);
@@ -121,24 +121,24 @@ namespace AirWaze.Controllers
 
         [Authorize(Roles = "Admin, Customer")]
         //only user + admin
-        [Route("User/Edit/{UserID:Guid}")]
+        [Route("User/Edit/{UserID}")]
         [HttpGet]
-        public ActionResult Edit(Guid UserID)
+        public ActionResult Edit(string UserID)
         {
-            var existingUser = _airWazeDatabase.FindUserByID(UserID);
+            var existingUser = _airWazeDatabase.GetUserByID(UserID);
             if (existingUser == null) return new NotFoundResult();
 
             var userEditViewModel = new UserEditViewModel
             {
-                UserID = existingUser.UserID,
+                UserID = existingUser.Id,
                 FirstName = existingUser.FirstName,
                 LastName = existingUser.LastName,
-                StreetName = existingUser.StreetName,
-                HouseNumber = existingUser.HouseNumber,
-                Bus = existingUser.Bus,
-                City = existingUser.City,
-                Zipcode = existingUser.Zipcode,
-                Country = existingUser.Country,
+                //StreetName = existingUser.StreetName,
+                //HouseNumber = existingUser.HouseNumber,
+                //Bus = existingUser.Bus,
+                //City = existingUser.City,
+                //Zipcode = existingUser.Zipcode,
+                //Country = existingUser.Country,
                 Email = existingUser.Email,
                 PhoneNumber = existingUser.PhoneNumber,
             };
@@ -150,26 +150,26 @@ namespace AirWaze.Controllers
         //only user + admin
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public async Task<IActionResult> Edit(Guid UserID, [FromForm]UserEditViewModel newUser)
+        public async Task<IActionResult> Edit(string UserID, [FromForm]UserEditViewModel newUser)
         {
             if (!TryValidateModel(newUser)) return View(newUser);
 
-            var existingUser = _airWazeDatabase.FindUserByID(UserID);
+            var existingUser = _airWazeDatabase.GetUserByID(UserID);
 
             if (existingUser == null) return new NotFoundResult();
 
             existingUser.FirstName = newUser.FirstName;
             existingUser.LastName = newUser.LastName;
-            existingUser.StreetName = newUser.StreetName;
-            existingUser.HouseNumber = newUser.HouseNumber;
-            existingUser.Bus = newUser.Bus;
-            existingUser.City = newUser.City;
-            existingUser.Country = newUser.Country;
-            existingUser.Zipcode = newUser.Zipcode;
+            //existingUser.StreetName = newUser.StreetName;
+            //existingUser.HouseNumber = newUser.HouseNumber;
+            //existingUser.Bus = newUser.Bus;
+            //existingUser.City = newUser.City;
+            //existingUser.Country = newUser.Country;
+            //existingUser.Zipcode = newUser.Zipcode;
             existingUser.PhoneNumber = newUser.PhoneNumber;
             existingUser.Email = newUser.Email;
 
-            _airWazeDatabase.UpdateUser(existingUser);
+            //_airWazeDatabase.UpdateUser(existingUser);
 
             return RedirectToAction("Index");
 
@@ -177,15 +177,15 @@ namespace AirWaze.Controllers
 
         [Authorize(Roles = "Admin, Customer")]
         //only user + admin
-        [Route("User/Delete/{UserID:Guid}")]
+        [Route("User/Delete/{UserID}")]
         [HttpGet]
-        public ActionResult Delete(Guid UserID)
+        public ActionResult Delete(string UserID)
         {
-            var existingUser = _airWazeDatabase.FindUserByID(UserID);
+            var existingUser = _airWazeDatabase.GetUserByID(UserID);
             if (existingUser == null) return new NotFoundResult();
             var deleteViewModel = new UserDeleteViewModel
             {
-                UserID = existingUser.UserID,
+                UserID = existingUser.Id,
                 FirstName = existingUser.FirstName,
                 LastName = existingUser.LastName,
             };
@@ -195,13 +195,13 @@ namespace AirWaze.Controllers
 
         [Authorize(Roles = "Admin, Customer")]
         //only user + admin
-        [Route("User/Delete/{UserID:Guid}")]
+        [Route("User/Delete/{UserID}")]
         [HttpPost]
-        public ActionResult ConfirmDelete(Guid UserID)
+        public ActionResult ConfirmDelete(string UserID)
         {
-            var existingUser = _airWazeDatabase.FindUserByID(UserID);
+            var existingUser = _airWazeDatabase.GetUserByID(UserID);
             if (existingUser == null) return new NotFoundResult();
-            _airWazeDatabase.RemoveUser(existingUser);
+            //_airWazeDatabase.RemoveUser(existingUser);
             return RedirectToAction("Index");
         }
     }
