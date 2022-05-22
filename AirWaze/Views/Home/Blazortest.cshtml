@@ -5,8 +5,11 @@
 
 <head>
 
-@* <script src="_content/Blazor.Extensions.Canvas/blazor.extensions.canvas.js"></script>*@
+<script src="_content/BrowserInterop/scripts.js"></script>
+<script src="_content/Blazor.Extensions.Canvas/blazor.extensions.canvas.js"></script>
+<script src="_content/Blazored.Modal/blazored.modal.js"></script>
  <script src="_framework/blazor.server.js"></script>
 </head>
 
-@(await Html.RenderComponentAsync<Planetypepicker>(RenderMode.Server))
+@(await Html.RenderComponentAsync<Canvasformap>(RenderMode.Server))
+

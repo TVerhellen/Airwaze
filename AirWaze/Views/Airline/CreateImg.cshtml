@@ -63,5 +63,17 @@
         </div>
         </div>
     }
-    <button class="btn btn-secondary" type="submit" style="margin-top:50px;margin-left:40%;width:400px;">Create</button> 
+    <button class="btn btn-secondary" onclick="message()" type="submit" style="margin-top:50px;margin-left:40%;width:400px;">Create</button> 
 </form>
+<script type="text/javascript">
+        function message()
+        {
+            Swal.fire({                   
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Airline Created',
+                    showConfirmButton: false,
+                    timer: 1500                   
+                    });
+        }
+    </script>

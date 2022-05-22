@@ -15,6 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Blazor.Extensions.Canvas" Version="1.1.1" />
+    <PackageReference Include="Blazored.Modal" Version="6.0.1" />
+    <PackageReference Include="BrowserInterop" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Core" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="6.0.5" />
@@ -26,12 +29,13 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.4" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.5" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Scripts\" />
+    <Folder Include="wwwroot\js\limonte-sweetalert2\" />
   </ItemGroup>
 
 </Project>

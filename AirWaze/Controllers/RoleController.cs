@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AirWaze.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -33,6 +33,7 @@ namespace AirWaze.Controllers
         [HttpPost]
         public async Task<IActionResult> AddRole(AddRoleViewModel model)
         {
+            await Task.Delay(1500);
             if (ModelState.IsValid)
             {
                 IdentityRole identityRole = new()
@@ -87,6 +88,7 @@ namespace AirWaze.Controllers
         [HttpPost]
         public async Task<IActionResult> EditRole(EditRoleViewModel model)
         {
+            await Task.Delay(1500);
             var role = await _roleManager.FindByIdAsync(model.Id);
 
             if (role == null)
@@ -196,6 +198,7 @@ namespace AirWaze.Controllers
         [HttpPost]
         public async Task<IActionResult> ConfirmDelete(string id)
         {
+            await Task.Delay(1500);
             var role = await _roleManager.FindByIdAsync(id);
 
             if (role == null)

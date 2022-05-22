@@ -1,16 +1,23 @@
-﻿@using AirWaze.Areas.Identity.Data
+﻿
+@using AirWaze.Areas.Identity.Data
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<AirWazeUser> SignInManager
 @inject UserManager<AirWazeUser> UserManager
-
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
+    
+    @if(User.IsInRole("Admin"))
+        {
+            <ul class="navbar-nav ml-auto small mb-2 mb-md-0" style="position: relative; top: -50px; left: 200px;">
+                <li><button type="button" onclick="location.href='@Url.Action("Index", "Admin")'" class="btn btn-outline-black btn-sm my-2 my-sm-0 mr-sm-2 text-black font-weight-bold" style="font-size: 20px">Dashboard</button></li>
+            </ul>
+        }
     <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
     </li>
-    <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+    <li class="nav-item" >
+        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
             <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
         </form>
     </li>
@@ -25,3 +32,4 @@ else
     </li>
 }
 </ul>
+   

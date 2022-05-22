@@ -8,12 +8,13 @@ namespace AirWaze.Entities
     public static class Airport 
     {
 
-        private static string _name = "Batman Airport";
+        private static string _name = "Airwaze";
         private static string _adress = "Bosdreef 6 Istanbul Turkye";
         private static DateTime _currenttime = DateTime.Now;
         private static Random generator = new Random();
         public static  IAirWazeDatabase myDatabase;      
         public static bool IsOnline = false;
+        public static List<Schedule> _approvedschedules = new List<Schedule>();
 
         public static Timer aTimer;
 
@@ -41,7 +42,11 @@ namespace AirWaze.Entities
         public static Schedule CurrentSchedule { get; set; }
         public static Schedule ScheduleToApprove { get; set; }
 
-        public static List<Schedule>? ApprovedSchedules { get; set; }
+        public static List<Schedule> ApprovedSchedules { get
+            { return _approvedschedules; } set
+            {
+                _approvedschedules = value;
+            } }
         
         public static void StartAirport()
         {
@@ -63,7 +68,6 @@ namespace AirWaze.Entities
             Flights = Flights.OrderBy(flight => flight.Departure).ToList();
             IsOnline = true;
             StartTimer(1);
-
         }
 
         public static void StartTimer(int dueTime)

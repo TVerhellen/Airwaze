@@ -13,10 +13,9 @@ namespace AirWaze.Controllers
         public static List<Flight> flights = new List<Flight>();
         public static List<FlightCreateViewModel> tempFlights = new List<FlightCreateViewModel>();
         Random _random = new Random();
+        public static List<Plane> planes = new List<Plane>();
 
-        
-
-        //testplane (and linked testAirline) is used for new FlightCreateViewModels, before going to FlightPicker
+        //testplane (and linked testAirline) is used for new FlightCreateViewModels, before going to PlanePicker
         static Airline testAirline = new Airline
         {
             Number = "00000",
@@ -50,22 +49,28 @@ namespace AirWaze.Controllers
         {
             List<Flight> oldlist = flights.ToList();
             _airwazeDatabase = airwazeDatabase;
-            flights = _airwazeDatabase.GetFlights();
+            if (flights.Count == 0)
+            {
+                flights = _airwazeDatabase.GetFlights();
+            }
+
+
             foreach (Flight x in flights)
             {
-                foreach(Flight y in oldlist)
+                foreach (Flight y in oldlist)
                 {
                     if (x.FlightID == y.FlightID)
                     {
                         if (x.Status != y.Status)
                         {
                             x.Status = y.Status;
-                            _airwazeDatabase.UpdateFlight(x);
-                        }                       
+                            //_airwazeDatabase.UpdateFlight(x);
+                        }
                     }
                 }
+
+                planes = _airwazeDatabase.GetPlanes();
             }
-            //planes = _airwazeDatabase.GetPlanes();
         }
 
         //Roles: Everyone
@@ -145,12 +150,13 @@ namespace AirWaze.Controllers
         //Roles: Admin + Airport Staff
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult Create(FlightCreateViewModel flightViewModel)
+        public async Task<IActionResult> Create(FlightCreateViewModel flightViewModel)
         {
+            await Task.Delay(1500);
             flightViewModel.FlightNr = CreateFlightNr(flightViewModel);
-            flightViewModel.CurrentGate = new Gate();
+            flightViewModel.CurrentGate = _airwazeDatabase.GetGateByNr(0);
             flightViewModel.CurrentPlane = testplane;
-            flightViewModel.CurrentRunway = new Runway();
+            flightViewModel.CurrentRunway = _airwazeDatabase.GetRunwayByNr(0);
             flightViewModel.Status = 0;
 
             if (TryValidateModel(flightViewModel))
@@ -179,7 +185,7 @@ namespace AirWaze.Controllers
         public IActionResult PlanePicker(FlightCreateViewModel flightViewModel, string id)
         {
             flightViewModel = tempFlights.SingleOrDefault(x => x.FlightNr == id);
-            flightViewModel.CurrentPlane = PlaneController.planeEntities.FirstOrDefault(x => x.PlaneNr == Request.Form["selectedPlaneNr"]);
+            flightViewModel.CurrentPlane = planes.FirstOrDefault(x => x.PlaneNr == Request.Form["selectedPlaneNr"]);
 
             if (TryValidateModel(flightViewModel))
             {
@@ -241,9 +247,10 @@ namespace AirWaze.Controllers
         //Roles: Admin + Airport Staff
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult Edit(string id, FlightEditViewModel flightViewModel)
+        public async Task<IActionResult> Edit(string id, FlightEditViewModel flightViewModel)
         {
-            flightViewModel.CurrentPlane = PlaneController.planeEntities.FirstOrDefault(x => x.PlaneNr == Request.Form["selectedPlaneNr"]);
+            await Task.Delay(1500);
+            flightViewModel.CurrentPlane = planes.FirstOrDefault(x => x.PlaneNr == Request.Form["selectedPlaneNr"]);
             flightViewModel.Status = Convert.ToInt32(Request.Form["selectedStatus"]);
             flightViewModel.FlightNr = id;
 
@@ -309,8 +316,9 @@ namespace AirWaze.Controllers
         [Authorize(Roles = "Admin")]
         //Roles: Admin + Airport Staff
         [HttpGet]
-        public IActionResult DeleteConfirm(string id)
+        public async Task<IActionResult> DeleteConfirm(string id)
         {
+            await Task.Delay(1500);
             var flightEntity = flights.FirstOrDefault(x => x.FlightNr == id);
             //var flightEntity = _airwazeDatabase.GetFlightByNr(flightnr);
 

@@ -1,5 +1,8 @@
 ﻿@using AirWaze.Entities
 
+@{
+    List<Schedule> approvedSchedules = Airport.ApprovedSchedules;
+}
 <h1>Approved Flight Schedules:</h1>
 @if(Airport.ApprovedSchedules == null)
 {
@@ -8,14 +11,12 @@
 else
 {
     
-    @for(int i = 0; i < Airport.ApprovedSchedules.Count; i++)
+    @foreach(var schedule in approvedSchedules)
     {
-        <h3>@Airport.ApprovedSchedules[i].Date.ToString("D") - @Airport.ApprovedSchedules[i].Date.Hour.ToString("00") : @Airport.ApprovedSchedules[i].Date.Minute.ToString("00")</h3>
-        <!--
-        <a class="btn btn-primary" asp-controller="Admin" asp-action="DetailSchedule" asp-route-index="@i">Detail</a>
-        -->
+        <h3>@schedule.Date.ToString("D") - @schedule.Date.Hour.ToString("00") : @schedule.Date.Minute.ToString("00")</h3>
+        <a class="btn btn-primary" asp-controller="Admin" asp-action="DetailSchedule" asp-route-id="@schedule.ScheduleID">Detail</a>
     }
 }
 <br />
 <br />
-<a class="btn btn-primary" asp-controller="Admin" asp-action="Schedule" >Go Back</a>
+<a class="btn btn-primary" asp-controller="Admin" asp-action="Schedule">Back</a>

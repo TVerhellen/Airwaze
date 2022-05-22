@@ -1,44 +1,59 @@
 ﻿@model List<FlightListViewModel>
 
+<div class="container-fluid" style="padding: 0 0 0 0;">
+    <div class="row">
+        <div class="col-lg-2 bg-dark-blue d-none d-sm-block" style="padding-top: 50px; padding-bottom: 20px;">
 
+            <div class="list-group text-left font-weight-bold" style="padding-top: 30px;">  
+                <a class="list-group-item" asp-action="ListAllRoles" asp-controller="Role">Manage roles</a>
+                <a class="list-group-item" asp-action="List" asp-controller="Airline">Manage airlines</a>
+                <a class="list-group-item" asp-action="List" asp-controller="Plane">Manage planes</a>
+                <a class="list-group-item" asp-action="Index" asp-controller="Flight">Manage flights</a> 
+                <a class="list-group-item" asp-action="Schedule" asp-controller="Admin">Manage schedule</a>                
+            </div>
+        </div>
+        <div class="col-lg-9" style="padding-bottom: 50px;">
+            <h1>Manage flights</h1>
+            <br />
+            <a class="btn btn-primary" asp-controller="Flight" asp-action="Create">Add New Flight</a>
+            <br />
+            <h2>All Flights</h2>
 
-<h1>Flight Landing Page</h1>
-<br />
-<a class="btn btn-primary" asp-controller="Flight" asp-action="Create">Add New Flight</a>
-<br />
-<h2>All Flights</h2>
-
-@if (@Model.Count != 0)
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Date</th>
-                <th scope="col">Time</th>
-                <th scope="col">Destination</th>
-                <th scope="col">Flight Number</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var x in @Model)
+            @if (@Model.Count != 0)
             {
-                <tr>
-                    <td>@x.Departure.Date.ToString("D")</td>
-                    <td>@x.Departure.Hour.ToString("00"):@x.Departure.Minute.ToString("00")</td>
-                    <td>@x.Destination</td>     
-                    <td>@x.FlightNr</td>
-                    <td><a class="btn btn-primary" asp-controller="Flight" asp-action="Detail" asp-route-id="@x.FlightNr">Details</a></td>
-                    <td><a class="btn btn-primary" asp-controller="Flight" asp-action="Edit" asp-route-id="@x.FlightNr">Edit</a></td>
-                    <td><a class="btn btn-primary" asp-controller="Flight" asp-action="Delete" asp-route-id="@x.FlightNr">Delete</a></td>
-                </tr>
+                <table class="table table-striped table-dark">
+                    <thead class="rounded">
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Destination</th>
+                            <th scope="col">Flight Number</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var x in @Model)
+                    {
+                        <tr class="rounded">
+                            <td>@x.Departure.Date.ToString("D")</td>
+                            <td>@x.Departure.Hour.ToString("00"):@x.Departure.Minute.ToString("00")</td>
+                            <td>@x.Destination</td>     
+                            <td>@x.FlightNr</td>
+                            <td><a class="btn btn-primary" asp-controller="Flight" asp-action="Detail" asp-route-id="@x.FlightNr">Details</a></td>
+                            <td><a class="btn btn-primary" asp-controller="Flight" asp-action="Edit" asp-route-id="@x.FlightNr">Edit</a></td>
+                            <td><a class="btn btn-primary" asp-controller="Flight" asp-action="Delete" asp-route-id="@x.FlightNr">Delete</a></td>
+                        </tr>
 
-                <!-- Show Status if not 0 -->
-            }
+                         <!-- Show Status if not 0 -->
+                    }
             
-        </tbody>
-    </table>
-}
-else
-{
-    <p>No flights planned at the moment.</p>
-}
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>No flights planned at the moment.</p>
+            }
+        </div>
+</div>
+
+

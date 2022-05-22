@@ -5,34 +5,56 @@
     ViewData["Title"] = "All roles";
 }
 
-<h1>All roles</h1>
+<div class="container-fluid" style="padding: 0 0 0 0;">
+    <div class="row">
+        <div class="col-lg-2 bg-dark-blue d-none d-sm-block" style="padding-top: 50px; padding-bottom: 20px;">
 
-<a class="btn btn-primary mb-2" asp-action="AddRole"><i class="fa-solid fa-users"></i> Add role</a>
+            <div class="list-group text-left font-weight-bold" style="padding-top: 30px;">
+                <a class="list-group-item" asp-action="ListAllRoles" asp-controller="Role">Manage roles</a>   
+                <a class="list-group-item" asp-action="List" asp-controller="Airline">Manage airlines</a>
+                <a class="list-group-item" asp-action="List" asp-controller="Plane">Manage planes</a>
+                <a class="list-group-item" asp-action="Index" asp-controller="Flight">Manage flights</a> 
+                <a class="list-group-item" asp-action="Schedule" asp-controller="Admin">Manage schedule</a>                             
+            </div>
+        </div>
+    <div class="col-lg-9" style="padding-bottom: 50px;">
+           <h1>Manage roles</h1>
+           </br>
+           <a class="btn btn-primary mb-2" asp-action="AddRole">Add role</a>
+           </br>
+            @if (Model.Any())
+            {
+                <table class="table col-4">
+                <thead>
+                    <tr>
+                       <td><h5>Role</h5></td>
+                        <td></td>
+                    </tr>
+                </thead>
+                @foreach (var role in Model)
+                {
+                    <tbody>
+                        <tr>
+                            <td>@role.Name</td>
+                            <td class="text-center">
+                                <a asp-action="EditRole" asp-route-id="@role.Id" class="btn btn-primary">Edit</a>
+                                <a asp-action="DeleteRole" asp-route-id="@role.Id" class="btn btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                }
+                </table>
+            }
+            else
+            {
+                <h5>No roles yet, use the button to add your first role.</h5>
+            }
+         </div>
+    </div>
+</div>
 
-@if (Model.Any())
-{
-    <table class="table col-4">
-        <thead>
-            <tr>
-                <td><h5>Role</h5></td>
-                <td></td>
-            </tr>
-        </thead>
-        @foreach (var role in Model)
-        {
-            <tbody>
-                <tr>
-                    <td>@role.Name</td>
-                    <td class="text-center">
-                        <a asp-action="EditRole" asp-route-id="@role.Id" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i>Edit</a>
-                        <a asp-action="DeleteRole" asp-route-id="@role.Id" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i>Delete</a>
-                    </td>
-                </tr>
-            </tbody>
-        }
-    </table>
-}
-else
-{
-    <h5>No roles yet, use the button above to add your first role.</h5>
-}
+
+
+
+
+

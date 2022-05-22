@@ -82,8 +82,9 @@ namespace AirWaze.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult Create(TicketCreateViewModel newTicket)
+        public async Task<IActionResult> Create(TicketCreateViewModel newTicket)
         {
+            await Task.Delay(1500);
             if (TryValidateModel(newTicket))
             {
                 newTicket.TicketNr = $"NOTASSIGNED{ticketsToHandle.Count}";
@@ -153,8 +154,9 @@ namespace AirWaze.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult Edit(string ID, TicketEditViewModel editedTicket)
+        public async Task<IActionResult> Edit(string ID, TicketEditViewModel editedTicket)
         {
+            await Task.Delay(1500);
             Ticket loadedTicket = loadedTickets.Single(x => x.TicketNr == ID);
             loadedTicket.LastName = editedTicket.LastName;
             loadedTicket.FirstName = editedTicket.FirstName;
@@ -176,8 +178,9 @@ namespace AirWaze.Controllers
             return View(deleteTicket);
         }
 
-        public IActionResult ConfirmedDelete(string ID)
+        public async Task<IActionResult> ConfirmedDelete(string ID)
         {
+            await Task.Delay(1500);
             database.RemoveTicket(loadedTickets.Single(x => x.TicketNr == ID));
             LoadTicketList(myUser);
             return RedirectToAction("List");

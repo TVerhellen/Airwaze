@@ -5,7 +5,7 @@
 
 
 
-@if(@PlaneController.planeEntities.Count > 0)
+@if(@FlightController.planes.Count > 0)
 {
     <h2>Please select the plane for this flight</h2>
 <form asp-controller="Flight" asp-action="PlanePicker" asp-route-id=@Model.FlightNr method="post">
@@ -14,7 +14,7 @@
         <label>Available Planes:</label>
         <br />
         <select name="selectedPlaneNr">
-            @foreach(var item in @PlaneController.planeEntities)
+            @foreach(var item in @FlightController.planes)
             {
                  <option value=@item.PlaneNr>@item.CurrentAirline.Name - @item.PlaneNr</option>
             }

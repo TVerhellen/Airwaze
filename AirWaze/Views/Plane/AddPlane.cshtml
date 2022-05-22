@@ -33,24 +33,24 @@
         <span class="text-danger" asp-validation-for="FirstClassCapacity"></span>
     </div>
     <div class="form-group">
-        <label asp-for="FuelCapacity"></label>
-        <input class ="form-control" asp-for="FuelCapacity" />
+        <label asp-for="FuelCapacity">Fuel Capacity in Liters</label>
+        <input class ="form-control" asp-for="FuelCapacity" readonly="readonly"/>
         <span class="text-danger" asp-validation-for="FuelCapacity"></span>
     </div>
     
     <div class="form-group">
-        <label asp-for="LoadCapacity"></label>
-        <input class ="form-control" asp-for="LoadCapacity" />
+        <label asp-for="LoadCapacity">Load Capacity in Kg</label>
+        <input class ="form-control" asp-for="LoadCapacity" readonly="readonly"/>
         <span class="text-danger" asp-validation-for="LoadCapacity"></span>
     </div>
     <div class="form-group">
-        <label asp-for="FuelUsagePerKM"></label>
-        <input class ="form-control" asp-for="FuelUsagePerKM" />
+        <label asp-for="FuelUsagePerKM">Fuel Usage Liters/KM</label>
+        <input class ="form-control" asp-for="FuelUsagePerKM" readonly="readonly"/>
         <span class="text-danger" asp-validation-for="FuelUsagePerKM"></span>
     </div>
     <div class="form-group">
         <label asp-for="FlightRegion"></label>
-        <input class ="form-control" asp-for="FlightRegion" />
+        <input class ="form-control" asp-for="FlightRegion" readonly="readonly"/>
         <span class="text-danger" asp-validation-for="FlightRegion"></span>
     </div>
      <div class="form-group">
@@ -59,7 +59,7 @@
         <span class="text-danger" asp-validation-for="ConstructionYear"></span>
     </div>
     <div class="form-group">
-        <label asp-for="AirMiles"></label>
+        <label asp-for="AirMiles">Km in the Air for this Airport</label>
         <input class ="form-control" asp-for="AirMiles" />
         <span class="text-danger" asp-validation-for="AirMiles"></span>
     </div>
@@ -75,10 +75,23 @@
     </div>
        <div class="form-group">
         <input asp-for="IsAvailable"/>
-        <label asp-for="IsAvailable">Currently Available and Ready to Rock?</label>
+        <label asp-for="IsAvailable">Currently Available?</label>
     
     </div>
     
 
-    <button class="btn btn-secondary" type="submit" style="margin-top:50px;margin-left:40%;width:400px;">Create</button> 
+    <button class="btn btn-secondary" type="submit" onclick="message()" style="margin-top:50px;margin-left:40%;width:400px;">Create</button> 
 </form>
+
+<script type="text/javascript">
+        function message()
+        {
+            Swal.fire({                   
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Plane Added',
+                    showConfirmButton: false,
+                    timer: 1500                   
+                    });
+        }
+    </script>

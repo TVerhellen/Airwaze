@@ -10,29 +10,27 @@
 @inject ILogger<Planetypepicker> Logger
 @inject IJSRuntime jsRuntime
 
-@if(mymodel.Manufacturer == null)
-{
-    <p>
+<p>
     <label>
         Select Manufacturer: 
         <select @bind="SelectedManufacturer">
             <option value="Boeing">Boeing</option>
             <option value="Airbus">Airbus</option>
-            <option value="Gulfstream">Gulfstream</option>
-           
+            <option value="Gulfstream">Gulfstream</option>          
         </select>
     </label>
 </p>
-
 <span>
     Selected Manufacturer: @SelectedManufacturer
 </span>
-    <button @onclick="BindManufacturer">Confirm</button>
-}
-else if(mymodel.Type == null)
+<button class="btn btn-primary" @onclick="BindManufacturer">Confirm</button>
+@if(mymodel.Manufacturer != null)
 {
     if(SelectedManufacturer == "Boeing")
     {
+    <div style="margin-top:50px;margin-bottom:50px">
+        <img src="Images/BoeingLogo.jpg" alt="Sample Image" width="400" height="200"/>
+        </div>
     <p>
     <label>
         Select Type: 
@@ -47,7 +45,10 @@ else if(mymodel.Type == null)
     }
     else if(SelectedManufacturer == "Airbus")
     {
-    <p>
+    <div style="margin-top:50px;margin-bottom:50px">
+        <img src="Images/AirbusLogo.png" alt="Sample Image" width="400" height="200"/>
+        </div>
+     <p>
     <label>
         Select Type: 
         <select @bind="SelectedType">
@@ -61,6 +62,9 @@ else if(mymodel.Type == null)
     }
     else
     {
+    <div style="margin-top:50px;margin-bottom:50px">
+        <img src="Images/GulfstreamLogo.png" alt="Sample Image" width="400" height="200"/>
+        </div>
     <p>
     <label>
         Select Type: 
@@ -73,46 +77,86 @@ else if(mymodel.Type == null)
     <span>
     Selected Type: @SelectedType
 </span>
-    <button @onclick="BindType">Confirm</button>
+    <button class="btn btn-primary" @onclick="BindType">Confirm</button>
 }
-else
+@if (mymodel.Type != null)
 {
-    <div style="padding-top:20px;">
+    <div style="margin-top:50px;margin-bottom:50px">
     @switch (mymodel.Type)
     {
         case "737":
-            <img src="PlaneLayout/737.jpg" alt="Sample Image" width="800" height="400"/> 
+            <img src="PlaneLayout/737.jpg" alt="Sample Image" width="800" height="400"/>
+            mymodel.FuelUsagePerKM = 20;
+            mymodel.FuelCapacity = 50000;
+            mymodel.LoadCapacity = 5000;
             break;
         case "767":
             <img src="PlaneLayout/767.jpg" alt="Sample Image" width="800" height="400"/> 
+            mymodel.FuelUsagePerKM = 20;
+            mymodel.FuelCapacity = 50000;
+            mymodel.LoadCapacity = 5000;
             break;
         case "787":
             <img src="PlaneLayout/787.jpg" alt="Sample Image" width="800" height="400"/> 
+            mymodel.FuelUsagePerKM = 20;
+            mymodel.FuelCapacity = 50000;
+            mymodel.LoadCapacity = 5000;
             break;
         case "A318":
-            <img src="PlaneLayout/A318.jpg" alt="Sample Image" width="800" height="400"/> 
+            <img src="PlaneLayout/A318.jpg" alt="Sample Image" width="800" height="400"/>
+            mymodel.FuelUsagePerKM = 20;
+            mymodel.FuelCapacity = 50000;
+            mymodel.LoadCapacity = 5000;
             break;
         case "A319":
             <img src="PlaneLayout/A319.jpg" alt="Sample Image" width="800" height="400"/> 
+            mymodel.FuelUsagePerKM = 20;
+            mymodel.FuelCapacity = 50000;
+            mymodel.LoadCapacity = 5000;
             break;
         case "A321":
             <img src="PlaneLayout/767.jpg" alt="Sample Image" width="800" height="400"/> 
+            mymodel.FuelUsagePerKM = 20;
+            mymodel.FuelCapacity = 50000;
+            mymodel.LoadCapacity = 5000;
             break;
          case "Standard":
                 <img src="PlaneLayout/Gulf.jpg" alt="Sample Image" width="800" height="400"/>
+                mymodel.FuelUsagePerKM = 20;
+            mymodel.FuelCapacity = 50000;
+            mymodel.LoadCapacity = 5000;
                 break;
             default:
                 break;
-        }
+    }
     </div>   
-
-      <a class="btn btn-primary" @onclick="BindPic" href="/Plane/AddPlane">Confirm</a>
+        <button class="btn btn-primary"style="margin-bottom:40px;" @onclick="BindPic">Confirm</button>
+<br />     
 }
-
-
+@if (mymodel.SeatDiagramPic != null)
+{
+    <label>
+        Select FlightRegion for your Plane: 
+        <select @bind="SelectedFlightRegion">
+            <option value="EUR">Europa</option> 
+            <option value="ASI">Asia</option>
+            <option value="NA">North America</option>
+            <option value="SA">South America</option>
+            <option value="AFR">Africa</option>
+            <option value="OCE">Oceania</option>
+        </select>
+    </label>   
+    <br />
+     <a class="btn btn-secondary" style="margin-left:250px;width:600px;margin-top:60px;" @onclick=BindRegion href="/Plane/AddPlane">Add this Plane to my Airline</a>
+}
 
 @code{
     public static PlaneCreateViewModel mymodel = new PlaneCreateViewModel();
+    public string SelectedManufacturer = "";
+    public string SelectedType = "";
+    public string SelectedPath = "";
+    public string SelectedFlightRegion = "";
+
     public void BindManufacturer() => mymodel.Manufacturer = SelectedManufacturer;
     public void BindType()
     {
@@ -129,28 +173,28 @@ else
                 mymodel.FirstClassCapacity = 30;
                 mymodel.PassengerCapacity = 120;              
                 break;
-        case "767":
-            mymodel.FirstClassCapacity = 36;
+            case "767":
+                mymodel.FirstClassCapacity = 36;
                 mymodel.PassengerCapacity = 192;                
-            break;
-        case "787":
-            mymodel.FirstClassCapacity = 30;
+                break;
+            case "787":
+                mymodel.FirstClassCapacity = 30;
                 mymodel.PassengerCapacity = 156;               
-            break;
-        case "A318":
-            mymodel.FirstClassCapacity =32;
+                break;
+            case "A318":
+                mymodel.FirstClassCapacity =32;
                 mymodel.PassengerCapacity = 32;               
-            break;
-        case "A319":
-            mymodel.FirstClassCapacity = 0;
+                break;
+            case "A319":
+                mymodel.FirstClassCapacity = 0;
                 mymodel.PassengerCapacity = 138;                
-            break;
-        case "A321":
-            mymodel.FirstClassCapacity = 32;
+                break;
+            case "A321":
+                mymodel.FirstClassCapacity = 32;
                 mymodel.PassengerCapacity = 164;             
-            break;
-         case "Standard":
-               mymodel.FirstClassCapacity = 10;
+                break;
+            case "Standard":
+                mymodel.FirstClassCapacity = 10;
                 mymodel.PassengerCapacity = 10;                
                 break;
             default:
@@ -158,13 +202,11 @@ else
         }
         mymodel.FlightHours = 0;
         mymodel.NextMainentance = 200000;
-        PlaneController.planesToAdd.Add(mymodel);
     } 
-    public string SelectedManufacturer = "";
-    public string SelectedType = "";
-    public string SelectedPath = "";
-    
-
-
+    public void BindRegion()
+    {
+        mymodel.FlightRegion = SelectedFlightRegion;
+        PlaneController.planesToAdd.Add(mymodel);
+    }
     
 }

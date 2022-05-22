@@ -1,6 +1,30 @@
-﻿@{
-    ViewData["Title"] = "Privacy Policy";
-}
-<h1>@ViewData["Title"]</h1>
-
-<p>Use this page to detail your site's privacy policy.</p>
+﻿
+<body>
+    <button class="btn btn-primary" aria-label="Try me! Example: A basic message" onclick="message()">
+        Try me!
+    </button>      
+   
+</body>
+ 
+   <script type="text/javascript">
+       
+        
+       function message()
+        {
+      
+            Swal.fire({
+  text: 'Login Completed',
+  icon:'success',
+  target: '#custom-target',
+  customClass: {
+    container: 'position-absolute'
+  },
+  toast: true,
+  position: 'top-right',
+  showConfirmButton: false,
+  timer: 1500,
+  timerProgressBar: true
+})
+                    
+        }
+    </script>

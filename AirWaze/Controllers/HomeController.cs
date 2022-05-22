@@ -11,7 +11,7 @@ namespace AirWaze.Controllers
         private readonly ILogger<HomeController> _logger;
 
         public static IAirWazeDatabase _myDatabase;
-
+      
         public HomeController(ILogger<HomeController> logger, IAirWazeDatabase mydatabase)
         {
             _logger = logger;
@@ -23,14 +23,14 @@ namespace AirWaze.Controllers
             {
                 Airport.StartAirport();
             }
-        }       
+        }
 
-    public IActionResult Index()
+        public IActionResult Index()
         {
             return View();
         }
 
-        
+
         public IActionResult Privacy()
         {
             return View();
@@ -47,7 +47,10 @@ namespace AirWaze.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-    
+        [Route("/map")]
+        public IActionResult Map()
+        {
+            return View();
+        }
     }
 }
