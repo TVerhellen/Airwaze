@@ -28,9 +28,7 @@ namespace AirWaze.Entities
         public string? AdminComments { get; set; }
 
         public string AccountNumber { get; set; }
-
-        //public List<Invoice> ListInvoices { get; set; }
-
+      
         public string? Logo { get; set; }   
     }
 }

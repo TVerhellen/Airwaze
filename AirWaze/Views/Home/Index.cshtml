@@ -102,7 +102,11 @@
  <script type="text/javascript">
         function message()
         {
-            Swal.fire({                   
+            var alerted = localStorage.getItem('alerted') || '';
+            if (alerted != 'yes')
+            {
+                 localStorage.setItem('alerted','yes');
+                 Swal.fire({                   
                     position: 'center',                    
                     title: 'Welcome',
                     showConfirmButton: false,
@@ -112,10 +116,10 @@
                     imageWidth: 400,
                     imageHeight: 200,
                     imageAlt: 'Custom image'
-                    });
-        }
+                    });        
+            }                                       
+        }       
     </script>
-
 </body>
 
 
