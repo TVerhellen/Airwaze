@@ -55,7 +55,7 @@ namespace AirWaze.Controllers
         // AIRLINE ROLE
         [HttpGet]
         public async Task<IActionResult> Index(Guid ID)
-        {
+        {          
             LoggedInAirline = airlineEntities.FirstOrDefault(x => x.AirlineID == ID);
             if (LoggedInAirline == null)
             {
@@ -98,13 +98,15 @@ namespace AirWaze.Controllers
                     NextMainentance = plane.NextMainentance,
                 }) ;
             }
+
             return View(thislist);
         }
 
         [Authorize(Roles = "Admin")]
         //ADMIN ROLE
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List(string option, string searchString)
         {
+            ViewData["CurrentFilter"] = searchString;
             List<PlaneListViewModel> thislist = new List<PlaneListViewModel>();
             foreach (var plane in planeEntities)
             {
@@ -123,7 +125,30 @@ namespace AirWaze.Controllers
                     NextMainentance = plane.NextMainentance,
                 });
             }
-            return View(thislist);
+            //searchfunction
+            var myPlane = from s in thislist
+                          select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                if (option == "Name")
+                {
+                    myPlane = myPlane.Where(s => s.PlaneNr.Contains(searchString));
+                }
+                else if (option == "Type")
+                {
+                    myPlane = myPlane.Where(s => s.Type.Contains(searchString));
+                }
+                else if (option == "Capacity")
+                {
+                    myPlane = myPlane.Where(s => s.PassengerCapacity.ToString().Contains(searchString)).ToList();
+                }
+                else if (option == "Date")
+                {
+                    myPlane = myPlane.Where(s => s.ConstructionYear.ToString("dd/MM/yyyy").Contains(searchString) || s.ConstructionYear.ToString("dd-MM-yyyy").Contains(searchString)).ToList();
+                }
+            }
+            return View(myPlane.ToList());
         }
 
         [Authorize(Roles = "Admin")]
