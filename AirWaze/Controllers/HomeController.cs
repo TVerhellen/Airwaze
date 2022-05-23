@@ -52,5 +52,13 @@ namespace AirWaze.Controllers
         {
             return View();
         }
+        public IActionResult Departures()
+        {
+            List<FlightListViewModel> departures = new List<FlightListViewModel>();
+
+
+
+            return View(departures);
+        }
     }
 }

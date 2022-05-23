@@ -1,0 +1,52 @@
+﻿@model List<FlightListViewModel>
+
+
+<h1>Departures Board</h1>
+<h2>@DateTime.Now.ToString("f")</h2>
+<br/>
+<br/>
+
+                <table class="table table-striped table-dark">
+                    <thead class="rounded">
+                        <tr>
+                            <th scope="col">Time</th>
+                            <th scope="col">Destination</th>
+                            <th scope="col">Flight</th>
+                            <th scope="col">Gate Nr.</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (@Model.Count != 0)
+                        {
+                            @foreach (var x in @Model)
+                            {
+                                <tr>
+                                    <td>@x.Departure.Hour.ToString("00"):@x.Departure.Minute.ToString("00")</td>
+                                    <td>@x.Destination</td>     
+                                    <td>@x.FlightNr</td>
+                                    if(@x.CurrentGate.Number != 0)
+                                    {
+                                        <td>@x.CurrentGate.Number</td>
+                                    }
+                                    else
+                                    {
+                                        <td> </td>
+                                    }
+                                    <td>@x.Status</td>
+                                    <td><a class="btn btn-primary" asp-controller="Flight" asp-action="Detail" asp-route-id="@x.FlightNr">Details</a></td>
+                                </tr>
+
+                         <!-- make table row clickable to see details? -->
+                            }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>No flights planned at the moment.</td>
+                        </tr>
+                    }
+            
+                    </tbody>
+                </table>
+            

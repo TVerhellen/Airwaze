@@ -15,7 +15,8 @@ namespace AirWaze.Entities
         public static  IAirWazeDatabase myDatabase;      
         public static bool IsOnline = false;
         public static List<Schedule> _approvedschedules = new List<Schedule>();
-
+        public static List<Destination> Destinations = new List<Destination>();
+        
         public static Timer aTimer;
 
         static Airport()
@@ -37,7 +38,6 @@ namespace AirWaze.Entities
         public static List<Gate> Gates { get; set; }
         public static List<Flight> Flights { get; set; }
         public static List<Runway> Runways { get; set; }
-
         public static List<Plane> Planes { get; set; }
         public static Schedule CurrentSchedule { get; set; }
         public static Schedule ScheduleToApprove { get; set; }

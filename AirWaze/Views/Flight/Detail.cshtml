@@ -28,7 +28,32 @@ else
     <p>@Model.CurrentGate.Number</p>
 }
 <h2>Current Status</h2>
-<p>@Model.Distance km</p>
+@switch (Model.Status)
+            {
+                case 0:
+                    <p>Awaiting Approval</p>
+                    break;
+                case 1:
+                    <p>Approved</p>
+                    break;
+                case 2:
+                    <p>Delayed</p>
+                    break;
+                case 3:
+                    <p>Boarding</p>
+                    break;
+                case 4:
+                    <p>Departed</p>
+                    break;
+                case 5:
+                    <p>Arrived</p>
+                    break;
+                case 6:
+                    <p>Cancelled</p>
+                    break;
+                default:
+                    break;
+            }
 
 <!-- For Airport staff-->
 <h2>Plane</h2>
