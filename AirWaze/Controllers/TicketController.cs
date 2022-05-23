@@ -53,8 +53,10 @@ namespace AirWaze.Controllers
             return View();
         }
 
-        public IActionResult List()
+        public IActionResult List(string option, string searchString)
         {
+            ViewData["CurrentFilter"] = searchString;
+
             List<TicketListViewModel> list = new List<TicketListViewModel>();
             foreach (var ticket in loadedTickets)
             {
@@ -69,9 +71,27 @@ namespace AirWaze.Controllers
                         Status = ticket.Status
                     });
                 }
-
             }
-            return View(list);
+            //searchfunction
+            var myTicket = from s in list
+                           select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                if (option == "Destination")
+                {
+                    myTicket = myTicket.Where(s => s.CurrentFlight.Destination.Contains(searchString));
+                }
+                else if (option == "Date")
+                {
+                    myTicket = myTicket.Where(s => s.CurrentFlight.Departure.ToString("dd/MM/yyyy").Contains(searchString) || s.CurrentFlight.Departure.ToString("dd-MM-yyyy").Contains(searchString)).ToList();
+                }
+                else if (option == "Name")
+                {
+                    myTicket = myTicket.Where(s => s.LastName.Contains(searchString) || s.FirstName.Contains(searchString));
+                }
+            }
+            return View(myTicket.ToList());
         }
 
         [HttpGet]

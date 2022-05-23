@@ -211,7 +211,9 @@ namespace AirWaze.Database
 
         public void UpdatePlane(Plane plane)
         {
-            _dbContext.Planes.Remove(_dbContext.Planes.FirstOrDefault(x => x.PlaneID == plane.PlaneID));
+            _dbContext.Airlines.Remove(_dbContext.Airlines.FirstOrDefault(x => x.AirlineID == plane.CurrentAirline.AirlineID));
+            _dbContext.Airlines.Add(plane.CurrentAirline);       
+            _dbContext.Planes.Remove(_dbContext.Planes.FirstOrDefault(x => x.PlaneID == plane.PlaneID));          
             _dbContext.Planes.Add(plane);
             _dbContext.SaveChanges();
         }
@@ -258,6 +260,21 @@ namespace AirWaze.Database
         {
             return _dbContext.Runways
                .SingleOrDefault(runway => runway.Number.Equals(nr));
+        }
+
+        public List<Destination> GetDestinations()
+        {
+            return _dbContext.Destinations.ToList();
+        }
+
+        public Destination GetDestinationByID(int id)
+        {
+            return _dbContext.Destinations.SingleOrDefault(destination => destination.DestinationID == id);
+        }
+
+        public void AddDestination(Destination destination)
+        {
+            throw new NotImplementedException();
         }
     } 
 }

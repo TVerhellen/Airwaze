@@ -75,5 +75,8 @@ namespace AirWaze.Database.Design
         Runway GetRunwayByNr(int nr);
 
         void AddRunway(Runway runway);
+        List<Destination> GetDestinations();
+        Destination GetDestinationByID(int id);
+        void AddDestination(Destination destination);
     }
 }

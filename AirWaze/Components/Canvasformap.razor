@@ -9,7 +9,9 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers;
 @using Microsoft.JSInterop
 @using BrowserInterop.Extensions
-@using BrowserInterop.Geolocation   
+@using BrowserInterop.Geolocation  
+@using AirWaze.Entities
+
 @inject ILogger<Canvasformap> Logger
 @inject IJSRuntime jsRuntime
 
@@ -25,48 +27,48 @@
                         @switch (@selectedService)
                         {
                             case 1:
-                                <span class="section-heading-upper">Gate 1 - 4</span>
+                                <span class="section-heading-upper">Gate 1 - 2</span>
                                 <div style="margin-bottom:10px">
                                     <img src="Images/gates.jpg" alt="Sample Image" width="100" height="50"/>
                                 </div>
                                 <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">@distancegang.ToString("0,00"); m distance from your current position</span>
+                                    <span class="section-heading-lower">@distancealdi.ToString("0,00") m distance from your current position, bearing @bearingaldi.ToString("0,00")</span>
                                 </h2>
                                 break;
                             case 2:
-                                <span class="section-heading-upper">Gate 5 - 8</span>
+                                <span class="section-heading-upper">Gate 3 - 4</span>
                                 <div style="margin-top:10px;margin-bottom:10px">
                                     <img src="Images/gates.jpg" alt="Sample Image" width="100" height="50"/>
                                 </div>
                                 <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">@distancegang.ToString("0,00"); m distance from your current position</span>
+                                    <span class="section-heading-lower">@distancealdi.ToString("0,00") m distance from your current position, bearing @bearingaldi.ToString("0,00")</span>
                                 </h2>
                                 break;
                             case 3:
-                                <span class="section-heading-upper">Gate 9 - 12</span>
+                                <span class="section-heading-upper">Gate 5 - 6</span>
                                 <div style="margin-top:10px;margin-bottom:10px">
                                     <img src="Images/gates.jpg" alt="Sample Image" width="100" height="50"/>
                                 </div>
                                 <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">@distancegang.ToString("0,00"); m distance from your current position</span>
+                                    <span class="section-heading-lower">@distancealdi.ToString("0,00") m distance from your current position, bearing @bearingaldi.ToString("0,00")</span>
                                 </h2>
                                 break;
                             case 4:
-                                <span class="section-heading-upper">Gate 13 - 16</span>
+                                <span class="section-heading-upper">Gate 7 - 8 - 9</span>
                                 <div style="margin-top:10px;margin-bottom:10px">
                                     <img src="Images/gates.jpg" alt="Sample Image" width="100" height="50"/>
                                 </div>
                                 <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">@distancegang.ToString("0,00"); m distance from your current position</span>
+                                    <span class="section-heading-lower">@distancealdi.ToString("0,00") m distance from your current position, bearing @bearingaldi.ToString("0,00")</span>
                                 </h2>
                                 break;
                             case 5:
-                                <span class="section-heading-upper">Gate 17 - 20</span>
+                                <span class="section-heading-upper">Gate  - 20</span>
                                 <div style="margin-gatesop:10px;margin-bottom:10px">
                                     <img src="Images/gates.jpg" alt="Sample Image" width="100" height="50"/>
                                 </div>
                                 <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">@distancegang.ToString("0,00"); m distance from your current position</span>
+                                    <span class="section-heading-lower">@distancealdi.ToString("0,00") m distance from your current position, bearing @bearingaldi.ToString("0,00")</span>
                                 </h2>
                                 break;
                             case 6:
@@ -75,7 +77,7 @@
                                     <img src="Images/burgerking.jpg" alt="Sample Image" width="100" height="50"/>
                                 </div>
                                 <h2 class="section-heading mb-0">                                   
-                                   <span class="section-heading-lower">@distancestation.ToString("0,00"); m distance from your current position</span>
+                                   <span class="section-heading-lower">@distancepitta.ToString("0,00") m distance from your current position, bearing @bearingpitta.ToString("0,00")</span>
                                 </h2>
                                 break;
                             case 7:
@@ -84,7 +86,7 @@
                                     <img src="Images/Dutyfree.jpg" alt="Sample Image" width="100" height="50"/>
                                 </div>
                                 <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">@distancewhitehouse.ToString("0,00"); m distance from your current position</span>
+                                    <span class="section-heading-lower">@distancefrietkot.ToString("0,00") m distance from your current position, bearing @bearingfrietkot.ToString("0,00")</span>
                                 </h2>
                                 break;
                             default:
@@ -111,7 +113,7 @@
                                     <img src="Images/gates.jpg" alt="Sample Image" width="100" height="50"/>
                                 </div>
                                 <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">@distancegang.ToString("0,00"); m distance from your current position</span>
+                                    <span class="section-heading-lower">@distancealdi.ToString("0,00") m distance from your current position</span>
                                 </h2>
                                 break;
                             case 2:
@@ -120,7 +122,7 @@
                                     <img src="Images/gates.jpg" alt="Sample Image" width="100" height="50"/>
                                 </div>
                                 <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">@distancegang.ToString("0,00"); m distance from your current position</span>
+                                    <span class="section-heading-lower">@distancealdi.ToString("0,00") m distance from your current position</span>
                                 </h2>
                                 break;
                             case 3:
@@ -129,7 +131,7 @@
                                     <img src="Images/gates.jpg" alt="Sample Image" width="100" height="50"/>
                                 </div>
                                 <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">@distancegang.ToString("0,00"); m distance from your current position</span>
+                                    <span class="section-heading-lower">@distancealdi.ToString("0,00") m distance from your current position</span>
                                 </h2>
                                 break;
                             case 4:
@@ -138,7 +140,7 @@
                                     <img src="Images/gates.jpg" alt="Sample Image" width="100" height="50"/>
                                 </div>
                                 <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">@distancegang.ToString("0,00"); m distance from your current position</span>
+                                    <span class="section-heading-lower">@distancealdi.ToString("0,00") m distance from your current position</span>
                                 </h2>
                                 break;
                             case 5:
@@ -147,7 +149,7 @@
                                     <img src="Images/gates.jpg" alt="Sample Image" width="100" height="50"/>
                                 </div>
                                 <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower"@distancegang.ToString("0,00"); m distance from your current position></span>
+                                    <span class="section-heading-lower">@distancealdi.ToString("0,00") m distance from your current position></span>
                                 </h2>
                                 break;
                             case 6:
@@ -156,7 +158,7 @@
                                     <img src="Images/burgerking.jpg" alt="Sample Image" width="100" height="50"/>
                                 </div>
                                 <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">@distancestation.ToString("0,00"); m distance from your current position</span>
+                                    <span class="section-heading-lower">@distancepitta.ToString("0,00") m distance from your current position</span>
                                 </h2>
                                 break;
                             case 7:
@@ -165,7 +167,7 @@
                                     <img src="Images/Dutyfree.jpg" alt="Sample Image" width="100" height="50"/>
                                 </div>
                                 <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">@distancewhitehouse.ToString("0,00"); m distance from your current position</span>
+                                    <span class="section-heading-lower">@distancefrietkot.ToString("0,00") m distance from your current position</span>
                                 </h2>
                                 break;
                             default:
@@ -177,60 +179,71 @@
         </div>
             </div>
         </section>
-
-
 <p>@mousePointerMessage</p>
 
+<a class="btn btn-primary" @onclick="KillEvents" href="/">Dispose Events + Timer -- BELANGRIJK -- Link nr Index</a>
 
- <button class="btn btn-primary" @onclick="GetGeolocation">Get Current Position</button>
-
-@if(currentPosition != null){
-   <div>
-<p>Current position : </p>
-        <ul>
-           
-Latitude : @currentPosition.Coords.Latitude
-            <li>Longitude : @currentPosition.Coords.Longitude </li>
-            <li>Altitude : @currentPosition.Coords.Altitude </li>
-            <li>Accuracy : @currentPosition.Coords.Accuracy </li>
-            <li>Altitude Accuracy : @currentPosition.Coords.AltitudeAccuracy </li>
-            <li>Heading : @currentPosition.Coords.Heading </li>
-            <li>Speed : @currentPosition.Coords.Speed </li>
-        </ul>
-    </div>
-}
 
 @code {
     private int selectedService = 0;
 
     private WindowNavigatorGeolocation geolocationWrapper;
     private GeolocationPosition currentPosition;
+    private GeolocationPosition oldposition;
     private List<GeolocationResult> positioHistory = new List<GeolocationResult>();
     private Canvas2DContext _context;
     protected BECanvasComponent _canvasReference;
-    private string? mousePointerMessage; 
-    private double distancestation;
-    private double distancegang;
-    private double distancewhitehouse;
+    private string? mousePointerMessage;     
     private static System.Timers.Timer thisTimer;
     private int counter = 0;
+    private double mybearing;
+    private double targetbearing;
+
+    //Airport Coordinates
+
+    private double distancegates12;
+    private double distancegates34;
+    private double distancegates56;
+    private double distancegates789;
+    private double bearinggates12;
+    private double bearinggates34;
+    private double bearinggates56;
+    private double bearinggates789;
 
     //specific doubles for sintNiklaas
-    //private double stationlon = 4.144092;
-    //private double stationlat = 51.171666;
-    //private double ganglon = 4.140948;
-    //private double ganglat = 51.170052;
-    //private double whitehouselon = -77.036533;
-    //private double whitehouselat = 38.897668;
+
+    private double herderstraatlon = 4.142743;
+    private double herderstraatlat = 51.171666;
+    private double regentiestraatlon = 4.142771;
+    private double regentiestraatlat = 51.168555;
+    private double basisschoollon = 4.135054;
+    private double basisschoollat = 51.168353;
+    private double distanceregentiestraat;
+    private double distanceherderstraat;
+    private double distancebasisschool;
+    private double bearingherderstraat;
+    private double bearingregentiestraat;
+    private double bearingbasisschool;
+
+    //constantes voor veld : 0.00001239875 vr Lat
+    // 0.0000166383333333 vr Lon
+    //veld : 51.177484 - 51; 51.167565
+    // 4.143673 - 4.133690
 
     //specific doubles for Wondelgem  //VS ALDI-fietkot-PITTA
 
-    private double stationlon = 3.717714;
-    private double stationlat = 51.084001;
-    private double ganglon = 3.711019;
-    private double ganglat = 51.083220;
-    private double whitehouselon = 3.716733;
-    private double whitehouselat = 51.080390;
+    private double aldilon = 3.717714;
+    private double aldilat = 51.084001;
+    private double pittalon = 3.716733;
+    private double pittalat = 51.080390;
+    private double frietkotlon = 3.711019;
+    private double frietkotlat =  51.083220;
+    private double distancealdi;
+    private double distancepitta;
+    private double distancefrietkot;
+    private double bearingpitta;
+    private double bearingfrietkot;
+    private double bearingaldi;
 
 
     protected override async Task OnInitializedAsync()
@@ -253,12 +266,22 @@ Latitude : @currentPosition.Coords.Latitude
 
     public void CountDownTimer(Object source, System.Timers.ElapsedEventArgs e)
     {
-        if (counter % 5 == 0 || counter > 5)
-        {                
-            counter += 1;
-            GetGeolocation();  
+        if (counter % 5 == 0 && counter > 5)
+        {
+            if (oldposition == null && currentPosition != null)
+            {
+                oldposition = currentPosition;
+            }
+            if (oldposition.Coords != currentPosition.Coords)
+            {
+                mybearing = DegreeBearing(oldposition.Coords.Longitude, oldposition.Coords.Latitude, currentPosition.Coords.Longitude, currentPosition.Coords.Latitude);
+                oldposition = currentPosition;
+            }
+            GetGeolocation();            
+           
+        } 
+         counter++;
 
-        }        
         InvokeAsync(StateHasChanged);
     }
 
@@ -272,16 +295,32 @@ Latitude : @currentPosition.Coords.Latitude
             MaximumAgeTimeSpan = TimeSpan.FromHours(1),
             TimeoutTimeSpan = TimeSpan.FromMinutes(1)
         })).Location;
-        this._context = await this._canvasReference.CreateCanvas2DAsync();
+        this._context = await this._canvasReference.CreateCanvas2DAsync();       
         if (currentPosition.Coords.Latitude < 51.084944 && currentPosition.Coords.Latitude > 51.0802263 && currentPosition.Coords.Longitude < 3.719737 && currentPosition.Coords.Longitude > 3.709195)
         {
-            x = (int)Math.Round(((51.084944 - currentPosition.Coords.Latitude / 800) /  0.00001757)/10000);
+            x = (int)Math.Round(((51.084944 - currentPosition.Coords.Latitude / 800) /  0.0001757)/1000);
             y =  (int)Math.Round(((3.719737 - currentPosition.Coords.Longitude / 600) / 0.000005897125)/1000);
-             await this._context.SetFillStyleAsync("black");      
+            await this._context.SetFillStyleAsync("black");      
             await this._context.FillRectAsync(x, y, 20, 20);
+            await this._context.SetFillStyleAsync("red");      
+            await this._context.FillRectAsync((x-10), (y-10), 10, 10);             
             await this._context.SetFontAsync("46px Calibri");
             await this._context.StrokeTextAsync("Hier ben Ik", x, y);
-        }       
+        }
+
+        //Sint-Niklaas
+
+        //if (currentPosition.Coords.Latitude < 51.084944 && currentPosition.Coords.Latitude > 51.0802263 && currentPosition.Coords.Longitude < 3.719737 && currentPosition.Coords.Longitude > 3.709195)
+        //{
+        //    x = (int)Math.Round(((51.177484 - currentPosition.Coords.Latitude / 800) / 0.00001239875)/1000);
+        //    y =  (int)Math.Round(((4.143673 - currentPosition.Coords.Longitude / 600) / 0.000016638333)/1000);
+        //    await this._context.SetFillStyleAsync("black");      
+        //    await this._context.FillRectAsync(x, y, 20, 20);
+        //    await this._context.SetFontAsync("46px Calibri");
+        //    await this._context.StrokeTextAsync("Hier ben Ik", x, y);
+        //}
+
+
     }
 
     private async Task ReportPointerLocation(MouseEventArgs e)
@@ -321,9 +360,33 @@ Latitude : @currentPosition.Coords.Latitude
         }
         this._context = await this._canvasReference.CreateCanvas2DAsync();
         await GetGeolocation();
-        distancegang =  GetDistance(ganglon, ganglat);
-        distancestation =  GetDistance(stationlon, stationlat);
-        distancewhitehouse =  GetDistance(whitehouselon, whitehouselat);               
+
+        //WOndelgem
+
+        //distancealdi =  GetDistance(aldilon, aldilat);
+        //distancefrietkot =  GetDistance( frietkotlon, frietkotlat);
+        //distancepitta =  GetDistance(pittalon, pittalat);
+        //bearingaldi = DegreeBearing(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, aldilon, aldilat);
+        //bearingpitta = DegreeBearing(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, pittalon, pittalat);
+        //bearingfrietkot = DegreeBearing(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, frietkotlon, frietkotlat);
+        
+        //Once DB is Updated
+        //distancegates12 = GetDistance(AirWaze.Entities.Airport.Gates[0].CoordsLon, AirWaze.Entities.Airport.Gates[0].CoordsLat);
+        //distancegates34 = GetDistance(AirWaze.Entities.Airport.Gates[2].CoordsLon, AirWaze.Entities.Airport.Gates[2].CoordsLat);
+        //distancegates56 = GetDistance(AirWaze.Entities.Airport.Gates[4].CoordsLon, AirWaze.Entities.Airport.Gates[4].CoordsLat);
+        //distancegates789 = GetDistance(AirWaze.Entities.Airport.Gates[6].CoordsLon, AirWaze.Entities.Airport.Gates[6].CoordsLat);
+        // bearinggates12 = DegreeBearing(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, AirWaze.Entities.Airport.Gates[0].CoordsLon, AirWaze.Entities.Airport.Gates[0].CoordsLat);
+        // bearinggates34 = DegreeBearing(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, AirWaze.Entities.Airport.Gates[2].CoordsLon, AirWaze.Entities.Airport.Gates[2].CoordsLat);
+        // bearinggates56 = DegreeBearing(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, AirWaze.Entities.Airport.Gates[4].CoordsLon, AirWaze.Entities.Airport.Gates[4].CoordsLat);
+        // bearinggates789 = DegreeBearing(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, AirWaze.Entities.Airport.Gates[6].CoordsLon, AirWaze.Entities.Airport.Gates[6].CoordsLat);
+
+        //SintNiklaas
+        distanceregentiestraat =  GetDistance(regentiestraatlon, regentiestraatlat);
+        distanceherderstraat =  GetDistance( herderstraatlon, herderstraatlat);
+        distancebasisschool =  GetDistance(basisschoollon, basisschoollat);
+        bearingherderstraat = DegreeBearing(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, herderstraatlon, herderstraatlat);
+        bearingregentiestraat = DegreeBearing(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, regentiestraatlon, regentiestraatlat);
+        bearingbasisschool = DegreeBearing(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, basisschoollon, basisschoollat);
     }
 
 
@@ -337,6 +400,7 @@ Latitude : @currentPosition.Coords.Latitude
         double PIx = 3.141592653589793;
         return x * PIx / 180;
     }
+
     public static double DistanceBetweenPlaces(double lon1, double lat1, double lon2, double lat2)
     {
         double RADIUS = 6378.16;
@@ -347,12 +411,49 @@ Latitude : @currentPosition.Coords.Latitude
         return angle * RADIUS;
     }
 
-    
+
     public double GetDistance(double x, double y)
     {
         return DistanceBetweenPlaces(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, x, y) *1000;
 
     }
-         
+
+    public async Task KillEvents()
+    {
+
+        if (thisTimer != null)
+        {
+            thisTimer.Dispose();
+        }        
+    }
+    
+    static double DegreeBearing(double lat1, double lon1, double lat2, double lon2)
+    {   
+        var dLon = ToRad(lon2-lon1);
+        var dPhi = Math.Log(
+            Math.Tan(ToRad(lat2)/2+Math.PI/4)/Math.Tan(ToRad(lat1)/2+Math.PI/4));
+        if (Math.Abs(dLon) > Math.PI) 
+            dLon = dLon > 0 ? -(2*Math.PI-dLon) : (2*Math.PI+dLon);
+        return ToBearing(Math.Atan2(dLon, dPhi));
+    }
+
+    public static double ToRad(double degrees)
+    {
+        return degrees * (Math.PI / 180);
+    }
+
+    public static double ToDegrees(double radians)
+    {
+        return radians * 180 / Math.PI;
+    }
+
+    public static double ToBearing(double radians) 
+    {        
+        return (ToDegrees(radians) +360) % 360;
+    }
+
+
+
+
        
  }

@@ -1,7 +1,11 @@
-﻿using AirWaze.Database.Design;
+﻿using AirWaze.Areas.Identity.Data;
+using AirWaze.Data;
+using AirWaze.Database.Design;
 using AirWaze.Entities;
 using AirWaze.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirWaze.Controllers
@@ -9,15 +13,26 @@ namespace AirWaze.Controllers
     [Authorize(Roles="Admin")]
     public class AdminController : Controller
     {
+        private readonly UserManager<AirWazeUser> _userManager;
+
+
         public static Schedule? scheduleToApprove;
         public static List<Flight> flights = new List<Flight>();
         
         private readonly IAirWazeDatabase _airwazeDatabase;
 
-        public AdminController(IAirWazeDatabase airwazeDatabase)
+        public AdminController(IAirWazeDatabase airwazeDatabase, UserManager<AirWazeUser> userManager)
         {
             _airwazeDatabase = airwazeDatabase;
             flights = _airwazeDatabase.GetFlights();
+            _userManager = userManager;
+        }
+
+        [HttpGet]
+        public IActionResult ListUsers()
+        {
+            var users = _userManager.Users;
+            return View(users);
         }
 
         public IActionResult Index()
@@ -75,6 +90,11 @@ namespace AirWaze.Controllers
             foreach(var flight in scheduleToApprove.Flights)
             {
                 listflights.Add(flight);
+                if(flight.Status == 0)
+                {
+                    flight.Status = 1;
+                    _airwazeDatabase.UpdateFlight(flight);
+                }
             }
             Airport.ApprovedSchedules.Add(new Schedule
             {
