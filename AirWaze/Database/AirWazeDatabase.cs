@@ -211,7 +211,9 @@ namespace AirWaze.Database
 
         public void UpdatePlane(Plane plane)
         {
-            _dbContext.Planes.Remove(_dbContext.Planes.FirstOrDefault(x => x.PlaneID == plane.PlaneID));
+            _dbContext.Airlines.Remove(_dbContext.Airlines.FirstOrDefault(x => x.AirlineID == plane.CurrentAirline.AirlineID));
+            _dbContext.Airlines.Add(plane.CurrentAirline);       
+            _dbContext.Planes.Remove(_dbContext.Planes.FirstOrDefault(x => x.PlaneID == plane.PlaneID));          
             _dbContext.Planes.Add(plane);
             _dbContext.SaveChanges();
         }
