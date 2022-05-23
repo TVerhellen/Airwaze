@@ -17,14 +17,14 @@ namespace AirWaze.Entities
         public Runway CurrentRunway { get; set; }
         public int Status { get; set; }
         /* 
-          0 = Generated
-          1 = Delayed
-          2 = Boarding
-          3 = Departed
-          4 = Arrived
-          5 = Cancelled
+          0 = Generated, Not Approved
+          1 = Approved
+          2 = Delayed
+          3 = Boarding
+          4 = Departed
+          5 = Arrived
+          6 = Cancelled
          */
-
 
         public override string ToString()
         {

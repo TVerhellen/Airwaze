@@ -64,7 +64,7 @@ namespace AirWaze.Entities
             
             Flights = myDatabase.GetFlights();
             Planes = myDatabase.GetPlanes();
-            Flights = Flights.FindAll(x => x.Status != 3 || x.Status != 5);
+            Flights = Flights.FindAll(x => x.Status != 4 && x.Status != 6);
             Flights = Flights.OrderBy(flight => flight.Departure).ToList();
             IsOnline = true;
             StartTimer(1);
@@ -84,7 +84,7 @@ namespace AirWaze.Entities
         {
             foreach (Flight x in Flights)
             {
-                TimeSpan myspan = _currenttime - x.Departure;
+                TimeSpan myspan = x.Departure - _currenttime;
                 if (myspan.TotalMinutes < 120 && x.CurrentPlane.IsAvailable == true)
                 {
                     if (x.CurrentPlane != null)
@@ -102,7 +102,7 @@ namespace AirWaze.Entities
                 }              
                 if (myspan.TotalMinutes < 0)
                 {                
-                    x.Status = 3;
+                    x.Status = 4;
                     myDatabase = CrazyMethod(HomeController._myDatabase);                                      
                     FlightController.flights = Flights.ToList();
 
@@ -182,11 +182,10 @@ namespace AirWaze.Entities
 
             for (int i = 0; i < Flights.Count; i++)
             {
-                if(Flights[i].Departure >= chosenDate)
+                if(Flights[i].Departure >= chosenDate && Flights[i].Departure <= chosenDate.AddHours(24) && Flights[i].Status == 0)
                 {
                     theseflights.Add(Flights[i]);
                 }
-                
             }
 
             if(theseflights.Count == 4)

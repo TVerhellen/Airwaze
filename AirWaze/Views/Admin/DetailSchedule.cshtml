@@ -12,19 +12,25 @@
             <p>@flightCounter: @Model.Flights[flightCounter-1].Departure - @Model.Flights[flightCounter-1].FlightNr - @Model.Flights[flightCounter-1].Destination - Gate @Model.Flights[flightCounter-1].CurrentGate.Number</p>
             switch (Model.Flights[flightCounter-1].Status)
             {
+                case 0:
+                    <p>Status: WAITING FOR APPROVAL</p>
+                    break;
                 case 1:
-                    <p>Status: DELAYED</p>
+                    <p>Status: APPROVED</p>
                     break;
                 case 2:
-                    <p>Status: BOARDING</p>
+                    <p>Status: DELAYED</p>
                     break;
                 case 3:
-                    <p>Status: DEPARTED</p>
+                    <p>Status: BOARDING</p>
                     break;
                 case 4:
-                    <p>Status: ARRIVED</p>
+                    <p>Status: DEPARTED</p>
                     break;
                 case 5:
+                    <p>Status: ARRIVED</p>
+                    break;
+                case 6:
                     <p>Status: CANCELLED</p>
                     break;
                 default:

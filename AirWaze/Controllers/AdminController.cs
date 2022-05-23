@@ -75,6 +75,11 @@ namespace AirWaze.Controllers
             foreach(var flight in scheduleToApprove.Flights)
             {
                 listflights.Add(flight);
+                if(flight.Status == 0)
+                {
+                    flight.Status = 1;
+                    _airwazeDatabase.UpdateFlight(flight);
+                }
             }
             Airport.ApprovedSchedules.Add(new Schedule
             {
