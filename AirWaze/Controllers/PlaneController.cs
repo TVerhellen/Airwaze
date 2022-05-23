@@ -145,7 +145,7 @@ namespace AirWaze.Controllers
                 }
                 else if (option == "Date")
                 {
-                    myPlane = myPlane.Where(s => s.ConstructionYear.ToString("dd/MM/yyyy").Contains(searchString)).ToList();
+                    myPlane = myPlane.Where(s => s.ConstructionYear.ToString("dd/MM/yyyy").Contains(searchString) || s.ConstructionYear.ToString("dd-MM-yyyy").Contains(searchString)).ToList();
                 }
             }
             return View(myPlane.ToList());

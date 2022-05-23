@@ -79,7 +79,7 @@ namespace AirWaze.Controllers
                 }
                 else if (option == "Date")
                 {
-                    myTicket = myTicket.Where(s => s.CurrentFlight.Departure.ToString("dd/MM/yyyy").Contains(searchString)).ToList();
+                    myTicket = myTicket.Where(s => s.CurrentFlight.Departure.ToString("dd/MM/yyyy").Contains(searchString) || s.CurrentFlight.Departure.ToString("dd-MM-yyyy").Contains(searchString)).ToList();
                 }
                 else if (option == "Name")
                 {

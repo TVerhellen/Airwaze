@@ -120,7 +120,7 @@ namespace AirWaze.Controllers
                 }
                 else if (option == "Date")
                 {
-                    myFlight = myFlight.Where(s => s.Departure.ToString("dd/MM/yyyy").Contains(searchString)).ToList();
+                    myFlight = myFlight.Where(s => s.Departure.ToString("dd/MM/yyyy").Contains(searchString) || s.Departure.ToString("dd-MM-yyyy").Contains(searchString)).ToList();
                 }
             }
             return View(myFlight.ToList());
