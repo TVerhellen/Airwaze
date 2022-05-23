@@ -7,6 +7,21 @@
 @model List<TicketListViewModel>
 
 <div>
+  @*searchfunction*@
+    <form asp-action="List" method="get">
+        <div class="form-actions no-color">
+            <p>
+                Search by: &nbsp;
+                @Html.RadioButton("option", "Name") Name &nbsp;
+                @Html.RadioButton("option", "Destination") Destination &nbsp;
+                @Html.RadioButton("option", "Date") Date &nbsp; &nbsp;*
+                <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" /> &nbsp;
+                <input class="btn btn-primary" type="submit" value="Search"/> &nbsp;
+                <a href="/Ticket/List" class="btn btn-primary">Show all tickets</a> 
+            </p>
+        </div>
+    </form>
+    <br/>
     <table>
         <tr>
             <th>Ticket Number</th>

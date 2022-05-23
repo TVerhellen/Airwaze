@@ -11,8 +11,7 @@
                 <center><i class="fas fa-user fa-5x text-white" style="padding-bottom: 20px;"></i></center>
                 <center>
                     <p style="color:white">@User.Identity.Name</p>
-                </center>
-            
+                </center>          
 
                 <div class="list-group text-left font-weight-bold" style="padding-top: 30px;">
                     <a class="list-group-item" asp-action="Index" asp-controller="Admin"><i class="fas fa-tachometer-alt text-white"> &nbsp; Dashboard</i></a>
@@ -26,7 +25,23 @@
         <div class="col-lg-9" style="padding-bottom: 50px;">
             <div>
                 <h1>Manage planes</h1>
-                <h1 style="color:red;">Hallo Admin</h1>
+                @*<h1 style="color:red;">Hallo Admin</h1>*@
+
+                <form asp-action="List" method="get">
+                    <div class="form-actions no-color">
+                        <p>
+                            Search by: &nbsp;
+                            @Html.RadioButton("option", "Name") Name &nbsp;
+                            @Html.RadioButton("option", "Type") Type &nbsp;
+                            @Html.RadioButton("option", "Date") Date &nbsp;
+                            @Html.RadioButton("option", "Capacity") Capacity &nbsp; &nbsp;
+                        <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" /> &nbsp;
+                        <input class="btn btn-primary" type="submit" value="Search"/> &nbsp;
+                        <a href="/Plane/List" class="btn btn-primary">Show all planes</a> 
+                        </p>
+                    </div>
+                </form>
+                <br/>
     
                 @if (Model.Count != 0)
                 {       
