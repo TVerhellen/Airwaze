@@ -1,4 +1,9 @@
-﻿
+﻿@model IEnumerable<AirWaze.Areas.Identity.Data.AirWazeUser>
+
+@{
+    ViewBag.Title = "All Users";
+}
+
 <div class="container-fluid" style="padding: 0 0 0 0;">
     <div class="row">
         <div class="col-lg-2 bg-dark-blue d-none d-sm-block" style="padding-top: 10px; padding-bottom: 20px;">
@@ -10,7 +15,7 @@
             
 
                 <div class="list-group text-left font-weight-bold" style="padding-top: 30px;">
-                    <a class="list-group-item" asp-action="Index" asp-controller="Admin"><i class="fas fa-tachometer-alt text-white"> &nbsp; Dashboard</i></a>
+                    <a class="list-group-item" asp-action="Index" asp-controller="Admin"><i class="fas fa-tachometer-alt text-white"> &nbsp; Dashboard</i></a>                    
                     <a class="list-group-item" asp-action="ListAllRoles" asp-controller="Role"><i class="fas fa-user text-white"> &nbsp; Manage roles</i></a>
                     <a class="list-group-item" asp-action="ListUsers" asp-controller="Admin"><i class="fas fa-users text-white"> &nbsp; Users</i></a>
                     <a class="list-group-item" asp-action="List" asp-controller="Airline"><i class="fas fa-user-check text-white">&nbsp; Airlines</i></a>
@@ -20,21 +25,36 @@
                 </div>
         </div>
         <div class="col-lg-9" style="padding-bottom: 50px;">
-            <h3 class="font-weight-bold" style="padding-top: 50px; padding-bottom: 30px;">Admin Dashboard</h3>
-            <p>
-                Hello @User.Identity.Name, welcome to the Airwaze admin dashboard.
-                </br>
-                What would you like to do? Click on the left. 
-            </p>
-        </div>
+            <h3 class="font-weight-bold" style="padding-top: 50px; padding-bottom: 30px;">Users</h3>
 
-    </div>
-</div>
+             <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover">
+                    <tr>
+
+                        <th>
+                        @Html.DisplayNameFor(model => model.Email)
+                        </th>
+                        <th>@Html.DisplayNameFor(model => model.FirstName)</th>
+                        <th>@Html.DisplayNameFor(model => model.LastName)</th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FirstName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LastName)
+                            </td>
+                        </tr>
+                    }
+
+                </table>
 
 <script src="~/lib/bootstrap/bootstrap-admin/popper.min.js"></script>
 <link href="~/lib/bootstrap/bootstrap-admin/bootstrap-parkeasy.css" rel="stylesheet" />
 <link href="~/lib/bootstrap/bootstrap-admin/dashboard.css" rel="stylesheet" />
-
-
-
-
