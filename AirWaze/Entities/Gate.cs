@@ -14,5 +14,9 @@ namespace AirWaze.Entities
         public Flight? CurrentFlight { get; set; }
         [NotMapped]
         public bool IsAvailable { get; set; }
+        [NotMapped]
+        public double CoordsLat { get; set; }
+        [NotMapped]
+        public double CoordsLon { get; set; }
     }
 }

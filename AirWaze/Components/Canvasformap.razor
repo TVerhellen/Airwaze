@@ -191,6 +191,8 @@
     private Canvas2DContext _context;
     protected BECanvasComponent _canvasReference;
     private string? mousePointerMessage; 
+
+
     private double distancestation;
     private double distancegang;
     private double distancewhitehouse;
@@ -198,17 +200,27 @@
     private int counter = 0;
 
     //specific doubles for sintNiklaas
-    //private double stationlon = 4.144092;
-    //private double stationlat = 51.171666;
-    //private double ganglon = 4.140948;
-    //private double ganglat = 51.170052;
-    //private double whitehouselon = -77.036533;
-    //private double whitehouselat = 38.897668;
+
+    //private double herderstraatlon = 4.142743;
+    //private double herderstraatlat = 51.171666;
+    //private double regentiestraatlon = 4.142771;
+    //private double regentiestraatlat = 51.168555;
+    //private double basisschoollon = 4.135054;
+    //private double basisschoollat = 51.168353;
+    //private double distanceregentiestraat;
+    //private double distanceherderstraat;
+    //private double distancebasisschool;
+
+    //constantes voor veld : 0.00001239875 vr Lat
+    // 0.0000166383333333 vr Lon
+    //veld : 51.177484 - 51; 51.167565
+    // 4.143673 - 4.133690
+
 
     //specific doubles for Wondelgem  //VS ALDI-fietkot-PITTA
 
-    private double stationlon = 3.717714;
-    private double stationlat = 51.084001;
+    private double herderstraatlon = 3.717714;
+    private double herderstraatlat = 51.084001;
     private double ganglon = 3.711019;
     private double ganglat = 51.083220;
     private double whitehouselon = 3.716733;
@@ -255,6 +267,9 @@
             TimeoutTimeSpan = TimeSpan.FromMinutes(1)
         })).Location;
         this._context = await this._canvasReference.CreateCanvas2DAsync();
+
+        //Wondelgem
+
         if (currentPosition.Coords.Latitude < 51.084944 && currentPosition.Coords.Latitude > 51.0802263 && currentPosition.Coords.Longitude < 3.719737 && currentPosition.Coords.Longitude > 3.709195)
         {
             x = (int)Math.Round(((51.084944 - currentPosition.Coords.Latitude / 800) /  0.0001757)/1000);
@@ -263,7 +278,21 @@
             await this._context.FillRectAsync(x, y, 20, 20);
             await this._context.SetFontAsync("46px Calibri");
             await this._context.StrokeTextAsync("Hier ben Ik", x, y);
-        }       
+        }
+        
+        //Sint-Niklaas
+
+        //if (currentPosition.Coords.Latitude < 51.084944 && currentPosition.Coords.Latitude > 51.0802263 && currentPosition.Coords.Longitude < 3.719737 && currentPosition.Coords.Longitude > 3.709195)
+        //{
+        //    x = (int)Math.Round(((51.177484 - currentPosition.Coords.Latitude / 800) / 0.00001239875)/1000);
+        //    y =  (int)Math.Round(((4.143673 - currentPosition.Coords.Longitude / 600) / 0.000016638333)/1000);
+        //    await this._context.SetFillStyleAsync("black");      
+        //    await this._context.FillRectAsync(x, y, 20, 20);
+        //    await this._context.SetFontAsync("46px Calibri");
+        //    await this._context.StrokeTextAsync("Hier ben Ik", x, y);
+        //}
+
+
     }
 
     private async Task ReportPointerLocation(MouseEventArgs e)
@@ -303,9 +332,19 @@
         }
         this._context = await this._canvasReference.CreateCanvas2DAsync();
         await GetGeolocation();
+
+
+        //WOndelgem
+
         distancegang =  GetDistance(ganglon, ganglat);
-        distancestation =  GetDistance(stationlon, stationlat);
-        distancewhitehouse =  GetDistance(whitehouselon, whitehouselat);               
+        distancestation =  GetDistance( herderstraatlon, herderstraatlat);
+        distancewhitehouse =  GetDistance(whitehouselon, whitehouselat);        
+        
+        //SintNiklaas
+        //distanceregentiestraat =  GetDistance(regentielon, regentielat);
+        //distanceherderstraat =  GetDistance( herderstraatlon, herderstraatlat);
+        //distancebasisschool =  GetDistance(basisschoollon, basisschoollat);
+
     }
 
 
