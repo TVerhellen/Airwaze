@@ -26,7 +26,7 @@ namespace AirWaze.Controllers
             var userViewModels = new List<UserListViewModel>();
             foreach (var user in _airWazeDatabase.GetUsers())
             {
-                userViewModels.Add(new UserListViewModel() { UserID = user.UserID, FirstName = user.FirstName, LastName = user.LastName });
+                userViewModels.Add(new UserListViewModel() { UserID = user.UserID, FirstName = user.FirstName, LastName = user.LastName });                
             }
             return View(userViewModels);
             

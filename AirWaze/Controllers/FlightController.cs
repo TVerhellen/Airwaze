@@ -75,8 +75,10 @@ namespace AirWaze.Controllers
 
         //Roles: Everyone
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string option, string searchString)
         {
+            ViewData["CurrentFilter"] = searchString;
+
             var flightViewModels = new List<FlightListViewModel>();
 
             //foreach (var flight in flights)
@@ -92,6 +94,7 @@ namespace AirWaze.Controllers
             //    });
             //}
 
+
             foreach (var flight in flights)
             {
                 flightViewModels.Add(new FlightListViewModel()
@@ -105,8 +108,24 @@ namespace AirWaze.Controllers
                     Status = flight.Status
                 });
             }
-            return View(flightViewModels);
+            //searchfunction
+            var myFlight = from s in flightViewModels
+                            select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                if (option == "Destination")
+                {
+                    myFlight = myFlight.Where(s => s.Destination.Contains(searchString));
+                }
+                else if (option == "Date")
+                {
+                    myFlight = myFlight.Where(s => s.Departure.ToString("dd/MM/yyyy").Contains(searchString) || s.Departure.ToString("dd-MM-yyyy").Contains(searchString)).ToList();
+                }
+            }
+            return View(myFlight.ToList());
         }
+
 
         //Roles: everyone
         [HttpGet]
