@@ -56,9 +56,44 @@ namespace AirWaze.Controllers
         {
             List<FlightListViewModel> departures = new List<FlightListViewModel>();
 
+            foreach (Flight flight in FlightController.flights)
+            {
+                if(flight.Departure >= DateTime.Now.AddMinutes(-15) && flight.Departure <= DateTime.Now.AddHours(24))
+                {
+                    if (flight.Status != 0 && flight.Status != 5)
+                    {
+                        if(flight.Status == 4)
+                        {
+                            if(flight.Departure >= DateTime.Now.AddMinutes(-15) && flight.Departure <= DateTime.Now.AddMinutes(15))
+                            {
+                                departures.Add(CreateNewFlightListViewModel(flight));
+                            }
+                        }
+                        else
+                        {
+                            departures.Add(CreateNewFlightListViewModel(flight));
+                        }
+                    }
+                }
+            }
 
+            departures = departures.OrderBy(flight => flight.Departure).ToList();
 
             return View(departures);
+        }
+
+        private FlightListViewModel CreateNewFlightListViewModel(Flight flight)
+        {
+            return new FlightListViewModel
+            {
+                FlightID = flight.FlightID,
+                FlightNr = flight.FlightNr,
+                FlightTime = flight.FlightTime,
+                Departure = flight.Departure,
+                Destination = flight.Destination,
+                CurrentGate = flight.CurrentGate,
+                Status = flight.Status
+            };
         }
     }
 }
