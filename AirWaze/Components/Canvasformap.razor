@@ -179,24 +179,8 @@
         </section>
 <p>@mousePointerMessage</p>
 
+<a class="btn btn-primary" @onclick="KillEvents" href="/">Dispose Events + Timer -- BELANGRIJK -- Link nr Index</a>
 
- <button class="btn btn-primary" @onclick="GetGeolocation">Get Current Position</button>
-
-@if(currentPosition != null){
-   <div>
-<p>Current position : </p>
-        <ul>
-           
-Latitude : @currentPosition.Coords.Latitude
-            <li>Longitude : @currentPosition.Coords.Longitude </li>
-            <li>Altitude : @currentPosition.Coords.Altitude </li>
-            <li>Accuracy : @currentPosition.Coords.Accuracy </li>
-            <li>Altitude Accuracy : @currentPosition.Coords.AltitudeAccuracy </li>
-            <li>Heading : @currentPosition.Coords.Heading </li>
-            <li>Speed : @currentPosition.Coords.Speed </li>
-        </ul>
-    </div>
-}
 
 @code {
     private int selectedService = 0;
@@ -252,11 +236,11 @@ Latitude : @currentPosition.Coords.Latitude
     public void CountDownTimer(Object source, System.Timers.ElapsedEventArgs e)
     {
         if (counter % 5 == 0 || counter > 5)
-        {                
-            counter += 1;
+        {                           
             GetGeolocation();  
-
-        }        
+            counter += 1;
+        }      
+        
         InvokeAsync(StateHasChanged);
     }
 
@@ -273,9 +257,9 @@ Latitude : @currentPosition.Coords.Latitude
         this._context = await this._canvasReference.CreateCanvas2DAsync();
         if (currentPosition.Coords.Latitude < 51.084944 && currentPosition.Coords.Latitude > 51.0802263 && currentPosition.Coords.Longitude < 3.719737 && currentPosition.Coords.Longitude > 3.709195)
         {
-            x = (int)Math.Round(((51.084944 - currentPosition.Coords.Latitude / 800) /  0.00001757)/10000);
+            x = (int)Math.Round(((51.084944 - currentPosition.Coords.Latitude / 800) /  0.0001757)/1000);
             y =  (int)Math.Round(((3.719737 - currentPosition.Coords.Longitude / 600) / 0.000005897125)/1000);
-             await this._context.SetFillStyleAsync("black");      
+            await this._context.SetFillStyleAsync("black");      
             await this._context.FillRectAsync(x, y, 20, 20);
             await this._context.SetFontAsync("46px Calibri");
             await this._context.StrokeTextAsync("Hier ben Ik", x, y);
@@ -345,12 +329,21 @@ Latitude : @currentPosition.Coords.Latitude
         return angle * RADIUS;
     }
 
-    
+
     public double GetDistance(double x, double y)
     {
         return DistanceBetweenPlaces(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, x, y) *1000;
 
     }
-         
+
+    public async Task KillEvents(){
+
+        if (thisTimer != null)
+        {
+            thisTimer.Dispose();
+        }
+        
+    }
+   
        
  }
