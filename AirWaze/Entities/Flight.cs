@@ -24,6 +24,7 @@ namespace AirWaze.Entities
           4 = Departed
           5 = Arrived
           6 = Cancelled
+          7 = Completed (Plane has returned)
          */
 
         public override string ToString()

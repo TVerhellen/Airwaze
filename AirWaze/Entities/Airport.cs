@@ -140,6 +140,9 @@ namespace AirWaze.Entities
         }
 
         //Alle Shedule Crud -- Admin resticted
+
+
+        //generate schedule standard no longer needed?
         public static Schedule GenerateSchedule()
         {
             Schedule myshedule = new Schedule();
@@ -152,6 +155,8 @@ namespace AirWaze.Entities
             {
                 theseflights.Add(Flights[i]);
             }
+
+            //put this in correct methods
             for (int i = 0; i < Flights.Count; i++)
             {
                 if (Gates[i].IsAvailable == true)
@@ -188,6 +193,7 @@ namespace AirWaze.Entities
                 }
             }
 
+            //put this in correct methods
             if(theseflights.Count == 4)
             {
                 for (int i = 0; i < Flights.Count; i++)
@@ -248,6 +254,51 @@ namespace AirWaze.Entities
             var goocheltruc = myList.ToList();
             return goocheltruc[0];
 
+        }
+
+        public static void CheckGateAvailability()
+        {
+            //make list of flights over next 2 hrs with CurrentGate == 0 and status 1&2
+            //order by departure
+            //available gate -> assign to next flight, priority status 2, then 1 
+            //Gate.IsAvailable = false
+            //Plane with CurrentPlane.PlaneID -> Not Available
+        }
+        public static void CheckRunwayAvailability()
+        {
+            //make list of flights over next 30 mins with CurrentRunway == 0 and status 1&2
+            //order by departure
+            //available runway -> assign to next flight, priority status 2, then 1
+            //Runway.IsAvailable = false
+        }
+        public static void CheckBoarding()
+        {
+            //make list of flights with status 1/2  &  departure in 30 mins or less & CurrentGate/CurrentRunway != 0
+            //change status to Boarding
+        }
+        public static void CheckDepartures()
+        {
+            //make list of flights with status 3 & departure time passed
+            //change status to Departed
+            //Change CurrentGate & CurrentRunway to 0
+            //Change Runway.IsAvailable & Gate.IsAvailable to True
+        }
+        public static void CheckArrived()
+        {
+            //List of flights with status 4 departed
+            //If DateTime.Now >= Departure + FlightTime -> status = Arrived
+        }
+        public static void CheckCompleted()
+        {
+            //List of flights with status 5 arrived
+            //If DateTime.Now >= Departure + FlightTime * 2 + 1 week -> status = completed
+            //Plane with CurrentPlane.PlaneID -> Available
+        }
+
+        //Check available planes for created flight in PlanePicker View
+        public static List<Plane> AvailablePlanesForFlight(Destination dest, DateTime time)
+        {
+            return new List<Plane>();
         }
     }
 }
