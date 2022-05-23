@@ -17,6 +17,7 @@
                 <div class="list-group text-left font-weight-bold" style="padding-top: 30px;">
                     <a class="list-group-item" asp-action="Index" asp-controller="Admin"><i class="fas fa-tachometer-alt text-white"> &nbsp; Dashboard</i></a>
                     <a class="list-group-item" asp-action="ListAllRoles" asp-controller="Role"><i class="fas fa-user text-white"> &nbsp; Manage roles</i></a>
+                    <a class="list-group-item" asp-action="ListUsers" asp-controller="Admin"><i class="fas fa-users text-white"> &nbsp; Users</i></a>
                     <a class="list-group-item" asp-action="List" asp-controller="Airline"><i class="fa fa-user-check text-white">&nbsp; Airlines</i></a>
                     <a class="list-group-item" asp-action="List" asp-controller="Plane"><i class="fa fa-plane text-white"></i>&nbsp; Planes</i></a>
                     <a class="list-group-item" asp-action="Index" asp-controller="Flight"><i class="fa fa-plane-departure text-white">&nbsp; Flights</i></a> 
@@ -43,8 +44,8 @@
                         <tr>
                             <td>@role.Name</td>
                             <td class="text-center">
-                                <a asp-action="EditRole" asp-route-id="@role.Id" class="btn btn-primary">Edit</a>
-                                <a asp-action="DeleteRole" asp-route-id="@role.Id" class="btn btn-danger">Delete</a>
+                                <a asp-action="EditRole" asp-route-id="@role.Id" class="btn btn-primary"><i class="fa fa-edit text-white"></i></a>
+                                <a asp-action="DeleteRole" asp-route-id="@role.Id" class="btn btn-danger"><i class="fa fa-trash text-white"></i></a>
                             </td>
                         </tr>
                     </tbody>

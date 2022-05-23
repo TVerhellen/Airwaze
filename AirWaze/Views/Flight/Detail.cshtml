@@ -9,6 +9,8 @@
 <p>@Model.FlightNr</p>
 <h2>Destination</h2>
 <p>@Model.Destination</p>
+<h2>Airline</h2>
+<p>@Model.CurrentPlane.CurrentAirline.Name</p>
 <h2>Departure</h2>
 <p>@Model.Departure.ToString("R")</p>
 <h2></h2>
@@ -25,12 +27,37 @@ else
 {
     <p>@Model.CurrentGate.Number</p>
 }
+<h2>Current Status</h2>
+@switch (Model.Status)
+            {
+                case 0:
+                    <p>Awaiting Approval</p>
+                    break;
+                case 1:
+                    <p>Approved</p>
+                    break;
+                case 2:
+                    <p>Delayed</p>
+                    break;
+                case 3:
+                    <p>Boarding</p>
+                    break;
+                case 4:
+                    <p>Departed</p>
+                    break;
+                case 5:
+                    <p>Arrived</p>
+                    break;
+                case 6:
+                    <p>Cancelled</p>
+                    break;
+                default:
+                    break;
+            }
 
 <!-- For Airport staff-->
 <h2>Plane</h2>
 <p>@Model.CurrentPlane.PlaneNr</p>
-<h2>Airline</h2>
-<p>@Model.CurrentPlane.CurrentAirline.Name</p>
 <h2>Runway</h2>
 @if(Model.CurrentRunway.Number == 0)
 {
@@ -42,8 +69,6 @@ else
 }
 <!-- TODO: route button to page with tickets only for this flight -->
 <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index">Booked Tickets</a>
-
-
 <a class="btn btn-primary" asp-controller="Flight" asp-action="Index">Go Back</a>
 
 

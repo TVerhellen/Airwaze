@@ -2,20 +2,30 @@
 
 @{
     List<Schedule> approvedSchedules = Airport.ApprovedSchedules;
+    approvedSchedules.Reverse();
 }
-<h1>Approved Flight Schedules:</h1>
 @if(Airport.ApprovedSchedules == null)
 {
     <h2>There are no approved schedules yet.</h2>
 }
 else
 {
-    
-    @foreach(var schedule in approvedSchedules)
-    {
-        <h3>@schedule.Date.ToString("D") - @schedule.Date.Hour.ToString("00") : @schedule.Date.Minute.ToString("00")</h3>
-        <a class="btn btn-primary" asp-controller="Admin" asp-action="DetailSchedule" asp-route-id="@schedule.ScheduleID">Detail</a>
-    }
+    <table class="table table-striped">
+                    <thead class="rounded">
+                        <tr>
+                            <th scope="col">Approved Schedules</th>
+                        </tr>
+                    </thead>
+                    <tbody>   
+            @foreach(var schedule in approvedSchedules)
+            {
+              <tr>
+                    <td><h3>@schedule.Date.ToString("D") - @schedule.Date.Hour.ToString("00") : @schedule.Date.Minute.ToString("00")</h3></td>
+                    <td><a class="btn btn-primary" asp-controller="Admin" asp-action="DetailSchedule" asp-route-id="@schedule.ScheduleID">Detail</a></td>
+              </tr>      
+            }
+    </tbody>
+    </table>
 }
 <br />
 <br />
