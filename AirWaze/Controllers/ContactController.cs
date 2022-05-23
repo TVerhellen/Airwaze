@@ -48,8 +48,14 @@ namespace AirWaze.Controllers
 
                 smtp.Send(mail);
             }
-            return View(e);
-        }       
+            return RedirectToAction("EmailSend", "Contact");
+        }
+
+        public ActionResult EmailSend()
+        {
+            
+            return View();
+        }
 
     }
 }
