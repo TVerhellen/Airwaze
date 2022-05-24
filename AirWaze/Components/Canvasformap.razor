@@ -385,7 +385,7 @@
         distanceregentiestraat =  GetDistance(regentiestraatlon, regentiestraatlat);
         distanceherderstraat =  GetDistance( herderstraatlon, herderstraatlat);
         distancebasisschool =  GetDistance(basisschoollon, basisschoollat);
-        bearingherderstraat = DegreeBearing(herderstraatlon, herderstraatlat, currentPosition.Coords.Longitude, currentPosition.Coords.Latitude);
+        bearingherderstraat = DegreeBearing( currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, herderstraatlon, herderstraatlat);
         bearingregentiestraat = DegreeBearing(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, regentiestraatlon, regentiestraatlat);
         bearingbasisschool = DegreeBearing(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, basisschoollon, basisschoollat);
     }
@@ -422,9 +422,29 @@
         var dLon = ToRad(lon2-lon1);
         var dPhi = Math.Log(
             Math.Tan(ToRad(lat2)/2+Math.PI/4)/Math.Tan(ToRad(lat1)/2+Math.PI/4));
-        if (Math.Abs(dLon) > Math.PI) 
+        if (Math.Abs(dLon) > Math.PI)
+        {
             dLon = dLon > 0 ? -(2*Math.PI-dLon) : (2*Math.PI+dLon);
-        return ToBearing(Math.Atan2(dLon, dPhi));
+        }
+        double x = ToBearing(Math.Atan2(dLon, dPhi));
+        if ( 0 < x && x < 90)
+        {
+            x = 90 - x;
+        }
+        else if ( 90 < x && x < 180)
+        {
+            x = (180 + (90 - x));
+        }
+        else if (180 < x && x < 270)
+        {
+            x = (270 + (180 - x));
+        }
+        else
+        {
+            x = (360 + (270 - x));
+        }
+
+        return x;
     }
 
     public static double ToRad(double degrees)
