@@ -9,8 +9,10 @@ namespace AirWaze.Entities
         public int FlightID { get; set; }
         public string FlightNr { get; set; }
         public Plane? CurrentPlane { get; set; }
+        //public bool CurrentPlaneConfirmed { get; set; }
         public TimeSpan FlightTime { get; set; }
         public DateTime Departure { get; set; }
+        //TODO: remove distance and change references to Destination.Distance
         public decimal Distance { get; set; }
         public string Destination { get; set; }
         public Gate CurrentGate { get; set; }
