@@ -363,12 +363,12 @@
 
         //WOndelgem
 
-        //distancealdi =  GetDistance(aldilon, aldilat);
-        //distancefrietkot =  GetDistance( frietkotlon, frietkotlat);
-        //distancepitta =  GetDistance(pittalon, pittalat);
-        //bearingaldi = DegreeBearing(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, aldilon, aldilat);
-        //bearingpitta = DegreeBearing(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, pittalon, pittalat);
-        //bearingfrietkot = DegreeBearing(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, frietkotlon, frietkotlat);
+        distancealdi =  GetDistance(aldilon, aldilat);
+        distancefrietkot =  GetDistance( frietkotlon, frietkotlat);
+        distancepitta =  GetDistance(pittalon, pittalat);
+        bearingaldi = DegreeBearing(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, aldilon, aldilat);
+        bearingpitta = DegreeBearing(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, pittalon, pittalat);
+        bearingfrietkot = DegreeBearing(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, frietkotlon, frietkotlat);
         
         //Once DB is Updated
         //distancegates12 = GetDistance(AirWaze.Entities.Airport.Gates[0].CoordsLon, AirWaze.Entities.Airport.Gates[0].CoordsLat);
@@ -384,7 +384,7 @@
         distanceregentiestraat =  GetDistance(regentiestraatlon, regentiestraatlat);
         distanceherderstraat =  GetDistance( herderstraatlon, herderstraatlat);
         distancebasisschool =  GetDistance(basisschoollon, basisschoollat);
-        bearingherderstraat = DegreeBearing(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, herderstraatlon, herderstraatlat);
+        bearingherderstraat = DegreeBearing(herderstraatlon, herderstraatlat, currentPosition.Coords.Longitude, currentPosition.Coords.Latitude);
         bearingregentiestraat = DegreeBearing(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, regentiestraatlon, regentiestraatlat);
         bearingbasisschool = DegreeBearing(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, basisschoollon, basisschoollat);
     }
