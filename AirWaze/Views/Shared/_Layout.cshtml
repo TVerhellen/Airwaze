@@ -11,6 +11,10 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/AirWaze.styles.css" asp-append-version="true" /> 
 
+     <link rel="stylesheet" href="~/AirWaze.styles.css" asp-append-version="true" />    
+     <link rel="stylesheet" href="~/js/sweetalert2.min.css" />     
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
     <link rel="stylesheet" href="~/css/bootstrap.min.css">      
     <link rel="stylesheet" href="~/css/owl.carousel.min.css">
     <link rel="stylesheet" href="~/css/slicknav.css">
@@ -24,52 +28,70 @@
     <link rel="stylesheet" href="~/css/flaticon.css">
     <link rel="stylesheet" href="~/css/main.css">
     <link rel="stylesheet" href="~/css/price_rangs.css">
+    <link rel="stylesheet" href="~/css/normalize.min.css">
+    <link rel="stylesheet" href="~/css/mainbis.css">
     <link rel="stylesheet" href="~/css/responsive.css">
     <link rel="stylesheet" href="~/css/style.css">
-    <link rel="stylesheet" href="~/AirWaze.styles.css" asp-append-version="true" />    
-     <link rel="stylesheet" href="~/js/sweetalert2.min.css" />     
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/css/Toinon.css">
+
+   
 </head>
 <body>
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text">
+                    <img src="~/Images/airwazeLogo.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
     <header>
-
-        <div class="header-area header-transparent">
+        <!-- Header Start -->
+       <div class="header-area header-transparent">
             <div class="main-header">
                <div class="header-bottom  header-sticky">
                     <div class="container-fluid">
                         <div class="row align-items-center">
-                            <!-- Logo -->
-                            <div class="col-xl-2 col-lg-2 col-md-1">
-                                <div class="logo">
-                                  <a asp-area="" asp-controller="Home" asp-action="Index"><img src="~/Images/airwazeLogo.png" alt=""/></a>
-                                </div>
-                            </div>
-                            <div class="col-xl-10 col-lg-10 col-md-8">
+
+               <div class="col-xl-2 col-lg-2 col-md-1">
+                 <div class="logo">
+                    <a asp-area="" asp-controller="Home" asp-action="Index"><img src="~/Images/airwazeLogo.png" alt=""></a>
+                 </div>
+               </div>
+
+                <div class="col-xl-10 col-lg-10 col-md-8">
                                 <!-- Main-menu -->
                                 <div class="main-menu f-right d-none d-lg-block">
                                     <nav>
-                                        <ul id="navigation">                                                                                                                                     
-                                            <li><a href="index.html">Home</a></li>
-                                            <li><a href="about.html">About</a></li>
-                                            <li><a href="catagori.html">Catagories</a></li>
-                                            <li><a href="listing.html">Listing</a></li>
-                                            <li><a href="#">Page</a>
-                                                <ul class="submenu">
-                                                    <li><a href="blog.html">Blog</a></li>
-                                                    <li><a href="blog_details.html">Blog Details</a></li>
-                                                    <li><a href="elements.html">Element</a></li>
-                                                    <li><a href="listing_details.html">Listing details</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="contact.html">Contact</a></li>
-                                            <li class="add-list"><a href="listing_details.html"><i class="ti-plus"></i> add Listing</a></li>
-                                            <li class="login"><a href="#">
-                                                <i class="ti-user"></i> Sign in or Register</a>
-                                            </li>
+                                        <ul id="navigation">                                                                                                                                  
+
+                                            <li><a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></li>
+                                            @if (User.IsInRole("Customer") || User.IsInRole("Admin"))
+                                            {
+                                                <li> <a asp-area="" asp-controller="Ticket" asp-action="List">Tickets</a></li>
+                                                <li><a asp-area="" asp-controller="Ticket" asp-action="Create">Create Ticket</a></li>
+                                            }
+                                            @if (User.IsInRole("Admin"))
+                                            {
+                                                <li> <a  asp-area="" asp-controller="Flight" asp-action="Index">Flights</a></li>
+                                                <li><a asp-area="" asp-controller="Ticket" asp-action="Create">Create Ticket</a></li>
+                                            }
+                                            @if (User.IsInRole("Customer") || !User.Identity.IsAuthenticated)
+                                            {
+                                                <li> <a asp-area="" asp-controller="Home" asp-action="Blazortest">Map Prototype</a></li>
+                                            }                                            
+                                            @if (User.IsInRole("Admin"))
+                                            {
+                                                <li class="add-list"><a asp-area="" asp-controller="Admin" asp-action="Index"> Dashboard</a></li>
+                                            }
+                                            <li><partial name="_LoginPartial" /></li>
                                         </ul>
+                                        
                                     </nav>
                                 </div>
-                            </div>
+                </div>
                             <!-- Mobile Menu -->
                             <div class="col-12">
                                 <div class="mobile_menu d-block d-lg-none"></div>
@@ -79,90 +101,130 @@
                </div>
             </div>
        </div>
-
-
-
-
-
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/Images/airwazeLogo.png" alt="AirwazeLogo" style="height:200px; width:200px"/></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>            
-                        
-                        @if (User.IsInRole("Customer") || User.IsInRole("Admin"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Ticket" asp-action="List">Tickets</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Ticket" asp-action="Create">Create Ticket</a>
-                            </li>
-                        }
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Flight" asp-action="Index">Flights</a>
-                            </li>
-                        }
-                        @*<li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Users</a>
-                        </li>*@
-                         @if (User.IsInRole("Customer") || !User.Identity.IsAuthenticated)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Blazortest">Map Prototype</a>
-                            </li>
-                        }
-                    </ul>
-                    <partial name="_LoginPartial" />
-                </div>
-            </div>
-        </nav>       
+        <!-- Header End -->
     </header>
+    
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
      <script src="_content/GeneralComponents/GeneralComponents.DOMHelpers.js"></script>
-   @* <footer class="border-top footer text-muted">
-        <div class="container" style="padding-top: 20px;">
-                <div class="row">
-                    <div class="col-sm">
-                        <h6>About Us</h6>                        
+
+     <footer>
+        <!-- Footer Start-->
+        <div class="footer-area">
+            <div class="container">
+               <div class="footer-top footer-padding">
+                    <div class="row justify-content-between">
+                        <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6">
+                            <div class="single-footer-caption mb-50">
+                                <div class="single-footer-caption mb-30">
+                                    <!-- logo -->
+                                    <div class="footer-logo">
+                                        <a asp-area="" asp-controller="Home" asp-action="Index"><img src="~/Images/airwazeLogo.png" alt=""></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-2 col-md-4 col-sm-6">
+                            <div class="single-footer-caption mb-50">
+                                <div class="footer-tittle">
+                                    <h4>About us</h4>
+                                    <ul>
+                                        We are an airport where you can travel to any destination you want to go. 
+                                        If you are an airline you can also lent your airplanes to us. 
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                            <div class="single-footer-caption mb-50">
+                                <div class="footer-tittle">
+                                    <h4>Address</h4>
+                                    <ul>
+                                        Airwaze
+                                        <a href="https://g.page/luchthaven-antwerpen-anr?share">Luchthavenlei,
+                                        2100 Antwerpen,</a>
+                                        Belgium
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+                            <div class="single-footer-caption mb-50">
+                                <div class="footer-tittle">
+                                    <h4>Contact</h4>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-sm">
-                        <h6>Address</h6>
-                        
-                        <p class="small">
-                            Airwaze
-                            <a href="https://g.page/luchthaven-antwerpen-anr?share">Luchthavenlei,
-                            2100 Antwerpen,</a>
-                            Belgium
-                        </p>                        
+               </div>
+                <div class="footer-bottom">
+                    <div class="row d-flex justify-content-between align-items-center">
+                        <div class="col-xl-9 col-lg-8">
+                            <div class="footer-copy-right">
+                                <p>
+                                Copyright &copy;<script>document.write(new Date().getFullYear());</script>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-4">
+                            <!-- Footer Social -->
+                            <div class="footer-social f-right">
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-sm">
-                        <a  asp-action="Index" asp-controller="Contact"><h6>Contact us</h6></a>
-                    </div>
-                </div>
+               </div>
+            </div>
         </div>
-    </footer>*@
+        <!-- Footer End-->
+    </footer>
+    
      <script src="_content/BrowserInterop/scripts.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/sweetalert2.all.min.js"></script> 
+    <script src="~/js/sweetalert2.all.min.js"></script> 
+
+                   <!-- JS here -->
+				
+				<!-- All JS Custom Plugins Link Here here -->
+				<script src="~/js/vendor/modernizr-3.5.0.min.js"></script>
+				<!-- Jquery, Popper, Bootstrap -->
+				<script src="~/js/vendor/jquery-1.12.4.min.js"></script>
+				<script src="~/js/popper.min.js"></script>
+				<script src="~/js/bootstrap.min.js"></script>
+				<!-- Jquery Mobile Menu -->
+				<script src="~/js/jquery.slicknav.min.js"></script>
+
+				<!-- Jquery Slick , Owl-Carousel Plugins -->
+				<script src="~/js/owl.carousel.min.js"></script>
+				<script src="~/js/slick.min.js"></script>
+				<!-- One Page, Animated-HeadLin -->
+				<script src="~/js/wow.min.js"></script>
+				<script src="~/js/animated.headline.js"></script>
+				<script src="~/js/jquery.magnific-popup.js"></script>
+
+				<!-- Nice-select, sticky -->
+				<script src="~/js/jquery.nice-select.min.js"></script>
+				<script src="~/js/jquery.sticky.js"></script>
+				
+				<!-- contact js -->
+				<script src="~/js/contact.js"></script>
+				<script src="~/js/jquery.form.js"></script>
+				<script src="~/js/jquery.validate.min.js"></script>
+				<script src="~/js/mail-script.js"></script>
+				<script src="~/js/jquery.ajaxchimp.min.js"></script>
+				
+				<!-- Jquery Plugins, main Jquery -->	
+				<script src="~/js/plugins.js"></script>
+				<script src="~/js/main.js"></script>
+
     
     @await RenderSectionAsync("Scripts", required: false)
     

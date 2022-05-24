@@ -1,0 +1,55 @@
+.footer-area {
+    background-color: #010E21;
+    background-size: cover;
+    background-repeat: no-repeat
+}
+
+@media (max-width: 2000px) {
+    .slider-area {
+        background-image: url(../Images/backgroundHeader.jpg);
+        background-size: cover;
+        background-repeat: no-repeat;
+        position: absolute;
+        width: 108%;
+        height: 200%;
+        left: -4%;
+        top: -5%;
+        bottom: 0;
+        right: -4%;
+    }
+}
+
+@media (max-width: 5000px) {
+    .slider-area {
+        background-image: url(../Images/backgroundHeader.jpg);
+        background-size: cover;
+        background-repeat: no-repeat;
+        position: absolute;
+        width: 183%;
+        height: 200%;
+        left: -50%;
+        top: -5%;
+        bottom: 0;
+        right: -50%;
+    }
+}
+
+.hero-overly {
+    position: relative;
+    z-index: 1
+}
+
+    .hero-overly::before {
+        position: absolute;
+        content: "";
+        background-color: rgba(0,1,2,0.4);        
+        z-index: 0;
+        background-repeat: no-repeat
+    }
+
+a {
+    color: #007bff;
+    text-decoration: none;
+    background-color: transparent;
+    -webkit-text-decoration-skip: objects
+}
