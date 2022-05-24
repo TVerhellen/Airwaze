@@ -253,11 +253,11 @@ namespace AirWaze.Entities
             myList.Add(myDatabase);
             var goocheltruc = myList.ToList();
             return goocheltruc[0];
-
         }
 
         public static void CheckGateAvailability()
         {
+
             //make list of flights over next 2 hrs with CurrentGate == 0 and status 1&2
             //order by departure
             //available gate -> assign to next flight, priority status 2, then 1 
@@ -291,13 +291,18 @@ namespace AirWaze.Entities
         public static void CheckCompleted()
         {
             //List of flights with status 5 arrived
-            //If DateTime.Now >= Departure + FlightTime * 2 + 1 week -> status = completed
+            //If DateTime.Now >= Departure + 2xFlightTime + 1 week -> status = completed
             //Plane with CurrentPlane.PlaneID -> Available
         }
 
         //Check available planes for created flight in PlanePicker View
         public static List<Plane> AvailablePlanesForFlight(Destination dest, DateTime time)
         {
+            //get full planes list and filter down
+            //timeslot flight = Departure + 2xFlightTime + 1 week  -> timeslot this flight cannot overlap with timeslot other flights with that plane
+            //only show planes that fly region of destination
+
+
             return new List<Plane>();
         }
     }
