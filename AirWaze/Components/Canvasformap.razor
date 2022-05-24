@@ -303,8 +303,41 @@
             y =  (int)Math.Round(((3.719737 - currentPosition.Coords.Longitude / 600) / 0.000005897125)/1000);
             await this._context.SetFillStyleAsync("black");      
             await this._context.FillRectAsync(x, y, 20, 20);
-            await this._context.SetFillStyleAsync("red");      
-            await this._context.FillRectAsync((x-10), (y-10), 10, 10);             
+            await this._context.SetFillStyleAsync("red");
+            await this._context.FillRectAsync((x-10), (y+5), 10, 10);
+            //if (mybearing != null)
+            //{
+            //    switch (mybearing)
+            //    {
+            //        case < 22.5 :                        
+            //            await this._context.FillRectAsync((x+5), (y-10), 10, 10);             
+            //            break;
+            //        case < 67.5 :                        
+            //            await this._context.FillRectAsync((x+20), (y-10), 10, 10);             
+            //            break;
+            //        case < 112.5 :                        
+            //            await this._context.FillRectAsync((x+20), (y+5), 10, 10);             
+            //            break;
+            //        case < 157.5 :                        
+            //            await this._context.FillRectAsync((x+20), (y+20), 10, 10);             
+            //            break;
+            //        case < 202.5 :                        
+            //            await this._context.FillRectAsync((x+5), (y+20), 10, 10);             
+            //            break;
+            //        case < 247.5 :                        
+            //            await this._context.FillRectAsync((x-10), (y+20), 10, 10);             
+            //            break;
+            //        case < 292.5 :                        
+            //            await this._context.FillRectAsync((x-10), (y+5), 10, 10);             
+            //            break;
+            //        case < 337.5 :                        
+            //            await this._context.FillRectAsync((x-10), (y-10), 10, 10);             
+            //            break;
+            //        case <= 360:
+            //            await this._context.FillRectAsync((x+5), (y-10), 10, 10);
+            //            break;
+            //    }
+            //}                                
             await this._context.SetFontAsync("46px Calibri");
             await this._context.StrokeTextAsync("Hier ben Ik", x, y);
         }
