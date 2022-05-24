@@ -1,0 +1,19 @@
+﻿body {
+    margin-bottom: 60px;
+    height: none;
+    width: none;
+    background-image: url('../Images/planebackground.jpg');
+    background-size: cover;
+}
+
+.haraldcontainer {
+    background-image: url('../Images/TerminalEdit.png');
+    background-size: contain;
+    height: 800px;
+    width: 600px;
+}
+
+.planeindexcontainer {
+   
+}
+

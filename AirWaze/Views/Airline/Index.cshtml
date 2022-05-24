@@ -4,8 +4,76 @@
 @{
 }
 @model AirlineIndexViewModel
+<head>
+	 <link rel="stylesheet" href="~/css/airlineindex.css">
+</head>
 
-<p>Dit is Hardcoded tot Login er is</p>
+<div class="categories-area section-padding30">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <!-- Section Tittle -->
+                        <div class="section-tittle text-center mb-80">
+                            <span>Welcome to Budapest Airport,</span>
+                            <h2>@Model.Airline.Name</h2>
+                        </div>
+                    </div
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="single-cat text-center mb-50">
+                            <div class="cat-icon">
+                                 <img src="~/Images/planeicon.png" alt="Sample Image" width="70px" height="70px"/>
+                            </div>
+                            <div class="cat-cap">
+                                <h5><a href="catagori.html">Your Current Planes</a></h5>
+                                <p>Planes and such</p>
+                                <a href="catagori.html">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="single-cat text-center mb-50">
+                            <div class="cat-icon">
+                                <span class="flaticon-drink"></span>
+                            </div>
+                            <div class="cat-cap">
+                                <h5><a href="catagori.html">Detail Section</a></h5>
+                                <p>Must explain your how this keind denoun pleasure</p>
+                                <a href="catagori.html">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="single-cat text-center mb-50">
+                            <div class="cat-icon">
+                                <span class="flaticon-home"></span>
+                            </div>
+                            <div class="cat-cap">
+                                <h5><a href="catagori.html">Update Info</a></h5>
+                                <p>Must explain your how this keind denoun pleasure</p>
+                                <a href="catagori.html">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="single-cat text-center mb-50">
+                            <div class="cat-icon">
+                                <img src="~/Images/flighticon.png" alt="Sample Image" width="70px" height="70px"/>
+                            </div>
+                            <div class="cat-cap">
+                                <h5><a href="catagori.html">Flights</a></h5>
+                                <p>Must explain your how this keind denoun pleasure</p>
+                                <a href="catagori.html">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+        </div>
+
+
+@*<p>Dit is Hardcoded tot Login er is</p>
 @if (Model.Airline.Logo != null)
 {
     <div style="position:center;" >
@@ -26,8 +94,8 @@
 <p> These Dont work yet</p>
 
 <a class="btn btn-primary" asp-action="List" asp-controller="FLight" asp-route-ID="HierGUiDAirliner/Flights/Planes">Lijst VLuchten</a>
+*@
 
-<a class="btn btn-primary" asp-action="Invoices" asp-controller="Airline" asp-route-ID="HierGUiDAirliner">Lijst Facturen</a>
 
 
 
