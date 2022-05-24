@@ -80,7 +80,7 @@ namespace AirWaze.Controllers
         public IActionResult ConfirmApproveSchedule()
         {
             scheduleToApprove.IsValidated = true;
-            Airport.CurrentSchedule = scheduleToApprove;
+            //Airport.CurrentSchedule = scheduleToApprove;
             if(Airport.ApprovedSchedules == null)
             {
                 Airport.ApprovedSchedules = new List<Schedule>();
