@@ -9,7 +9,7 @@
 </head>
 
 <div class="categories-area section-padding30">
-            <div class="container">
+            <div class="container">               
                 <div class="row">
                     <div class="col-lg-12">
                         <!-- Section Tittle -->
@@ -19,82 +19,64 @@
                         </div>
                     </div
                 </div>
-                <div class="row">
+                <div class="row">                   
                     <div class="col-lg-3 col-md-6 col-sm-6">
+                        <a asp-action="Index" asp-controller="Plane" asp-route-ID="@Model.Airline.AirlineID">
                         <div class="single-cat text-center mb-50">
                             <div class="cat-icon">
                                  <img src="~/Images/planeicon.png" alt="Sample Image" width="70px" height="70px"/>
                             </div>
                             <div class="cat-cap">
-                                <h5><a href="catagori.html">Your Current Planes</a></h5>
-                                <p>Planes and such</p>
-                                <a href="catagori.html">View Details</a>
+                                <h5>Your Current Planes</h5>
+                                <p>Must explain your how this keind denoun pleasure</p>                          
                             </div>
                         </div>
-                    </div>
+                        </a>
+                    </div>                
                     <div class="col-lg-3 col-md-6 col-sm-6">
+                        <a asp-action="Detail" asp-controller="Airline" asp-route-ID="@Model.Airline.AirlineID">
                         <div class="single-cat text-center mb-50">
                             <div class="cat-icon">
-                                <span class="flaticon-drink"></span>
+                                <img src="~/Images/detailicon.png" alt="Sample Image" width="70px" height="70px"/>
                             </div>
                             <div class="cat-cap">
-                                <h5><a href="catagori.html">Detail Section</a></h5>
-                                <p>Must explain your how this keind denoun pleasure</p>
-                                <a href="catagori.html">View Details</a>
+                                <h5>Detail Section</h5>
+                                <p>Must explain your how this keind denoun pleasure</p>                               
                             </div>
                         </div>
+                        </a>
                     </div>
                     <div class="col-lg-3 col-md-6 col-sm-6">
+                        <a asp-action="Update" asp-controller="Airline" asp-route-ID="@Model.Airline.AirlineID">
                         <div class="single-cat text-center mb-50">
                             <div class="cat-icon">
-                                <span class="flaticon-home"></span>
+                                <img src="~/Images/updateicon.png" alt="Sample Image" width="70px" height="70px"/>
                             </div>
                             <div class="cat-cap">
-                                <h5><a href="catagori.html">Update Info</a></h5>
-                                <p>Must explain your how this keind denoun pleasure</p>
-                                <a href="catagori.html">View Details</a>
+                                <h5>Update Info</h5>
+                                <p>Must explain your how this keind denoun pleasure</p>                                
                             </div>
                         </div>
+                        </a>
                     </div>
                     <div class="col-lg-3 col-md-6 col-sm-6">
+                        <a asp-action="List" asp-controller="FLight" asp-route-ID="HierGUiDAirliner/Flights/Planes">
                         <div class="single-cat text-center mb-50">
                             <div class="cat-icon">
                                 <img src="~/Images/flighticon.png" alt="Sample Image" width="70px" height="70px"/>
                             </div>
                             <div class="cat-cap">
-                                <h5><a href="catagori.html">Flights</a></h5>
-                                <p>Must explain your how this keind denoun pleasure</p>
-                                <a href="catagori.html">View Details</a>
+                                <h5>Your Flights</h5>
+                                <p>Must explain your how this keind denoun pleasure</p>                              
                             </div>
                         </div>
+                        </a>
                     </div>
                  </div>
             </div>
         </div>
 
 
-@*<p>Dit is Hardcoded tot Login er is</p>
-@if (Model.Airline.Logo != null)
-{
-    <div style="position:center;" >
-        <img src="@Url.Content(@Model.Airline.Logo)" alt="Sample Image" width="400" height="400"/>
-    </div>
-}
-
-<h1>Hello @Model.Airline.Name</h1>
-
-<h1>Status Panel Here, For now Buttons will do</h1>
-
-<div>
-<a class="btn btn-primary" asp-action="Index" asp-controller="Plane" asp-route-ID="@Model.Airline.AirlineID">Your Current Planes</a>
-<a class="btn btn-primary" asp-action="Detail" asp-controller="Airline" asp-route-ID="@Model.Airline.AirlineID">Detail Pagina</a>
-<a class="btn btn-primary" asp-action="Update" asp-controller="Airline" asp-route-ID="@Model.Airline.AirlineID">Update perso gegevens</a>
-</div>
-<br />
-<p> These Dont work yet</p>
-
-<a class="btn btn-primary" asp-action="List" asp-controller="FLight" asp-route-ID="HierGUiDAirliner/Flights/Planes">Lijst VLuchten</a>
-*@
 
 
 
