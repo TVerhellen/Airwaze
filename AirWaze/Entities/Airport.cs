@@ -116,10 +116,9 @@ namespace AirWaze.Entities
             Planes = PlaneController.planeEntities.ToList();
             Flights = Flights.FindAll(x => x.Status != 3 || x.Status != 5);
             Flights = Flights.OrderBy(flight => flight.Departure).ToList();
-            //if (CurrentSchedule.Flights.Count != 25)
-            //{
-            //    CurrentSchedule = GenerateSchedule();
-            //}
+          
+
+            //Update Database where -> in respective methods ???
         }
         public static void AddGate()
         {
@@ -143,40 +142,42 @@ namespace AirWaze.Entities
 
 
         //generate schedule standard no longer needed?
-        public static Schedule GenerateSchedule()
-        {
-            Schedule myshedule = new Schedule();
-            myshedule.Date = _currenttime;
-            myshedule.ScheduleID = generator.Next(0, 10000);
-            List<Flight> theseflights = new List<Flight>();
-            Flights = Flights.OrderBy(flight => flight.Departure).ToList();
+        //public static Schedule GenerateSchedule()
+        //{
+        //    Schedule myshedule = new Schedule();
+        //    myshedule.Date = _currenttime;
+        //    myshedule.ScheduleID = generator.Next(0, 10000);
+        //    List<Flight> theseflights = new List<Flight>();
+        //    Flights = Flights.OrderBy(flight => flight.Departure).ToList();
 
-            for (int i = 0; i < Flights.Count; i++)
-            {
-                theseflights.Add(Flights[i]);
-            }
+        //    for (int i = 0; i < Flights.Count; i++)
+        //    {
+        //        theseflights.Add(Flights[i]);
+        //    }
 
-            //put this in correct methods
-            for (int i = 0; i < Flights.Count; i++)
-            {
-                if (Gates[i].IsAvailable == true)
-                {
-                    theseflights[i].CurrentGate = Gates[i];
-                    Gates[i].IsAvailable = false;
-                    Gates[i].CurrentFlight = theseflights[i];
-                }
-            }
-            for (int i = 0; i < Runways.Count; i++)
-            {
-                if (Runways[i].IsAvailable == true)
-                {
-                    theseflights[i].CurrentRunway = Runways[i];
-                    Runways[i].IsAvailable = false;
-                    Runways[i].CurrentFlight = theseflights[i];
-                }
-            }
-            return myshedule;
-        }
+        //    //put this in correct methods
+        //    for (int i = 0; i < Flights.Count; i++)
+        //    {
+        //        if (Gates[i].IsAvailable == true)
+        //        {
+        //            theseflights[i].CurrentGate = Gates[i];
+        //            Gates[i].IsAvailable = false;
+        //            Gates[i].CurrentFlight = theseflights[i];
+        //        }
+        //    }
+        //    for (int i = 0; i < Runways.Count; i++)
+        //    {
+        //        if (Runways[i].IsAvailable == true)
+        //        {
+        //            theseflights[i].CurrentRunway = Runways[i];
+        //            Runways[i].IsAvailable = false;
+        //            Runways[i].CurrentFlight = theseflights[i];
+        //        }
+        //    }
+
+        //    myshedule.Flights = theseflights;
+        //    return myshedule;
+        //}
         public static Schedule GenerateSchedule(DateTime chosenDate)
         {
             Schedule myshedule = new Schedule();
@@ -193,28 +194,7 @@ namespace AirWaze.Entities
                 }
             }
 
-            //put this in correct methods
-            if(theseflights.Count == 4)
-            {
-                for (int i = 0; i < Flights.Count; i++)
-                {
-                    if (Gates[i].IsAvailable == true)
-                    {
-                        theseflights[i].CurrentGate = Gates[i];
-                        Gates[i].IsAvailable = false;
-                        Gates[i].CurrentFlight = theseflights[i];
-                    }
-                }
-                for (int i = 0; i < Runways.Count; i++)
-                {
-                    if (Runways[i].IsAvailable == true)
-                    {
-                        theseflights[i].CurrentRunway = Runways[i];
-                        Runways[i].IsAvailable = false;
-                        Runways[i].CurrentFlight = theseflights[i];
-                    }
-                }
-            }
+            
 
             myshedule.Flights = theseflights;
 
@@ -257,19 +237,102 @@ namespace AirWaze.Entities
 
         public static void CheckGateAvailability()
         {
+            //make list of flights leaving in less than 2 hours with status approved or delayed and that have no gate yet
+            //Sort list by status descending (priority to status 2 - delayed) and then by departure date (priority to flights leaving earlier)
+            List<Flight> nextFlights = new List<Flight>();
+            foreach (Flight flight in Flights)
+            {
+                if((flight.Status == 1 || flight.Status == 2) 
+                    && DateTime.Now >= flight.Departure.AddHours(-2) 
+                    && flight.CurrentGate.Number == 0)
+                {
+                    nextFlights.Add(flight);
+                }
+            }
+            nextFlights = nextFlights.OrderByDescending(flight => flight.Status).ThenBy(flight => flight.Departure).ToList();
 
-            //make list of flights over next 2 hrs with CurrentGate == 0 and status 1&2
-            //order by departure
-            //available gate -> assign to next flight, priority status 2, then 1 
-            //Gate.IsAvailable = false
-            //Plane with CurrentPlane.PlaneID -> Not Available
+            //Make list of available gates
+            List<Gate> availableGates = new List<Gate>();
+            availableGates = myDatabase.GetGates().FindAll(gate => gate.IsAvailable == true);
+
+            //Check for every flight if there is at least 1 gate available -> assign first gate to flight and flight to gate, update availability and remove gate from list availablegates
+            foreach(Flight nextFlight in nextFlights)
+            {
+                if(availableGates.Count > 0)
+                {
+                    availableGates[0].CurrentFlight = nextFlight;
+                    availableGates[0].IsAvailable = false;
+                    myDatabase.UpdateGate(availableGates[0]);
+
+                    nextFlight.CurrentGate = availableGates[0];
+                    myDatabase.UpdateFlight(nextFlight);
+
+                    availableGates.RemoveAt(0);
+                }
+                else
+                {
+                    //If no gate available for a flight -> check if it needs to be delayed
+                    // Less than 30 mins to departure and still no free gate -> Delay (1 hour)
+                    // Else do nothing -> Will be checked again with next UpdateAirport
+                    if(DateTime.Now >= nextFlight.Departure.AddMinutes(-30))
+                    {
+                        DelayFlight(nextFlight);
+                    }
+                }
+            }
         }
+
         public static void CheckRunwayAvailability()
         {
             //make list of flights over next 30 mins with CurrentRunway == 0 and status 1&2
             //order by departure
             //available runway -> assign to next flight, priority status 2, then 1
             //Runway.IsAvailable = false
+
+            //make list of flights leaving in less than 30 mins with status approved or delayed and that have no runway yet
+            //Sort list by status descending (priority to status 2 - delayed) and then by departure date (priority to flights leaving earlier)
+            List<Flight> nextFlights = new List<Flight>();
+            foreach (Flight flight in Flights)
+            {
+                if ((flight.Status == 1 || flight.Status == 2)
+                    && DateTime.Now >= flight.Departure.AddMinutes(-30)
+                    && flight.CurrentRunway.Number == 0)
+                {
+                    nextFlights.Add(flight);
+                }
+            }
+            nextFlights = nextFlights.OrderByDescending(flight => flight.Status).ThenBy(flight => flight.Departure).ToList();
+
+
+            //Make list of available gates
+            List<Runway> availableRunways = new List<Runway>();
+            availableRunways = myDatabase.GetRunways().FindAll(runway => runway.IsAvailable == true);
+
+            //Check for every flight if there is at least 1 gate available -> assign first gate to flight and flight to gate, update availability and remove gate from list availablegates
+            foreach (Flight nextFlight in nextFlights)
+            {
+                if (availableRunways.Count > 0)
+                {
+                    availableRunways[0].CurrentFlight = nextFlight;
+                    availableRunways[0].IsAvailable = false;
+                    myDatabase.UpdateRunway(availableRunways[0]);
+
+                    nextFlight.CurrentRunway = availableRunways[0];
+                    myDatabase.UpdateFlight(nextFlight);
+
+                    availableRunways.RemoveAt(0);
+                }
+                else
+                {
+                    //If no runway available for a flight -> check if it needs to be delayed
+                    // Less than 10 mins to departure and still no free runway -> Delay (30 mins)
+                    // Else do nothing -> Will be checked again with next UpdateAirport
+                    if (DateTime.Now >= nextFlight.Departure.AddMinutes(-30))
+                    {
+                        DelayFlight(nextFlight);
+                    }
+                }
+            }
         }
         public static void CheckBoarding()
         {
@@ -304,6 +367,12 @@ namespace AirWaze.Entities
 
 
             return new List<Plane>();
+        }
+
+        private static void DelayFlight(Flight flight)
+        {
+            flight.Departure = flight.Departure.AddHours(1);
+            myDatabase.UpdateFlight(flight);
         }
     }
 }
