@@ -1,29 +1,41 @@
-﻿using AirWaze.Database.Design;
+﻿using AirWaze.Areas.Identity.Data;
+using AirWaze.Database.Design;
 using AirWaze.Entities;
 using AirWaze.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace AirWaze.Controllers
 {
     [Authorize(Roles = "Admin, Customer")]
     public class TicketController : Controller
     {
+        private readonly UserManager<AirWazeUser> _userManager;
         private readonly IAirWazeDatabase database;
         private static List<Ticket> loadedTickets = new List<Ticket>();
-        static AspNetUser myUser;
+        static ApplicationUser myUser;
 
-        public TicketController(IAirWazeDatabase db)
+        public TicketController(IAirWazeDatabase db, UserManager<AirWazeUser> userManager)
         {
+            _userManager = userManager;
             database = db;
-            myUser = database.GetUserByID(HttpContext.Session.GetString("UserID"));
-            if(loadedTickets.Count == 0)
-            {
-                LoadTicketList(myUser);
-            }
+            
+            //myUser = HttpContext.User;
+            //myUser = database.GetUserByID(HttpContext.Session.GetString("user_id"));
             
         }
 
+        public async void GetUser()
+        {
+            string myUserId = _userManager.GetUserId(User);
+            myUser = database.GetUserByID(myUserId);
+            if (loadedTickets.Count == 0)
+            {
+                LoadTicketList(myUser);
+            }
+        }
 
         
         //{
@@ -50,13 +62,14 @@ namespace AirWaze.Controllers
 
         public IActionResult Index()
         {
+            GetUser();
             return View();
         }
 
         public IActionResult List(string option, string searchString)
         {
             ViewData["CurrentFilter"] = searchString;
-
+            GetUser();
             List<TicketListViewModel> list = new List<TicketListViewModel>();
             foreach (var ticket in loadedTickets)
             {
@@ -268,7 +281,7 @@ namespace AirWaze.Controllers
             return "15B";
         }
 
-        public void LoadTicketList(AspNetUser user)
+        public void LoadTicketList(ApplicationUser user)
         {
             loadedTickets = database.GetTicketsByUser(user);
         }

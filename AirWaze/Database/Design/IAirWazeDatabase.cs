@@ -1,4 +1,5 @@
-﻿using AirWaze.Entities;
+﻿using AirWaze.Areas.Identity.Data;
+using AirWaze.Entities;
 
 namespace AirWaze.Database.Design
 {
@@ -39,11 +40,11 @@ namespace AirWaze.Database.Design
 
         void RemoveAirline(Airline airline);
 
-        List<AspNetUser> GetUsers();
+        List<AirWazeUser> GetUsers();
 
-        AspNetUser GetUserByID(string id);
+        ApplicationUser GetUserByID(string id);
 
-        //void AddUser(User user);
+        void AddUser(AirWazeUser user);
 
         //void UpdateUser(User user);
 
@@ -54,7 +55,7 @@ namespace AirWaze.Database.Design
 
         //List<Ticket> GetTicketByFlight(Flight flight);
 
-        List<Ticket> GetTicketsByUser(AspNetUser user);
+        List<Ticket> GetTicketsByUser(ApplicationUser user);
 
         Ticket GetTicketByNr(string nr);
 

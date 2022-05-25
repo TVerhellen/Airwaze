@@ -1,4 +1,6 @@
-﻿using AirWaze.Database.Design;
+﻿using AirWaze.Areas.Identity.Data;
+using AirWaze.Data;
+using AirWaze.Database.Design;
 using AirWaze.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,10 +10,12 @@ namespace AirWaze.Database
     {
 
         private readonly AirWazeDbContext _dbContext;
+        private readonly ApplicationDbContext _appDbContext;
 
-        public AirWazeDatabase(AirWazeDbContext dbContext)
+        public AirWazeDatabase(AirWazeDbContext dbContext, ApplicationDbContext appDbContext)
         {
             _dbContext = dbContext;
+            _appDbContext = appDbContext;
         }
         public void AddAirline(Airline airline)
         {
@@ -49,15 +53,41 @@ namespace AirWaze.Database
             return _dbContext.Airlines.ToList();
         }
 
-        //public void AddUser(User user)
-        //{
-        //    _dbContext.Users.Add(user);
-        //    _dbContext.SaveChanges();
-        //}
-
-        public AspNetUser GetUserByID(string id)
+        public void AddUser(AirWazeUser user)
         {
-            return _dbContext.AspNetUsers.SingleOrDefault(user => user.Id.Equals(id));
+            ApplicationUser appuser = new ApplicationUser()
+            {
+                Id = user.Id,
+                LastName = user.LastName,
+                FirstName = user.FirstName,
+                StreetName = user.StreetName,
+                HouseNumber = user.HouseNumber,
+                Bus = user.Bus,
+                Zipcode = user.Zipcode,
+                City = user.City,
+                Country = user.Country,
+                UserName = user.UserName,
+                NormalizedUserName = user.NormalizedUserName,
+                Email = user.Email,
+                NormalizedEmail = user.NormalizedEmail,
+                EmailConfirmed = user.EmailConfirmed,
+                PasswordHash = user.PasswordHash,
+                SecurityStamp = user.SecurityStamp,
+                ConcurrencyStamp = user.ConcurrencyStamp,
+                PhoneNumber = user.PhoneNumber,
+                PhoneNumberConfirmed = user.PhoneNumberConfirmed,
+                TwoFactorEnabled = user.TwoFactorEnabled,
+                LockoutEnd = user.LockoutEnd,
+                LockoutEnabled = user.LockoutEnabled,
+                AccessFailedCount = user.AccessFailedCount
+            };
+            _dbContext.Users.Add(appuser);
+            _dbContext.SaveChanges();
+        }
+
+        public ApplicationUser GetUserByID(string id)
+        {
+            return _dbContext.Users.SingleOrDefault(user => user.Id.Equals(id));
         }
 
         public int AddTicket(Ticket ticket)
@@ -132,9 +162,9 @@ namespace AirWaze.Database
             _dbContext.SaveChanges();
         }
 
-        public List<AspNetUser> GetUsers()
+        public List<AirWazeUser> GetUsers()
         {
-            return _dbContext.AspNetUsers.ToList();
+            return _appDbContext.Users.ToList();
         }
 
         //public List<Ticket> GetTicketByFlight(Flight flight)
@@ -158,7 +188,7 @@ namespace AirWaze.Database
             return _dbContext.Tickets.Include(x => x.CurrentUser).Include(x => x.CurrentFlight).ToList();
         }
 
-        public List<Ticket> GetTicketsByUser(AspNetUser user)
+        public List<Ticket> GetTicketsByUser(ApplicationUser user)
         {
             var query = from ticket in _dbContext.Tickets
                         where ticket.CurrentUser == user

@@ -1,4 +1,5 @@
-﻿using AirWaze.Data;
+﻿using AirWaze.Areas.Identity.Data;
+using AirWaze.Data;
 using AirWaze.Database.Design;
 using AirWaze.Entities;
 using AirWaze.Models;
@@ -11,7 +12,7 @@ namespace AirWaze.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private readonly IAirWazeDatabase _airWazeDatabase;
-        private static List<AspNetUser> userEntities = new List<AspNetUser>();
+        private static List<AirWazeUser> userEntities = new List<AirWazeUser>();
         public UserController(IAirWazeDatabase airWazeDatabase)
         {
             _airWazeDatabase = airWazeDatabase;
@@ -97,9 +98,9 @@ namespace AirWaze.Controllers
                     db.SaveChanges();
                 }
 
-                var newEntity = new User
+                var newEntity = new AirWazeUser
                 {
-                    UserID = userViewModel.UserID,
+                    Id = userViewModel.UserID,
                     FirstName = userViewModel.FirstName,
                     LastName = userViewModel.LastName,
                     StreetName = userViewModel.StreetName,
@@ -133,12 +134,12 @@ namespace AirWaze.Controllers
                 UserID = existingUser.Id,
                 FirstName = existingUser.FirstName,
                 LastName = existingUser.LastName,
-                //StreetName = existingUser.StreetName,
-                //HouseNumber = existingUser.HouseNumber,
-                //Bus = existingUser.Bus,
-                //City = existingUser.City,
-                //Zipcode = existingUser.Zipcode,
-                //Country = existingUser.Country,
+                StreetName = existingUser.StreetName,
+                HouseNumber = existingUser.HouseNumber,
+                Bus = existingUser.Bus,
+                City = existingUser.City,
+                Zipcode = existingUser.Zipcode,
+                Country = existingUser.Country,
                 Email = existingUser.Email,
                 PhoneNumber = existingUser.PhoneNumber,
             };
