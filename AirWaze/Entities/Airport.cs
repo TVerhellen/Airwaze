@@ -402,7 +402,7 @@ namespace AirWaze.Entities
             {
                 //TODO: modify flighttime to Destination.FlightTime 
                 if (flight.Status == 4
-                    && DateTime.Now >= flight.Departure.Add(flight.FlightTime))
+                    && DateTime.Now >= flight.Departure.Add(flight.Destination.FlightTime))
                 {
                     arrivedFlights.Add(flight);
                 }
@@ -425,7 +425,7 @@ namespace AirWaze.Entities
             foreach (Flight flight in Flights)
             {
                 //TODO: modify flighttime to Destination.FlightTime 
-                DateTime flyingTime = flight.Departure.Add(2 * flight.FlightTime);
+                DateTime flyingTime = flight.Departure.Add(2 * flight.Destination.FlightTime);
                 DateTime totalReturnTime = flyingTime.AddDays(7);
 
                 if (flight.Status == 5

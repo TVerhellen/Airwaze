@@ -14,3 +14,12 @@ td, th {
     width: auto;
     padding: 10px;
 }
+
+body {
+    margin-top: 20px;
+    margin-bottom: 60px;
+    height: none;
+    width: none;
+    background-image: url('../Images/airport-wallpapers.jpg');
+    background-size: cover;
+}

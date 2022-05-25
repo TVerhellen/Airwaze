@@ -1,4 +1,6 @@
-﻿using AirWaze.Database.Design;
+﻿using AirWaze.Areas.Identity.Data;
+using AirWaze.Data;
+using AirWaze.Database.Design;
 using AirWaze.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,10 +10,12 @@ namespace AirWaze.Database
     {
 
         private readonly AirWazeDbContext _dbContext;
+        private readonly ApplicationDbContext _appDbContext;
 
-        public AirWazeDatabase(AirWazeDbContext dbContext)
+        public AirWazeDatabase(AirWazeDbContext dbContext, ApplicationDbContext appDbContext)
         {
             _dbContext = dbContext;
+            _appDbContext = appDbContext;
         }
         public void AddAirline(Airline airline)
         {
@@ -49,15 +53,30 @@ namespace AirWaze.Database
             return _dbContext.Airlines.ToList();
         }
 
-        public void AddUser(User user)
+        public void AddUser(AirWazeUser user)
         {
-            _dbContext.Users.Add(user);
+            ApplicationUser appuser = new ApplicationUser()
+            {
+                Id = user.Id,
+                LastName = user.LastName,
+                FirstName = user.FirstName,
+                StreetName = user.StreetName,
+                HouseNumber = user.HouseNumber,
+                Bus = user.Bus,
+                Zipcode = user.Zipcode,
+                City = user.City,
+                Country = user.Country,
+                UserName = user.UserName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+            };
+            _dbContext.Users.Add(appuser);
             _dbContext.SaveChanges();
         }
 
-        public User FindUserByID(Guid id)
+        public ApplicationUser GetUserByID(string id)
         {
-            return _dbContext.Users.SingleOrDefault(user => user.UserID.Equals(id));
+            return _dbContext.Users.SingleOrDefault(user => user.Id.Equals(id));
         }
 
         public int AddTicket(Ticket ticket)
@@ -132,9 +151,9 @@ namespace AirWaze.Database
             _dbContext.SaveChanges();
         }
 
-        public List<User> GetUsers()
+        public List<AirWazeUser> GetUsers()
         {
-            return _dbContext.Users.ToList();
+            return _appDbContext.Users.ToList();
         }
 
         //public List<Ticket> GetTicketByFlight(Flight flight)
@@ -158,7 +177,7 @@ namespace AirWaze.Database
             return _dbContext.Tickets.Include(x => x.CurrentUser).Include(x => x.CurrentFlight).ToList();
         }
 
-        public List<Ticket> GetTicketsByUser(User user)
+        public List<Ticket> GetTicketsByUser(ApplicationUser user)
         {
             var query = from ticket in _dbContext.Tickets
                         where ticket.CurrentUser == user
@@ -191,11 +210,11 @@ namespace AirWaze.Database
             _dbContext.SaveChanges();
         }
 
-        public void RemoveUser(User user)
-        {
-            _dbContext.Users.Remove(user);
-            _dbContext.SaveChanges();
-        }
+        //public void RemoveUser(User user)
+        //{
+        //    _dbContext.Users.Remove(user);
+        //    _dbContext.SaveChanges();
+        //}
 
         public int RemoveTicket(Ticket ticket)
         {
@@ -218,11 +237,11 @@ namespace AirWaze.Database
             _dbContext.SaveChanges();
         }
 
-        public void UpdateUser(User user)
-        {
-            _dbContext.Users.Update(user);
-            _dbContext.SaveChanges();
-        }
+        //public void UpdateUser(User user)
+        //{
+        //    _dbContext.Users.Update(user);
+        //    _dbContext.SaveChanges();
+        //}
 
         public int UpdateTicket(Ticket ticket)
         {

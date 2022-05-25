@@ -5,9 +5,11 @@
 }
 @model List<PlaneListViewModel> 
 
-<div class="container-fluid" style="padding: 0 0 0 0;">
+    <head>
+	 <link rel="stylesheet" href="~/css/planeindex.css">
+</head>
     <div class="row">
-        <div class="col-lg-2 bg-dark-blue d-none d-sm-block" style="padding-top: 50px; padding-bottom: 20px;">
+        @*<div class="col-lg-2 bg-dark-blue d-none d-sm-block" style="padding-top: 50px; padding-bottom: 20px;">
                 <center><i class="fas fa-user fa-5x text-white" style="padding-bottom: 20px;"></i></center>
                 <center>
                     <p style="color:white">@User.Identity.Name</p>
@@ -22,8 +24,8 @@
                     <a class="list-group-item" asp-action="Index" asp-controller="Flight"><i class="fa fa-plane-departure text-white">&nbsp; Flights</i></a> 
                     <a class="list-group-item" asp-action="Schedule" asp-controller="Admin"><i class="fa fa-clock text-white">&nbsp; Schedule</i></a>  
                 </div>
-        </div>
-        <div class="col-lg-9" style="padding-bottom: 50px;">
+        </div>*@
+        
             <div>
                 <h1>Manage planes</h1>
                 @*<h1 style="color:red;">Hallo Admin</h1>*@
@@ -43,58 +45,60 @@
                     </div>
                 </form>
                 <br/>
-    
-                @if (Model.Count != 0)
-                {       
-                    <h1>Overview Planes:</h1>  
 
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Capacity</th>
-                                <th>Region</th>
-                                <th>Available</th>
-                                <th>Manufacturer</th>
-                                <th>Type</th>
-                                <th>Airliner</th>
-                                <th>ConstructionYear</th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>            
-                            @foreach (var plane in Model)
-                            {
-                                <tr>
-                                    <td>@plane.PlaneNr</td>
-                                    <td>@plane.PassengerCapacity</td>                       
-                                    <td>@plane.FlightRegion</td>
-                                    <td>@plane.IsAvailable</td>
-                                    <td>@plane.Manufacturer</td>
-                                    <td>@plane.Type</td>   
-                                    <td>@plane.CurrentAirline.NameTag</td>
-                                    <td>@plane.ConstructionYear</td>
-                                    <td><a class="btn btn-primary" asp-action="Detail" asp-controller="Plane" asp-route-ID=@plane.PlaneNr>Detail</a></td>
-                                    <td><a class="btn btn-secondary" asp-action="Update" asp-controller="Plane" asp-route-ID=@plane.PlaneNr>Edit</a></td>
-                                    <td><a class="btn btn-secondary" asp-action="Delete" asp-controller="Plane" asp-route-ID=@plane.PlaneNr>Delete</a></td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                }
-                else
-                {
-                    <h1>No Planes Currently Available</h1>
-                }
-        <div style="margin:100px;">
-            <a class="btn btn-secondary" asp-area="" asp-controller="Plane" asp-action="Type" style="margin-left:250px;width:600px;">Create New Plane</a>
-        </div> 
+                <div class="planeindexcontainer">
+                    @if (Model.Count != 0)
+                    {
+                        <div class="progress-table-wrap">
+						                    <div class="progress-table">
+							                    <div class="table-head">
+                                                    <div class="serial" style="margin-left:20px;">Airliner</div>
+                                                    <div class="serial" style="margin-left:20px;">Logo</div>
+								                    <div class="serial" style="margin-left:60px;">Nr</div>
+								                    <div class="visit" style="margin-left:20px;">Capacity</div>
+								                    <div class="visit" style="margin-left:80px;">Region</div>
+								                    <div class="visit" style="margin-left:60px;">Manfufacturer</div>
+								                    <div class="visit" style="margin-left:60px;">Type</div>
+								                    <div class="visit" style="margin-left:60px;">ConstructionYear</div>
+								                    <div class="percentage"></div>
+								                    <div class="percentage"></div>
+								                    <div class="percentage"></div>
+							                    </div>
+							                     @foreach (var plane in Model)
+							                    {
+								                    <div class="table-row">
+                                                        <div class="serial" style="margin-left:20px;">@plane.CurrentAirline.Name</div>
+                                                         <div class="serial" style="margin-left:20px;">
+                                                                <img src="@Url.Content(@plane.CurrentAirline.Logo)" alt="Sample Image" width="100" height="100" />
+                                                        </div>               
+									                    <div class="serial" style="margin-left:60px;">@plane.PlaneNr</div>
+									                    <div class="visit" style="margin-left:20px;">@plane.PassengerCapacity</div>
+									                    <div class="visit" style="margin-left:20px;">@plane.FlightRegion</div>
+									                    <div class="visit" style="margin-left:20px;">@plane.Manufacturer</div>
+									                    <div class="visit" style="margin-left:20px;">@plane.Type</div>
+									                    <div class="visit" style="margin-left:20px;">@plane.ConstructionYear</div>
+									                    <div class="visit" style="margin-left:20px"><a class="genric-btn info circle arrow" asp-action="Detail" asp-controller="Plane" asp-route-ID=@plane.PlaneNr>Detail</a></div>
+									                    <div class="visit" style="margin-left:20px"><a class="genric-btn warning circle arrow" asp-action="Update" asp-controller="Plane" asp-route-ID=@plane.PlaneNr>Edit</a></div>
+									                    <div class="visit" style="margin-left:20px"><a class="genric-btn danger circle arrow" asp-action="Delete" asp-controller="Plane" asp-route-ID=@plane.PlaneNr>Delete</a></div>									
+								                    </div>						
+							                    }
+                                              </div>
+                        </div>
+                    }
+                     else
+                        {
+                            <h1>No Planes Currently Available</h1>
+                        }
+                    <div style="margin:100px;">
+                     <a class="genric-btn primary e-large" asp-area="" asp-controller="Plane" asp-action="Type" style="margin-left:250px;width:600px;">Add New Plane</a>
+                    </div> 
+                    </div>
+    
+              
    
         </div>
-        </div>
-</div>
+        
+
 
 
 <script src="~/lib/bootstrap/bootstrap-admin/popper.min.js"></script>

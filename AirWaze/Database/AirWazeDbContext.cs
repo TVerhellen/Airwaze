@@ -14,7 +14,8 @@ namespace AirWaze.Database
             optionsBuilder.EnableSensitiveDataLogging();
         }
         public DbSet<Flight> Flights { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<ApplicationUser> Users { get; set; }
+        //public DbSet<AirWazeUser> AspNetUsers { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Airline> Airlines { get; set; }
         public DbSet<Plane> Planes { get; set; }

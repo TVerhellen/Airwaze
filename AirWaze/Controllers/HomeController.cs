@@ -88,7 +88,6 @@ namespace AirWaze.Controllers
             {
                 FlightID = flight.FlightID,
                 FlightNr = flight.FlightNr,
-                FlightTime = flight.FlightTime,
                 Departure = flight.Departure,
                 Destination = flight.Destination,
                 CurrentGate = flight.CurrentGate,

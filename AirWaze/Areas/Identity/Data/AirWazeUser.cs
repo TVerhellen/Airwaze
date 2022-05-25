@@ -11,6 +11,11 @@ public class AirWazeUser : IdentityUser
 {
     public string LastName { get; set; }
     public string FirstName { get; set; }
-
+    public string StreetName { get; set; }
+    public int HouseNumber { get; set; }
+    public string? Bus { get; set; }
+    public string Zipcode { get; set; }
+    public string City { get; set; }
+    public string Country { get; set; }
 }
 

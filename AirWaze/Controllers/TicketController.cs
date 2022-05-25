@@ -1,61 +1,79 @@
-﻿using AirWaze.Database.Design;
+﻿using AirWaze.Areas.Identity.Data;
+using AirWaze.Database.Design;
 using AirWaze.Entities;
 using AirWaze.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace AirWaze.Controllers
 {
+    [Authorize(Roles = "Admin, Customer")]
     public class TicketController : Controller
     {
+        private readonly UserManager<AirWazeUser> _userManager;
         private readonly IAirWazeDatabase database;
         private static List<Ticket> loadedTickets = new List<Ticket>();
+        static ApplicationUser myUser;
 
-        public TicketController(IAirWazeDatabase db)
+        public TicketController(IAirWazeDatabase db, UserManager<AirWazeUser> userManager)
         {
+            _userManager = userManager;
             database = db;
-            if(loadedTickets.Count == 0)
-            {
-                LoadTicketList(myUser);
-            }
+            
+            //myUser = HttpContext.User;
+            //myUser = database.GetUserByID(HttpContext.Session.GetString("user_id"));
             
         }
 
-
-        static User myUser = new User()
+        public async void GetUser()
         {
-            UserID = Guid.Parse("7B1A9A6C-658A-4391-8149-1184FAC528BE"),
-            //Name = "tverhel",
-            //Password = "password",
-            LastName = "Verhellen",
-            FirstName = "Tijs",
-            Email = "tijs@milehighclub.com",
-            StreetName = "Koperstraat",
-            HouseNumber = "894",
-            Bus = "4",
-            Zipcode = "1000",
-            City = "Brussel",
-            Country = "Belgium",
-            PhoneNumber = "0456789456",
-            //IsVerified = true
-        };
+            string myUserId = _userManager.GetUserId(User);
+            myUser = database.GetUserByID(myUserId);
+            if (loadedTickets.Count == 0)
+            {
+                LoadTicketList(myUser);
+            }
+        }
+
+        
+        //{
+        //    UserID = Guid.Parse("7B1A9A6C-658A-4391-8149-1184FAC528BE"),
+        //    //Name = "tverhel",
+        //    //Password = "password",
+        //    LastName = "Verhellen",
+        //    FirstName = "Tijs",
+        //    Email = "tijs@milehighclub.com",
+        //    StreetName = "Koperstraat",
+        //    HouseNumber = "894",
+        //    Bus = "4",
+        //    Zipcode = "1000",
+        //    City = "Brussel",
+        //    Country = "Belgium",
+        //    PhoneNumber = "0456789456",
+        //    //IsVerified = true
+        //};
 
         public static List<Flight> allFlights = new List<Flight>();
 
         public static List<TicketCreateViewModel> ticketsToHandle = new List<TicketCreateViewModel>();
 
+
         public IActionResult Index()
         {
+            GetUser();
             return View();
         }
 
         public IActionResult List(string option, string searchString)
         {
             ViewData["CurrentFilter"] = searchString;
-
+            GetUser();
             List<TicketListViewModel> list = new List<TicketListViewModel>();
             foreach (var ticket in loadedTickets)
             {
-                if (ticket.CurrentUser.UserID == myUser.UserID)
+                if (ticket.CurrentUser.Id == myUser.Id)
                 {
                     list.Add(new TicketListViewModel()
                     {
@@ -75,7 +93,7 @@ namespace AirWaze.Controllers
             {
                 if (option == "Destination")
                 {
-                    myTicket = myTicket.Where(s => s.CurrentFlight.Destination.Contains(searchString));
+                    myTicket = myTicket.Where(s => s.CurrentFlight.Destination.Name.Contains(searchString));
                 }
                 else if (option == "Date")
                 {
@@ -207,7 +225,7 @@ namespace AirWaze.Controllers
             Flight chosenFlight = database.GetFlightByNr(ID);
             string ticketnr = GenerateTicketNumber(chosenFlight);
             string seat = GenerateSeatNumber(chosenFlight);
-            toHandle.Price = toHandle.FirstClass ? (toHandle.ExtraLuggage ? chosenFlight.Distance * (decimal)1.2 + 75 : chosenFlight.Distance * (decimal)1.2) : (toHandle.ExtraLuggage ? chosenFlight.Distance + 75 : chosenFlight.Distance);
+            toHandle.Price = toHandle.FirstClass ? (toHandle.ExtraLuggage ? chosenFlight.Destination.Distance * (decimal)1.2 + 75 : chosenFlight.Destination.Distance * (decimal)1.2) : (toHandle.ExtraLuggage ? chosenFlight.Destination.Distance + 75 : chosenFlight.Destination.Distance);
 
             loadedTickets.Add(new Ticket()
             {
@@ -263,7 +281,7 @@ namespace AirWaze.Controllers
             return "15B";
         }
 
-        public void LoadTicketList(User user)
+        public void LoadTicketList(ApplicationUser user)
         {
             loadedTickets = database.GetTicketsByUser(user);
         }

@@ -5,12 +5,44 @@
     @model AirlineDeleteViewModel
     
 }
-<h1>@Model.Name @Model.Adress @Model.CompanyNumber</h1>
-<p>Wilt u deze Airliner verwijderen?</p>
 
-<a class="btn btn-primary" onclick="message()" asp-controller="Airline" asp-action="DeleteConfirm" asp-route-ID="@Model.AirlineID" style="margin-left:10px;">Ja</a>
-    <a class="btn btn-primary" asp-controller="Airline" asp-action="List" style="margin-left:10px;">Neen</a>
- 
+ <head>
+    <link rel="stylesheet" href="~/css/Detailplaneair.css" asp-append-version="true" />
+</head>
+
+<div class="peoples-visit dining-padding-top">           
+            <div class="single-visit left-img">
+                <div class="container">
+                    <div class="row justify-content-end">
+                        <div class="col-lg-8">
+                            <div class="visit-caption" style="background-color:#ce9244;">
+                                <span>Delete @Model.Name?</span>
+                                <ul>                                    
+                                    <li>
+                                        <div>
+                                        <img src="@Url.Content(@Model.Logo)" alt="" width="150" height="150" >
+                                        </div>
+                                    </li>
+                                    <br />
+                                    <li>@Model.Name</li>                                                                      
+                                    <li>@Model.CompanyNumber</li>
+                                    <li>@Model.Adress</li>
+                                    <li>@Model.Number</li>
+                                    <li>@Model.City</li>
+                                </ul>
+                                <br />
+                                <h1>Delete this Airliner?</h1>
+                                <br />
+                                 <a class="genric-btn info-border circle arrow" onclick="message()" asp-controller="Airline" asp-action="DeleteConfirm" asp-route-ID="@Model.AirlineID" style="margin-left:10px;">Ja<span class="lnr lnr-arrow-right"></span></a>
+                                 <a class="genric-btn danger-border circle arrow" asp-controller="Airline" asp-action="List" style="margin-left:10px;">Neen<span class="lnr lnr-arrow-right"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
     <script type="text/javascript">
         function message()
         {

@@ -8,18 +8,14 @@
 
 <form asp-controller="Flight" asp-action="Edit" asp-route-id="@Model.FlightNr" method="post">
     
+    <!--combobox destinations-->
      <div class="form-group">
        <label asp-for="Destination"></label>
        <input class="form-control" asp-for="Destination" value="@Model.Destination"/>
        <span asp-validation-for="Destination"></span>
     </div>
     <br />
-    <div class="form-group">
-        <label asp-for="FlightTime"></label>
-        <input class="form-control" asp-for="FlightTime" value="@Model.FlightTime"/>
-        <span asp-validation-for="FlightTime"></span>
-    </div>
-    <br />
+
     <!-- look up fill in datetimepicker with value -->
     <div class="form-group">
         <label asp-for="Departure"></label>
@@ -28,12 +24,7 @@
     </div>
      <br />
 
-    <div class="form-group">
-        <label asp-for="Distance"></label>
-        <input class="form-control" asp-for="Distance" value="@Model.Distance"/>
-        <span asp-validation-for="Distance"></span>
-    </div>
-     <br />
+
 
      <div class="form-group">
         <label asp-for="CurrentGate"></label>
