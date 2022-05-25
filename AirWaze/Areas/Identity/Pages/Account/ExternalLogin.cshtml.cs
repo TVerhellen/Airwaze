@@ -30,13 +30,17 @@ namespace AirWaze.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<AirWazeUser> _emailStore;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
+        private readonly Database.Design.IAirWazeDatabase _database;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public ExternalLoginModel(
             SignInManager<AirWazeUser> signInManager,
             UserManager<AirWazeUser> userManager,
             IUserStore<AirWazeUser> userStore,
             ILogger<ExternalLoginModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager,
+            Database.Design.IAirWazeDatabase db)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -44,6 +48,8 @@ namespace AirWaze.Areas.Identity.Pages.Account
             _emailStore = GetEmailStore();
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
+            _database = db;
         }
 
         /// <summary>
@@ -88,44 +94,68 @@ namespace AirWaze.Areas.Identity.Pages.Account
             [Display(Name = "Lastname")]
             public string LastName { get; set; }
 
-            //[MinLength(1, ErrorMessage = "Minimum 1 character!")]
-            //[MaxLength(50, ErrorMessage = "Maximum 50 characters!")]
-            //[Required(AllowEmptyStrings = false, ErrorMessage = "Streetname is required!")]
-            //public string StreetName { get; set; }
-
-            //[Range(0, int.MaxValue, ErrorMessage = "Housenumber error")]
-            //[Required(AllowEmptyStrings = false, ErrorMessage = "Housenumber is required!")]
-            //public string HouseNumber { get; set; }
-
-            //[Range(0, int.MaxValue, ErrorMessage = "Bus error")]
-            //public string? Bus { get; set; }
-
-            //[Required(ErrorMessage = "Zipcode is Required")]
-            //[DataType(DataType.PostalCode)]
-            //public string Zipcode { get; set; }
-
-            //[MinLength(1, ErrorMessage = "Minimum 1 character!")]
-            //[MaxLength(50, ErrorMessage = "Maximum 50 characters!")]
-            //[Required(AllowEmptyStrings = false, ErrorMessage = "City is required!")]
-            //public string City { get; set; }
-
-            //[MinLength(1, ErrorMessage = "Minimum 1 character!")]
-            //[MaxLength(50, ErrorMessage = "Maximum 50 characters!")]
-            //[Required(AllowEmptyStrings = false, ErrorMessage = "Country is required!")]
-            //public string Country { get; set; }
-
-            //[Required(ErrorMessage = "You must provide a phonenumber")]
-            //[Display(Name = "Phonenumber")]
-            //[DataType(DataType.PhoneNumber)]
-            //public string PhoneNumber { get; set; }
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
             [EmailAddress]
+            [Display(Name = "Email")]
             public string Email { get; set; }
+
+            /// <summary>
+            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+            ///     directly from your code. This API may change or be removed in future releases.
+            /// </summary>
+            [Required]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [DataType(DataType.Password)]
+            [Display(Name = "Password")]
+            public string Password { get; set; }
+
+            /// <summary>
+            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+            ///     directly from your code. This API may change or be removed in future releases.
+            /// </summary>
+            [DataType(DataType.Password)]
+            [Display(Name = "Confirm password")]
+            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            public string ConfirmPassword { get; set; }
+
+            [Required]
+            [StringLength(255, ErrorMessage = "The lastname field should have a maximum of 255 characters.")]
+            [Display(Name = "Street Name")]
+            public string StreetName { get; set; }
+
+            [Required]
+            [Display(Name = "House Number")]
+            public int HouseNumber { get; set; }
+
+            [StringLength(255, ErrorMessage = "The lastname field should have a maximum of 255 characters.")]
+            [Display(Name = "Bus")]
+            public string? Bus { get; set; }
+
+            [Required]
+            [StringLength(255, ErrorMessage = "The lastname field should have a maximum of 255 characters.")]
+            [Display(Name = "Zipcode")]
+            public string Zipcode { get; set; }
+
+            [Required]
+            [StringLength(255, ErrorMessage = "The lastname field should have a maximum of 255 characters.")]
+            [Display(Name = "City")]
+            public string City { get; set; }
+
+            [Required]
+            [StringLength(255, ErrorMessage = "The lastname field should have a maximum of 255 characters.")]
+            [Display(Name = "Country")]
+            public string Country { get; set; }
+
+            [Required]
+            [StringLength(255, ErrorMessage = "The lastname field should have a maximum of 255 characters.")]
+            [Display(Name = "Phone Number")]
+            public string PhoneNumber { get; set; }
         }
+    
         
         public IActionResult OnGet() => RedirectToPage("./Login");
 
@@ -189,15 +219,25 @@ namespace AirWaze.Areas.Identity.Pages.Account
                 ErrorMessage = "Error loading external login information during confirmation.";
                 return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
             }
+            ;
+            //if (ModelState.IsValid)
+            //{
+            var user = CreateUser();
 
-            if (ModelState.IsValid)
-            {
-                var user = CreateUser();
+            user.FirstName = Input.FirstName;
+            user.LastName = Input.LastName;
+            user.Email = Input.Email;
+            user.PhoneNumber = Input.PhoneNumber;
+            user.StreetName = Input.StreetName;
+            user.City = Input.City;
+            user.Country = Input.Country;
+            user.HouseNumber = Input.HouseNumber;
+            user.Bus = Input.Bus;
+            user.Zipcode = Input.Zipcode;
 
-                user.FirstName = Input.FirstName;
-                user.LastName = Input.LastName;
+            _database.AddUser(user);
 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+            await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
 
                 var result = await _userManager.CreateAsync(user);
@@ -207,8 +247,12 @@ namespace AirWaze.Areas.Identity.Pages.Account
                     if (result.Succeeded)
                     {
                         _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
-
-                        var userId = await _userManager.GetUserIdAsync(user);
+                        var defaultrole = _roleManager.FindByNameAsync("Customer").Result;
+                         if (defaultrole != null)
+                           {
+                            IdentityResult roleresult = await _userManager.AddToRoleAsync(user, defaultrole.Name);
+                             }
+                    var userId = await _userManager.GetUserIdAsync(user);
                         var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                         code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                         var callbackUrl = Url.Page(
@@ -234,7 +278,7 @@ namespace AirWaze.Areas.Identity.Pages.Account
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
-            }
+            //}
 
             ProviderDisplayName = info.ProviderDisplayName;
             ReturnUrl = returnUrl;

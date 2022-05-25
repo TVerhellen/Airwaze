@@ -40,6 +40,7 @@
   <ItemGroup>
     <Folder Include="Scripts\" />
     <Folder Include="wwwroot\js\limonte-sweetalert2\" />
+    <Folder Include="wwwroot\lib\bootstrap\citylisting-master\Doc\css\" />
   </ItemGroup>
 
   <ItemGroup>

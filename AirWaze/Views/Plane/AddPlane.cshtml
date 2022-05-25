@@ -5,6 +5,10 @@
 }
 @model PlaneCreateViewModel
 
+<head>
+    <link rel="stylesheet" href="~/css/planecreate.css">
+</head>
+
 <form asp-controller="Plane" asp-action="Create" method="post">
     <div class="form-group" >
         <label asp-for="Type"></label>
