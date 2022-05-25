@@ -4,6 +4,55 @@
 @{
     ViewData["Title"] = "Log in";
 }
+<link rel="stylesheet" href="~/css/login.css">   
+
+<main class="login-page">
+    @*<div class="card login-card">
+        <div class="card-body">
+            <h3 class="text-center text-white font-weight-light mb-4">LOG IN</h3>
+            <form action="/">
+                <div class="form-group">
+                    <input type="text" placeholder="First name" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="Password" class="form-control">
+                </div>
+                <input type="submit" value="Login" class="btn btn-danger btn-block mb-3">
+            </form>
+            <div class="d-flex justify-content-between mt-4">
+                <p class="text-white text-center font-weight-light">Login with</p>
+                <p class="text-center mb-0">
+                    @{
+                        if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                        {
+                            <div>
+                                <p>
+                                  There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
+                                  about setting up this ASP.NET application to support logging in via external services</a>.
+                            </p>
+                            </div>
+                        }
+                        else
+                        {
+                            <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                                <div>
+                                    <p>
+                                        @foreach (var provider in Model.ExternalLogins)
+                                        {
+                                            <button type="submit" class="social-login-btn icon-fb" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account"><i class="fa fa-facebook"></i></button>
+                                        }
+                                    </p>
+                                </div>
+                            </form>
+                        }
+                    }               
+                </p>
+            </div>
+        </div>
+    </div>*@
+
+
+
 
 <h1>@ViewData["Title"]</h1>
 <div class="row">
@@ -32,7 +81,7 @@
                     </div>
                 </div>
                 <div>
-                    <button style="background-color: lightblue" id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
                 </div>
                 <div>
                     <p>
@@ -69,7 +118,7 @@
                             <p>
                                 @foreach (var provider in Model.ExternalLogins)
                                 {
-                                    <button style="background-color: lightblue" type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account"><img src="~/Images/googleLogo.png" height="30px" width="30px"/>&nbsp @provider.DisplayName</button>
+                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account"><img src="~/Images/googleLogo.png" height="30px" width="30px"/>&nbsp @provider.DisplayName</button>
                                 }
                             </p>
                         </div>
@@ -79,6 +128,7 @@
         </section>
     </div>
 </div>
+</main>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
