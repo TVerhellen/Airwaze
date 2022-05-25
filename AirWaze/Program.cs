@@ -79,7 +79,7 @@ app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Airline}/{action=List}/{id?}");
+    pattern: "{controller=Plane}/{action=List}/{id?}");
 
 app.MapRazorPages();
 app.MapBlazorHub();
