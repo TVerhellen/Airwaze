@@ -306,5 +306,17 @@ namespace AirWaze.Database
         {
             throw new NotImplementedException();
         }
+
+        public void UpdateGate(Gate gate)
+        {
+            _dbContext.Gates.Update(gate);
+            _dbContext.SaveChanges();
+        }
+
+        public void UpdateRunway(Runway runway)
+        {
+            _dbContext.Runways.Update(runway);
+            _dbContext.SaveChanges();
+        }
     } 
 }

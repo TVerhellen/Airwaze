@@ -80,7 +80,7 @@ app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Plane}/{action=List}/{id?}");
 
 app.MapRazorPages();
 app.MapBlazorHub();

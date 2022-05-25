@@ -138,7 +138,8 @@ namespace AirWaze.Controllers
                 //ListInvoices = airlineViewModel.ListInvoices,
                 Logo = thisAirline.Logo,
             };
-            
+            List<Plane> planeEntities = _myDatabase.GetPlanes();
+            airlineDetailViewModel.CurrentPlanes = planeEntities.FindAll(x => x.CurrentAirline.AirlineID == ID);
             return View(airlineDetailViewModel);
            
         }
@@ -221,7 +222,8 @@ namespace AirWaze.Controllers
                 CompanyNumber = airline.CompanyNumber,
                 Adress = airline.Adress,
                 Number = airline.Number,
-                City = airline.City
+                City = airline.City,
+                Logo = airline.Logo,
             };
             return View(airlineDeleteViewModel);
         }

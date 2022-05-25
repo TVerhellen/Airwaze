@@ -1,0 +1,21 @@
+﻿body {
+    margin-bottom: 60px;
+    height: none;
+    width: none;
+    background-color: #664c2a;
+    background-size: cover;
+}
+
+.peoples-visit .single-visit.left-img::before {
+    position: absolute;
+    left: 0;
+    content: "";
+    top: 0;
+    bottom: 0;
+    background-image: url('../Images/DetailAirline.jpg');
+    width: 50%;
+    border-radius: 0 5px 0 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+

@@ -29,6 +29,11 @@ namespace AirWaze.Entities
 
         public string AccountNumber { get; set; }
       
-        public string? Logo { get; set; }   
+        public string? Logo { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Name} -- {NameTag} -- {Email}" ; 
+        }
     }
 }

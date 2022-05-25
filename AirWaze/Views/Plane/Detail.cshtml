@@ -2,17 +2,88 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    string path = @Model.SeatDiagramPic.Remove(0,1);
+    path = path.Insert(0, "..");
 }
 @model PlaneDetailViewModel
 
- <h1>Detail Pagina</h1>
 
- <p>@Model.FuelUsagePerKM @Model.Type @Model.CurrentAirline.Email @Model.PlaneNr @Model.Manufacturer</p>
- <p>First Class = @Model.FirstClassCapacity</p>
- <p>COnstr Year = @Model.ConstructionYear</p>
-  <div style="padding-top:20px;">
-    <img src=@Url.Content(@Model.SeatDiagramPic) alt="Sample Image" width="800" height="400"/>
-</div>
+ <head>
+    <link rel="stylesheet" href="~/css/Detailplane.css" asp-append-version="true" />            
+</head>
 
-
- <a class="btn btn-primary" asp-action="Index" asp-controller="Plane">Back</a>
+<div class="peoples-visit dining-padding-top">           
+            <div class="single-visit left-img">               
+                <div class="container">
+                    <div class="row justify-content-end">
+                        <div class="col-lg-8">
+                            <div class="visit-caption" style="background-color:#36b1ad;">
+                                <span>Details for @Model.PlaneNr</span>
+                                <form asp-controller="Plane" asp-action="Create" method="post">
+                                <div class="form-group" >
+                                    <label asp-for="Type"></label>
+                                    <input class ="form-control" asp-for="Type" readonly="readonly"/>
+                                    <span class="text-danger" asp-validation-for="Type"></span>
+                                </div>
+    
+                                <div class="form-group">
+                                    <label asp-for="Manufacturer" ></label>
+                                    <input class ="form-control" asp-for="Manufacturer" readonly="readonly"/>
+                                    <span class="text-danger" asp-validation-for="Manufacturer"></span>
+                                </div>                               
+                                <div class="form-group">
+                                    <label asp-for="PassengerCapacity"></label>
+                                    <input class ="form-control" asp-for="PassengerCapacity" readonly="readonly"/>
+                                    <span class="text-danger" asp-validation-for="PassengerCapacity"></span>
+                                </div> 
+                                <div class="form-group">
+                                    <label asp-for="FirstClassCapacity"></label>
+                                    <input class ="form-control" asp-for="FirstClassCapacity" readonly="readonly" />
+                                    <span class="text-danger" asp-validation-for="FirstClassCapacity"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="FuelCapacity">Fuel Capacity in Liters</label>
+                                    <input class ="form-control" asp-for="FuelCapacity" readonly="readonly"/>
+                                    <span class="text-danger" asp-validation-for="FuelCapacity"></span>
+                                </div>
+    
+                                <div class="form-group">
+                                    <label asp-for="LoadCapacity">Load Capacity in Kg</label>
+                                    <input class ="form-control" asp-for="LoadCapacity" readonly="readonly"/>
+                                    <span class="text-danger" asp-validation-for="LoadCapacity"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="FuelUsagePerKM">Fuel Usage Liters/KM</label>
+                                    <input class ="form-control" asp-for="FuelUsagePerKM" readonly="readonly"/>
+                                    <span class="text-danger" asp-validation-for="FuelUsagePerKM"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="FlightRegion"></label>
+                                    <input class ="form-control" asp-for="FlightRegion" readonly="readonly"/>
+                                    <span class="text-danger" asp-validation-for="FlightRegion"></span>
+                                </div>
+                                 <div class="form-group">
+                                    <label asp-for="ConstructionYear"></label>
+                                    <input class ="form-control" asp-for="ConstructionYear"  readonly="readonly"/>
+                                    <span class="text-danger" asp-validation-for="ConstructionYear"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="AirMiles">Km in the Air for this Airport</label>
+                                    <input class ="form-control" asp-for="AirMiles"  readonly="readonly"/>
+                                    <span class="text-danger" asp-validation-for="AirMiles"></span>
+                                </div>
+                               
+                                   <div class="form-group">
+                                    <input asp-for="IsAvailable"  readonly="readonly"/>
+                                    <label asp-for="IsAvailable">Currently Available?</label>  
+                                </div>     
+                                <a class="genric-btn info-border circle arrow" asp-action="Index" asp-controller="Airline">Back</a>
+                            </form>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
