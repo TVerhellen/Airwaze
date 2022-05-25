@@ -32,7 +32,7 @@
     <link rel="stylesheet" href="~/css/mainbis.css">
     <link rel="stylesheet" href="~/css/responsive.css">
     <link rel="stylesheet" href="~/css/style.css">
-    <link rel="stylesheet" href="~/css/Toinon.css">
+    <link rel="stylesheet" href="~/css/navbar.css">
 
    
 </head>
@@ -76,7 +76,7 @@
                                             @if (User.IsInRole("Admin"))
                                             {
                                                 <li> <a  asp-area="" asp-controller="Flight" asp-action="Index">Flights</a></li>
-                                                <li><a asp-area="" asp-controller="Ticket" asp-action="Create">Create Ticket</a></li>
+                                                <li><a asp-area="" asp-controller="Ticket" asp-action="Create">Book</a></li>
                                             }
                                             @if (User.IsInRole("Customer") || !User.Identity.IsAuthenticated)
                                             {
@@ -132,8 +132,10 @@
                                 <div class="footer-tittle">
                                     <h4>About us</h4>
                                     <ul>
-                                        We are an airport where you can travel to any destination you want to go. 
-                                        If you are an airline you can also lent your airplanes to us. 
+                                        You can travel to any destination at the Airwaze airport.
+                                        <br/>
+                                        <br/>
+                                        If you are an airline you can lent your airplanes to us. 
                                     </ul>
                                 </div>
                             </div>
@@ -143,9 +145,9 @@
                                 <div class="footer-tittle">
                                     <h4>Address</h4>
                                     <ul>
-                                        Airwaze
-                                        <a href="https://g.page/luchthaven-antwerpen-anr?share">Luchthavenlei,
-                                        2100 Antwerpen,</a>
+                                        Airwaze<br/>
+                                        @*<a href="https://g.page/luchthaven-antwerpen-anr?share">*@Luchthavenlei,<br/>
+                                        2100 Antwerpen,@*</a>*@<br/>
                                         Belgium
                                     </ul>
                                 </div>

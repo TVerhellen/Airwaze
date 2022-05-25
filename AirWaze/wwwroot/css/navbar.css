@@ -39,7 +39,7 @@
     z-index: 1
 }
 
-    .hero-overly::before {
+.hero-overly::before {
         position: absolute;
         content: "";
         background-color: rgba(0,1,2,0.4);        
@@ -47,9 +47,3 @@
         background-repeat: no-repeat
     }
 
-a {
-    color: #007bff;
-    text-decoration: none;
-    background-color: transparent;
-    -webkit-text-decoration-skip: objects
-}
