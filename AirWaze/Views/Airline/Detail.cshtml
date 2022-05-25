@@ -67,6 +67,7 @@
                                     <span class="text-danger" asp-validation-for="Email"></span>
 								</div>
 								</li>
+									
 								<li>
                                 <div class="mt-10">
 									<input class="single-input" asp-for="PhoneNumber" readonly="readonly" placeholder="PhoneNumber"
@@ -81,8 +82,33 @@
                                     <span class="text-danger" asp-validation-for="AccountNumber"></span>
 								</div>
 								</li>
+								<div class="mt-10">
+									@if (Model.CurrentPlanes != null)
+									{
+										<div class="progress-table-wrap">
+															<div class="progress-table">
+																<div class="table-head">																	
+																	<div class="visit" style="padding-left:20px;">Number</div>
+																	<div class="visit" style="padding-left:80px;">Type</div>
+																	<div class="visit" style="padding-left:60px;">Manfufacturer</div>																	
+																	<div class="percentage"></div>																	
+																</div>
+																 @foreach (var plane in Model.CurrentPlanes)
+																{
+																	<div class="table-row">
+																		<div class="serial">@plane.PlaneNr</div>																																				
+																		<div class="visit" style="padding-left:20px;">@plane.Manufacturer</div>
+																		<div class="visit" style="padding-left:20px;">@plane.Type</div>																		
+																		<div class="visit" style="padding-left:20px"><a class="genric-btn info circle arrow" asp-action="Detail" asp-controller="Plane" asp-route-ID=@plane.PlaneNr>Detail<span class="lnr lnr-arrow-right"></span></a></div>																									
+																	</div>						
+																}
+															  </div>
+										</div>
+									}
+								</div>
 								</ul>
-								 <a class="btn btn-primary" asp-action="Index" asp-controller="Airline">Back</a>
+								<br />
+								 <a class="genric-btn info-border circle arrow" asp-action="Index" asp-controller="Airline">Back</a>
 							</form>
                                 
                             </div>
