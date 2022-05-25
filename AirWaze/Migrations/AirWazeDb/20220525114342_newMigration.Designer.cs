@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AirWaze.Migrations.AirWazeDb
 {
     [DbContext(typeof(AirWazeDbContext))]
-    [Migration("20220525092035_newmigration")]
-    partial class newmigration
+    [Migration("20220525114342_newMigration")]
+    partial class newMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -82,17 +82,11 @@ namespace AirWaze.Migrations.AirWazeDb
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
                     b.Property<string>("Bus")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("City")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Country")
@@ -101,9 +95,6 @@ namespace AirWaze.Migrations.AirWazeDb
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -116,36 +107,12 @@ namespace AirWaze.Migrations.AirWazeDb
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StreetName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
 
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
@@ -167,14 +134,19 @@ namespace AirWaze.Migrations.AirWazeDb
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DestinationID"), 1L, 1);
 
-                    b.Property<int>("Distance")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Distance")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("Name")
-                        .HasColumnType("int");
+                    b.Property<TimeSpan>("FlightTime")
+                        .HasColumnType("time");
 
-                    b.Property<bool>("Region")
-                        .HasColumnType("bit");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Region")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("DestinationID");
 
@@ -192,6 +164,9 @@ namespace AirWaze.Migrations.AirWazeDb
                     b.Property<int>("CurrentGateGateID")
                         .HasColumnType("int");
 
+                    b.Property<bool>("CurrentPlaneConfirmed")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("CurrentPlanePlaneID")
                         .HasColumnType("int");
 
@@ -201,19 +176,15 @@ namespace AirWaze.Migrations.AirWazeDb
                     b.Property<DateTime>("Departure")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Destination")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Distance")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("DestinationID")
+                        .HasColumnType("int");
 
                     b.Property<string>("FlightNr")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<TimeSpan>("FlightTime")
-                        .HasColumnType("time");
+                    b.Property<string>("SeatDiagram")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -226,6 +197,8 @@ namespace AirWaze.Migrations.AirWazeDb
 
                     b.HasIndex("CurrentRunwayRunwayID");
 
+                    b.HasIndex("DestinationID");
+
                     b.ToTable("Flights");
                 });
 
@@ -236,6 +209,12 @@ namespace AirWaze.Migrations.AirWazeDb
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GateID"), 1L, 1);
+
+                    b.Property<double>("CoordsLat")
+                        .HasColumnType("float");
+
+                    b.Property<double>("CoordsLon")
+                        .HasColumnType("float");
 
                     b.Property<int>("Number")
                         .HasColumnType("int");
@@ -397,11 +376,19 @@ namespace AirWaze.Migrations.AirWazeDb
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("AirWaze.Entities.Destination", "Destination")
+                        .WithMany()
+                        .HasForeignKey("DestinationID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("CurrentGate");
 
                     b.Navigation("CurrentPlane");
 
                     b.Navigation("CurrentRunway");
+
+                    b.Navigation("Destination");
                 });
 
             modelBuilder.Entity("AirWaze.Entities.Plane", b =>

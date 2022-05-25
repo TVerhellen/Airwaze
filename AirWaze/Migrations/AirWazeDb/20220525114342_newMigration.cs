@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AirWaze.Migrations.AirWazeDb
 {
-    public partial class newmigration : Migration
+    public partial class newMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -37,9 +37,10 @@ namespace AirWaze.Migrations.AirWazeDb
                 {
                     DestinationID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<int>(type: "int", nullable: false),
-                    Distance = table.Column<int>(type: "int", nullable: false),
-                    Region = table.Column<bool>(type: "bit", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Distance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Region = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FlightTime = table.Column<TimeSpan>(type: "time", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -52,7 +53,9 @@ namespace AirWaze.Migrations.AirWazeDb
                 {
                     GateID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Number = table.Column<int>(type: "int", nullable: false)
+                    Number = table.Column<int>(type: "int", nullable: false),
+                    CoordsLat = table.Column<double>(type: "float", nullable: false),
+                    CoordsLon = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -86,19 +89,8 @@ namespace AirWaze.Migrations.AirWazeDb
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -147,17 +139,23 @@ namespace AirWaze.Migrations.AirWazeDb
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FlightNr = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CurrentPlanePlaneID = table.Column<int>(type: "int", nullable: true),
-                    FlightTime = table.Column<TimeSpan>(type: "time", nullable: false),
+                    CurrentPlaneConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     Departure = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Distance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Destination = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DestinationID = table.Column<int>(type: "int", nullable: false),
                     CurrentGateGateID = table.Column<int>(type: "int", nullable: false),
                     CurrentRunwayRunwayID = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false)
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    SeatDiagram = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Flights", x => x.FlightID);
+                    table.ForeignKey(
+                        name: "FK_Flights_Destinations_DestinationID",
+                        column: x => x.DestinationID,
+                        principalTable: "Destinations",
+                        principalColumn: "DestinationID",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Flights_Gates_CurrentGateGateID",
                         column: x => x.CurrentGateGateID,
@@ -226,6 +224,11 @@ namespace AirWaze.Migrations.AirWazeDb
                 column: "CurrentRunwayRunwayID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Flights_DestinationID",
+                table: "Flights",
+                column: "DestinationID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Planes_CurrentAirlineAirlineID",
                 table: "Planes",
                 column: "CurrentAirlineAirlineID");
@@ -244,9 +247,6 @@ namespace AirWaze.Migrations.AirWazeDb
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Destinations");
-
-            migrationBuilder.DropTable(
                 name: "Tickets");
 
             migrationBuilder.DropTable(
@@ -254,6 +254,9 @@ namespace AirWaze.Migrations.AirWazeDb
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Destinations");
 
             migrationBuilder.DropTable(
                 name: "Gates");

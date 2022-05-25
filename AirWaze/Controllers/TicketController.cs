@@ -93,7 +93,7 @@ namespace AirWaze.Controllers
             {
                 if (option == "Destination")
                 {
-                    myTicket = myTicket.Where(s => s.CurrentFlight.Destination.Contains(searchString));
+                    myTicket = myTicket.Where(s => s.CurrentFlight.Destination.Name.Contains(searchString));
                 }
                 else if (option == "Date")
                 {
@@ -225,7 +225,7 @@ namespace AirWaze.Controllers
             Flight chosenFlight = database.GetFlightByNr(ID);
             string ticketnr = GenerateTicketNumber(chosenFlight);
             string seat = GenerateSeatNumber(chosenFlight);
-            toHandle.Price = toHandle.FirstClass ? (toHandle.ExtraLuggage ? chosenFlight.Distance * (decimal)1.2 + 75 : chosenFlight.Distance * (decimal)1.2) : (toHandle.ExtraLuggage ? chosenFlight.Distance + 75 : chosenFlight.Distance);
+            toHandle.Price = toHandle.FirstClass ? (toHandle.ExtraLuggage ? chosenFlight.Destination.Distance * (decimal)1.2 + 75 : chosenFlight.Destination.Distance * (decimal)1.2) : (toHandle.ExtraLuggage ? chosenFlight.Destination.Distance + 75 : chosenFlight.Destination.Distance);
 
             loadedTickets.Add(new Ticket()
             {

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AirWaze.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220525092010_newmigration")]
-    partial class newmigration
+    [Migration("20220525114310_newMigration")]
+    partial class newMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
