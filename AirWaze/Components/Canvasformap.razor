@@ -16,216 +16,192 @@
 @inject ILogger<Canvasformap> Logger
 @inject IJSRuntime jsRuntime
 
-<div class="peoples-visit dining-padding-top">
-            <!-- Single Left img -->
-            <div class="single-visit left-img">
-                <div class="container">
-                    <div class="row justify-content-end">
-                        <div class="col-lg-8">
-                            <div class="visit-caption">
-                                <span>We are offering for you</span>
-                                <h3>Every Month, Millions of People 
-                                    visit this site We’ve Built.</h3>
-                                <p>Unlike what its name implies, dry cleaning is not actually a 'dry' process. Clothes are soaked in a different solvent.</p>
-                                <!--Single Visit categories -->
-                                <div class="visit-categories mb-40">
-                                    <div class="visit-location">
-                                        <span class="flaticon-travel"></span>
-                                    </div>
-                                    <div class="visit-cap">
-                                        <h4>Great places in the world</h4>
-                                        <p>Unlike what its name implies, dry cleaning is not actu  process. Clothes soaked differentent.
-                                        </p>
-                                    </div>
-                                </div>
-                                <!--Single Visit categories -->
-                                <div class="visit-categories">
-                                    <div class="visit-location">
-                                        <span class="flaticon-work"></span>
-                                    </div>
-                                    <div class="visit-cap">
-                                        <h4>Biggest category listing</h4>
-                                        <p>Unlike what its name implies, dry cleaning is not actu  process. Clothes soaked differentent.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<head>
+   
+    <style>
+        
+        body
+
+        {
+        margin-top: 20px;
+        margin-bottom: 60px;
+        height: none;
+        width: none;
+        background-image: url('../Images/gps.jpg');
+        background-size: cover;
+        }
+
+        
+
+    </style>
+</head>
 
 
 
-<h1>Klik op areas voor mee info</h1>
-<section class="page-section">
+<h1>Click area for more info!</h1>
+                                      
+                 
+             <section class="blog_area section-padding">
             <div class="container">
-                <div class="product-item">
-                    @if (selectedService != 0)
-            {
-                <div class="product-item-title d-flex" style="width:200px;margin-left:900px;">
-                    <div class="bg-faded p-5 d-flex ms-auto rounded">
-                        @switch (@selectedService)
-                        {
-                            case 1:
-                                <span class="section-heading-upper">Gate 1 - 2</span>
-                                <div style="margin-bottom:10px">
-                                    <img src="Images/gates.jpg" alt="Sample Image" width="100" height="50"/>
-                                </div>
-                                <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">@distancealdi.ToString("0,00") m distance from your current position, bearing @bearingaldi.ToString("0,00")</span>
-                                </h2>
-                                break;
-                            case 2:
-                                <span class="section-heading-upper">Gate 3 - 4</span>
-                                <div style="margin-top:10px;margin-bottom:10px">
-                                    <img src="Images/gates.jpg" alt="Sample Image" width="100" height="50"/>
-                                </div>
-                                <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">@distancealdi.ToString("0,00") m distance from your current position, bearing @bearingaldi.ToString("0,00")</span>
-                                </h2>
-                                break;
-                            case 3:
-                                <span class="section-heading-upper">Gate 5 - 6</span>
-                                <div style="margin-top:10px;margin-bottom:10px">
-                                    <img src="Images/gates.jpg" alt="Sample Image" width="100" height="50"/>
-                                </div>
-                                <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">@distancealdi.ToString("0,00") m distance from your current position, bearing @bearingaldi.ToString("0,00")</span>
-                                </h2>
-                                break;
-                            case 4:
-                                <span class="section-heading-upper">Gate 7 - 8 - 9</span>
-                                <div style="margin-top:10px;margin-bottom:10px">
-                                    <img src="Images/gates.jpg" alt="Sample Image" width="100" height="50"/>
-                                </div>
-                                <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">@distancealdi.ToString("0,00") m distance from your current position, bearing @bearingaldi.ToString("0,00")</span>
-                                </h2>
-                                break;
-                            case 5:
-                                <span class="section-heading-upper">Gate  - 20</span>
-                                <div style="margin-gatesop:10px;margin-bottom:10px">
-                                    <img src="Images/gates.jpg" alt="Sample Image" width="100" height="50"/>
-                                </div>
-                                <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">@distancealdi.ToString("0,00") m distance from your current position, bearing @bearingaldi.ToString("0,00")</span>
-                                </h2>
-                                break;
-                            case 6:
-                                <span class="section-heading-upper">BurgerKing</span>
-                                <div style="margin-top:10px;margin-bottom:10px">
-                                    <img src="Images/burgerking.jpg" alt="Sample Image" width="100" height="50"/>
-                                </div>
-                                <h2 class="section-heading mb-0">                                   
-                                   <span class="section-heading-lower">@distancepitta.ToString("0,00") m distance from your current position, bearing @bearingpitta.ToString("0,00")</span>
-                                </h2>
-                                break;
-                            case 7:
-                                <span class="section-heading-upper">TaxFreeShop</span>
-                                <div style="margin-top:10px;margin-bottom:10px">
-                                    <img src="Images/Dutyfree.jpg" alt="Sample Image" width="100" height="50"/>
-                                </div>
-                                <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">@distancefrietkot.ToString("0,00") m distance from your current position, bearing @bearingfrietkot.ToString("0,00")</span>
-                                </h2>
-                                break;
-                            default:
-                                break;
-                        }                            
-                    </div>
-                </div>
-            }
-            <div class="haraldcontainer" style="margin-left:200px;">
+                <div class="row">
+                    <div class="col-lg-8 mb-5 mb-lg-0">
+                        <div class="blog_left_sidebar">
+            
                     <div @onmousedown="ReportPointerLocation">
                         <BECanvas Width="600" Height="800" @ref="_canvasReference" >   
                         </BECanvas>
                     </div>
                 </div>
-                @if (selectedService != 0)
-            {
-                <div class="product-item-description d-flex me-auto">
-                    <div class="bg-faded p-5 rounded">
-                        @switch (@selectedService)
-                        {
-                            case 1:
-                                <span class="section-heading-upper">Gate 1 - 4</span>
-                                <div style="margin-top:10px;margin-bottom:10px">
-                                    <img src="Images/gates.jpg" alt="Sample Image" width="100" height="50"/>
-                                </div>
-                                <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">@distancealdi.ToString("0,00") m distance from your current position</span>
-                                </h2>
-                                break;
-                            case 2:
-                                <span class="section-heading-upper">Gate 5 - 8</span>
-                                <div style="margin-top:10px;margin-bottom:10px">
-                                    <img src="Images/gates.jpg" alt="Sample Image" width="100" height="50"/>
-                                </div>
-                                <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">@distancealdi.ToString("0,00") m distance from your current position</span>
-                                </h2>
-                                break;
-                            case 3:
-                                <span class="section-heading-upper">Gate 9 - 12</span>
-                                <div style="margin-top:10px;margin-bottom:10px">
-                                    <img src="Images/gates.jpg" alt="Sample Image" width="100" height="50"/>
-                                </div>
-                                <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">@distancealdi.ToString("0,00") m distance from your current position</span>
-                                </h2>
-                                break;
-                            case 4:
-                                <span class="section-heading-upper">Gate 13 - 16</span>
-                                <div style="margin-top:10px;margin-bottom:10px">
-                                    <img src="Images/gates.jpg" alt="Sample Image" width="100" height="50"/>
-                                </div>
-                                <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">@distancealdi.ToString("0,00") m distance from your current position</span>
-                                </h2>
-                                break;
-                            case 5:
-                                <span class="section-heading-upper">Gate 17 - 20</span>
-                                <div style="margin-top:10px;margin-bottom:10px">
-                                    <img src="Images/gates.jpg" alt="Sample Image" width="100" height="50"/>
-                                </div>
-                                <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">@distancealdi.ToString("0,00") m distance from your current position></span>
-                                </h2>
-                                break;
-                            case 6:
-                                <span class="section-heading-upper">BurgerKing</span>
-                                <div style="margin-top:10px;margin-bottom:10px">
-                                    <img src="Images/burgerking.jpg" alt="Sample Image" width="100" height="50"/>
-                                </div>
-                                <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">@distancepitta.ToString("0,00") m distance from your current position</span>
-                                </h2>
-                                break;
-                            case 7:
-                                <span class="section-heading-upper">TaxFreeShop</span>
-                                <div style="margin-top:10px;margin-bottom:10px">
-                                    <img src="Images/Dutyfree.jpg" alt="Sample Image" width="100" height="50"/>
-                                </div>
-                                <h2 class="section-heading mb-0">                                   
-                                    <span class="section-heading-lower">@distancefrietkot.ToString("0,00") m distance from your current position</span>
-                                </h2>
-                                break;
-                            default:
-                                break;
-                        }              
-                    </div>
                 </div>
-            }
-        </div>
+               <div class="col-lg-4">
+                        <div class="blog_right_sidebar">
+                             <div>
+                                         <a href="/" @onclick="KillEvents"><i class='fas fa-home' style='font-size:84px;color:red'></i></a>
+                                        </div>
+                             @switch (@selectedService)
+                                {
+                                    case 1:  
+                                        <div style="padding-top:60px;">
+                                         <h3 class="widget_title">Gates 3 & 4</h3>
+                                         <p>Gates number 3 & 4 are located here</p>
+                                         <p>Luxury Seating Acomodation and Shop Delivery available on site</p>
+                                         <br />
+                                          <h3>Gps Details:</h3>                                              
+                                          <p>@distancegates34.ToString("0,00") m distance from your current position, bearing @bearinggates34.ToString("0,00")</p>
+                                        <br>
+                                        <div class="media-body">
+                                                <a href="blog_details.html">Insert Link </a>
+                                                   
+                                            </div>
+                                        <br>
+                                        <div class="media post_item">                                
+                                            <img src="Images/gates.jpg" alt="Sample Image" height="360" width="360"/>                                                                                       
+                                        </div>   
+                                        </div>
+                                        
+                                     break;                                   
+                                    case 2:
+                                        <div style="padding-top:60px;">
+                                         <h3 class="widget_title">Gates 1 & 2</h3>
+                                         <p>Gates number 1 & 2 are located here</p>
+                                         <p>Luxury Seating Acomodation and Shop Delivery available on site</p>
+                                         <br />
+                                          <h3>Gps Details:</h3>                                              
+                                          <p>@distancegates12.ToString("0,00") m distance from your current position, bearing @bearinggates12.ToString("0,00")</p>
+                                        <br>
+                                        <div class="media-body">
+                                                <a href="blog_details.html">Insert Link </a>
+                                                   
+                                            </div>
+                                        <br>
+                                        <div class="media post_item">                                
+                                            <img src="Images/gates.jpg" alt="Sample Image" height="360" width="360"/>                                                                                       
+                                        </div>   
+                                        </div>
+                                        break;
+                                    case 3:
+                                        <div style="padding-top:60px;">
+                                         <h3 class="widget_title">Gates 5 & 6</h3>
+                                         <p>Gates number 5 & 6 are located here</p>
+                                         <p>Luxury Seating Acomodation and Shop Delivery available on site</p>
+                                         <br />
+                                          <h3>Gps Details:</h3>                                              
+                                          <p>@distancegates56.ToString("0,00") m distance from your current position, bearing @bearinggates56.ToString("0,00")</p>
+                                        <br>
+                                        <div class="media-body">
+                                                <a href="blog_details.html">Insert Link </a>
+                                                   
+                                            </div>
+                                        <br>
+                                        <div class="media post_item">                                
+                                            <img src="Images/gates.jpg" alt="Sample Image" height="360" width="360"/>                                                                                       
+                                        </div>   
+                                        </div>
+                                        break;
+                                    case 4:
+                                        <div style="padding-top:60px;">
+                                         <h3 class="widget_title">Gates 7, 8 & 9</h3>
+                                         <p>Gates number 7, 8 & 9 are located here</p>
+                                         <p>Luxury Seating Acomodation and Shop Delivery available on site</p>
+                                         <br />
+                                          <h3>Gps Details:</h3>                                              
+                                          <p>@distancegates789.ToString("0,00") m distance from your current position, bearing @bearinggates789.ToString("0,00")</p>
+                                        <br>
+                                        <div class="media-body">
+                                                <a href="blog_details.html">Insert Link </a>
+                                                   
+                                            </div>
+                                        <br>
+                                        <div class="media post_item">                                
+                                            <img src="Images/gates.jpg" alt="Sample Image" height="360" width="360"/>                                                                                       
+                                        </div>   
+                                        </div>
+                                        break;
+                                    case 5:
+                                        <div style="padding-top:60px;">
+                                         <h3 class="widget_title">Gates 1000</h3>
+                                         <p>Gates number 7, 8 & 9 are located here</p>
+                                         <p>Luxury Seating Acomodation and Shop Delivery available on site</p>
+                                         <br />
+                                          <h3>Gps Details:</h3>                                              
+                                          <p>@distancegates789.ToString("0,00") m distance from your current position, bearing @bearinggates789.ToString("0,00")</p>
+                                        <br>
+                                        <div class="media-body">
+                                                <a href="blog_details.html">Insert Link </a>
+                                                   
+                                            </div>
+                                        <br>
+                                        <div class="media post_item">                                
+                                            <img src="Images/gates.jpg" alt="Sample Image" height="360" width="360"/>                                                                                       
+                                        </div>   
+                                        </div>
+                                        break;
+                                    case 6:
+                                        <div style="padding-top:60px;">
+                                         <h3 class="widget_title">BurgerKing</h3>
+                                         <p>Eat in/ take out / delivery at gates</p>
+                                         <p>Whoppers - SoftDrinks - Ice</p>
+                                         <br />
+                                          <h3>Gps Details:</h3>                                              
+                                          <p>@distancegates789.ToString("0,00") m distance from your current position, bearing @bearinggates789.ToString("0,00")</p>
+                                        <br>
+                                        <div class="media-body">
+                                                <a href="blog_details.html">Insert Link </a>                                                 
+                                            </div>
+                                        <br>
+                                        <div class="media post_item">                                
+                                            <img src="Images/burgerking.jpg" alt="Sample Image" height="360" width="360"/>                                                                                       
+                                        </div>   
+                                        </div>
+                                         break;                                       
+                                    case 7:
+                                        <div style="padding-top:60px;">
+                                         <h3 class="widget_title">TaxFreeShop</h3>
+                                         <p>Buy Shit</p>
+                                         <p>Perfume - Tobacco - Alcohol</p>
+                                         <br />
+                                          <h3>Gps Details:</h3>                                              
+                                          <p>@distancegates789.ToString("0,00") m distance from your current position, bearing @bearinggates789.ToString("0,00")</p>
+                                        <br>
+                                        <div class="media-body">
+                                                <a href="blog_details.html">Insert Link </a>                                                 
+                                            </div>
+                                        <br>
+                                        <div class="media post_item">                                
+                                            <img src="Images/Dutyfree.jpg" alt="Sample Image" height="360" width="360"/>                                                                                       
+                                        </div>   
+                                        </div>
+                                        break;
+                                    default:
+                                        break;
+                                }            
+                        </div>
+                </div>
             </div>
-        </section>
-<p>@mousePointerMessage</p>
-
-<a class="btn btn-primary" @onclick="KillEvents" href="/">Dispose Events + Timer -- BELANGRIJK -- Link nr Index</a>
-
-
+        
+        </div>
+        
+        </section>                                                                                       
 @code {
     private int selectedService = 0;
 
@@ -344,41 +320,40 @@
             y =  (int)Math.Round(((3.719737 - currentPosition.Coords.Longitude / 600) / 0.000005897125)/1000);
             await this._context.SetFillStyleAsync("black");      
             await this._context.FillRectAsync(x, y, 20, 20);
-            await this._context.SetFillStyleAsync("red");
-            await this._context.FillRectAsync((x-10), (y+5), 10, 10);
-            //if (mybearing != null)
-            //{
-            //    switch (mybearing)
-            //    {
-            //        case < 22.5 :                        
-            //            await this._context.FillRectAsync((x+5), (y-10), 10, 10);             
-            //            break;
-            //        case < 67.5 :                        
-            //            await this._context.FillRectAsync((x+20), (y-10), 10, 10);             
-            //            break;
-            //        case < 112.5 :                        
-            //            await this._context.FillRectAsync((x+20), (y+5), 10, 10);             
-            //            break;
-            //        case < 157.5 :                        
-            //            await this._context.FillRectAsync((x+20), (y+20), 10, 10);             
-            //            break;
-            //        case < 202.5 :                        
-            //            await this._context.FillRectAsync((x+5), (y+20), 10, 10);             
-            //            break;
-            //        case < 247.5 :                        
-            //            await this._context.FillRectAsync((x-10), (y+20), 10, 10);             
-            //            break;
-            //        case < 292.5 :                        
-            //            await this._context.FillRectAsync((x-10), (y+5), 10, 10);             
-            //            break;
-            //        case < 337.5 :                        
-            //            await this._context.FillRectAsync((x-10), (y-10), 10, 10);             
-            //            break;
-            //        case <= 360:
-            //            await this._context.FillRectAsync((x+5), (y-10), 10, 10);
-            //            break;
-            //    }
-            //}                                
+            await this._context.SetFillStyleAsync("red");           
+            if (mybearing != null)
+            {
+                switch (mybearing)
+                {
+                    case < 22.5 :                        
+                        await this._context.FillRectAsync((x+5), (y-10), 10, 10);             
+                        break;
+                    case < 67.5 :                        
+                        await this._context.FillRectAsync((x+20), (y-10), 10, 10);             
+                        break;
+                    case < 112.5 :                        
+                        await this._context.FillRectAsync((x+20), (y+5), 10, 10);             
+                        break;
+                    case < 157.5 :                        
+                        await this._context.FillRectAsync((x+20), (y+20), 10, 10);             
+                        break;
+                    case < 202.5 :                        
+                        await this._context.FillRectAsync((x+5), (y+20), 10, 10);             
+                        break;
+                    case < 247.5 :                        
+                        await this._context.FillRectAsync((x-10), (y+20), 10, 10);             
+                        break;
+                    case < 292.5 :                        
+                        await this._context.FillRectAsync((x-10), (y+5), 10, 10);             
+                        break;
+                    case < 337.5 :                        
+                        await this._context.FillRectAsync((x-10), (y-10), 10, 10);             
+                        break;
+                    case <= 360:
+                        await this._context.FillRectAsync((x+5), (y-10), 10, 10);
+                        break;
+                }
+            }                                
             await this._context.SetFontAsync("46px Calibri");
             await this._context.StrokeTextAsync("Hier ben Ik", x, y);
         }
@@ -441,27 +416,27 @@
         distancealdi =  GetDistance(aldilon, aldilat);
         distancefrietkot =  GetDistance( frietkotlon, frietkotlat);
         distancepitta =  GetDistance(pittalon, pittalat);
-        bearingaldi = DegreeBearing(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, aldilon, aldilat);
-        bearingpitta = DegreeBearing(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, pittalon, pittalat);
-        bearingfrietkot = DegreeBearing(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, frietkotlon, frietkotlat);
+        bearingaldi = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, aldilat, aldilon);
+        bearingpitta = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, pittalat, pittalon);
+        bearingfrietkot = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, frietkotlat, frietkotlon);
 
         //Once DB is Updated
-        //distancegates12 = GetDistance(AirWaze.Entities.Airport.Gates[0].CoordsLon, AirWaze.Entities.Airport.Gates[0].CoordsLat);
-        //distancegates34 = GetDistance(AirWaze.Entities.Airport.Gates[2].CoordsLon, AirWaze.Entities.Airport.Gates[2].CoordsLat);
-        //distancegates56 = GetDistance(AirWaze.Entities.Airport.Gates[4].CoordsLon, AirWaze.Entities.Airport.Gates[4].CoordsLat);
-        //distancegates789 = GetDistance(AirWaze.Entities.Airport.Gates[6].CoordsLon, AirWaze.Entities.Airport.Gates[6].CoordsLat);
-        // bearinggates12 = DegreeBearing(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, AirWaze.Entities.Airport.Gates[0].CoordsLon, AirWaze.Entities.Airport.Gates[0].CoordsLat);
-        // bearinggates34 = DegreeBearing(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, AirWaze.Entities.Airport.Gates[2].CoordsLon, AirWaze.Entities.Airport.Gates[2].CoordsLat);
-        // bearinggates56 = DegreeBearing(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, AirWaze.Entities.Airport.Gates[4].CoordsLon, AirWaze.Entities.Airport.Gates[4].CoordsLat);
-        // bearinggates789 = DegreeBearing(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, AirWaze.Entities.Airport.Gates[6].CoordsLon, AirWaze.Entities.Airport.Gates[6].CoordsLat);
+        distancegates12 = GetDistance(AirWaze.Entities.Airport.Gates[0].CoordsLon, AirWaze.Entities.Airport.Gates[0].CoordsLat);
+        distancegates34 = GetDistance(AirWaze.Entities.Airport.Gates[2].CoordsLon, AirWaze.Entities.Airport.Gates[2].CoordsLat);
+        distancegates56 = GetDistance(AirWaze.Entities.Airport.Gates[4].CoordsLon, AirWaze.Entities.Airport.Gates[4].CoordsLat);
+        distancegates789 = GetDistance(AirWaze.Entities.Airport.Gates[6].CoordsLon, AirWaze.Entities.Airport.Gates[6].CoordsLat);
+         bearinggates12 = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, AirWaze.Entities.Airport.Gates[0].CoordsLat, AirWaze.Entities.Airport.Gates[0].CoordsLon);
+         bearinggates34 = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, AirWaze.Entities.Airport.Gates[2].CoordsLat, AirWaze.Entities.Airport.Gates[2].CoordsLon);
+         bearinggates56 = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, AirWaze.Entities.Airport.Gates[4].CoordsLat, AirWaze.Entities.Airport.Gates[4].CoordsLon);
+         bearinggates789 = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, AirWaze.Entities.Airport.Gates[6].CoordsLat, AirWaze.Entities.Airport.Gates[6].CoordsLon);
 
         //SintNiklaas
         distanceregentiestraat =  GetDistance(regentiestraatlon, regentiestraatlat);
         distanceherderstraat =  GetDistance( herderstraatlon, herderstraatlat);
         distancebasisschool =  GetDistance(basisschoollon, basisschoollat);
-        bearingherderstraat = DegreeBearing( currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, herderstraatlon, herderstraatlat);
-        bearingregentiestraat = DegreeBearing(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, regentiestraatlon, regentiestraatlat);
-        bearingbasisschool = DegreeBearing(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, basisschoollon, basisschoollat);
+        bearingherderstraat = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, herderstraatlat, herderstraatlon);
+        bearingregentiestraat = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, regentiestraatlat, regentiestraatlon);
+        bearingbasisschool = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, basisschoollat, basisschoollon);
     }
 
 
@@ -501,23 +476,6 @@
             dLon = dLon > 0 ? -(2*Math.PI-dLon) : (2*Math.PI+dLon);
         }
         double x = ToBearing(Math.Atan2(dLon, dPhi));
-        if ( 0 < x && x < 90)
-        {
-            x = 90 - x;
-        }
-        else if ( 90 < x && x < 180)
-        {
-            x = (180 + (90 - x));
-        }
-        else if (180 < x && x < 270)
-        {
-            x = (270 + (180 - x));
-        }
-        else
-        {
-            x = (360 + (270 - x));
-        }
-
         return x;
     }
 
