@@ -221,7 +221,8 @@ namespace AirWaze.Controllers
                 CompanyNumber = airline.CompanyNumber,
                 Adress = airline.Adress,
                 Number = airline.Number,
-                City = airline.City
+                City = airline.City,
+                Logo = airline.Logo,
             };
             return View(airlineDeleteViewModel);
         }

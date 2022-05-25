@@ -5,10 +5,92 @@
 }
  @model AirlineDetailViewModel
 
- <h1>Detail Pagina: @Model.NameTag</h1>
- <p>@Model.Name</p>
- <p> @Model.Adress  @Model.Number, @Model.City</p>
- <p>@Model.PhoneNumber</p>
- <p>@Model.Email </p>
+ <head>
+    <link rel="stylesheet" href="~/css/Detailplaneair.css" asp-append-version="true" />
+</head>
 
- <a class="btn btn-primary" asp-action="Index" asp-controller="Airline">Back</a>
+<div class="peoples-visit dining-padding-top">           
+            <div class="single-visit left-img">
+                <div class="container">
+                    <div class="row justify-content-end">
+                        <div class="col-lg-8">
+                            <div class="visit-caption" style="background-color:#ce9244;">
+                                <span>Details for @Model.Name</span>
+                                <form asp-controller="Airline" asp-action="Update" method="post">
+								<ul>
+								<li>
+								<div class="mt-10">
+                                    <input class="single-input" asp-for="Name" readonly="readonly" placeholder="Name"
+										onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name'" required />
+                                    <span class="text-danger" asp-validation-for="Name"></span>
+								</div>								
+								</li>
+								<li>
+								<div class="mt-10">
+									<input class="single-input" asp-for="NameTag" readonly="readonly" placeholder="NameTag"
+										onfocus="this.placeholder = ''" onblur="this.placeholder = 'NameTag'" required />
+                                    <span class="text-danger" asp-validation-for="NameTag"></span>
+								</div>
+								</li>
+								<li>
+								<div class="mt-10">
+									<input class="single-input" asp-for="CompanyNumber" readonly="readonly" placeholder="CompanyNumber"
+										onfocus="this.placeholder = ''" onblur="this.placeholder = 'CompanyNumber'" required />
+                                    <span class="text-danger" asp-validation-for="CompanyNumber"></span>
+								</div>
+								</li>
+								<li>
+								<div class="mt-10">
+									<input class="single-input" asp-for="Adress" readonly="readonly" placeholder="Adress"
+										onfocus="this.placeholder = ''" onblur="this.placeholder = 'Adress'" required />
+                                    <span class="text-danger" asp-validation-for="Adress"></span>
+								</div>
+								</li>
+								<li>
+                                <div class="mt-10">
+									<input class="single-input" asp-for="Number" readonly="readonly" placeholder="Number"
+										onfocus="this.placeholder = ''" onblur="this.placeholder = 'Number'" required />
+                                    <span class="text-danger" asp-validation-for="Number"></span>
+								</div>
+								</li>
+								<li>
+                                <div class="mt-10">
+									<input class="single-input" asp-for="City" readonly="readonly" placeholder="City"
+										onfocus="this.placeholder = ''" onblur="this.placeholder = 'City'" required />
+                                    <span class="text-danger" asp-validation-for="City"></span>
+								</div>
+								</li>
+								<li>
+                                 <div class="mt-10">
+									<input class="single-input" asp-for="Email" readonly="readonly" readonly="readonly" placeholder="Email"
+										onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" required />
+                                    <span class="text-danger" asp-validation-for="Email"></span>
+								</div>
+								</li>
+								<li>
+                                <div class="mt-10">
+									<input class="single-input" asp-for="PhoneNumber" readonly="readonly" placeholder="PhoneNumber"
+										onfocus="this.placeholder = ''" onblur="this.placeholder = 'PhoneNumber'" required />
+                                    <span class="text-danger" asp-validation-for="PhoneNumber"></span>
+								</div>
+								</li>
+								<li>
+                                 <div class="mt-10">
+									<input class="single-input" asp-for="AccountNumber" readonly="readonly" placeholder="AccountNumber"
+										onfocus="this.placeholder = ''" onblur="this.placeholder = 'AccountNumber'" required />
+                                    <span class="text-danger" asp-validation-for="AccountNumber"></span>
+								</div>
+								</li>
+								</ul>
+								 <a class="btn btn-primary" asp-action="Index" asp-controller="Airline">Back</a>
+							</form>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+

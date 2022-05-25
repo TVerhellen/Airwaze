@@ -3,15 +3,18 @@
 *@
 @{
 }
+@model List<AirlineListViewModel>
+
 <head>
     <link rel="stylesheet" href="~/css/customstyle.css" asp-append-version="true" />
 </head>
 
-@model List<AirlineListViewModel>
 
-<div class="container-fluid" style="padding: 0 0 0 0;">
-    <div class="row">
-        <div class="col-lg-2 bg-dark-blue d-none d-sm-block" style="padding-top: 50px; padding-bottom: 20px;">
+<body>
+<div class="popular-location section-padding30" style="padding-top:40px;">
+            <div class="container">
+                <div class="row">
+                    @*<div class="col-lg-2 bg-dark-blue d-none d-sm-block" style="padding-top: 50px; padding-bottom: 20px;">
             <center><i class="fas fa-user fa-5x text-white" style="padding-bottom: 20px;"></i></center>
                 <center>
                     <p style="color:white">@User.Identity.Name</p>
@@ -27,58 +30,51 @@
                     <a class="list-group-item" asp-action="Index" asp-controller="Flight"><i class="fa fa-plane-departure text-white">&nbsp; Flights</i></a> 
                     <a class="list-group-item" asp-action="Schedule" asp-controller="Admin"><i class="fa fa-clock text-white">&nbsp; Schedule</i></a>  
                 </div>
-        </div>
-        <div class="col-lg-9" style="padding-bottom: 50px;">
-            <div>
-                <h1>Manage airlines</h1>
-    
-                @if (Model.Count != 0)
+        </div>*@
+                    <div class="col-lg-12" >
+                        <div class="section-tittle text-center mb-80">
+                            <span>Hello Admin, </span>
+                            <h2>Overview Airlines</h2>
+                        </div>
+                    </div>
+                </div>
+                 @if (Model.Count != 0)
                 {
-                    <h1>Overzicht Airlines:</h1>  
+                    <div class="row">
+                        @foreach (var airline in Model)
+                        {
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <div class="single-location mb-30">
+                                    <div class="location-img">
+                                        <img src="@Url.Content(@airline.Logo)" alt="" width="100" height="300" >
+                                    </div>
+                                    <div class="location-details">
+                                        <p>@airline.Name</p>
+                                        <a class="genric-btn success-border circle" asp-action="Detail" asp-controller="Airline" asp-route-ID=@airline.AirlineID>Detail</a>
+                                        <a class="genric-btn info-border circle" asp-action="Update" asp-controller="Airline" asp-route-ID=@airline.AirlineID>Edit</a>
+                                        <a class="genric-btn warning-border circle" asp-action="Delete" asp-controller="Airline" asp-route-ID=@airline.AirlineID>Delete</a>
 
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>NameTag</th>
-                    
-                                    <th>Logo</th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>            
-                                @foreach (var airline in Model)
-                                {
-                                     <tr>
-                                        <td>@airline.Name</td>
-                                        <td>@airline.NameTag</td>                                             
-                                        <td>
-                                            <img src="@Url.Content(@airline.Logo)" alt="Sample Image" width="100" height="100" />
-                                        </td>
-                                        <td><a class="btn btn-primary" asp-action="Detail" asp-controller="Airline" asp-route-ID=@airline.AirlineID>Detail</a></td>
-                                        <td><a class="btn btn-secondary" asp-action="Update" asp-controller="Airline" asp-route-ID=@airline.AirlineID>Edit</a></td>
-                                        <td><a class="btn btn-secondary" asp-action="Delete" asp-controller="Airline" asp-route-ID=@airline.AirlineID>Delete</a></td>
-                                    </tr>
-                                }
-                        </tbody>
-                    </table>
-                 }
+                                    </div>
+                                </div>
+                            </div>
+                        }                
+                    </div>
+                }
                 else
                 {
                     <h1>No Airlines Currently Available</h1>
                 }
-            <div style="margin:100px;">
-                <a class="btn btn-secondary" asp-area="" asp-controller="Airline" asp-action="Create" style="margin-left:250px;width:600px;">Create New Airline</a>
+        <div style="margin:20px;">
+                <a class="genric-btn primary e-large" asp-area="" asp-controller="Airline" asp-action="Create" style="margin-left:250px;width:600px;">Create New Airline</a>
             </div> 
             </div>
-    </div>
-</div>
-
-<script src="~/lib/bootstrap/bootstrap-admin/popper.min.js"></script>
+        </div>
+</body>
+        <script src="~/lib/bootstrap/bootstrap-admin/popper.min.js"></script>
 <link href="~/lib/bootstrap/bootstrap-admin/bootstrap-parkeasy.css" rel="stylesheet" />
 <link href="~/lib/bootstrap/bootstrap-admin/dashboard.css" rel="stylesheet" />
+
+
 
 
 
