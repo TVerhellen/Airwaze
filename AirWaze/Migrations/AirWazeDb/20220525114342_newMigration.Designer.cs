@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AirWaze.Migrations.AirWazeDb
 {
     [DbContext(typeof(AirWazeDbContext))]
-    [Migration("20220518084251_CreateAirWazeDbContext")]
-    partial class CreateAirWazeDbContext
+    [Migration("20220525114342_newMigration")]
+    partial class newMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -77,6 +77,82 @@ namespace AirWaze.Migrations.AirWazeDb
                     b.ToTable("Airlines");
                 });
 
+            modelBuilder.Entity("AirWaze.Entities.ApplicationUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Bus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("HouseNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StreetName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Zipcode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("AirWaze.Entities.Destination", b =>
+                {
+                    b.Property<int>("DestinationID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DestinationID"), 1L, 1);
+
+                    b.Property<decimal>("Distance")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<TimeSpan>("FlightTime")
+                        .HasColumnType("time");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Region")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("DestinationID");
+
+                    b.ToTable("Destinations");
+                });
+
             modelBuilder.Entity("AirWaze.Entities.Flight", b =>
                 {
                     b.Property<int>("FlightID")
@@ -85,31 +161,30 @@ namespace AirWaze.Migrations.AirWazeDb
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FlightID"), 1L, 1);
 
-                    b.Property<int?>("CurrentGateGateID")
+                    b.Property<int>("CurrentGateGateID")
                         .HasColumnType("int");
+
+                    b.Property<bool>("CurrentPlaneConfirmed")
+                        .HasColumnType("bit");
 
                     b.Property<int?>("CurrentPlanePlaneID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CurrentRunwayRunwayID")
+                    b.Property<int>("CurrentRunwayRunwayID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Departure")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Destination")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Distance")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("DestinationID")
+                        .HasColumnType("int");
 
                     b.Property<string>("FlightNr")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<TimeSpan>("FlightTime")
-                        .HasColumnType("time");
+                    b.Property<string>("SeatDiagram")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -122,6 +197,8 @@ namespace AirWaze.Migrations.AirWazeDb
 
                     b.HasIndex("CurrentRunwayRunwayID");
 
+                    b.HasIndex("DestinationID");
+
                     b.ToTable("Flights");
                 });
 
@@ -132,6 +209,12 @@ namespace AirWaze.Migrations.AirWazeDb
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GateID"), 1L, 1);
+
+                    b.Property<double>("CoordsLat")
+                        .HasColumnType("float");
+
+                    b.Property<double>("CoordsLon")
+                        .HasColumnType("float");
 
                     b.Property<int>("Number")
                         .HasColumnType("int");
@@ -235,8 +318,8 @@ namespace AirWaze.Migrations.AirWazeDb
                     b.Property<int>("CurrentFlightFlightID")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("CurrentUserUserID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("CurrentUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("ExtraLuggage")
                         .HasColumnType("bit");
@@ -270,69 +353,18 @@ namespace AirWaze.Migrations.AirWazeDb
 
                     b.HasIndex("CurrentFlightFlightID");
 
-                    b.HasIndex("CurrentUserUserID");
+                    b.HasIndex("CurrentUserId");
 
                     b.ToTable("Tickets");
-                });
-
-            modelBuilder.Entity("AirWaze.Entities.User", b =>
-                {
-                    b.Property<Guid>("UserID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("AdminComments")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Bus")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("HouseNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StreetName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Zipcode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserID");
-
-                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("AirWaze.Entities.Flight", b =>
                 {
                     b.HasOne("AirWaze.Entities.Gate", "CurrentGate")
                         .WithMany()
-                        .HasForeignKey("CurrentGateGateID");
+                        .HasForeignKey("CurrentGateGateID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("AirWaze.Entities.Plane", "CurrentPlane")
                         .WithMany()
@@ -340,13 +372,23 @@ namespace AirWaze.Migrations.AirWazeDb
 
                     b.HasOne("AirWaze.Entities.Runway", "CurrentRunway")
                         .WithMany()
-                        .HasForeignKey("CurrentRunwayRunwayID");
+                        .HasForeignKey("CurrentRunwayRunwayID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AirWaze.Entities.Destination", "Destination")
+                        .WithMany()
+                        .HasForeignKey("DestinationID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CurrentGate");
 
                     b.Navigation("CurrentPlane");
 
                     b.Navigation("CurrentRunway");
+
+                    b.Navigation("Destination");
                 });
 
             modelBuilder.Entity("AirWaze.Entities.Plane", b =>
@@ -368,11 +410,9 @@ namespace AirWaze.Migrations.AirWazeDb
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AirWaze.Entities.User", "CurrentUser")
-                        .WithMany("ListCurrentTickets")
-                        .HasForeignKey("CurrentUserUserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("AirWaze.Entities.ApplicationUser", "CurrentUser")
+                        .WithMany()
+                        .HasForeignKey("CurrentUserId");
 
                     b.Navigation("CurrentFlight");
 
@@ -382,11 +422,6 @@ namespace AirWaze.Migrations.AirWazeDb
             modelBuilder.Entity("AirWaze.Entities.Airline", b =>
                 {
                     b.Navigation("CurrentPlanes");
-                });
-
-            modelBuilder.Entity("AirWaze.Entities.User", b =>
-                {
-                    b.Navigation("ListCurrentTickets");
                 });
 #pragma warning restore 612, 618
         }

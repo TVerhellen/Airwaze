@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using AirWaze.Areas.Identity.Data;
+using System.ComponentModel.DataAnnotations;
 
 namespace AirWaze.Entities
 {
@@ -8,7 +9,7 @@ namespace AirWaze.Entities
         public int TicketID { get; set; }
         public string TicketNr { get; set; }
         public Flight CurrentFlight { get; set; }
-        public User CurrentUser { get; set; }
+        public ApplicationUser CurrentUser { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public decimal Price { get; set; }

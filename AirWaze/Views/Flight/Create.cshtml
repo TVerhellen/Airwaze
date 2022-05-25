@@ -7,18 +7,14 @@
 
 <form asp-controller="Flight" asp-action="Create" method="post">
     
+    <!--combobox destinations-->
      <div class="form-group">
        <label asp-for="Destination"></label>
        <input class="form-control" asp-for="Destination" />
        <span asp-validation-for="Destination"></span>
     </div>
     <br />
-    <div class="form-group">
-        <label>Flight Duration (hh:mm)</label>
-        <input class="form-control" asp-for="FlightTime" />
-        <span asp-validation-for="FlightTime"></span>
-    </div>
-    <br />
+
 
     <div class="form-group">
         <label asp-for="Departure"></label>
@@ -27,12 +23,7 @@
     </div>
      <br />
 
-    <div class="form-group">
-        <label>Distance (km)</label>
-        <input class="form-control" asp-for="Distance" />
-        <span asp-validation-for="Distance"></span>
-    </div>
-     <br />
+
 
      <a class="btn btn-primary" asp-controller="Flight" asp-action="Index">Go Back</a>
     <button class="btn btn-primary" onclick="message()" type="submit">Create Flight</button>

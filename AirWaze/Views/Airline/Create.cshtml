@@ -7,14 +7,35 @@
                     
 @model AirlineCreateViewModel
 
+<head>
+    <link rel="stylesheet" href="~/css/Detailplaneair.css" asp-append-version="true" />
+</head>
 
-    <h1>Choose Logo For Airline</h1>
-    <div style="padding-top:20px;"> 
-<form asp-controller="Airline" asp-action="CreateImg" method="post" enctype="multipart/form-data">
-    <input type="file" name="uploadFile" class="form-control" />
-    <input type="submit" value="Add Logo For Airliner" id="sub" style="margin-top:20px;"/>
-</form>
-    </div>
+<div class="peoples-visit dining-padding-top">           
+            <div class="single-visit left-img">
+                <div class="container">
+                    <div class="row justify-content-end">
+                        <div class="col-lg-8">
+                            <div class="visit-caption" style="background-color:#ce9244;">
+                                <span>Details for @Model.Name</span>
+                                  <h1>Choose Logo For Airline</h1>
+                                    <div style="padding-top:20px;"> 
+                                <form asp-controller="Airline" asp-action="CreateImg" method="post" enctype="multipart/form-data">
+                                    <input type="file" name="uploadFile" class="form-control" />
+                                    <input type="submit" value="Add Logo For Airliner" id="sub" style="margin-top:20px;"/>
+                                </form>
+                                    </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    
 
 
 
