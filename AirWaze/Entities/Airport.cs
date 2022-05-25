@@ -447,7 +447,6 @@ namespace AirWaze.Entities
             }
         }
 
-        //TODO: Check available planes for created flight in PlanePicker View
         public static List<Plane> GetAvailablePlanesForFlight(Flight originalFlight)
         {
             //Use Planes list (not database!)
@@ -462,14 +461,14 @@ namespace AirWaze.Entities
             //Make timeslot for this flight to compare plane timeslots with
             //TODO: Test this calculation!!!!
             DateTime originalFlightPeriodStart = originalFlight.Departure.AddHours(-2);
-            DateTime originalFlightPeriodEnd = originalFlight.Departure.Add((2 * originalFlight.FlightTime) + TimeSpan.FromDays(7));
+            DateTime originalFlightPeriodEnd = originalFlight.Departure.Add((2 * originalFlight.Destination.FlightTime) + TimeSpan.FromDays(7));
 
             foreach(Plane plane in Planes)
             {
                 List<Flight> flightsPerPlane = new List<Flight>();
 
                 //TODO:change flight.Destination to flight.Destination.Region
-                if (plane.FlightRegion == originalFlight.Destination)
+                if (plane.FlightRegion == originalFlight.Destination.Region)
                 {
                     //Make list of all flights with currentPlane = this plane and with status 0 - 5
                     foreach(Flight flight in Flights)
