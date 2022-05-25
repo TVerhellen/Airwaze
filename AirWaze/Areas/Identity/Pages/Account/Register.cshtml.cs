@@ -31,6 +31,7 @@ namespace AirWaze.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly Database.Design.IAirWazeDatabase _database;
 
         public RegisterModel(
             UserManager<AirWazeUser> userManager,
@@ -38,7 +39,8 @@ namespace AirWaze.Areas.Identity.Pages.Account
             SignInManager<AirWazeUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            Database.Design.IAirWazeDatabase db)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -47,6 +49,7 @@ namespace AirWaze.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _roleManager = roleManager;
+            _database = db;
         }
 
         /// <summary>
@@ -111,6 +114,39 @@ namespace AirWaze.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            [StringLength(255, ErrorMessage = "The lastname field should have a maximum of 255 characters.")]
+            [Display(Name = "Street Name")]
+            public string StreetName { get; set; }
+
+            [Required]
+            [Display(Name = "House Number")]
+            public int HouseNumber { get; set; }
+
+            [StringLength(255, ErrorMessage = "The lastname field should have a maximum of 255 characters.")]
+            [Display(Name = "Bus")]
+            public string? Bus { get; set; }
+
+            [Required]
+            [StringLength(255, ErrorMessage = "The lastname field should have a maximum of 255 characters.")]
+            [Display(Name = "Zipcode")]
+            public string Zipcode { get; set; }
+
+            [Required]
+            [StringLength(255, ErrorMessage = "The lastname field should have a maximum of 255 characters.")]
+            [Display(Name = "City")]
+            public string City { get; set; }
+
+            [Required]
+            [StringLength(255, ErrorMessage = "The lastname field should have a maximum of 255 characters.")]
+            [Display(Name = "Country")]
+            public string Country { get; set; }
+
+            [Required]
+            [StringLength(255, ErrorMessage = "The lastname field should have a maximum of 255 characters.")]
+            [Display(Name = "Phone Number")]
+            public string PhoneNumber { get; set; }
         }
 
 
@@ -130,6 +166,16 @@ namespace AirWaze.Areas.Identity.Pages.Account
 
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
+                user.Email = Input.Email;
+                user.PhoneNumber = Input.PhoneNumber;
+                user.StreetName = Input.StreetName;
+                user.City = Input.City;
+                user.Country = Input.Country;
+                user.HouseNumber = Input.HouseNumber;
+                user.Bus = Input.Bus;
+                user.Zipcode = Input.Zipcode;
+
+                _database.AddUser(user);
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -145,6 +191,7 @@ namespace AirWaze.Areas.Identity.Pages.Account
                     }
 
                     var userId = await _userManager.GetUserIdAsync(user);
+                    HttpContext.Session.SetString("user_id", userId);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(

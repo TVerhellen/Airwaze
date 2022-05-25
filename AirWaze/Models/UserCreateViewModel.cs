@@ -8,7 +8,7 @@ namespace AirWaze.Models
 
         [DisplayName("ID")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "ID is verplicht!")]
-        public Guid UserID { get; set; }
+        public string UserID { get; set; }
 
         //public string Name { get; set; }
         //public string Password { get; set; }
@@ -35,7 +35,7 @@ namespace AirWaze.Models
 
         [Range(0, int.MaxValue, ErrorMessage = "Housenumber error")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Housenumber is required!")]
-        public string HouseNumber { get; set; }
+        public int HouseNumber { get; set; }
 
         [Range(0, int.MaxValue, ErrorMessage = "Bus error")]
         public string? Bus { get; set; }

@@ -1,4 +1,5 @@
-﻿using AirWaze.Entities;
+﻿using AirWaze.Areas.Identity.Data;
+using AirWaze.Entities;
 
 namespace AirWaze.Database.Design
 {
@@ -39,22 +40,22 @@ namespace AirWaze.Database.Design
 
         void RemoveAirline(Airline airline);
 
-        List<User> GetUsers();
+        List<AirWazeUser> GetUsers();
 
-        User FindUserByID(Guid id);
+        ApplicationUser GetUserByID(string id);
 
-        void AddUser(User user);
+        void AddUser(AirWazeUser user);
 
-        void UpdateUser(User user);
+        //void UpdateUser(User user);
 
-        void RemoveUser(User user);
+        //void RemoveUser(User user);
         public List<Ticket> GetTicketsByFlight(string flightnr);
 
         List<Ticket> GetTickets();
 
         //List<Ticket> GetTicketByFlight(Flight flight);
 
-        List<Ticket> GetTicketsByUser(User user);
+        List<Ticket> GetTicketsByUser(ApplicationUser user);
 
         Ticket GetTicketByNr(string nr);
 

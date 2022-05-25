@@ -15,9 +15,9 @@
 <p>@Model.Departure.ToString("R")</p>
 <h2></h2>
 <h2>Flight Duration (hh:mm)</h2>
-<p>@Model.FlightTime</p>
+<p>@Model.Destination.FlightTime</p>
 <h2>Distance</h2>
-<p>@Model.Distance km</p>
+<p>@Model.Destination.Distance km</p>
 <h2>Gate</h2>
 @if(Model.CurrentGate.Number == 0)
 {

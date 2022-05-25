@@ -7,7 +7,7 @@ namespace AirWaze.Models
     {
         [DisplayName("ID")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "ID is verplicht!")]
-        public Guid UserID { get; set; }
+        public string UserID { get; set; }
 
         [MinLength(1, ErrorMessage = "Minimum 1 character!")]
         [MaxLength(20, ErrorMessage = "Maximum 20 characters!")]
@@ -22,7 +22,7 @@ namespace AirWaze.Models
         [Display(Name = "Emailaddress")]
         [Required(ErrorMessage = "The emailaddress is required")]
         [EmailAddress(ErrorMessage = "Invalid Emailaddress")]
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
         [MinLength(1, ErrorMessage = "Minimum 1 character!")]
         [MaxLength(50, ErrorMessage = "Maximum 50 characters!")]
@@ -31,7 +31,7 @@ namespace AirWaze.Models
 
         [Range(0, int.MaxValue, ErrorMessage = "Housenumber error")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Housenumber is required!")]
-        public string HouseNumber { get; set; }
+        public int HouseNumber { get; set; }
 
         [Range(0, int.MaxValue, ErrorMessage = "Bus error")]
         public string? Bus { get; set; }
@@ -54,6 +54,6 @@ namespace AirWaze.Models
         [Display(Name = "Homephone")]
         [DataType(DataType.PhoneNumber)]
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid phonenumber")]
-        public string PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
     }
 }

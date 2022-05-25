@@ -42,7 +42,6 @@ namespace AirWaze.Controllers
             LoadCapacity = 1,
             Manufacturer = "Tester",
             Type = "111",
-            SeatDiagram = new string[5, 40],
         };
         public FlightController(IAirWazeDatabase airwazeDatabase)
         {
@@ -86,7 +85,6 @@ namespace AirWaze.Controllers
                 {
                     FlightID = flight.FlightID,
                     FlightNr = flight.FlightNr,
-                    FlightTime = flight.FlightTime,
                     Departure = flight.Departure,
                     Destination = flight.Destination,
                     CurrentGate = flight.CurrentGate,
@@ -101,7 +99,7 @@ namespace AirWaze.Controllers
             {
                 if (option == "Destination")
                 {
-                    myFlight = myFlight.Where(s => s.Destination.Contains(searchString));
+                    myFlight = myFlight.Where(s => s.Destination.Name.Contains(searchString));
                 }
                 else if (option == "Date")
                 {
@@ -126,9 +124,7 @@ namespace AirWaze.Controllers
                     FlightID = flightEntity.FlightID,
                     FlightNr = flightEntity.FlightNr,
                     CurrentPlane = flightEntity.CurrentPlane,
-                    FlightTime = flightEntity.FlightTime,
                     Departure = flightEntity.Departure,
-                    Distance = flightEntity.Distance,
                     Destination = flightEntity.Destination,
                     CurrentGate = flightEntity.CurrentGate,
                     CurrentRunway = flightEntity.CurrentRunway,
@@ -196,9 +192,7 @@ namespace AirWaze.Controllers
                     FlightID = flightViewModel.FlightID,
                     FlightNr = flightViewModel.FlightNr,
                     CurrentPlane = flightViewModel.CurrentPlane,
-                    FlightTime = flightViewModel.FlightTime,
                     Departure = flightViewModel.Departure,
-                    Distance = flightViewModel.Distance,
                     Destination = flightViewModel.Destination,
                     CurrentGate = flightViewModel.CurrentGate,
                     CurrentRunway = flightViewModel.CurrentRunway,
@@ -229,9 +223,7 @@ namespace AirWaze.Controllers
                 FlightID = flightEntity.FlightID,
                 FlightNr = flightEntity.FlightNr,
                 CurrentPlane = flightEntity.CurrentPlane,
-                FlightTime = flightEntity.FlightTime,
                 Departure = flightEntity.Departure,
-                Distance = flightEntity.Distance,
                 Destination = flightEntity.Destination,
                 CurrentGate = flightEntity.CurrentGate,
                 CurrentRunway = flightEntity.CurrentRunway,
@@ -261,9 +253,7 @@ namespace AirWaze.Controllers
             //flightEntity.FlightID = flightViewModel.FlightID;
             flightEntity.FlightNr = flightViewModel.FlightNr;
             flightEntity.CurrentPlane = flightViewModel.CurrentPlane;
-            flightEntity.FlightTime = flightViewModel.FlightTime;
             flightEntity.Departure = flightViewModel.Departure;
-            flightEntity.Distance = flightViewModel.Distance;
             flightEntity.Destination = flightViewModel.Destination;
             flightEntity.CurrentGate = flightViewModel.CurrentGate;
             flightEntity.CurrentRunway = flightViewModel.CurrentRunway;
@@ -325,7 +315,7 @@ namespace AirWaze.Controllers
         private string CreateFlightNr(FlightCreateViewModel flightmodel)
         {
             //1st 2 letters of destination + date
-            string tempFlightNr1 = flightmodel.Destination.Substring(0, 2).ToUpper() + flightmodel.Departure.ToString("yy") + flightmodel.Departure.ToString("MM") + flightmodel.Departure.ToString("dd");
+            string tempFlightNr1 = flightmodel.Destination.Name.Substring(0, 2).ToUpper() + flightmodel.Departure.ToString("yy") + flightmodel.Departure.ToString("MM") + flightmodel.Departure.ToString("dd");
             //random number of length 2
             int tempFlightNr2 = _random.Next(0, 100);
             //combine both temp nrs

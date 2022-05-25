@@ -23,9 +23,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<AirWazeUser>(options => options.SignIn.RequireConfirmedAccount = false)
+builder.Services.AddDefaultIdentity<AirWazeUser>(/*options => options.SignIn.RequireConfirmedAccount = false*/)
     .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultUI()
+    .AddDefaultTokenProviders();
 
 //login Google
 builder.Services.AddAuthentication()
@@ -49,7 +51,6 @@ builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(2);
-    options.Cookie.Name = ".User.Session";
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
