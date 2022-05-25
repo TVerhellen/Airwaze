@@ -14,6 +14,7 @@ namespace AirWaze.Entities
         public DateTime Departure { get; set; }
         //TODO: remove distance and change references to Destination.Distance
         public decimal Distance { get; set; }
+        //TODO: change string to Destination Entity
         public string Destination { get; set; }
         public Gate CurrentGate { get; set; }
         public Runway CurrentRunway { get; set; }

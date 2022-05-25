@@ -448,14 +448,50 @@ namespace AirWaze.Entities
         }
 
         //TODO: Check available planes for created flight in PlanePicker View
-        public static List<Plane> GetAvailablePlanesForFlight(Flight flight)
+        public static List<Plane> GetAvailablePlanesForFlight(Flight originalFlight)
         {
-            //Use Planes list (not database!), only planes with IsAvailable true
+            //Use Planes list (not database!)
             //get full planes list and filter down
             //timeslot flight = Departure + 2xFlightTime + 1 week  -> timeslot this flight cannot overlap with timeslot other flights with that plane
             //only show planes that fly region of destination
+            //Both IsAvailable=true and IsAvailable=false need to be in this list, as for PlanePicker in FlightCreator, also nonavailable planes need to be able to be selected (flight is later)
+            //For check PlaneAvailability in Airport (for departures), only IsAvailable=true is checked in that method
 
-            return new List<Plane>();
+            List<Plane> availablePlanes = new List<Plane>();
+
+            //Make timeslot for this flight to compare plane timeslots with
+            //TODO: Test this calculation!!!!
+            DateTime originalFlightPeriodStart = originalFlight.Departure.AddHours(-2);
+            DateTime originalFlightPeriodEnd = originalFlight.Departure.Add((2 * originalFlight.FlightTime) + TimeSpan.FromDays(7));
+
+            foreach(Plane plane in Planes)
+            {
+                List<Flight> flightsPerPlane = new List<Flight>();
+
+                //TODO:change flight.Destination to flight.Destination.Region
+                if (plane.FlightRegion == originalFlight.Destination)
+                {
+                    //Make list of all flights with currentPlane = this plane and with status 0 - 5
+                    foreach(Flight flight in Flights)
+                    {
+                        if(flight.Status != 6 && flight.Status != 7 && flight.CurrentPlane == plane)
+                        {
+                            flightsPerPlane.Add(flight);
+                        }
+                    }
+                    
+
+                    //TODO: finish this method
+
+
+                    //Make timeslot for every flight using this plane
+
+
+
+                }
+            }
+
+            return availablePlanes;
         }
 
         private static void DelayFlight(Flight flight, int minutesDelay)
