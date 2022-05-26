@@ -1,0 +1,32 @@
+.hero-area2 {
+    background-image: url(../Images/privacy.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 500px;
+}
+
+@media (max-width: 2000px) {
+    .hero-area2 {
+        width: 108%;
+        height: 200%;
+        left: -4%;
+        top: -5%;
+        bottom: 0;
+        right: -4%;
+    }
+}
+
+@media (max-width: 5000px) {
+    .hero-area2 {
+        width: 183%;
+        height: 200%;
+        left: -50%;
+        top: -5%;
+        bottom: 0;
+        right: -50%;
+    }
+}
+
+h2 {
+    margin-left: 20%;
+}
