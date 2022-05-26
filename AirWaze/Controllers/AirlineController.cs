@@ -34,9 +34,9 @@ namespace AirWaze.Controllers
                 
                 LoggedInAirline = new Airline
                 {
-                    Name = "Harald Airways",
+                    Email = User.Identity.Name,
                 };
-                LoggedInAirline = airlineEntities.FirstOrDefault(x => x.Name == LoggedInAirline.Name);
+                LoggedInAirline = airlineEntities.FirstOrDefault(x => x.Email == LoggedInAirline.Email);
                 
             }
             mymodel.Airline = LoggedInAirline;

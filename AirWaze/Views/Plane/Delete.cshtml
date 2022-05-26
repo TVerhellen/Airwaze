@@ -5,13 +5,40 @@
     @model PlaneDeleteViewModel
     
 }
-<h1>@Model.PlaneNr @Model.Manufacturer @Model.Type  </h1>
-<p>Delete this Plane??</p>
 
-<a class="btn btn-primary" onclick="message()" asp-controller="Plane" asp-action="DeleteConfirm" asp-route-ID="@Model.PlaneNr" style="margin-left:10px;">Ja</a>
-    <a class="btn btn-primary" asp-controller="Plane" asp-action="Index" style="margin-left:10px;">Neen</a>
- 
-<script type="text/javascript">
+ <head>
+    <link rel="stylesheet" href="~/css/Detailplaneair.css" asp-append-version="true" />
+</head>
+
+
+<div class="peoples-visit dining-padding-top">           
+            <div class="single-visit left-img">
+                <div class="container">
+                    <div class="row justify-content-end">
+                        <div class="col-lg-8">
+                            <div class="visit-caption" style="background-color:#ce9244;">
+                                <span>Delete @Model.PlaneNr?</span>
+                                <ul>                                                                       
+                                    <br />
+                                    <li>@Model.PlaneNr</li>                                                                      
+                                    <li>@Model.CurrentAirline.Name</li>
+                                    <li>@Model.Manufacturer</li>
+                                    <li>@Model.Type</li>                                    
+                                </ul>
+                                <br />
+                                <h1>Delete this Plane?</h1>
+                                <br />
+                                 <a class="genric-btn info-border circle arrow" onclick="message()" asp-controller="Plane" asp-action="DeleteConfirm" asp-route-ID="@Model.PlaneNr" style="margin-left:10px;">Ja<span class="lnr lnr-arrow-right"></span></a>
+                                 <a class="genric-btn danger-border circle arrow" asp-controller="Plane" asp-action="Index" style="margin-left:10px;">Neen<span class="lnr lnr-arrow-right"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
+    <script type="text/javascript">
         function message()
         {
             Swal.fire({                   
@@ -19,7 +46,11 @@
                     icon: 'error',
                     title: 'Plane Deleted',
                     showConfirmButton: false,
-                    timer: 1500                 
+                    timer: 1500                   
                     });
         }
     </script>
+
+
+
+

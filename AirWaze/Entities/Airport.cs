@@ -447,15 +447,55 @@ namespace AirWaze.Entities
             }
         }
 
-        //TODO: Check available planes for created flight in PlanePicker View
-        public static List<Plane> GetAvailablePlanesForFlight(Flight flight)
+        public static List<Plane> GetAvailablePlanesForFlight(Flight originalFlight)
         {
-            //Use Planes list (not database!), only planes with IsAvailable true
-            //get full planes list and filter down
-            //timeslot flight = Departure + 2xFlightTime + 1 week  -> timeslot this flight cannot overlap with timeslot other flights with that plane
-            //only show planes that fly region of destination
+            //Both IsAvailable=true and IsAvailable=false need to be in this list, as for PlanePicker in FlightCreator, also nonavailable planes need to be able to be selected (flight is later)
+            //For check PlaneAvailability in Airport (for departures), only IsAvailable=true is checked in that method
 
-            return new List<Plane>();
+            List<Plane> availablePlanes = new List<Plane>();
+
+            //Make timeslot for this flight to compare plane timeslots with
+            //TODO: Test this calculation!!!!
+            DateTime originalFlightPeriodStart = originalFlight.Departure.AddHours(-2);
+            DateTime originalFlightPeriodEnd = originalFlight.Departure.Add((2 * originalFlight.Destination.FlightTime) + TimeSpan.FromDays(7));
+
+            foreach(Plane plane in Planes)
+            {
+                //only check planes that fly to same region as destination
+                if (plane.FlightRegion == originalFlight.Destination.Region)
+                {
+                    //Make list of all flights with currentPlane = this plane and with status 0 - 5
+                    List<Flight> flightsPerPlane = new List<Flight>();
+
+                    foreach (Flight flight in Flights)
+                    {
+                        if(flight.Status != 6 && flight.Status != 7 && flight.CurrentPlane.PlaneNr == plane.PlaneNr)
+                        {
+                            flightsPerPlane.Add(flight);
+                        }
+                    }
+
+                    //If there are flights with this plane, check for each flight if timeslots do not overlap with original flight
+                    if(flightsPerPlane.Count > 0)
+                    {
+                        foreach(Flight flightPP in flightsPerPlane)
+                        {
+                            //Make timeslot for the flights with this plane
+                            DateTime newFlightPeriodStart = flightPP.Departure.AddHours(-2);
+                            DateTime newFlightPeriodEnd = flightPP.Departure.Add((2 * flightPP.Destination.FlightTime) + TimeSpan.FromDays(7));
+
+                            //Compare overlap on both timeslots, if none -> plane is available
+                            bool overlap = newFlightPeriodStart < originalFlightPeriodEnd && originalFlightPeriodStart < newFlightPeriodEnd;
+
+                            if (!overlap)
+                            {
+                                availablePlanes.Add(plane);
+                            }
+                        }
+                    }
+                }
+            }
+            return availablePlanes;
         }
 
         private static void DelayFlight(Flight flight, int minutesDelay)

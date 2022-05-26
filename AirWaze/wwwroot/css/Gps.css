@@ -1,0 +1,16 @@
+﻿body {
+    margin-bottom: 60px;
+    height: none;
+    width: none;
+    background-color: #43330d;
+    background-size: cover;
+}
+
+
+.blog_left_sidebar {
+    background-image: url('../Images/TerminalEdit.png');
+    background-size: contain;
+    height: 800px;
+    width: 600px;
+}
+

@@ -19,6 +19,7 @@ namespace AirWaze.Database
         }
         public void AddAirline(Airline airline)
         {
+                  
             _dbContext.Airlines.Add(airline);
             //_dbContext.Entry(airline.CurrentPlanes).State = EntityState.Unchanged;
             _dbContext.SaveChanges();
@@ -230,11 +231,13 @@ namespace AirWaze.Database
 
         public void UpdatePlane(Plane plane)
         {
-            _dbContext.Airlines.Remove(_dbContext.Airlines.FirstOrDefault(x => x.AirlineID == plane.CurrentAirline.AirlineID));
-            _dbContext.Airlines.Add(plane.CurrentAirline);       
-            _dbContext.Planes.Remove(_dbContext.Planes.FirstOrDefault(x => x.PlaneID == plane.PlaneID));          
-            _dbContext.Planes.Add(plane);
-            _dbContext.SaveChanges();
+
+
+            //_dbContext.Planes.Remove(_dbContext.Planes.FirstOrDefault(x => x.PlaneNr == plane.PlaneNr));
+            //_dbContext.Entry(plane.CurrentAirline).State = EntityState.Unchanged;
+            //_dbContext.Planes.Add(plane);
+            //_dbContext.Entry(plane.CurrentAirline).State = EntityState.Unchanged;
+            //_dbContext.SaveChanges();
         }
 
         //public void UpdateUser(User user)
