@@ -32,6 +32,7 @@ namespace AirWaze.Database
             _dbContext.Entry(flight.CurrentPlane.CurrentAirline).State = EntityState.Unchanged;
             _dbContext.Entry(flight.CurrentGate).State = EntityState.Unchanged;
             _dbContext.Entry(flight.CurrentRunway).State = EntityState.Unchanged;
+            _dbContext.Entry(flight.Destination).State = EntityState.Unchanged;
             _dbContext.SaveChanges();
         }
 
@@ -98,6 +99,7 @@ namespace AirWaze.Database
                 .Include(x => x.CurrentPlane.CurrentAirline)
                 .Include(x => x.CurrentGate)
                 .Include(x => x.CurrentRunway)
+                .Include(x => x.Destination)
                 .SingleOrDefault(flight => flight.FlightNr.Equals(nr));
         }
 
@@ -122,6 +124,7 @@ namespace AirWaze.Database
                 .Include(x => x.CurrentPlane.CurrentAirline)
                 .Include(x => x.CurrentGate)
                 .Include(x => x.CurrentRunway)
+                .Include(x => x.Destination)
                 .ToList();
         }
 
@@ -193,6 +196,7 @@ namespace AirWaze.Database
 
         public void RemoveFlight(Flight flight)
         {
+            //TODO: check if Plane/Destination/Gate/Runway are not removed
             _dbContext.Flights.Remove(flight);
             _dbContext.SaveChanges();
         }
@@ -225,6 +229,7 @@ namespace AirWaze.Database
 
         public void UpdateFlight(Flight flight)
         {
+            //TODO: check if Plane/Destination/Gate/Runway are not removed/changed
             _dbContext.Flights.Update(flight);
             _dbContext.SaveChanges();
         }

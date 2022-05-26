@@ -170,66 +170,66 @@ namespace AirWaze.Entities
             return goocheltruc[0];
         }
 
-        //public static void CheckPlaneAvailability()
-        //{
-        //    //make list of flights leaving in less than 2 hours with status approved or delayed and CurrentPlaneConfirmed false, all already have a CurrentPlane
-        //    //Sort list by status descending (priority to status 2 - delayed) and then by departure date (priority to flights leaving earlier)
+        public static void CheckPlaneAvailability()
+        {
+            //make list of flights leaving in less than 2 hours with status approved or delayed and CurrentPlaneConfirmed false, all already have a CurrentPlane
+            //Sort list by status descending (priority to status 2 - delayed) and then by departure date (priority to flights leaving earlier)
 
 
-        //    List<Flight> nextFlights = new List<Flight>();
-        //    foreach (Flight flight in Flights)
-        //    {
-        //        if ((flight.Status == 1 || flight.Status == 2)
-        //            && DateTime.Now >= flight.Departure.AddHours(-2)
-        //            && flight.CurrentPlaneConfirmed == false)
-        //        {
-        //            nextFlights.Add(flight);
-        //        }
-        //    }
-        //    nextFlights = nextFlights.OrderByDescending(flight => flight.Status).ThenBy(flight => flight.Departure).ToList();
+            List<Flight> nextFlights = new List<Flight>();
+            foreach (Flight flight in Flights)
+            {
+                if ((flight.Status == 1 || flight.Status == 2)
+                    && DateTime.Now >= flight.Departure.AddHours(-2)
+                    && flight.CurrentPlaneConfirmed == false)
+                {
+                    nextFlights.Add(flight);
+                }
+            }
+            nextFlights = nextFlights.OrderByDescending(flight => flight.Status).ThenBy(flight => flight.Departure).ToList();
 
-        //    //Check for each flight if the CurrentPlane is available,   if yes -> Plane.IsAvailable = false & update
-        //    //                                                          if not -> Check for Available planes (remove planes with prop IsAvailable false from list!) and assign first free one, update Plane & Flight
-        //    //                                                                                       if none available -> Delay Flight (2 hours), update Flight
+            //Check for each flight if the CurrentPlane is available,   if yes -> Plane.IsAvailable = false & update
+            //                                                          if not -> Check for Available planes (remove planes with prop IsAvailable false from list!) and assign first free one, update Plane & Flight
+            //                                                                                       if none available -> Delay Flight (2 hours), update Flight
 
-        //    foreach (Flight flight in nextFlights)
-        //    {
-        //        if (flight.CurrentPlane.IsAvailable == false)
-        //        {
-        //            List<Plane> availablePlanes = GetAvailablePlanesForFlight(flight);
-        //            availablePlanes = availablePlanes.FindAll(plane => plane.IsAvailable == true);
+            foreach (Flight flight in nextFlights)
+            {
+                if (flight.CurrentPlane.IsAvailable == false)
+                {
+                    List<Plane> availablePlanes = GetAvailablePlanesForFlight(flight);
+                    availablePlanes = availablePlanes.FindAll(plane => plane.IsAvailable == true);
 
-        //            if (availablePlanes.Count > 0)
-        //            {
-        //                flight.CurrentPlane = availablePlanes[0];
-        //                flight.CurrentPlaneConfirmed = true;
-        //                UpdateFlightInFlightsList(flight);
-        //                myDatabase.UpdateFlight(flight);
+                    if (availablePlanes.Count > 0)
+                    {
+                        flight.CurrentPlane = availablePlanes[0];
+                        flight.CurrentPlaneConfirmed = true;
+                        UpdateFlightInFlightsList(flight);
+                        myDatabase.UpdateFlight(flight);
 
-        //                availablePlanes[0].IsAvailable = false;
-        //                UpdatePlaneInPlanesList(availablePlanes[0]);
-        //                myDatabase.UpdatePlane(availablePlanes[0]);
-        //            }
-        //            else
-        //            {
-        //                //if none available -> Delay Flight (2 hours)
-        //                DelayFlight(flight, 120);
-        //            }
-        //        }
-        //        else
-        //        {
-        //            //the currentplane for this flight is available -> plane availability on false and update
-        //            flight.CurrentPlane.IsAvailable = false; 
-        //            UpdatePlaneInPlanesList(flight.CurrentPlane);
-        //            myDatabase.UpdatePlane(flight.CurrentPlane);
+                        availablePlanes[0].IsAvailable = false;
+                        UpdatePlaneInPlanesList(availablePlanes[0]);
+                        myDatabase.UpdatePlane(availablePlanes[0]);
+                    }
+                    else
+                    {
+                        //if none available -> Delay Flight (2 hours)
+                        DelayFlight(flight, 120);
+                    }
+                }
+                else
+                {
+                    //the currentplane for this flight is available -> plane availability on false and update
+                    flight.CurrentPlane.IsAvailable = false;
+                    UpdatePlaneInPlanesList(flight.CurrentPlane);
+                    myDatabase.UpdatePlane(flight.CurrentPlane);
 
-        //            //the currentplane for this flight is available -> flight planeconfirmed on true and update
-        //            flight.CurrentPlaneConfirmed = true;
-        //            UpdateFlightInFlightsList(flight);
-        //            myDatabase.UpdateFlight(flight);
-        //        }
-        //    }
-        //}
+                    //the currentplane for this flight is available -> flight planeconfirmed on true and update
+                    flight.CurrentPlaneConfirmed = true;
+                    UpdateFlightInFlightsList(flight);
+                    myDatabase.UpdateFlight(flight);
+                }
+            }
+        }
 
         public static void CheckGateAvailability()
         {
@@ -334,31 +334,31 @@ namespace AirWaze.Entities
                 }
             }
         }
-        //public static void CheckBoarding()
-        //{
-        //    //make list of flights with status 1/2  &  departure in 30 mins or less & CurrentGate/CurrentRunway/CurrentPlane != 0
-        //    //change status to Boarding
+        public static void CheckBoarding()
+        {
+            //make list of flights with status 1/2  &  departure in 30 mins or less & CurrentGate/CurrentRunway/CurrentPlane != 0
+            //change status to Boarding
 
-        //    List<Flight> boardingFlights = new List<Flight>();
-        //    foreach (Flight flight in Flights)
-        //    {
-        //        if ((flight.Status == 1 || flight.Status == 2)
-        //            && DateTime.Now >= flight.Departure.AddMinutes(-30)
-        //            && flight.CurrentRunway.Number != 0
-        //            && flight.CurrentGate.Number != 0
-        //            && flight.CurrentPlaneConfirmed == true)
-        //        {
-        //            boardingFlights.Add(flight);
-        //        }
-        //    }
+            List<Flight> boardingFlights = new List<Flight>();
+            foreach (Flight flight in Flights)
+            {
+                if ((flight.Status == 1 || flight.Status == 2)
+                    && DateTime.Now >= flight.Departure.AddMinutes(-30)
+                    && flight.CurrentRunway.Number != 0
+                    && flight.CurrentGate.Number != 0
+                    && flight.CurrentPlaneConfirmed == true)
+                {
+                    boardingFlights.Add(flight);
+                }
+            }
 
-        //    foreach (Flight flight in boardingFlights)
-        //    {
-        //        flight.Status = 3;
-        //        UpdateFlightInFlightsList(flight);
-        //        myDatabase.UpdateFlight(flight);
-        //    }
-        //}
+            foreach (Flight flight in boardingFlights)
+            {
+                flight.Status = 3;
+                UpdateFlightInFlightsList(flight);
+                myDatabase.UpdateFlight(flight);
+            }
+        }
         public static void CheckDepartures()
         {
             //make list of flights with status 3 & departure time passed
@@ -400,7 +400,6 @@ namespace AirWaze.Entities
             List<Flight> arrivedFlights = new List<Flight>();
             foreach (Flight flight in Flights)
             {
-                //TODO: modify flighttime to Destination.FlightTime 
                 if (flight.Status == 4
                     && DateTime.Now >= flight.Departure.Add(flight.Destination.FlightTime))
                 {
@@ -424,7 +423,6 @@ namespace AirWaze.Entities
             List<Flight> completedFlights = new List<Flight>();
             foreach (Flight flight in Flights)
             {
-                //TODO: modify flighttime to Destination.FlightTime 
                 DateTime flyingTime = flight.Departure.Add(2 * flight.Destination.FlightTime);
                 DateTime totalReturnTime = flyingTime.AddDays(7);
 
