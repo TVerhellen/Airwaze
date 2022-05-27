@@ -27,7 +27,11 @@
         background-image: url('../Images/gps.jpg');
         background-size: cover;
         }       
-
+        .blog_right_sidebar {
+             background-color: #516eb1;
+             background-size: contain; 
+             padding: 20px;
+             }
     </style>
 </head>
 
@@ -47,14 +51,15 @@
                 </div>
                 </div>
                <div class="col-lg-4">
-                        <div class="blog_right_sidebar">
-                             <div>
+                   <div>
                                          <a href="/" @onclick="KillEvents"><i class='fas fa-home' style='font-size:84px;color:red'></i></a>
                                         </div>
+                        <div class="blog_right_sidebar">
+                             
                              @switch (@selectedService)
                                 {
                                     case 1:  
-                                        <div style="padding-top:60px;">
+                                        <div style="padding-top:20px;">
                                          <h3 class="widget_title">Gates 3 & 4</h3>
                                          <p>Gates number 3 & 4 are located here</p>
                                          <p>Luxury Seating Acomodation and Shop Delivery available on site</p>
@@ -74,7 +79,7 @@
                                         
                                      break;                                   
                                     case 2:
-                                        <div style="padding-top:60px;">
+                                        <div style="padding-top:20px;">
                                          <h3 class="widget_title">Gates 1 & 2</h3>
                                          <p>Gates number 1 & 2 are located here</p>
                                          <p>Luxury Seating Acomodation and Shop Delivery available on site</p>
@@ -93,7 +98,7 @@
                                         </div>
                                         break;
                                     case 3:
-                                        <div style="padding-top:60px;">
+                                        <div style="padding-top:20px;">
                                          <h3 class="widget_title">Gates 5 & 6</h3>
                                          <p>Gates number 5 & 6 are located here</p>
                                          <p>Luxury Seating Acomodation and Shop Delivery available on site</p>
@@ -112,7 +117,7 @@
                                         </div>
                                         break;
                                     case 4:
-                                        <div style="padding-top:60px;">
+                                        <div style="padding-top:20px;">
                                          <h3 class="widget_title">Gates 7, 8 & 9</h3>
                                          <p>Gates number 7, 8 & 9 are located here</p>
                                          <p>Luxury Seating Acomodation and Shop Delivery available on site</p>
@@ -131,7 +136,7 @@
                                         </div>
                                         break;
                                     case 5:
-                                        <div style="padding-top:60px;">
+                                        <div style="padding-top:20px;">
                                          <h3 class="widget_title">Gates 1000</h3>
                                          <p>Gates number 7, 8 & 9 are located here</p>
                                          <p>Luxury Seating Acomodation and Shop Delivery available on site</p>
@@ -150,7 +155,7 @@
                                         </div>
                                         break;
                                     case 6:
-                                        <div style="padding-top:60px;">
+                                        <div style="padding-top:20px;">
                                          <h3 class="widget_title">BurgerKing</h3>
                                          <p>Eat in/ take out / delivery at gates</p>
                                          <p>Whoppers - SoftDrinks - Ice</p>
@@ -168,7 +173,7 @@
                                         </div>
                                          break;                                       
                                     case 7:
-                                        <div style="padding-top:60px;">
+                                        <div style="padding-top:20px;">
                                          <h3 class="widget_title">TaxFreeShop</h3>
                                          <p>Buy Shit</p>
                                          <p>Perfume - Tobacco - Alcohol</p>

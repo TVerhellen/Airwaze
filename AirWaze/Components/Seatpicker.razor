@@ -16,7 +16,6 @@
 @using BrowserInterop.Extensions
 @using BrowserInterop.Geolocation
 @inject ILogger<Seatpicker> Logger
-
 @inject IJSRuntime jsRuntime
 
 <head>
@@ -28,8 +27,11 @@
     height: 1266px;
     width: 720px;
 }
-
-
+.blog_right_sidebar {
+             background-color: #af932a;
+             background-size: contain; 
+             padding: 20px;
+             }
     </style>
 
 </head>
@@ -43,32 +45,28 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 mb-5 mb-lg-0">
-                        <div class="blog_left_sidebar1">
-            
+                        <div class="blog_left_sidebar1">           
                     <div @onmousedown="ReportPointerLocation">
                         <BECanvas Width="720" Height="1266" @ref="_canvasReference" >   
                         </BECanvas>
                     </div>
                 </div>
                 </div>
-               <div class="col-lg-4">
-                  
+               <div class="col-lg-4">                 
                    @if (selectedseat != "")
                     {
                           @if (istaken)
                             {
                                 <div class="blog_right_sidebar">                                                        
-                                            <div style="padding-top:60px;">
-                                                 <h1 class="widget_title">SEAT TAKEN</h1>
-                                                 
-
+                                            <div style="padding-top:20px;">
+                                                 <h1 class="widget_title">SEAT TAKEN</h1>                                                
                                             </div>                                  
-                           </div>
+                                </div>
                             }
-                            else
+                           else
                             {
                                 <div class="blog_right_sidebar">                                                        
-                                            <div style="padding-top:60px;">
+                                            <div style="padding-top:20px;">
                                                  <h3 class="widget_title">@selectedseat</h3>
                                                  <p>Your seatnumber: @alfcolumn</p>
                                                  <p>Row : @row</p>
@@ -82,25 +80,20 @@
                                                     </div>
                                                 <br>
                                                 <div class="media post_item">                                
-                                                    <img src="Images/seat.jpg" alt="Sample Image" height="360" width="360"/>                                                                                       
+                                                    <img src="Images/seat.jpg" alt="Sample Image" height="240" width="240"/>                                                                                       
                                                 </div>
                                                 
-                                                <a class="btn btn-secondary" style="margin-left:250px;width:600px;margin-top:60px;" @onclick=ConfirmSeat href="/Ticket/Create">Confirm Seat and Go to payment Menu</a>
-                                                <button class="btn btn-primary"style="margin-bottom:40px;" @onclick=CancelSeat>Cancel</button>
+                                                <a class="btn btn-secondary" style="margin-top:60px;" @onclick=ConfirmSeat href="/Ticket/Create">Confirm Seat, To Payment Menu</a>
+                                                <button class="btn btn-primary"style="margin-bottom:40px;margin-top:30px;" @onclick=CancelSeat>Cancel</button>
 
                                             </div>                                  
-                           </div>
-                             }
-                    
-                     }
-               
+                                 </div>
+                             }                   
+                     }             
                 </div>
-            </div>
-        
+            </div>       
         </div>
-                </section>                                   
-
-
+      </section>                                   
 
 <p>@mousePointerMessage</p>
 <p>@selectedseat</p>
