@@ -52,12 +52,25 @@
                 </div>
                 </div>
                <div class="col-lg-4">
+                  
                    @if (selectedseat != "")
                     {
-                         <div class="blog_right_sidebar">                                                        
+                          @if (istaken)
+                            {
+                                <div class="blog_right_sidebar">                                                        
+                                            <div style="padding-top:60px;">
+                                                 <h1 class="widget_title">SEAT TAKEN</h1>
+                                                 
+
+                                            </div>                                  
+                           </div>
+                            }
+                            else
+                            {
+                                <div class="blog_right_sidebar">                                                        
                                             <div style="padding-top:60px;">
                                                  <h3 class="widget_title">@selectedseat</h3>
-                                                 <p>Your seatnumber: @column</p>
+                                                 <p>Your seatnumber: @alfcolumn</p>
                                                  <p>Row : @row</p>
                                                  <br />
                                                   <h3>Price</h3>                                              
@@ -77,7 +90,9 @@
 
                                             </div>                                  
                            </div>
-                    }
+                             }
+                    
+                     }
                
                 </div>
             </div>
@@ -93,9 +108,10 @@
  
 @code {
     private string[,] thisseatdiagram;
+    private string seatdiagramstring;
     private int x = 176;
     private int y = 273;
-    private bool myboolean = false;
+    private bool istaken = false;
     private bool renderbool = true;
     private bool isseatselected = false;
     private string selectedseat = "";
@@ -116,24 +132,27 @@
 
     private async Task ReportPointerLocation(MouseEventArgs e)
     {       
+        await Task.Delay(2000);
         mousePointerMessage = $"Mouse coordinates: {e.OffsetX}:{e.OffsetY}";      
         if (isseatselected == false)
-        {
-              
-            await this._context.SetFillStyleAsync("black");      
-            await this._context.FillRectAsync(e.OffsetX, e.OffsetY, 10, 10);
+        {         
             for (int i = 0; i < 6; i++)
             {
                 for (int j = 0; j < 23; j++)
                 {
                     if (e.OffsetX > (x + ( i * 65)) && (e.OffsetY > y + ( j * 30)) && (e.OffsetX < ((x + ( i * 65)) + 20)) && (e.OffsetY < (( y  + ( j * 30)) +20)))
-                    {
+                    {                       
+                        await this._context.SetFillStyleAsync("black");      
+                        await this._context.FillRectAsync(e.OffsetX, e.OffsetY, 10, 10);
+                        if (thisseatdiagram[j,i] == "1")
+                        {
+                            istaken = true;
+                        }
                         isseatselected = true;  
                         //HIT , select seat[j,i]
                         // Naar html 
                         row = (Math.Round((e.OffsetY - 273) / 30) + 1).ToString();
                         column = (Math.Round((e.OffsetX - 176) / 65) + 1);
-
                         price = generator.Next(1000, 5000);
                         switch (column)
                         {
@@ -170,14 +189,35 @@
 
     protected async Task OnRenderAsync(bool firstRender)
     {
-        this._context = await this._canvasReference.CreateCanvas2DAsync();
-        await this._context.SetFillStyleAsync("green");             
-        await this._context.FillRectAsync(176, 273, 20, 20);        
+        //this._context = await this._canvasReference.CreateCanvas2DAsync();
+        //await this._context.SetFillStyleAsync("green");             
+        //await this._context.FillRectAsync(176, 273, 20, 20);        
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+        int columncounter = 0;
+        int rowcounter = 0;
+        seatdiagramstring = "00000000000000000000000/00000000000000000000000/00000000000000000000000/00000000000000000000000/00000000000100000000000/00000000000000000000000/";
+        if (seatdiagramstring != null)
+        {
 
+            seatdiagramstring = seatdiagramstring.Remove(seatdiagramstring.LastIndexOf('/'));
+            string[] mylist = seatdiagramstring.Split('/');
+            foreach (string x in mylist)
+            {
+                rowcounter++;
+                columncounter = x.Count();
+            }
+            thisseatdiagram = new string[columncounter, rowcounter];
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 23; j++)
+                {
+                    thisseatdiagram[j, i] = mylist[i].Substring(j, 1);
+                }
+            }
+        }        
         if (thisseatdiagram == null)
         {
             thisseatdiagram = new string[23, 6];
@@ -202,7 +242,7 @@
                     }               
                 }            
             } 
-            await Task.Delay(2000);
+
         }        
     }
 
@@ -222,15 +262,25 @@
         int thisrow = Convert.ToInt32(row);
         int thiscolumn = Convert.ToInt32(column);
         thisseatdiagram[thisrow, thiscolumn] = "1";
+        for (int i = 0; i < 6; i++)
+        {
+            for (int j = 0; j < 23; j++)
+            {
+                seatdiagramstring += thisseatdiagram[j, i];
+            }
+            seatdiagramstring += "/";
+        }
         //myticket.seat = x;
-        //myticket.flight.seatdiagram = y
+        //myticket.flight.seatdiagram = seatdiagramstring
         //Airwaze.Controllers.TicketController.TicketstoHande.Add(myticket)
     }
 
     public void CancelSeat()
     {
         isseatselected = false;
+        selectedseat = "";
+        istaken = false;
     }
-
+   
   
  }
