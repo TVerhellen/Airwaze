@@ -3,25 +3,51 @@
 @{
     ViewData["Title"] = "Add Role";
 }
+<link rel="stylesheet" href="~/css/dashboard.css">
 
-<h1>Add role</h1>
+<main>
+    <div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap text-center pt-50">
+                            <h2>Dashboard</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="col-lg-9" style="padding-bottom: 50px;">       
+    </div>
+     <section>
+            <div class="container">
+                <div class="col-lg-8 col-md-8">
+                <h3>Add role</h3>
 
-<form asp-action="AddRole" method="post" class="mt-3">
-    <div class="form-group row">
-        <label asp-for="RoleName" class="col-1 col-form-label"></label>
-        <div>
-            <input asp-for="RoleName" class="form-control" placeholder="Name" />
-            <span asp-validation-for="RoleName" class="text-danger"></span>
+                <form asp-action="AddRole" method="post" class="mt-3">
+                    <div class="mt-10">
+                        <label asp-for="RoleName" class="col-1 col-form-label"></label>
+                    <div>
+                        <input asp-for="RoleName" class="form-control" placeholder="Name" />
+                        <span asp-validation-for="RoleName" class="text-danger"></span>
+                    </div>
+                </div>
+                </br>
+                <div class="mt-10">
+                    <button type="submit" class="genric-btn info circle" onclick="message()">Add role</button> &nbsp; &nbsp; &nbsp;
+                    <a asp-action="ListAllRoles" class="genric-btn primary circle">Back</a>
+                <div>                    
+                </div>
+                </div>
+                </form>
+            </div>
         </div>
-    </div>
-    </br>
-    <div class="form-group col-4">
-        <button type="submit" class="btn btn-primary" onclick="message()">Add role</button>
-        <div>
-            <a asp-action="ListAllRoles" class="btn btn-warning my-3">Back</a>
-        </div>
-    </div>
-</form>
+    </section>
+    <br/>
+    <br/>
+    <br/>
+</main>
 
 <script type="text/javascript">
         function message()
@@ -34,4 +60,4 @@
                     timer: 1500
                     });
         }
-    </script>
+</script>

@@ -4,7 +4,21 @@
 @{
     ViewData["Title"] = "All roles";
 }
+<link rel="stylesheet" href="~/css/dashboard.css">
+
 <main>
+    <div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap text-center pt-50">
+                            <h2>Dashboard</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
 <div class="container-fluid" style="padding: 0 0 0 0;">
     <div class="row">
         <div class="col-lg-2 bg-dark-blue d-none d-sm-block" style="padding-top: 50px; padding-bottom: 20px;">
@@ -23,43 +37,44 @@
                     <a class="list-group-item" asp-action="Index" asp-controller="Flight"><i class="fa fa-plane-departure text-white">&nbsp; Flights</i></a> 
                     <a class="list-group-item" asp-action="Schedule" asp-controller="Admin"><i class="fa fa-clock text-white">&nbsp; Schedule</i></a>  
                 </div>
-        </div>
-    <div class="col-lg-9" style="padding-bottom: 50px;">
-           <h1>Manage roles</h1>
-           </br>
-           <a class="btn btn-primary mb-2" asp-action="AddRole">Add role</a>
-           </br>
-            @if (Model.Any())
-            {
-                <table class="table col-4">
-                <thead>
-                    <tr>
-                       <td><h5>Role</h5></td>
-                        <td></td>
-                    </tr>
-                </thead>
-                @foreach (var role in Model)
-                {
-                    <tbody>
-                        <tr>
-                            <td>@role.Name</td>
-                            <td class="text-center">
-                                <a asp-action="EditRole" asp-route-id="@role.Id" class="btn btn-primary"><i class="fa fa-edit text-white"></i></a>
-                                <a asp-action="DeleteRole" asp-route-id="@role.Id" class="btn btn-danger"><i class="fa fa-trash text-white"></i></a>
-                            </td>
-                        </tr>
-                    </tbody>
-                }
-                </table>
-            }
-            else
-            {
-                <h5>No roles yet, use the button to add your first role.</h5>
-            }
-         </div>
+        </div>            
+        <div class="col-lg-9" style="padding-bottom: 50px;">
+        <div class="section-top-border">
+					<h3 class="mb-30">Manage roles</h3>
+                    <br/>
+                    <a class="genric-btn info circle" asp-action="AddRole">Add role</a>
+                    <br/>
+					@if (Model.Any())
+					{
+					<div class="progress-table-wrap">
+						<div class="progress-table">
+							<div class="table-head">								
+								<div class="country">Role</div>
+                                <div class="country"></div>
+                                <div class="country"></div>
+							</div>
+                             @foreach (var role in Model)
+                            {
+							<div class="table-row">
+								<div class="country"> @role.Name</div>	
+                                <div class="country"><a asp-action="EditRole" asp-route-id="@role.Id" class="genric-btn warning circle">Edit</a></div>
+                                <div class="country"><a asp-action="DeleteRole" asp-route-id="@role.Id" class="genric-btn danger circle">Delete</a></div>
+							</div>
+                            }
+							
+						</div>
+					</div>
+					}
+					else
+					{
+						<h5>No roles yet, use the button to add your first role.</h5>
+					}
+				</div>    
+            </div>
     </div>
 </div>
 </main>
+
 <script src="~/lib/bootstrap/bootstrap-admin/popper.min.js"></script>
 <link href="~/lib/bootstrap/bootstrap-admin/bootstrap-parkeasy.css" rel="stylesheet" />
 <link href="~/lib/bootstrap/bootstrap-admin/dashboard.css" rel="stylesheet" />
