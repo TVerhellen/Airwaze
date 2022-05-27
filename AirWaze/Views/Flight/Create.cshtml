@@ -6,7 +6,7 @@
 @{
     List<Destination> allDestinations = FlightController.destinations.OrderBy(dest => dest.Region).ThenBy(dest => dest.Name).ToList();
 }
-
+<main>
 <h1>Create New Flight</h1>
 
 <form asp-controller="Flight" asp-action="Create" method="post">
@@ -47,3 +47,4 @@
                     });
         }
     </script>
+    </main>
