@@ -3,6 +3,7 @@
 
 
 
+@using AirWaze.Entities
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components.Web
 @using Microsoft.AspNetCore.Http.Extensions
@@ -51,7 +52,33 @@
                 </div>
                 </div>
                <div class="col-lg-4">
-                        
+                   @if (selectedseat != "")
+                    {
+                         <div class="blog_right_sidebar">                                                        
+                                            <div style="padding-top:60px;">
+                                                 <h3 class="widget_title">@selectedseat</h3>
+                                                 <p>Your seatnumber: @column</p>
+                                                 <p>Row : @row</p>
+                                                 <br />
+                                                  <h3>Price</h3>                                              
+                                                  <p>@price Euros</p>
+                                                  <p>CLass = @seatclass</p>
+                                                <br>
+                                                <div class="media-body">
+                                                        <a href="blog_details.html">Insert Link </a>                                                   
+                                                    </div>
+                                                <br>
+                                                <div class="media post_item">                                
+                                                    <img src="Images/seat.jpg" alt="Sample Image" height="360" width="360"/>                                                                                       
+                                                </div>
+                                                
+                                                <a class="btn btn-secondary" style="margin-left:250px;width:600px;margin-top:60px;" @onclick=ConfirmSeat href="/Ticket/Create">Confirm Seat and Go to payment Menu</a>
+                                                <button class="btn btn-primary"style="margin-bottom:40px;" @onclick=CancelSeat>Cancel</button>
+
+                                            </div>                                  
+                           </div>
+                    }
+               
                 </div>
             </div>
         
@@ -61,27 +88,78 @@
 
 
 <p>@mousePointerMessage</p>
+<p>@selectedseat</p>
 
  
 @code {
-
-    private string[,] thisseatdiagram = new string[23, 6];
+    private string[,] thisseatdiagram;
     private int x = 176;
     private int y = 273;
     private bool myboolean = false;
     private bool renderbool = true;
     private bool isseatselected = false;
+    private string selectedseat = "";
+    private string row;
+    private double column;
+    private string alfcolumn = "";
+
+    private int price;
+    private string seatclass = "Economy";
+    private Random generator = new Random();
 
     private string? mousePointerMessage;
+
+    //ticket to edit
+    //private Ticket myticket  = AirWaze.Controllers.TicketController.
+    //Diagram
+    //thisseatdiagram = myticket.flight.seatdiagram;
 
     private async Task ReportPointerLocation(MouseEventArgs e)
     {       
         mousePointerMessage = $"Mouse coordinates: {e.OffsetX}:{e.OffsetY}";      
         if (isseatselected == false)
         {
-            isseatselected = true;    
+              
             await this._context.SetFillStyleAsync("black");      
-            await this._context.FillRectAsync(e.OffsetX, e.OffsetY, 10, 10);                
+            await this._context.FillRectAsync(e.OffsetX, e.OffsetY, 10, 10);
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 23; j++)
+                {
+                    if (e.OffsetX > (x + ( i * 65)) && (e.OffsetY > y + ( j * 30)) && (e.OffsetX < ((x + ( i * 65)) + 20)) && (e.OffsetY < (( y  + ( j * 30)) +20)))
+                    {
+                        isseatselected = true;  
+                        //HIT , select seat[j,i]
+                        // Naar html 
+                        row = (Math.Round((e.OffsetY - 273) / 30) + 1).ToString();
+                        column = (Math.Round((e.OffsetX - 176) / 65) + 1);
+
+                        price = generator.Next(1000, 5000);
+                        switch (column)
+                        {
+                            case 1:
+                                alfcolumn = "A";
+                                break;
+                            case 2:
+                                alfcolumn = "B";
+                                break;
+                            case 3:
+                                alfcolumn = "C";
+                                break;
+                            case 4:
+                                alfcolumn = "D";
+                                break;
+                            case 5:
+                                alfcolumn = "E";
+                                break;
+                            case 6:
+                                alfcolumn = "F";
+                                break;
+                        }
+                        selectedseat = $"Stoel {alfcolumn} -- {row}";
+                    }                    
+                }
+            }           
         }      
     }
 
@@ -99,27 +177,15 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        for (int i = 0; i < 6; i++)
+
+        if (thisseatdiagram == null)
         {
-            for (int j = 0; j < 23; j++)
-            {
-                if (myboolean == false)
-                {
-                    thisseatdiagram[j, i] = "1";
-                    myboolean = true;
-                }
-                else
-                {
-                    thisseatdiagram[j, i] = "0";
-                    myboolean = false;
-                }
-            }
-        }
+            thisseatdiagram = new string[23, 6];
+            FillEmtpyPlane(6, 23);
+        }      
         if (isseatselected == false)
         {
             this._context = await this._canvasReference.CreateCanvas2DAsync();
-            await this._context.SetFillStyleAsync("green");                    
-
             for (int i = 0 ; i < 6; i++)
             {
                 for (int j = 0 ; j < 23; j++)
@@ -136,9 +202,35 @@
                     }               
                 }            
             } 
-             await Task.Delay(2000);
+            await Task.Delay(2000);
         }        
     }
- 
+
+    public void FillEmtpyPlane(int colums, int rows)
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            for (int j = 0; j < 23; j++)
+            {                              
+                thisseatdiagram[j, i] = "0";                                   
+            }
+        } 
+    }
+
+    public void ConfirmSeat()
+    {
+        int thisrow = Convert.ToInt32(row);
+        int thiscolumn = Convert.ToInt32(column);
+        thisseatdiagram[thisrow, thiscolumn] = "1";
+        //myticket.seat = x;
+        //myticket.flight.seatdiagram = y
+        //Airwaze.Controllers.TicketController.TicketstoHande.Add(myticket)
+    }
+
+    public void CancelSeat()
+    {
+        isseatselected = false;
+    }
+
   
  }
