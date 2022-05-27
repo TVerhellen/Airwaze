@@ -22,7 +22,7 @@
                             {
                                 <tr  style="background-color:darkgray; color:white; font-family:'Lucida Sans Typewriter'">
                                     <td>@x.Departure.Hour.ToString("00"):@x.Departure.Minute.ToString("00")</td>
-                                    <td>@x.Destination</td>     
+                                    <td>@x.Destination.Name</td>     
                                     <td>@x.FlightNr</td>
                                     @if(@x.CurrentGate.Number != 0)
                                     {
@@ -32,7 +32,32 @@
                                     {
                                         <td> </td>
                                     }
-                                    <td>@x.Status</td>
+                                    @switch (x.Status)
+                                    {
+                                        case 0:
+                                            <p>Awaiting Approval</p>
+                                            break;
+                                        case 1:
+                                            <p>Approved</p>
+                                            break;
+                                        case 2:
+                                            <p>Delayed</p>
+                                            break;
+                                        case 3:
+                                            <p>Boarding</p>
+                                            break;
+                                        case 4:
+                                            <p>Departed</p>
+                                            break;
+                                        case 5:
+                                            <p>Arrived</p>
+                                            break;
+                                        case 6:
+                                            <p>Cancelled</p>
+                                            break;
+                                        default:
+                                            break;
+                                    }
                                 </tr>
                             }
                         }

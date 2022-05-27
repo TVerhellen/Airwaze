@@ -1,18 +1,24 @@
 ﻿@using AirWaze.Controllers
+@using AirWaze.Entities
 @model FlightEditViewModel
 
+@{
+    List<Destination> allDestinations = FlightController.destinations.OrderBy(dest => dest.Region).ThenBy(dest => dest.Name).ToList();
+}
 
 <h1>Edit Flight Details</h1>
 <h2>Flight Nr.: @Model.FlightNr</h2>
 <br />
 
 <form asp-controller="Flight" asp-action="Edit" asp-route-id="@Model.FlightNr" method="post">
-    
-    <!--combobox destinations-->
-     <div class="form-group">
-       <label asp-for="Destination"></label>
-       <input class="form-control" asp-for="Destination" value="@Model.Destination"/>
-       <span asp-validation-for="Destination"></span>
+ <div class="form-group">
+        <label>Destination:</label>
+        <select name="selectedDestination">
+            @foreach(var item in allDestinations)
+            {
+                 <option value=@item.Name>@item.Region - @item.Name</option>
+            }
+        </select>
     </div>
     <br />
 
@@ -25,7 +31,7 @@
      <br />
 
 
-
+     <!-- combobox Gates -->
      <div class="form-group">
         <label asp-for="CurrentGate"></label>
         <input class="form-control" asp-for="CurrentGate" value="@Model.CurrentGate"/>
@@ -33,6 +39,7 @@
     </div>
      <br />
 
+     <!-- combobox Runways -->
      <div class="form-group">
         <label asp-for="CurrentRunway"></label>
         <input class="form-control" asp-for="CurrentRunway" value="@Model.CurrentRunway"/>
@@ -44,7 +51,7 @@
         <label>Plane</label>
         <br />
         <select name="selectedPlaneNr">
-            @foreach(var item in @FlightController.planes)
+            @foreach(var item in @PlaneController.planeEntities)
             {
                  <option value=@item.PlaneNr>@item.CurrentAirline.Name - @item.PlaneNr</option>
             }

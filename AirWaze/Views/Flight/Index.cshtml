@@ -59,7 +59,7 @@
                         <tr class="rounded">
                             <td>@x.Departure.Date.ToString("D")</td>
                             <td>@x.Departure.Hour.ToString("00"):@x.Departure.Minute.ToString("00")</td>
-                            <td>@x.Destination</td>     
+                            <td>@x.Destination.Name</td>     
                             <td>@x.FlightNr</td>
                             <td><a class="btn btn-primary" asp-controller="Flight" asp-action="Detail" asp-route-id="@x.FlightNr">Details</a></td>
                             <td><a class="btn btn-primary" asp-controller="Flight" asp-action="Edit" asp-route-id="@x.FlightNr">Edit</a></td>

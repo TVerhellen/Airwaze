@@ -49,7 +49,27 @@ namespace AirWaze.Entities
         
         public static void StartAirport()
         {
-           
+            UpdateAirportListsFromDatabase();
+
+            //TESTING PURPOSES
+            //TODO: DELETE AFTER TESTING
+            //
+            Gates[0].IsAvailable = false;
+            Gates[1].IsAvailable = false;
+            Gates[2].IsAvailable = false;
+            Gates[3].IsAvailable = false;
+            Gates[5].IsAvailable = false;
+            Gates[7].IsAvailable = false;
+            Gates[8].IsAvailable = false;
+            Gates[9].IsAvailable = false;
+            //
+
+            IsOnline = true;
+            StartTimer(1);
+        }
+
+        private static void UpdateAirportListsFromDatabase()
+        {
             Runways = myDatabase.GetRunways();
             foreach (Runway x in Runways)
             {
@@ -61,16 +81,19 @@ namespace AirWaze.Entities
                 x.IsAvailable = true;
             }
 
-            UpdateAirportListsFromDatabase();
+            FlightController.flights = myDatabase.GetFlights().ToList();
+            Flights = FlightController.flights.ToList();
+            FlightController.destinations = myDatabase.GetDestinations().ToList();
+            //Flights = Flights.FindAll(x => x.Status != 6 && x.Status != 7);
+            //Flights = Flights.OrderBy(flight => flight.Departure).ToList();
+            PlaneController.planeEntities = myDatabase.GetPlanes().ToList();
+            Planes = PlaneController.planeEntities;
 
-            IsOnline = true;
-            StartTimer(1);
         }
-
         public static void StartTimer(int dueTime)
         {
             aTimer = new Timer(new TimerCallback(TimerProc));
-            aTimer.Change(dueTime, 30000000);
+            aTimer.Change(dueTime, 120000000);
         }
         private static void TimerProc(object state)
         {
@@ -79,32 +102,32 @@ namespace AirWaze.Entities
         }
         public static void UpdateAirport()
         {
-            UpdateAirportListsFromDatabase();
+            //Fill in lists with data from Controller lists
+            UpdateAirportListsFromControllerLists();
 
-
-            //CheckGateAvailability();
+            //Do checks for flight logic and make changes to Lists in both Airport and Controller classes so both remain up to date
+            CheckGateAvailability();
             //CheckRunwayAvailability();
             //CheckPlaneAvailability();
             //CheckBoarding();
             //CheckDepartures();
             //CheckArrived();
             //CheckCompleted();
-
    
-            myDatabase = CrazyMethod(HomeController._myDatabase);                                      
+            myDatabase = CrazyMethod(HomeController._myDatabase);
 
+            //These can be deleted?
             //if (CurrentSchedule != null)
             //{
             //    CurrentSchedule.Flights.Remove(x);
             //}
 
-            Flights = FlightController.flights.ToList();
-            Planes = PlaneController.planeEntities.ToList();
-            Flights = Flights.FindAll(x => x.Status != 3 || x.Status != 5);
-            Flights = Flights.OrderBy(flight => flight.Departure).ToList();
+            //Flights = FlightController.flights.ToList();
+            //Planes = PlaneController.planeEntities.ToList();
+            //Flights = Flights.FindAll(x => x.Status != 3 || x.Status != 5);
+            //Flights = Flights.OrderBy(flight => flight.Departure).ToList();
 
-
-            //Update Database where -> in respective methods ???
+            FlightController.flightsChangedWithoutDatabaseUpdate = true;
         }
         public static void AddGate()
         {
@@ -114,7 +137,6 @@ namespace AirWaze.Entities
             myDatabase.AddGate(thisgate);
             Gates.Add(thisgate);
         }
-
         public static void AddRunway()
         {
             Runway thisRunway = new Runway();
@@ -123,7 +145,6 @@ namespace AirWaze.Entities
             myDatabase.AddRunway(thisRunway);
             Runways.Add(thisRunway);
         }
-
         public static Schedule GenerateSchedule(DateTime chosenDate)
         {
             Schedule myshedule = new Schedule();
@@ -143,12 +164,6 @@ namespace AirWaze.Entities
             myshedule.Flights = theseflights;
             return myshedule;
         }
-
-        public static void FlightDeparts()
-        {
-
-        }
-
         //Methods voor Passenger/Airliner hier en dan aanroepen in controller?
         public static void ViewSchedulePassenger()
         {
@@ -169,7 +184,6 @@ namespace AirWaze.Entities
             var goocheltruc = myList.ToList();
             return goocheltruc[0];
         }
-
         public static void CheckPlaneAvailability()
         {
             //make list of flights leaving in less than 2 hours with status approved or delayed and CurrentPlaneConfirmed false, all already have a CurrentPlane
@@ -203,11 +217,11 @@ namespace AirWaze.Entities
                     {
                         flight.CurrentPlane = availablePlanes[0];
                         flight.CurrentPlaneConfirmed = true;
-                        UpdateFlightInFlightsList(flight);
+                        UpdateFlightInAllLists(flight);
                         myDatabase.UpdateFlight(flight);
 
                         availablePlanes[0].IsAvailable = false;
-                        UpdatePlaneInPlanesList(availablePlanes[0]);
+                        UpdatePlaneInAllLists(availablePlanes[0]);
                         myDatabase.UpdatePlane(availablePlanes[0]);
                     }
                     else
@@ -220,22 +234,22 @@ namespace AirWaze.Entities
                 {
                     //the currentplane for this flight is available -> plane availability on false and update
                     flight.CurrentPlane.IsAvailable = false;
-                    UpdatePlaneInPlanesList(flight.CurrentPlane);
+                    UpdatePlaneInAllLists(flight.CurrentPlane);
                     myDatabase.UpdatePlane(flight.CurrentPlane);
 
                     //the currentplane for this flight is available -> flight planeconfirmed on true and update
                     flight.CurrentPlaneConfirmed = true;
-                    UpdateFlightInFlightsList(flight);
+                    UpdateFlightInAllLists(flight);
                     myDatabase.UpdateFlight(flight);
                 }
             }
         }
-
         public static void CheckGateAvailability()
         {
             //make list of flights leaving in less than 2 hours with status approved or delayed and that have no gate yet
             //Sort list by status descending (priority to status 2 - delayed) and then by departure date (priority to flights leaving earlier)
-            List<Flight> nextFlights = new List<Flight>();
+
+            List <Flight> nextFlights = new List<Flight>();
             foreach (Flight flight in Flights)
             {
                 if((flight.Status == 1 || flight.Status == 2) 
@@ -249,7 +263,7 @@ namespace AirWaze.Entities
 
             //Make list of available gates
             List<Gate> availableGates = new List<Gate>();
-            availableGates = myDatabase.GetGates().FindAll(gate => gate.IsAvailable == true);
+            availableGates = Gates.FindAll(gate => gate.IsAvailable == true);
 
             //Check for every flight if there is at least 1 gate available -> assign first gate to flight and flight to gate, update availability and remove gate from list availablegates
             foreach(Flight nextFlight in nextFlights)
@@ -259,11 +273,11 @@ namespace AirWaze.Entities
                     availableGates[0].CurrentFlight = nextFlight;
                     availableGates[0].IsAvailable = false;
                     UpdateGateInGatesList(availableGates[0]);
-                    myDatabase.UpdateGate(availableGates[0]);
 
                     nextFlight.CurrentGate = availableGates[0];
-                    UpdateFlightInFlightsList(nextFlight);
-                    myDatabase.UpdateFlight(nextFlight);
+                    UpdateFlightInAllLists(nextFlight);
+                    //Save changes in DB at the end to solve exception?
+                    //myDatabase.UpdateFlight(nextFlight);
 
                     availableGates.RemoveAt(0);
                 }
@@ -279,7 +293,6 @@ namespace AirWaze.Entities
                 }
             }
         }
-
         public static void CheckRunwayAvailability()
         {
             //make list of flights over next 30 mins with CurrentRunway == 0 and status 1&2
@@ -304,7 +317,7 @@ namespace AirWaze.Entities
 
             //Make list of available gates
             List<Runway> availableRunways = new List<Runway>();
-            availableRunways = myDatabase.GetRunways().FindAll(runway => runway.IsAvailable == true);
+            availableRunways = Runways.FindAll(runway => runway.IsAvailable == true);
 
             //Check for every flight if there is at least 1 gate available -> assign first gate to flight and flight to gate, update availability and remove gate from list availablegates
             foreach (Flight nextFlight in nextFlights)
@@ -314,10 +327,9 @@ namespace AirWaze.Entities
                     availableRunways[0].CurrentFlight = nextFlight;
                     availableRunways[0].IsAvailable = false;
                     UpdateRunwayInRunwaysList(availableRunways[0]);
-                    myDatabase.UpdateRunway(availableRunways[0]);
 
                     nextFlight.CurrentRunway = availableRunways[0];
-                    UpdateFlightInFlightsList(nextFlight);
+                    UpdateFlightInAllLists(nextFlight);
                     myDatabase.UpdateFlight(nextFlight);
 
                     availableRunways.RemoveAt(0);
@@ -355,7 +367,7 @@ namespace AirWaze.Entities
             foreach (Flight flight in boardingFlights)
             {
                 flight.Status = 3;
-                UpdateFlightInFlightsList(flight);
+                UpdateFlightInAllLists(flight);
                 myDatabase.UpdateFlight(flight);
             }
         }
@@ -380,16 +392,14 @@ namespace AirWaze.Entities
             {
                 flight.CurrentGate.IsAvailable = true;
                 UpdateGateInGatesList(flight.CurrentGate);
-                myDatabase.UpdateGate(flight.CurrentGate);
 
                 flight.CurrentRunway.IsAvailable = true;
                 UpdateRunwayInRunwaysList(flight.CurrentRunway);
-                myDatabase.UpdateRunway(flight.CurrentRunway);
 
                 flight.Status = 4;
                 flight.CurrentGate = myDatabase.GetGateByNr(0);
                 flight.CurrentRunway = myDatabase.GetRunwayByNr(0);
-                UpdateFlightInFlightsList(flight);
+                UpdateFlightInAllLists(flight);
                 myDatabase.UpdateFlight(flight);
             }
         }
@@ -410,7 +420,7 @@ namespace AirWaze.Entities
             foreach (Flight arrivedflight in arrivedFlights)
             {
                 arrivedflight.Status = 5;
-                UpdateFlightInFlightsList(arrivedflight);
+                UpdateFlightInAllLists(arrivedflight);
                 myDatabase.UpdateFlight(arrivedflight);
             }
         }
@@ -436,15 +446,14 @@ namespace AirWaze.Entities
             foreach (Flight completedflight in completedFlights)
             {
                 completedflight.Status = 7;
-                UpdateFlightInFlightsList(completedflight);
+                UpdateFlightInAllLists(completedflight);
                 myDatabase.UpdateFlight(completedflight);
 
                 completedflight.CurrentPlane.IsAvailable = true;
-                UpdatePlaneInPlanesList(completedflight.CurrentPlane);
+                UpdatePlaneInAllLists(completedflight.CurrentPlane);
                 myDatabase.UpdatePlane(completedflight.CurrentPlane);
             }
         }
-
         public static List<Plane> GetAvailablePlanesForFlight(Flight originalFlight)
         {
             //Both IsAvailable=true and IsAvailable=false need to be in this list, as for PlanePicker in FlightCreator, also nonavailable planes need to be able to be selected (flight is later)
@@ -495,21 +504,21 @@ namespace AirWaze.Entities
             }
             return availablePlanes;
         }
-
         private static void DelayFlight(Flight flight, int minutesDelay)
         {
             flight.Departure = flight.Departure.AddMinutes(minutesDelay);
-            UpdateFlightInFlightsList(flight);
-            myDatabase.UpdateFlight(flight);
+            UpdateFlightInAllLists(flight);
+            //myDatabase.UpdateFlight(flight);
         }
-        private static void UpdateAirportListsFromDatabase()
+        private static void UpdateAirportListsFromControllerLists()
         {
-            Flights = myDatabase.GetFlights();
-            Flights = Flights.FindAll(x => x.Status != 6 && x.Status != 7);
-            Flights = Flights.OrderBy(flight => flight.Departure).ToList();
-            Planes = myDatabase.GetPlanes();
+            //Flights = myDatabase.GetFlights();
+            Flights = FlightController.flights.ToList();
+            //Flights = Flights.FindAll(x => x.Status != 6 && x.Status != 7);
+            //Flights = Flights.OrderBy(flight => flight.Departure).ToList();
+            Planes = PlaneController.planeEntities.ToList();
         }
-        private static void UpdateFlightInFlightsList(Flight updatedFlight)
+        private static void UpdateFlightInAllLists(Flight updatedFlight)
         {
             //look for correct flight in Flights List and update only properties that can be modified in Airport Class automatically
             foreach(Flight flight in Flights)
@@ -517,6 +526,22 @@ namespace AirWaze.Entities
                 if(flight.FlightNr == updatedFlight.FlightNr)
                 {
                     flight.CurrentPlane = updatedFlight.CurrentPlane;
+                    flight.CurrentPlaneConfirmed = updatedFlight.CurrentPlaneConfirmed;
+                    flight.Departure = updatedFlight.Departure;
+                    flight.CurrentGate = updatedFlight.CurrentGate;
+                    flight.CurrentRunway = updatedFlight.CurrentRunway;
+                    flight.Status = updatedFlight.Status;
+                    break;
+                }
+            }
+
+            //Also update flight list in FlightController
+            foreach (Flight flight in FlightController.flights)
+            {
+                if (flight.FlightNr == updatedFlight.FlightNr)
+                {
+                    flight.CurrentPlane = updatedFlight.CurrentPlane;
+                    flight.CurrentPlaneConfirmed = updatedFlight.CurrentPlaneConfirmed;
                     flight.Departure = updatedFlight.Departure;
                     flight.CurrentGate = updatedFlight.CurrentGate;
                     flight.CurrentRunway = updatedFlight.CurrentRunway;
@@ -525,10 +550,20 @@ namespace AirWaze.Entities
                 }
             }
         }
-        private static void UpdatePlaneInPlanesList(Plane updatedPlane)
+        private static void UpdatePlaneInAllLists(Plane updatedPlane)
         {
             //look for correct plane in Planes List and update only properties that can be modified in Airport Class automatically
             foreach (Plane plane in Planes)
+            {
+                if (plane.PlaneNr == updatedPlane.PlaneNr)
+                {
+                    plane.IsAvailable = updatedPlane.IsAvailable;
+                    break;
+                }
+            }
+
+            //Also update planes list in PlaneController
+            foreach (Plane plane in PlaneController.planeEntities)
             {
                 if (plane.PlaneNr == updatedPlane.PlaneNr)
                 {

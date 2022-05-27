@@ -1,4 +1,5 @@
 ﻿using AirWaze.Database.Design;
+using AirWaze.Database;
 using AirWaze.Entities;
 using AirWaze.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -10,9 +11,12 @@ namespace AirWaze.Controllers
     {
         public readonly IAirWazeDatabase _airwazeDatabase;
         public static List<Flight> flights = new List<Flight>();
-        public static List<FlightCreateViewModel> tempFlights = new List<FlightCreateViewModel>();
+        //public static List<Flight> tempFlights = new List<Flight>();
+        public static List<FlightCreateViewModel> tempFlightModels = new List<FlightCreateViewModel>();
         Random _random = new Random();
-        public static List<Plane> planes = new List<Plane>();
+        //public static List<Plane> planes = new List<Plane>();
+        public static bool flightsChangedWithoutDatabaseUpdate = false;
+        public static List<Destination> destinations = new List<Destination>();
 
         //testplane (and linked testAirline) is used for new FlightCreateViewModels, before going to PlanePicker
         static Airline testAirline = new Airline
@@ -45,30 +49,55 @@ namespace AirWaze.Controllers
         };
         public FlightController(IAirWazeDatabase airwazeDatabase)
         {
-            List<Flight> oldlist = flights.ToList();
             _airwazeDatabase = airwazeDatabase;
-            if (flights.Count == 0)
-            {
-                flights = _airwazeDatabase.GetFlights();
-            }
 
 
-            foreach (Flight x in flights)
-            {
-                foreach (Flight y in oldlist)
-                {
-                    if (x.FlightID == y.FlightID)
-                    {
-                        if (x.Status != y.Status)
-                        {
-                            x.Status = y.Status;
-                            //_airwazeDatabase.UpdateFlight(x);
-                        }
-                    }
-                }
+            //TODO: REMOVE COMMENTS AFTER TESTING
+            //if(flightsChangedWithoutDatabaseUpdate)
+            //{
+            //    //Save changes made to flights in Database
 
-                planes = _airwazeDatabase.GetPlanes();
-            }
+            //    List<Flight> databaseFlights = _airwazeDatabase.GetFlights();
+
+
+            //    foreach (Flight databaseFlight in databaseFlights)
+            //    {
+            //        Flight flightToChange = flights.SingleOrDefault(x => x.FlightNr == databaseFlight.FlightNr);
+            //        _airwazeDatabase.RemoveFlight(flightToChange);
+            //        _airwazeDatabase.AddFlight(flightToChange);
+            //    }
+            //    flightsChangedWithoutDatabaseUpdate = false;
+            //}
+
+
+
+
+
+
+            //List<Flight> oldlist = flights.ToList();
+            //if (flights.Count == 0)
+            //{
+            //    flights = _airwazeDatabase.GetFlights();
+            //}
+            //else
+            //{
+            //    foreach (Flight x in flights)
+            //    {
+            //        foreach (Flight y in oldlist)
+            //        {
+            //            if (x.FlightID == y.FlightID)
+            //            {
+            //                if (x.Status != y.Status)
+            //                {
+            //                    x.Status = y.Status;
+            ////_airwazeDatabase.UpdateFlight(x);
+            //            }
+            //        }
+            //    }
+
+            //}
+            ////planes = _airwazeDatabase.GetPlanes();
+            //}
         }
 
         //Roles: Everyone
@@ -151,6 +180,7 @@ namespace AirWaze.Controllers
         public async Task<IActionResult> Create(FlightCreateViewModel flightViewModel)
         {
             await Task.Delay(1500);
+            flightViewModel.Destination = destinations.FirstOrDefault(x => x.Name == Request.Form["selectedDestination"]);
             flightViewModel.FlightNr = CreateFlightNr(flightViewModel);
             flightViewModel.CurrentGate = _airwazeDatabase.GetGateByNr(0);
             flightViewModel.CurrentPlane = testplane;
@@ -159,7 +189,7 @@ namespace AirWaze.Controllers
 
             if (TryValidateModel(flightViewModel))
             {
-                tempFlights.Add(flightViewModel);   
+                tempFlightModels.Add(flightViewModel);   
                 return RedirectToAction("PlanePicker", new { flightNr = flightViewModel.FlightNr });
             }
             else
@@ -173,7 +203,7 @@ namespace AirWaze.Controllers
         //[Route("Flight/PlanePicker/{flightNr}")]
         public IActionResult PlanePicker(string flightNr)
         {
-            var flightCreateViewModel = tempFlights.SingleOrDefault(x => x.FlightNr == flightNr);
+            var flightCreateViewModel = tempFlightModels.SingleOrDefault(x => x.FlightNr == flightNr);
             
             return View(flightCreateViewModel);      
         }
@@ -182,8 +212,8 @@ namespace AirWaze.Controllers
         [HttpPost]
         public IActionResult PlanePicker(FlightCreateViewModel flightViewModel, string id)
         {
-            flightViewModel = tempFlights.SingleOrDefault(x => x.FlightNr == id);
-            flightViewModel.CurrentPlane = planes.FirstOrDefault(x => x.PlaneNr == Request.Form["selectedPlaneNr"]);
+            flightViewModel = tempFlightModels.SingleOrDefault(x => x.FlightNr == id);
+            flightViewModel.CurrentPlane = PlaneController.planeEntities.FirstOrDefault(x => x.PlaneNr == Request.Form["selectedPlaneNr"]);
 
             if (TryValidateModel(flightViewModel))
             {
@@ -200,7 +230,7 @@ namespace AirWaze.Controllers
                 };
                 _airwazeDatabase.AddFlight(newEntity);
                 flights.Add(newEntity);
-                tempFlights.Remove(flightViewModel);
+                tempFlightModels.Remove(flightViewModel);
                 return RedirectToAction("Index");
             }
             else
@@ -240,8 +270,9 @@ namespace AirWaze.Controllers
         public async Task<IActionResult> Edit(string id, FlightEditViewModel flightViewModel)
         {
             await Task.Delay(1500);
-            flightViewModel.CurrentPlane = planes.FirstOrDefault(x => x.PlaneNr == Request.Form["selectedPlaneNr"]);
+            flightViewModel.CurrentPlane = PlaneController.planeEntities.FirstOrDefault(x => x.PlaneNr == Request.Form["selectedPlaneNr"]);
             flightViewModel.Status = Convert.ToInt32(Request.Form["selectedStatus"]);
+            flightViewModel.Destination = destinations.FirstOrDefault(x => x.Name == Request.Form["selectedDestination"]);
             flightViewModel.FlightNr = id;
 
             var flightEntity = flights.FirstOrDefault(x => x.FlightNr == id);
@@ -338,5 +369,4 @@ namespace AirWaze.Controllers
             return tempFlightNrFull;
         }
     }
-    
 }

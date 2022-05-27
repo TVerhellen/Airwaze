@@ -231,6 +231,11 @@ namespace AirWaze.Database
         {
             //TODO: check if Plane/Destination/Gate/Runway are not removed/changed
             _dbContext.Flights.Update(flight);
+            //_dbContext.Entry(flight.CurrentPlane).State = EntityState.Unchanged;
+            //_dbContext.Entry(flight.CurrentPlane.CurrentAirline).State = EntityState.Unchanged;
+            //_dbContext.Entry(flight.CurrentGate).State = EntityState.Unchanged;
+            //_dbContext.Entry(flight.CurrentRunway).State = EntityState.Unchanged;
+            //_dbContext.Entry(flight.Destination).State = EntityState.Unchanged;
             _dbContext.SaveChanges();
         }
 
@@ -259,7 +264,7 @@ namespace AirWaze.Database
 
         public List<Gate> GetGates()
         {
-            return _dbContext.Gates.ToList();
+            return _dbContext.Gates.AsNoTracking().ToList();
         }
 
         public void AddGate(Gate gate)
@@ -269,7 +274,7 @@ namespace AirWaze.Database
 
         public List<Runway> GetRunways()
         {
-            return _dbContext.Runways.ToList();
+            return _dbContext.Runways.AsNoTracking().ToList();
         }
 
         public void AddRunway(Runway runway)
@@ -279,13 +284,13 @@ namespace AirWaze.Database
 
         public Gate GetGateByNr(int nr)
         {
-            return _dbContext.Gates
+            return _dbContext.Gates.AsNoTracking()
                 .SingleOrDefault(gate => gate.Number.Equals(nr));
         }
 
         public Runway GetRunwayByNr(int nr)
         {
-            return _dbContext.Runways
+            return _dbContext.Runways.AsNoTracking()
                .SingleOrDefault(runway => runway.Number.Equals(nr));
         }
 
@@ -304,16 +309,16 @@ namespace AirWaze.Database
             throw new NotImplementedException();
         }
 
-        public void UpdateGate(Gate gate)
-        {
-            _dbContext.Gates.Update(gate);
-            _dbContext.SaveChanges();
-        }
+        //public void UpdateGate(Gate gate)
+        //{
+        //    _dbContext.Gates.Update(gate);
+        //    _dbContext.SaveChanges();
+        //}
 
-        public void UpdateRunway(Runway runway)
-        {
-            _dbContext.Runways.Update(runway);
-            _dbContext.SaveChanges();
-        }
+        //public void UpdateRunway(Runway runway)
+        //{
+        //    _dbContext.Runways.Update(runway);
+        //    _dbContext.SaveChanges();
+        //}
     } 
 }
