@@ -12,16 +12,13 @@
 @using BrowserInterop.Geolocation  
 @using AirWaze.Entities
 
-
 @inject ILogger<Canvasformap> Logger
 @inject IJSRuntime jsRuntime
 
 <head>
    
-    <style>
-        
+    <style>        
         body
-
         {
         margin-top: 20px;
         margin-bottom: 60px;
@@ -29,14 +26,10 @@
         width: none;
         background-image: url('../Images/gps.jpg');
         background-size: cover;
-        }
-
-        
+        }       
 
     </style>
 </head>
-
-
 
 <h1>Click area for more info!</h1>
                                       
@@ -420,7 +413,7 @@
         bearingpitta = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, pittalat, pittalon);
         bearingfrietkot = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, frietkotlat, frietkotlon);
 
-        //Once DB is Updated
+        //Gates in st Niklaas
         distancegates12 = GetDistance(AirWaze.Entities.Airport.Gates[0].CoordsLon, AirWaze.Entities.Airport.Gates[0].CoordsLat);
         distancegates34 = GetDistance(AirWaze.Entities.Airport.Gates[2].CoordsLon, AirWaze.Entities.Airport.Gates[2].CoordsLat);
         distancegates56 = GetDistance(AirWaze.Entities.Airport.Gates[4].CoordsLon, AirWaze.Entities.Airport.Gates[4].CoordsLat);
@@ -430,7 +423,7 @@
          bearinggates56 = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, AirWaze.Entities.Airport.Gates[4].CoordsLat, AirWaze.Entities.Airport.Gates[4].CoordsLon);
          bearinggates789 = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, AirWaze.Entities.Airport.Gates[6].CoordsLat, AirWaze.Entities.Airport.Gates[6].CoordsLon);
 
-        //SintNiklaas
+        // 3 points in SintNiklaas
         distanceregentiestraat =  GetDistance(regentiestraatlon, regentiestraatlat);
         distanceherderstraat =  GetDistance( herderstraatlon, herderstraatlat);
         distancebasisschool =  GetDistance(basisschoollon, basisschoollat);

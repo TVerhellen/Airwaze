@@ -1,0 +1,139 @@
+﻿
+
+
+
+
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.AspNetCore.Http.Extensions
+@using Microsoft.Extensions.Logging
+@using Blazor.Extensions; 
+@using Blazor.Extensions.Canvas
+@using Blazor.Extensions.Canvas.Canvas2D;
+@using Microsoft.AspNetCore.Mvc.TagHelpers;
+@using Microsoft.JSInterop
+@using BrowserInterop.Extensions
+@using BrowserInterop.Geolocation
+@inject ILogger<Seatpicker> Logger
+
+@inject IJSRuntime jsRuntime
+
+<head>
+    <style>
+        
+.blog_left_sidebar1 {
+    background-image: url('../Images/A319SeatPicker.jpg');
+    background-size: contain;
+    height: 1266px;
+    width: 720px;
+}
+
+
+    </style>
+
+</head>
+
+<div style="padding-top:200px;"></div>
+
+
+<br />
+
+  <section class="blog_area section-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 mb-5 mb-lg-0">
+                        <div class="blog_left_sidebar1">
+            
+                    <div @onmousedown="ReportPointerLocation">
+                        <BECanvas Width="720" Height="1266" @ref="_canvasReference" >   
+                        </BECanvas>
+                    </div>
+                </div>
+                </div>
+               <div class="col-lg-4">
+                        
+                </div>
+            </div>
+        
+        </div>
+                </section>                                   
+
+
+
+<p>@mousePointerMessage</p>
+
+ 
+@code {
+
+    private string[,] thisseatdiagram = new string[23, 6];
+    private int x = 176;
+    private int y = 273;
+    private bool myboolean = false;
+
+    private string? mousePointerMessage;
+
+    private async Task ReportPointerLocation(MouseEventArgs e)
+    {
+        mousePointerMessage = $"Mouse coordinates: {e.OffsetX}:{e.OffsetY}";
+        //this._context = await this._canvasReference.CreateCanvas2DAsync();      
+        //await this._context.SetFillStyleAsync("black");      
+        //await this._context.FillRectAsync(e.OffsetX, e.OffsetY, 20, 20);
+        //await this._context.SetFontAsync("38px Calibri");
+        //await this._context.StrokeTextAsync("Hello Blazor!!!", 5, 100);   
+
+    }
+
+
+    private Canvas2DContext _context;
+
+    protected BECanvasComponent _canvasReference;
+
+
+    protected async Task OnRenderAsync(bool firstRender)
+    {
+        this._context = await this._canvasReference.CreateCanvas2DAsync();
+        await this._context.SetFillStyleAsync("green");             
+        await this._context.FillRectAsync(176, 273, 20, 20);        
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            for (int j = 0; j < 23; j++)
+            {
+                if (myboolean == false)
+                {
+                    thisseatdiagram[j, i] = "1";
+                    myboolean = true;
+                }
+                else
+                {
+                    thisseatdiagram[j, i] = "0";
+                    myboolean = false;
+                }
+            }
+        }
+        this._context = await this._canvasReference.CreateCanvas2DAsync();
+        await this._context.SetFillStyleAsync("green");                    
+
+        for (int i = 0 ; i < 6; i++)
+        {
+            for (int j = 0 ; j < 23; j++)
+            {
+                if (thisseatdiagram[j,i] == "0")
+                {
+                    await this._context.SetFillStyleAsync("green");
+                    await this._context.FillRectAsync(x +( i * 65), y + (j * 30), 20, 20);
+                }
+                else
+                {
+                    await this._context.SetFillStyleAsync("red");
+                     await this._context.FillRectAsync(x +( i * 65), y + (j * 30), 20, 20);
+                }               
+            }
+        }            
+    }
+ 
+  
+ }
