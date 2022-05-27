@@ -6,6 +6,7 @@
 
 @model TicketPaymentViewModel
 
+<main>
 <h1>Payment</h1>
 <p>Destination: @Model.CurrentFlight.Destination</p>
 <p>Departure: @Model.CurrentFlight.Departure</p>
@@ -16,3 +17,4 @@
 <a class="btn btn-primary" asp-action="ConfirmedPayment" asp-route-ID="@Model.TicketNr">Pay Now</a>
 <a class="btn btn-primary" asp-action="Edit" asp-route-ID="@Model.TicketNr">Change Ticket</a>
 <a class="btn btn-danger" asp-action="Delete" asp-route-ID="@Model.TicketNr">Abort</a>
+</main>

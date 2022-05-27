@@ -5,8 +5,43 @@
 
 <head>
 
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AirWaze.styles.css" asp-append-version="true" /> 
+
+     <link rel="stylesheet" href="~/AirWaze.styles.css" asp-append-version="true" />    
+     <link rel="stylesheet" href="~/js/sweetalert2.min.css" />     
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">      
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/css/slicknav.css">
+    <link rel="stylesheet" href="~/css/animate.min.css">
+    <link rel="stylesheet" href="~/css/magnific-popup.css">
+    <link rel="stylesheet" href="~/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="~/css/themify-icons.css">
+    <link rel="stylesheet" href="~/css/slick.css">
+    <link rel="stylesheet" href="~/css/nice-select.css">
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/flaticon.css">
+    <link rel="stylesheet" href="~/css/main.css">
+    <link rel="stylesheet" href="~/css/price_rangs.css">
+    <link rel="stylesheet" href="~/css/normalize.min.css">
+    <link rel="stylesheet" href="~/css/mainbis.css">
+    <link rel="stylesheet" href="~/css/responsive.css">
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/navbar.css">
+
+     <link rel="stylesheet" href="~/css/Gps.css">
+
+
+
  <script src="_content/BrowserInterop/scripts.js"></script>
+<script src="_content/Blazor.Extensions.Canvas/blazor.extensions.canvas.js"></script>
+<script src="_content/Blazored.Modal/blazored.modal.js"></script>
  <script src="_framework/blazor.server.js"></script>
 </head>
 
-@(await Html.RenderComponentAsync<Interactivemap>(RenderMode.Server))
+
+
+@(await Html.RenderComponentAsync<Seatpicker>(RenderMode.Server))

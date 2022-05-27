@@ -4,7 +4,7 @@
 @{
 }
 @model TicketDetailViewModel
-
+<main>
 <h1>Ticket @Model.TicketNr</h1>
 <p>Name: @Model.LastName @Model.FirstName</p>
 <p>Destination: @Model.CurrentFlight.Destination</p>
@@ -32,5 +32,5 @@
 <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index">Return</a>
 <a class="btn btn-primary" asp-controller="Ticket" asp-action="Edit" asp-route-ID="@Model.TicketNr">Change Passenger Information</a>
 <a class="btn btn-danger" asp-controller="Ticket" asp-action="Delete" asp-route-ID="@Model.TicketNr">Delete</a>
-
+</main>
 

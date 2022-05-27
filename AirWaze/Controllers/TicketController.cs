@@ -15,12 +15,19 @@ namespace AirWaze.Controllers
         private readonly UserManager<AirWazeUser> _userManager;
         private readonly IAirWazeDatabase database;
         private static List<Ticket> loadedTickets = new List<Ticket>();
+        public static List<Destination> allDestinations = new List<Destination>();
+        public static List<Flight> allFlights = new List<Flight>();
+        public static List<TicketCreateViewModel> ticketsToHandle = new List<TicketCreateViewModel>();
         static ApplicationUser myUser;
 
         public TicketController(IAirWazeDatabase db, UserManager<AirWazeUser> userManager)
         {
             _userManager = userManager;
             database = db;
+            if(allDestinations.Count == 0)
+            {
+                allDestinations = database.GetDestinations();
+            }
             
             //myUser = HttpContext.User;
             //myUser = database.GetUserByID(HttpContext.Session.GetString("user_id"));
@@ -37,27 +44,9 @@ namespace AirWaze.Controllers
             }
         }
 
+       
+
         
-        //{
-        //    UserID = Guid.Parse("7B1A9A6C-658A-4391-8149-1184FAC528BE"),
-        //    //Name = "tverhel",
-        //    //Password = "password",
-        //    LastName = "Verhellen",
-        //    FirstName = "Tijs",
-        //    Email = "tijs@milehighclub.com",
-        //    StreetName = "Koperstraat",
-        //    HouseNumber = "894",
-        //    Bus = "4",
-        //    Zipcode = "1000",
-        //    City = "Brussel",
-        //    Country = "Belgium",
-        //    PhoneNumber = "0456789456",
-        //    //IsVerified = true
-        //};
-
-        public static List<Flight> allFlights = new List<Flight>();
-
-        public static List<TicketCreateViewModel> ticketsToHandle = new List<TicketCreateViewModel>();
 
 
         public IActionResult Index()
@@ -255,9 +244,7 @@ namespace AirWaze.Controllers
         {
             Ticket newTicket = loadedTickets.Single(x => x.TicketNr == ID);
             newTicket.Status = 1;
-            if(database.AddTicket(newTicket) > 0)
-            { }
-            else
+            if(database.AddTicket(newTicket) <= 0)
             {
                 LoadTicketList(myUser);
             }
@@ -278,7 +265,7 @@ namespace AirWaze.Controllers
 
         public string GenerateSeatNumber(Flight flight)
         {
-            return "15B";
+            return flight.FillSeatDiagram(1);
         }
 
         public void LoadTicketList(ApplicationUser user)

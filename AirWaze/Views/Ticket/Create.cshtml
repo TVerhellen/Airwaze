@@ -7,7 +7,7 @@
 }
 
 @model TicketCreateViewModel
-
+<main>
 <form asp-controller="Ticket" asp-action="Create" method="post">
     <div class="form-group">
         <label asp-for="LastName">Last Name</label>
@@ -21,9 +21,16 @@
     </div>
     <p>Flight Information</p>
     <div class="form-group">
-        <label asp-for="Destination">Destination</label>
-        <input asp-for="Destination"/>
+        <label>Available Destinations:</label>
+        <br />
+        <select name="Destination">
+            @foreach(var item in @TicketController.allDestinations)
+            {
+                 <option value=@item.Name>@item.Name</option>
+            }
+        </select>
     </div>
+    <button class="btn btn-primary" type="submit">Confirm Plane</button>
     <div class="form-group">
         <label asp-for="FirstClass">Preferred time of departure</label>
         <input asp-for="Departure"/>
@@ -41,6 +48,7 @@
 
     <button class="btn btn-primary" onclick="message()" type="submit">Create Ticket</button>
 </form>
+</main>
 <script type="text/javascript">
         function message()
         {
