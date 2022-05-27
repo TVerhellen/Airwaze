@@ -66,20 +66,20 @@
                                 <div class="main-menu f-right d-none d-lg-block">
                                     <nav>
                                         <ul id="navigation">      
-                                            <li> <a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                                            <li> <a asp-area="" asp-controller="Home" asp-action="Index" style="background-color: transparent">Home</a></li>
                                             @if (User.IsInRole("Customer") || User.IsInRole("Admin"))
                                             {
-                                                <li> <a asp-area="" asp-controller="Ticket" asp-action="List">Tickets</a></li>
-                                                <li><a asp-area="" asp-controller="Ticket" asp-action="Create">Create Ticket</a></li>
+                                                <li> <a asp-area="" asp-controller="Ticket" asp-action="List" style="background-color: transparent">Tickets</a></li>
+                                                <li><a asp-area="" asp-controller="Ticket" asp-action="Create" style="background-color: transparent">Create Ticket</a></li>
                                             }
                                             @if (User.IsInRole("Admin"))
                                             {
-                                                <li> <a  asp-area="" asp-controller="Flight" asp-action="Index">Flights</a></li>
-                                                <li><a asp-area="" asp-controller="Ticket" asp-action="Create">Book</a></li>
+                                                <li> <a  asp-area="" asp-controller="Flight" asp-action="Index" style="background-color: transparent">Flights</a></li>
+                                                <li><a asp-area="" asp-controller="Ticket" asp-action="Create" style="background-color: transparent">Book</a></li>
                                             }
                                             @if (User.IsInRole("Customer") || !User.Identity.IsAuthenticated)
                                             {
-                                                <li> <a asp-area="" asp-controller="Home" asp-action="Blazortest">Map Prototype</a></li>
+                                                <li> <a asp-area="" asp-controller="Home" asp-action="Blazortest" style="background-color: transparent">Map Prototype</a></li>
                                             }                                            
                                             @if (User.IsInRole("Admin"))
                                             {

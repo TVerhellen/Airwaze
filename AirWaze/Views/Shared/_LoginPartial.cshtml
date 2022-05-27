@@ -8,7 +8,7 @@
 {
     <div>
     <li >
-        <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+        <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" style="background-color: transparent">Hello @User.Identity?.Name!</a>
     </li>
     <li>
         <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">             
@@ -21,7 +21,7 @@ else
 {
     <div>
         <li class="login">
-            <a asp-area="Identity" asp-page="/Account/Login">
+            <a asp-area="Identity" asp-page="/Account/Login" style="background-color: transparent">
             <i class="fa fa-user"></i> Sign in or Register</a>
         </li>
     </div>
