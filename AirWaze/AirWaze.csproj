@@ -80,4 +80,11 @@
     <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shLegacy.js" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\css\loginpartials.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

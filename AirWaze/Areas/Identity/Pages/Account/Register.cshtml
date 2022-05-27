@@ -13,9 +13,13 @@
     <div class="card login-card">
         <div class="card-body">
             <h3 class="text-white text-center font-weight-light mb-4">REGISTER</h3>
+            <p class="text-info">            
+            Please enter your personal information below and click the register button to finish
+            logging in.
+            </p>
+            <hr />
             <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <h4>Create a new account.</h4>
-            <hr />
             <div class="form-group">
                 <label asp-for="Input.FirstName" class="text-white"></label>
                 <input asp-for="Input.FirstName" class="form-control" autocomplete="firstname" aria-required="true" />                
