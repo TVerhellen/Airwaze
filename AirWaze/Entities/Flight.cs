@@ -32,5 +32,67 @@ namespace AirWaze.Entities
         {
             return $"{Destination} {Departure}";
         }
+
+        public string FillSeatDiagram(int seatsToAdd)
+        {
+            if(SeatDiagram != null)
+            {
+                int seatCounter = 0;
+                int rowCounter = 0;
+                bool isFound = false;
+                for(int i = 0; i < SeatDiagram.Length; i++)
+                {
+                    switch (SeatDiagram[i])
+                    {
+                        case '0': //free seat
+                            SeatDiagram = SeatDiagram.Remove(i, 1).Insert(i, "1");
+                            isFound = true;
+                            break;
+                        case '-': //break between rows
+                            seatCounter = 0;
+                            rowCounter++;
+                            break;
+                        default: //any other option
+                            seatCounter++;
+                            break;
+                    }
+                    if (isFound) //empty seat
+                    {
+                        break;
+                    }
+                }
+                string seatNr = "";
+                seatNr += (rowCounter+1).ToString();
+                switch (seatCounter)
+                {
+                    case 0:
+                        seatNr += "A";
+                        break;
+                    case 1:
+                        seatNr += "B";
+                        break;
+                    case 2:
+                        seatNr += "C";
+                        break;
+                    case 3:
+                        seatNr += "D";
+                        break;
+                    case 4:
+                        seatNr += "E";
+                        break;
+                    case 5:
+                        seatNr += "F";
+                        break;
+                    case 6:
+                        seatNr += "G";
+                        break;
+                    case 7:
+                        seatNr += "H";
+                        break;
+                }
+                return seatNr;
+            }
+            return null;
+        }
     }
 }

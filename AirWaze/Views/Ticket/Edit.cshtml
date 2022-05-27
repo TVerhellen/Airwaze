@@ -4,7 +4,7 @@
 @{
 }
 @model TicketEditViewModel
-
+<main>
 <h1>Change Ticket @Model.TicketNr</h1>
 
 <form asp-controller="Ticket" asp-action="Edit" method="post">
@@ -21,7 +21,7 @@
 
     <button class="btn btn-primary" onclick="message()" type="submit">Save Ticket</button>
 </form>
-
+</main>
 <script type="text/javascript">
         function message()
         {
