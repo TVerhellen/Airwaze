@@ -1,8 +1,23 @@
 ﻿@model IEnumerable<AirWaze.Areas.Identity.Data.AirWazeUser>
-
 @{
     ViewBag.Title = "All Users";
 }
+
+<link rel="stylesheet" href="~/css/dashboard.css">
+
+<main>
+    <div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap text-center pt-50">
+                            <h2>Dashboard</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
 
 <div class="container-fluid" style="padding: 0 0 0 0;">
     <div class="row">
@@ -24,36 +39,61 @@
                     <a class="list-group-item" asp-action="Schedule" asp-controller="Admin"><i class="fas fa-clock text-white">&nbsp; Schedule</i></a>  
                 </div>
         </div>
-        <div class="col-lg-9" style="padding-bottom: 50px;">
-            <h3 class="font-weight-bold" style="padding-top: 50px; padding-bottom: 30px;">Users</h3>
+        <div class="col-xl-10" style="padding-bottom: 50px;">
+        <div class="section-top-border">
+					<h3 class="mb-30">Users</h3>
+                    <br/>
+					<div class="progress-table-wrap">
+						<div class="progress-table">
+							<div class="table-head">                             
+                                <div class="country">Firstname</div>
+                                <div class="country">Lastname</div>
+@*                                <div class="country">Streetname</div>
+                                <div class="country">Housenumber</div>
+                                <div class="country">Bus</div>
+                                <div class="country">Zipcode</div>
+                                <div class="country">City</div>
+                                <div class="country">Country</div>  *@                                                              
+                                <div class="visit">Phonenumber</div>
+                                <div class="country">Email</div>
 
-             <div class="table-responsive">
-                <table class="table table-bordered table-striped table-hover">
-                    <tr>
+							</div>
 
-                        <th>
-                        @Html.DisplayNameFor(model => model.Email)
-                        </th>
-                        <th>@Html.DisplayNameFor(model => model.FirstName)</th>
-                        <th>@Html.DisplayNameFor(model => model.LastName)</th>
-                    </tr>
+                             @foreach (var item in Model)
+                            {
+							<div class="table-row">									
+                                <div class="country"> @item.FirstName</div> 	
+                                <div class="country"> @item.LastName</div>                      
+                                @*<div class="country"> @item.StreetName</div>
+                                <div class="country"> @item.HouseNumber</div>
+                                @if(@item.Bus != null)
+                                {
+                                        <div class="country"> @item.Bus</div>
+                                }
+                                else
+                                {
+                                        <div class="country"> 0</div>
+                                }
 
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Email)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.FirstName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.LastName)
-                            </td>
-                        </tr>
-                    }
+                                <div class="country"> @item.Zipcode</div>
+                                <div class="country"> @item.City</div>
+                                <div class="country"> @item.Country</div>*@
+                                <div class="visit"> @item.PhoneNumber</div>&nbsp;
+                                <div class="country"> @item.Email</div>
+							</div>
+                            }
+							
+						</div>
+					</div>
+				</div>    
+            </div>
+        </div>
+    </div>    
+</main>
 
-                </table>
+
+
+
 
 <script src="~/lib/bootstrap/bootstrap-admin/popper.min.js"></script>
 <link href="~/lib/bootstrap/bootstrap-admin/bootstrap-parkeasy.css" rel="stylesheet" />
