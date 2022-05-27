@@ -65,9 +65,8 @@
                                 <!-- Main-menu -->
                                 <div class="main-menu f-right d-none d-lg-block">
                                     <nav>
-                                        <ul id="navigation">                                                                                                                                  
-
-                                            <li><a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></li>
+                                        <ul id="navigation">      
+                                            <li> <a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                                             @if (User.IsInRole("Customer") || User.IsInRole("Admin"))
                                             {
                                                 <li> <a asp-area="" asp-controller="Ticket" asp-action="List">Tickets</a></li>
@@ -175,7 +174,8 @@
                             <div class="footer-copy-right">
                                 <p>
                                 Copyright &copy;<script>document.write(new Date().getFullYear());</script>
-                                </p>
+                                &nbsp;  &nbsp;  &nbsp;  &nbsp;  <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                                </p>                                
                             </div>
                         </div>
                         <div class="col-xl-3 col-lg-4">
