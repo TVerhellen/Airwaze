@@ -69,20 +69,21 @@
     private int x = 176;
     private int y = 273;
     private bool myboolean = false;
+    private bool renderbool = true;
+    private bool isseatselected = false;
 
     private string? mousePointerMessage;
 
     private async Task ReportPointerLocation(MouseEventArgs e)
-    {
-        mousePointerMessage = $"Mouse coordinates: {e.OffsetX}:{e.OffsetY}";
-        //this._context = await this._canvasReference.CreateCanvas2DAsync();      
-        //await this._context.SetFillStyleAsync("black");      
-        //await this._context.FillRectAsync(e.OffsetX, e.OffsetY, 20, 20);
-        //await this._context.SetFontAsync("38px Calibri");
-        //await this._context.StrokeTextAsync("Hello Blazor!!!", 5, 100);   
-
+    {       
+        mousePointerMessage = $"Mouse coordinates: {e.OffsetX}:{e.OffsetY}";      
+        if (isseatselected == false)
+        {
+            isseatselected = true;    
+            await this._context.SetFillStyleAsync("black");      
+            await this._context.FillRectAsync(e.OffsetX, e.OffsetY, 10, 10);                
+        }      
     }
-
 
     private Canvas2DContext _context;
 
@@ -114,25 +115,29 @@
                 }
             }
         }
-        this._context = await this._canvasReference.CreateCanvas2DAsync();
-        await this._context.SetFillStyleAsync("green");                    
-
-        for (int i = 0 ; i < 6; i++)
+        if (isseatselected == false)
         {
-            for (int j = 0 ; j < 23; j++)
+            this._context = await this._canvasReference.CreateCanvas2DAsync();
+            await this._context.SetFillStyleAsync("green");                    
+
+            for (int i = 0 ; i < 6; i++)
             {
-                if (thisseatdiagram[j,i] == "0")
+                for (int j = 0 ; j < 23; j++)
                 {
-                    await this._context.SetFillStyleAsync("green");
-                    await this._context.FillRectAsync(x +( i * 65), y + (j * 30), 20, 20);
-                }
-                else
-                {
-                    await this._context.SetFillStyleAsync("red");
-                     await this._context.FillRectAsync(x +( i * 65), y + (j * 30), 20, 20);
-                }               
-            }
-        }            
+                    if (thisseatdiagram[j,i] == "0")
+                    {
+                        await this._context.SetFillStyleAsync("green");
+                        await this._context.FillRectAsync(x +( i * 65), y + (j * 30), 20, 20);
+                    }
+                    else
+                    {
+                        await this._context.SetFillStyleAsync("red");
+                        await this._context.FillRectAsync(x +( i * 65), y + (j * 30), 20, 20);
+                    }               
+                }            
+            } 
+             await Task.Delay(2000);
+        }        
     }
  
   
