@@ -94,7 +94,7 @@ namespace AirWaze.Entities
         public static void StartTimer(int dueTime)
         {
             aTimer = new Timer(new TimerCallback(TimerProc));
-            aTimer.Change(dueTime, 120000);
+            aTimer.Change(dueTime, 300000);
         }
         private static void TimerProc(object state)
         {
