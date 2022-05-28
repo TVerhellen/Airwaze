@@ -196,7 +196,6 @@ namespace AirWaze.Database
 
         public void RemoveFlight(Flight flight)
         {
-            //TODO: check if Plane/Destination/Gate/Runway are not removed
             _dbContext.Flights.Remove(flight);
             _dbContext.SaveChanges();
         }
@@ -229,7 +228,6 @@ namespace AirWaze.Database
 
         public void UpdateFlight(Flight flight)
         {
-            //TODO: check if Plane/Destination/Gate/Runway are not removed/changed
             _dbContext.Flights.Update(flight);
             //_dbContext.Entry(flight.CurrentPlane).State = EntityState.Unchanged;
             //_dbContext.Entry(flight.CurrentPlane.CurrentAirline).State = EntityState.Unchanged;

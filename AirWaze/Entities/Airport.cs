@@ -22,7 +22,6 @@ namespace AirWaze.Entities
         static Airport()
         {
             myDatabase = CrazyMethod(HomeController._myDatabase);
-            //myDatabase = new AirWazeDatabase(new AirWazeDbContext(), new Data.ApplicationDbContext());
         }
         public static string Name
         {
@@ -109,12 +108,12 @@ namespace AirWaze.Entities
 
             //Do checks for flight logic and make changes to Lists in both Airport and Controller classes so both remain up to date
             CheckGateAvailability();
-            //CheckRunwayAvailability();
-            //CheckPlaneAvailability();
-            //CheckBoarding();
-            //CheckDepartures();
-            //CheckArrived();
-            //CheckCompleted();
+            CheckRunwayAvailability();
+            CheckPlaneAvailability();
+            CheckBoarding();
+            CheckDepartures();
+            CheckArrived();
+            CheckCompleted();
    
             myDatabase = CrazyMethod(HomeController._myDatabase);
         }
@@ -224,12 +223,10 @@ namespace AirWaze.Entities
                     //the currentplane for this flight is available -> plane availability on false and update
                     flight.CurrentPlane.IsAvailable = false;
                     UpdatePlaneInAllLists(flight.CurrentPlane);
-                    myDatabase.UpdatePlane(flight.CurrentPlane);
 
                     //the currentplane for this flight is available -> flight planeconfirmed on true and update
                     flight.CurrentPlaneConfirmed = true;
                     UpdateFlightInAllLists(flight);
-                    myDatabase.UpdateFlight(flight);
                 }
             }
         }
