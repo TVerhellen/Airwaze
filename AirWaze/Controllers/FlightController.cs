@@ -243,6 +243,7 @@ namespace AirWaze.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(string id, FlightEditViewModel flightViewModel)
         {
+            //TODO: add selectedGate and selectedRunway
             await Task.Delay(1500);
             flightViewModel.CurrentPlane = PlaneController.planeEntities.FirstOrDefault(x => x.PlaneNr == Request.Form["selectedPlaneNr"]);
             flightViewModel.Status = Convert.ToInt32(Request.Form["selectedStatus"]);

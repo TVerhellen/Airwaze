@@ -4,10 +4,12 @@
 
 @{
     List<Destination> allDestinations = FlightController.destinations.OrderBy(dest => dest.Region).ThenBy(dest => dest.Name).ToList();
+
+    List<Plane> availablePlanesForThisFlight = Airport.GetAvailablePlanesForFlight(Airport.Flights.SingleOrDefault(x => x.FlightNr == Model.FlightNr)).ToList();
 }
-<main>
+<main style="margin-top: 200px">
 <h1>Edit Flight Details</h1>
-<h2>Flight Nr.: @Model.FlightNr</h2>
+<h2>for Flight Nr.: @Model.FlightNr</h2>
 <br />
 
 <form asp-controller="Flight" asp-action="Edit" asp-route-id="@Model.FlightNr" method="post">
@@ -25,25 +27,47 @@
     <!-- look up fill in datetimepicker with value -->
     <div class="form-group">
         <label asp-for="Departure"></label>
-        <input class="form-control" asp-for="Departure" value="@Model.Departure"/>
+        <input class="form-control" asp-for="Departure" value="@Model.Departure.ToString("o")"/>
         <span asp-validation-for="Departure"></span>
     </div>
      <br />
 
 
-     <!-- combobox Gates -->
      <div class="form-group">
-        <label asp-for="CurrentGate"></label>
-        <input class="form-control" asp-for="CurrentGate" value="@Model.CurrentGate"/>
-        <span asp-validation-for="CurrentGate"></span>
+        <label>Gate</label>
+        <br />
+        <select name="selectedGate">
+            @foreach(Gate gate in Airport.Gates)
+            {
+                if(gate.Number == 0)
+                {
+                    <option value=@gate.Number>@gate.Number - None Assigned Yet</option>
+                }
+                else
+                {
+                    <option value=@gate.Number>@gate.Number</option>
+                }
+            }
+         </select>
     </div>
      <br />
 
-     <!-- combobox Runways -->
-     <div class="form-group">
-        <label asp-for="CurrentRunway"></label>
-        <input class="form-control" asp-for="CurrentRunway" value="@Model.CurrentRunway"/>
-        <span asp-validation-for="CurrentRunway"></span>
+    <div class="form-group">
+        <label>Runway</label>
+        <br />
+        <select name="selectedRunway">
+            @foreach(Runway runway in Airport.Runways)
+            {
+                if(runway.Number == 0)
+                {
+                    <option value=@runway.Number>@runway.Number - None Assigned Yet</option>
+                }
+                else
+                {
+                    <option value=@runway.Number>@runway.Number</option>
+                }
+            }
+         </select>
     </div>
      <br />
 
@@ -51,7 +75,7 @@
         <label>Plane</label>
         <br />
         <select name="selectedPlaneNr">
-            @foreach(var item in @PlaneController.planeEntities)
+            @foreach(var item in @availablePlanesForThisFlight)
             {
                  <option value=@item.PlaneNr>@item.CurrentAirline.Name - @item.PlaneNr</option>
             }
@@ -62,12 +86,14 @@
         <label>Status</label>
         <br />
         <select name="selectedStatus">
-                 <option value=0>0 - Generated</option>
-                 <option value=1>1 - Delayed</option>
-                 <option value=2>2 - Boarding</option>
-                 <option value=3>3 - Departed</option>
-                 <option value=4>4 - Arrived</option>
-                 <option value=5>5 - Cancelled</option>
+                 <option value=0>0 - Awaiting Approval</option>
+                 <option value=1>1 - Approved</option>
+                 <option value=2>2 - Delayed</option>
+                 <option value=3>3 - Boarding</option>
+                 <option value=4>4 - Departed</option>
+                 <option value=5>5 - Arrived</option>
+                 <option value=6>6 - Cancelled</option>
+                 <option value=7>7 - Completed</option>
         </select>
     </div>
      <a class="btn btn-primary" asp-controller="Flight" asp-action="Index">Go Back</a>
