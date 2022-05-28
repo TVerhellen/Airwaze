@@ -22,6 +22,7 @@ namespace AirWaze.Entities
         static Airport()
         {
             myDatabase = CrazyMethod(HomeController._myDatabase);
+            //myDatabase = new AirWazeDatabase(new AirWazeDbContext(), new Data.ApplicationDbContext());
         }
         public static string Name
         {
@@ -70,6 +71,7 @@ namespace AirWaze.Entities
 
         private static void UpdateAirportListsFromDatabase()
         {
+            myDatabase = CrazyMethod(HomeController._myDatabase);
             Runways = myDatabase.GetRunways();
             foreach (Runway x in Runways)
             {
@@ -93,7 +95,7 @@ namespace AirWaze.Entities
         public static void StartTimer(int dueTime)
         {
             aTimer = new Timer(new TimerCallback(TimerProc));
-            aTimer.Change(dueTime, 120000000);
+            aTimer.Change(dueTime, 120000);
         }
         private static void TimerProc(object state)
         {
@@ -115,19 +117,6 @@ namespace AirWaze.Entities
             //CheckCompleted();
    
             myDatabase = CrazyMethod(HomeController._myDatabase);
-
-            //These can be deleted?
-            //if (CurrentSchedule != null)
-            //{
-            //    CurrentSchedule.Flights.Remove(x);
-            //}
-
-            //Flights = FlightController.flights.ToList();
-            //Planes = PlaneController.planeEntities.ToList();
-            //Flights = Flights.FindAll(x => x.Status != 3 || x.Status != 5);
-            //Flights = Flights.OrderBy(flight => flight.Departure).ToList();
-
-            FlightController.flightsChangedWithoutDatabaseUpdate = true;
         }
         public static void AddGate()
         {
@@ -266,18 +255,16 @@ namespace AirWaze.Entities
             availableGates = Gates.FindAll(gate => gate.IsAvailable == true);
 
             //Check for every flight if there is at least 1 gate available -> assign first gate to flight and flight to gate, update availability and remove gate from list availablegates
-            foreach(Flight nextFlight in nextFlights)
+            for(int i = 0; i<nextFlights.Count; i++)
             {
-                if(availableGates.Count > 0)
+                if (availableGates.Count > 0)
                 {
-                    availableGates[0].CurrentFlight = nextFlight;
+                    availableGates[0].CurrentFlight = nextFlights[i];
                     availableGates[0].IsAvailable = false;
                     UpdateGateInGatesList(availableGates[0]);
 
-                    nextFlight.CurrentGate = availableGates[0];
-                    UpdateFlightInAllLists(nextFlight);
-                    //Save changes in DB at the end to solve exception?
-                    //myDatabase.UpdateFlight(nextFlight);
+                    nextFlights[i].CurrentGate = availableGates[0];
+                    UpdateFlightInAllLists(nextFlights[i]);
 
                     availableGates.RemoveAt(0);
                 }
@@ -286,9 +273,9 @@ namespace AirWaze.Entities
                     //If no gate available for a flight -> check if it needs to be delayed
                     // Less than 30 mins to departure and still no free gate -> Delay (1 hour)
                     // Else do nothing -> Will be checked again with next UpdateAirport
-                    if(DateTime.Now >= nextFlight.Departure.AddMinutes(-30))
+                    if (DateTime.Now >= nextFlights[i].Departure.AddMinutes(-30))
                     {
-                        DelayFlight(nextFlight, 60);
+                        DelayFlight(nextFlights[i], 60);
                     }
                 }
             }
@@ -330,7 +317,6 @@ namespace AirWaze.Entities
 
                     nextFlight.CurrentRunway = availableRunways[0];
                     UpdateFlightInAllLists(nextFlight);
-                    myDatabase.UpdateFlight(nextFlight);
 
                     availableRunways.RemoveAt(0);
                 }
@@ -368,7 +354,6 @@ namespace AirWaze.Entities
             {
                 flight.Status = 3;
                 UpdateFlightInAllLists(flight);
-                myDatabase.UpdateFlight(flight);
             }
         }
         public static void CheckDepartures()
@@ -397,10 +382,9 @@ namespace AirWaze.Entities
                 UpdateRunwayInRunwaysList(flight.CurrentRunway);
 
                 flight.Status = 4;
-                flight.CurrentGate = myDatabase.GetGateByNr(0);
-                flight.CurrentRunway = myDatabase.GetRunwayByNr(0);
+                flight.CurrentGate = Gates.SingleOrDefault(x => x.Number == 0);
+                flight.CurrentRunway = Runways.SingleOrDefault(x => x.Number == 0);
                 UpdateFlightInAllLists(flight);
-                myDatabase.UpdateFlight(flight);
             }
         }
         public static void CheckArrived()
@@ -421,7 +405,6 @@ namespace AirWaze.Entities
             {
                 arrivedflight.Status = 5;
                 UpdateFlightInAllLists(arrivedflight);
-                myDatabase.UpdateFlight(arrivedflight);
             }
         }
         public static void CheckCompleted()
@@ -447,11 +430,9 @@ namespace AirWaze.Entities
             {
                 completedflight.Status = 7;
                 UpdateFlightInAllLists(completedflight);
-                myDatabase.UpdateFlight(completedflight);
 
                 completedflight.CurrentPlane.IsAvailable = true;
                 UpdatePlaneInAllLists(completedflight.CurrentPlane);
-                myDatabase.UpdatePlane(completedflight.CurrentPlane);
             }
         }
         public static List<Plane> GetAvailablePlanesForFlight(Flight originalFlight)
@@ -508,7 +489,6 @@ namespace AirWaze.Entities
         {
             flight.Departure = flight.Departure.AddMinutes(minutesDelay);
             UpdateFlightInAllLists(flight);
-            //myDatabase.UpdateFlight(flight);
         }
         private static void UpdateAirportListsFromControllerLists()
         {

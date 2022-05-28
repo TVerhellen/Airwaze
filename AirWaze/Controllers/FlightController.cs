@@ -11,11 +11,8 @@ namespace AirWaze.Controllers
     {
         public readonly IAirWazeDatabase _airwazeDatabase;
         public static List<Flight> flights = new List<Flight>();
-        //public static List<Flight> tempFlights = new List<Flight>();
         public static List<FlightCreateViewModel> tempFlightModels = new List<FlightCreateViewModel>();
         Random _random = new Random();
-        //public static List<Plane> planes = new List<Plane>();
-        public static bool flightsChangedWithoutDatabaseUpdate = false;
         public static List<Destination> destinations = new List<Destination>();
 
         //testplane (and linked testAirline) is used for new FlightCreateViewModels, before going to PlanePicker
@@ -50,30 +47,6 @@ namespace AirWaze.Controllers
         public FlightController(IAirWazeDatabase airwazeDatabase)
         {
             _airwazeDatabase = airwazeDatabase;
-
-
-            //TODO: REMOVE COMMENTS AFTER TESTING
-            //if(flightsChangedWithoutDatabaseUpdate)
-            //{
-            //    //Save changes made to flights in Database
-
-            //    List<Flight> databaseFlights = _airwazeDatabase.GetFlights();
-
-
-            //    foreach (Flight databaseFlight in databaseFlights)
-            //    {
-            //        Flight flightToChange = flights.SingleOrDefault(x => x.FlightNr == databaseFlight.FlightNr);
-            //        _airwazeDatabase.RemoveFlight(flightToChange);
-            //        _airwazeDatabase.AddFlight(flightToChange);
-            //    }
-            //    flightsChangedWithoutDatabaseUpdate = false;
-            //}
-
-
-
-
-
-
             //List<Flight> oldlist = flights.ToList();
             //if (flights.Count == 0)
             //{
@@ -135,7 +108,7 @@ namespace AirWaze.Controllers
                     myFlight = myFlight.Where(s => s.Departure.ToString("dd/MM/yyyy").Contains(searchString) || s.Departure.ToString("dd-MM-yyyy").Contains(searchString)).ToList();
                 }
             }
-            return View(myFlight.ToList());
+            return View(myFlight.OrderBy(x => x.Departure).ToList());
         }
 
 
@@ -230,6 +203,7 @@ namespace AirWaze.Controllers
                 };
                 _airwazeDatabase.AddFlight(newEntity);
                 flights.Add(newEntity);
+                Airport.Flights.Add(newEntity);
                 tempFlightModels.Remove(flightViewModel);
                 return RedirectToAction("Index");
             }
@@ -280,6 +254,7 @@ namespace AirWaze.Controllers
             if (flightEntity == null) return new NotFoundResult();
 
             flights.Remove(flightEntity);
+            Airport.Flights.Remove(flightEntity);
 
             //flightEntity.FlightID = flightViewModel.FlightID;
             flightEntity.FlightNr = flightViewModel.FlightNr;
@@ -291,6 +266,7 @@ namespace AirWaze.Controllers
             flightEntity.Status = flightViewModel.Status;
 
             flights.Add(flightEntity);
+            Airport.Flights.Add(flightEntity);
             _airwazeDatabase.UpdateFlight(flightEntity);
             return RedirectToAction("Index", "Flight");
         }
@@ -304,11 +280,6 @@ namespace AirWaze.Controllers
 
             if (flightEntity == null) return new NotFoundResult();
 
-            //TODO: review below check if Database is implemented
-            //Flight can only be deleted if flight status is 0 - Generated and there are 0 booked tickets for this flight
-            //Otherwise -> Cancel flight via Edit Action (need record of this flight)
-            //if (flightEntity.Status == 0 && _airwazeDatabase.GetTicketsByFlight(flightEntity.FlightNr).Count == 0)
-            //{
                 var flightViewModel = new FlightDeleteViewModel
                 {
                     FlightID = flightEntity.FlightID,
@@ -318,12 +289,6 @@ namespace AirWaze.Controllers
                 };
 
                 return View(flightViewModel);
-            //}
-            //else
-            //{
-            //    //TODO: throw message "cannot delete existing flight with booked tickets, please change flight status to "Cancelled"
-            //    return RedirectToAction("Index");
-            //}
         }
 
         [Authorize(Roles = "Admin")]
@@ -337,6 +302,7 @@ namespace AirWaze.Controllers
             if (flightEntity != null)
             {
                 flights.Remove(flightEntity);
+                Airport.Flights.Remove(flightEntity);
                 _airwazeDatabase.RemoveFlight(flightEntity);
             }
 

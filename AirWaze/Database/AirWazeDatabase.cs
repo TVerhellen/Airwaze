@@ -296,12 +296,12 @@ namespace AirWaze.Database
 
         public List<Destination> GetDestinations()
         {
-            return _dbContext.Destinations.ToList();
+            return _dbContext.Destinations.AsNoTracking().ToList();
         }
 
         public Destination GetDestinationByID(int id)
         {
-            return _dbContext.Destinations.SingleOrDefault(destination => destination.DestinationID == id);
+            return _dbContext.Destinations.AsNoTracking().SingleOrDefault(destination => destination.DestinationID == id);
         }
 
         public void AddDestination(Destination destination)

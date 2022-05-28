@@ -43,17 +43,18 @@
                 </form>
                 <br/>
             <br />
-            <h2>All Flights</h2>
+            <h2>Flights</h2>
 
             @if (@Model.Count != 0)
             {
                 <table class="table table-striped table-dark">
-                    <thead class="rounded">
+                    <thead>
                         <tr>
                             <th scope="col">Date</th>
                             <th scope="col">Time</th>
                             <th scope="col">Destination</th>
                             <th scope="col">Flight Number</th>
+                            <th scope="col">Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -64,12 +65,39 @@
                             <td>@x.Departure.Hour.ToString("00"):@x.Departure.Minute.ToString("00")</td>
                             <td>@x.Destination.Name</td>     
                             <td>@x.FlightNr</td>
+                            @switch (x.Status)
+                            {
+                                case 0:
+                                    <td>Awaiting Approval</td>
+                                    break;
+                                case 1:
+                                    <td>Approved</td>
+                                    break;
+                                case 2:
+                                    <td>Delayed</td>
+                                    break;
+                                case 3:
+                                    <td>Boarding</td>
+                                    break;
+                                case 4:
+                                    <td>Departed</td>
+                                    break;
+                                case 5:
+                                    <td>Arrived</td>
+                                    break;
+                                case 6:
+                                    <td>Cancelled</td>
+                                    break;
+                                default:
+                                    break;
+                            }
                             <td><a class="btn btn-primary" asp-controller="Flight" asp-action="Detail" asp-route-id="@x.FlightNr">Details</a></td>
-                            <td><a class="btn btn-primary" asp-controller="Flight" asp-action="Edit" asp-route-id="@x.FlightNr">Edit</a></td>
-                            <td><a class="btn btn-primary" asp-controller="Flight" asp-action="Delete" asp-route-id="@x.FlightNr">Delete</a></td>
+                            @if(x.Status == 0 || x.Status == 1 || x.Status == 2 || x.Status == 3)
+                            {
+                                <td><a class="btn btn-primary" asp-controller="Flight" asp-action="Edit" asp-route-id="@x.FlightNr">Edit</a></td>
+                                <td><a class="btn btn-primary" asp-controller="Flight" asp-action="Delete" asp-route-id="@x.FlightNr">Delete</a></td>
+                            }
                         </tr>
-
-                         <!-- Show Status if not 0 -->
                     }
             
                     </tbody>
