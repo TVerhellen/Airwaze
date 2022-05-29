@@ -1,0 +1,52 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+ <head>
+	 <link rel="stylesheet" href="~/css/planeindex.css">
+</head>
+
+@model List<FlightListViewModel>;
+
+<main >
+    <div style="padding-top:200px;"></div>
+    <div class="row">
+           
+            <div>
+                <h1>Overview Flights</h1>
+
+    <div class="planeindexcontainer">
+                    @if (Model.Count != 0)
+                    {
+                        <div class="progress-table-wrap">
+						                    <div class="progress-table">
+							                    <div class="table-head">                                                    
+                                                    <div class="serial" style="padding-left:20px;padding-right:20px">Number</div>
+								                    <div class="serial" style="padding-left:20px;padding-right:20px">Departure</div>
+								                    <div class="visit" style="padding-left:20px;padding-right:20px">Destination</div>
+								                    <div class="visit" style="padding-left:20px;padding-right:20px">Status</div>								                    
+							                    </div>
+							                     @foreach (var flight in Model)
+							                    {
+								                    <div class="table-row">                                                        
+                                                        <div class="serial" style="padding-left:20px;margin-right:20px">@flight.FlightNr</div>                                                                       
+									                    <div class="serial" style="padding-left:20px;padding-right:20px">@flight.Departure</div>
+									                    <div class="visit" style="padding-left:20px;padding-right:20px">@flight.Destination</div>
+									                    <div class="visit" style="padding-left:20px;padding-right:20px">@flight.Status</div>									                    
+									                    <div class="visit" style="padding-left:20px;padding-right:20px"><a class="genric-btn info circle arrow" asp-action="Detail" asp-controller="Flight" asp-route-id=@flight.FlightID>Detail</a></div>								                  									
+								                    </div>						
+							                    }
+                                              </div>
+                        </div>
+                    }
+                     else
+                        {
+                            <h1>No Flights</h1>
+                        }
+                     
+                    </div>  
+               </div>
+               </div>
+               </main>
