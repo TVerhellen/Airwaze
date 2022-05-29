@@ -34,7 +34,7 @@
 
     <div class="form-group">
         <label asp-for="FirstClass">Preferred time of departure</label>
-        <input asp-for="Departure"/>
+        <input asp-for="Departure" value="@DateTime.Today.ToString("yyyy-MM-dd")"/>
     </div>
 
 
@@ -47,20 +47,8 @@
         <label asp-for="ExtraLuggage">Extra Luggage?</label>
     </div>
 
-    <button class="btn btn-primary" onclick="message()" type="submit">Create Ticket</button>
+    <button class="btn btn-primary" type="submit">Create Ticket</button>
 </form>
     </div>
 
 </main>
-<script type="text/javascript">
-        function message()
-        {
-            Swal.fire({                   
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Ticket Created',
-                    showConfirmButton: false,
-                    timer: 1500                 
-                    });
-        }
-    </script>

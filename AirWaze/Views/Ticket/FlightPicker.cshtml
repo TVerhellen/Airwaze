@@ -7,20 +7,33 @@
 @model TicketFlightPickerViewModel
 <main>
     <div class="slider-height d-flex align-items-center">
-<table>
+<table class="table">
     <tr>
         <th>Destination</th>
         <th>Departure time</th>
+        <th></th>
     </tr>
     @foreach (var flight in Model.flightList)
     {
         <tr>
             <td>@flight.Destination.Name</td>
             <td>@flight.Departure</td>
-            <td><a asp-action="Payment" asp-route-ID="@flight.FlightNr" asp-route-ticket="@Model.TicketNr" style="color:black">Select</a></td>
+            <td><a asp-action="Payment" asp-route-ID="@flight.FlightNr" onclick="message()" asp-route-ticket="@Model.TicketNr" style="color:black">Select</a></td>
         </tr>
     }
-</table>
+</table></div>
 <a class="btn btn-primary" asp-action="Create">Go Back</a>
-</div>
+
 </main>
+<script type="text/javascript">
+        function message()
+        {
+            Swal.fire({                   
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Ticket Created',
+                    showConfirmButton: false,
+                    timer: 1500                 
+                    });
+        }
+    </script>

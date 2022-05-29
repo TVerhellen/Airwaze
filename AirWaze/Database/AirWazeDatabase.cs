@@ -88,6 +88,9 @@ namespace AirWaze.Database
             _dbContext.Entry(ticket.CurrentFlight).State = EntityState.Unchanged;
             _dbContext.Entry(ticket.CurrentFlight.CurrentPlane).State = EntityState.Unchanged;
             _dbContext.Entry(ticket.CurrentFlight.CurrentPlane.CurrentAirline).State = EntityState.Unchanged;
+            _dbContext.Entry(ticket.CurrentFlight.Destination).State = EntityState.Unchanged;
+            _dbContext.Entry(ticket.CurrentFlight.CurrentGate).State = EntityState.Unchanged;
+            _dbContext.Entry(ticket.CurrentFlight.CurrentRunway).State = EntityState.Unchanged;
             return _dbContext.SaveChanges();
         }
 

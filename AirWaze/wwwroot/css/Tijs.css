@@ -1,0 +1,12 @@
+﻿body {
+    margin-bottom: 60px;
+    height: none;
+    width: none;
+    background-image: url('../Images/AirportCheckIn.jpg');
+    background-size: cover;
+
+}
+.listContainer{
+    padding:20px;
+    background-color: rgba(255, 255, 255, 0.95 );
+}
