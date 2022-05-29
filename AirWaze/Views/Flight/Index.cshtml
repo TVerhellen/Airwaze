@@ -1,11 +1,25 @@
 ﻿@model List<FlightListViewModel>
 
+<link rel="stylesheet" href="~/css/flightindex.css">
 
-@*
-<div class="container-fluid" style="padding: 0 0 0 0;">
-    <div class="row">
-        <div class="col-lg-2 bg-dark-blue d-none d-sm-block" style="padding-top: 50px; padding-bottom: 20px;">
-                <center><i class="fas fa-user fa-5x text-white" style="padding-bottom: 20px;"></i></center>
+<main>
+    <div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap text-center pt-50">
+                            <h2>Dashboard</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="container-fluid" style="padding: 0 0 0 0;">
+        <div class="row">
+            <div class="col-lg-2 bg-dark-blue d-none d-sm-block left" style="padding-top: 10px; padding-bottom: 20px;">
+            <center><i class="fas fa-user fa-5x text-white" style="padding-bottom: 20px;"></i></center>
+
                 <center>
                     <p style="color:white">@User.Identity.Name</p>
                 </center>
@@ -15,105 +29,113 @@
                     <a class="list-group-item" asp-action="Index" asp-controller="Admin"><i class="fas fa-tachometer-alt text-white"> &nbsp; Dashboard</i></a>
                     <a class="list-group-item" asp-action="ListAllRoles" asp-controller="Role"><i class="fas fa-user text-white"> &nbsp; Manage roles</i></a>
                     <a class="list-group-item" asp-action="ListUsers" asp-controller="Admin"><i class="fas fa-users text-white"> &nbsp; Users</i></a>
-                    <a class="list-group-item" asp-action="List" asp-controller="Airline"><i class="fa fa-user-check text-white">&nbsp; Airlines</i></a>
-                    <a class="list-group-item" asp-action="List" asp-controller="Plane"><i class="fa fa-plane text-white"></i>&nbsp; Planes</i></a>
-                    <a class="list-group-item" asp-action="Index" asp-controller="Flight"><i class="fa fa-plane-departure text-white">&nbsp; Flights</i></a> 
-                    <a class="list-group-item" asp-action="Schedule" asp-controller="Admin"><i class="fa fa-clock text-white">&nbsp; Schedule</i></a>  
+                    <a class="list-group-item" asp-action="List" asp-controller="Airline"><i class="fas fa-user-check text-white">&nbsp; Airlines</i></a>
+                    <a class="list-group-item" asp-action="List" asp-controller="Plane"><i class="fas fa-plane text-white"></i>&nbsp; Planes</i></a>
+                    <a class="list-group-item" asp-action="Index" asp-controller="Flight"><i class="fas fa-plane-departure text-white">&nbsp; Flights</i></a> 
+                    <a class="list-group-item" asp-action="Schedule" asp-controller="Admin"><i class="fas fa-clock text-white">&nbsp; Schedule</i></a>  
                 </div>
-        </div>
-*@
-        <main>
-        <div class="col-lg-9" style="padding-bottom: 50px;margin-top: 200px">
-            <br />
-            <a class="btn btn-primary" asp-controller="Flight" asp-action="Create">Add New Flight</a>
-            <br />
-            <br />
+            </div>
+            <div class="col-lg-9" style="padding-bottom: 50px;">
+                <div class="section-top-border">
+					<h3 class="mb-30">Overview flights</h3>
+                    <a class="genric-btn info circle" asp-controller="Flight" asp-action="Create">Add New Flight</a>
+                    <br />
+                    <br />
             @*searchfunction*@
+            <div class="blog_right_sidebar">
+            <aside class="single_sidebar_widget search_widget">
                 <form asp-action="Index" method="get">
-                    <div class="form-actions no-color">
-                        <p>
-                            Search by: &nbsp;
-                            @Html.RadioButton("option", "Destination") Destination &nbsp;
-                            @Html.RadioButton("option", "Date") Date &nbsp; &nbsp;
-                        <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" /> &nbsp;
-                        <input class="btn btn-primary" type="submit" value="Search"/> &nbsp;
-                        <a href="/Flight/Index" class="btn btn-primary">Show all flights</a> 
-                        </p>
+                    <div class="form-group">
+                        <div class="input-group mb-3">
+                            <p>
+                                <br/>
+                                <div>
+                                <br/>
+                                Search by: &nbsp;
+                                @Html.RadioButton("option", "Destination") Destination &nbsp;
+                                @Html.RadioButton("option", "Date") Date &nbsp;
+      
+                                </div>
+                                <div class="input-group-append">
+                                    &nbsp; &nbsp;  <input type="text" class="form-control" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="Search Keyword" onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = 'Search Keyword'"/> &nbsp;&nbsp;
+                                    <button class="genric-btn danger circle" type="submit"><i class="fa fa-search"></i></button>&nbsp;                                    
+                                    <button class="genric-btn danger circle" onclick="window.location.href='/Flight/Index'" type="button" style="width:80%; height:50px;">Show all flights</button>
+                                </div>
+                            </p>
+                        </div>
                     </div>
                 </form>
-                <br/>
-            <br />
-            <h2>Flights</h2>
-
-            @if (@Model.Count != 0)
-            {
-                <table class="table table-striped table-dark">
-                    <thead>
-                        <tr>
-                            <th scope="col">Date</th>
-                            <th scope="col">Time</th>
-                            <th scope="col">Destination</th>
-                            <th scope="col">Flight Number</th>
-                            <th scope="col">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    @foreach (var x in @Model)
+                </aside>
+                </div>
+                @if (Model.Any())
                     {
-                        <tr class="rounded">
-                            <td>@x.Departure.Date.ToString("D")</td>
-                            <td>@x.Departure.Hour.ToString("00"):@x.Departure.Minute.ToString("00")</td>
-                            <td>@x.Destination.Name</td>     
-                            <td>@x.FlightNr</td>
-                            @switch (x.Status)
+                     <div class="progress-table-wrap planeindexcontainer">
+						<div class="progress-table">
+							<div class="table-head">								
+								<div class="country">Date</div>
+                                <div class="country">Time</div>
+                                <div class="country">Destination</div>
+                                <div class="country">Number</div>
+                                <div class="country">Status</div>
+                                <div class="country"></div>
+                                <div class="country"></div>
+                                <div class="country"></div>
+							</div> 
+                            @foreach (var x in @Model)
                             {
-                                case 0:
-                                    <td>Awaiting Approval</td>
+                                <div class="table-row">
+								    <div class="country"> @x.Departure.Date.DayOfWeek @x.Departure.Date.ToShortDateString()</div>	
+                                    <div class="country"> @x.Departure.Hour.ToString("00"):@x.Departure.Minute.ToString("00")</div>	
+                                    <div class="country"> @x.Destination.Name</div>	
+                                    <div class="country"> @x.FlightNr</div>	
+                                @switch (x.Status)
+                                {
+                                    case 0:
+                                    <div class="country">Awaiting Approval</div>
                                     break;
                                 case 1:
-                                    <td>Approved</td>
+                                    <div class="country">Approved</div> 
                                     break;
                                 case 2:
-                                    <td>Delayed</td>
+                                    <div class="country">Delayed</div> 
                                     break;
                                 case 3:
-                                    <td>Boarding</td>
+                                    <div class="country">Boarding</div> 
                                     break;
                                 case 4:
-                                    <td>Departed</td>
+                                    <div class="country">Departed</div>
                                     break;
                                 case 5:
-                                    <td>Arrived</td>
+                                    <div class="country">Arrived</div> 
                                     break;
                                 case 6:
-                                    <td>Cancelled</td>
+                                    <div class="country">Cancelled</div> 
                                     break;
                                 default:
                                     break;
+                                }                                
+                                &nbsp; <div class="country"><a class="genric-btn info circle" asp-controller="Flight" asp-action="Detail" asp-route-id="@x.FlightNr">Details</a></div>
+                                @if (x.Status == 0 || x.Status == 1 || x.Status == 2 || x.Status == 3)
+                                {
+                                            <div class="country"><a asp-action="EditRole" asp-route-id="@x.FlightNr" class="genric-btn warning circle">Edit</a></div> 
+                                            <div class="country"><a asp-action="DeleteRole" asp-route-id="@x.FlightNr" class="genric-btn danger circle">Delete</a></div>
+                                }
+                                </div>
                             }
-                            <td><a class="btn btn-primary" asp-controller="Flight" asp-action="Detail" asp-route-id="@x.FlightNr">Details</a></td>
-                            @if(x.Status == 0 || x.Status == 1 || x.Status == 2 || x.Status == 3)
-                            {
-                                <td><a class="btn btn-primary" asp-controller="Flight" asp-action="Edit" asp-route-id="@x.FlightNr">Edit</a></td>
-                                <td><a class="btn btn-primary" asp-controller="Flight" asp-action="Delete" asp-route-id="@x.FlightNr">Delete</a></td>
-                            }
-                        </tr>
-                    }
-            
-                    </tbody>
-                </table>
-            }
-            else
-            {
-                <p>No flights planned at the moment.</p>
-            }
+                        </div>
+                    </div>
+                                                    
+                }                           
+                else
+                {
+                        <h5>No flights planned at the moment.</h5>
+                } 
+            </div>
         </div>
-    </main>
-@*
-</div>
-*@
-
+      </div>
+  </div>
+</main>
 
 <script src="~/lib/bootstrap/bootstrap-admin/popper.min.js"></script>
 <link href="~/lib/bootstrap/bootstrap-admin/bootstrap-parkeasy.css" rel="stylesheet" />
-<link href="~/lib/bootstrap/bootstrap-admin/dashboard.css" rel="stylesheet" />

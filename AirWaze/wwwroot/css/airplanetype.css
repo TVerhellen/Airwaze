@@ -1,11 +1,5 @@
-﻿.haraldcontainer {
-    height: 800px;
-    width: 800px;
-}
-
-
 .hero-area2 {
-    background-image: url(../Images/contact.jpg);
+    background-image: url(../Images/airplanetype.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     min-height: 500px;
@@ -24,11 +18,7 @@
         padding-right: 20%;
     }
     .left {
-        margin-left: 0;
-    }
-    .blog_right_sidebar {
-        width: 150%;
-        height: 15%
+        margin-left:0;
     }
 }
 @media only screen and (max-width: 1300px) and (min-width: 601px) {
@@ -46,13 +36,6 @@
     .left {
         margin-left: -4%;
     }
-    .blog_right_sidebar {
-        width: 124%;
-        height: 12%
-    }
-    .planeindexcontainer{
-        width:124%;
-    }
 }
 
 @media only screen and (min-width: 1301px) and (max-width: 2500px) {
@@ -64,18 +47,8 @@
         bottom: 0;
         right: -50%;
     }
-    .center {
-        left: 10%;
-    }
     .left {
         margin-left: -30%;
-    }
-    .blog_right_sidebar {
-        width: 200%;
-        height: 12%
-    }
-    .planeindexcontainer {
-        width: 200%;
     }
 }
 
@@ -83,18 +56,12 @@ h2{
     margin-left:20%;
 }
 
-.btnall {
-    height: 50px;
-    width: 20%;
-}
-
-.btnCrud {
-    height: 50px;
+.center {
+    margin: auto;
     width: 100%;
+    padding: 10px;
 }
 
-.all{
-    width:200px;
+.country{
+    width: 27%;
 }
-
-

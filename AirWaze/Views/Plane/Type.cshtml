@@ -4,10 +4,27 @@
     ViewData["Title"] = "Home Page";
 }
 
-<head>
-@* <script src="_content/Blazor.Extensions.Canvas/blazor.extensions.canvas.js"></script>*@
+<link rel="stylesheet" href="~/css/airplanetype.css">
 
- <script src="_framework/blazor.server.js"></script>
-</head>
+<main>
+    <div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap text-center pt-50">
+                            <h2>New Airplane</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="col-lg-9" style="padding-bottom: 50px;">
+            <h2 class="font-weight-bold" style="padding-top: 50px; padding-bottom: 30px;">Airplane Type</h2>
+            @* <script src="_content/Blazor.Extensions.Canvas/blazor.extensions.canvas.js"></script>*@
+            <script src="_framework/blazor.server.js"></script>
+            @(await Html.RenderComponentAsync<Planetypepicker>(RenderMode.Server))
+        </div>
+</main>
 
-@(await Html.RenderComponentAsync<Planetypepicker>(RenderMode.Server))
+

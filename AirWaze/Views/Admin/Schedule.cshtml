@@ -2,7 +2,22 @@
 @using AirWaze.Entities
 @using AirWaze.Controllers
 
-<div class="container-fluid" style="padding: 0 0 0 0;">
+<link rel="stylesheet" href="~/css/flightindex.css">
+
+<main>
+    <div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap text-center pt-50">
+                            <h2>Dashboard</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+    <div class="container-fluid" style="padding: 0 0 0 0;">
     <div class="row">
         <div class="col-lg-2 bg-dark-blue d-none d-sm-block" style="padding-top: 50px; padding-bottom: 20px;">
             <center><i class="fas fa-user fa-5x text-white" style="padding-bottom: 20px;"></i></center>
@@ -22,13 +37,42 @@
                 </div>
         </div>
         <div class="col-lg-9" style="padding-bottom: 50px;">
-            <h1>Manage schedules</h1>
-            @if(@AdminController.scheduleToApprove == null)
-            {
-                <a class="btn btn-primary" asp-controller="Admin" asp-action="GenerateSchedule">Generate New Schedule</a>
-            }
-
-            <h1>Flight Schedule to Approve:</h1>
+            <div class="section-top-border">
+			    <h3 class="mb-30">Manage schedule</h3>
+                <br />
+                <br />
+                    <div class="categories-area">
+                    <div class="container">                      
+                        <div class="row">
+                                @if (@AdminController.scheduleToApprove == null)
+                                {
+                                    <div class="col-lg-3 col-md-6 col-sm-6">
+                                        <div class="single-cat text-center mb-50">
+                                            <div class="cat-icon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <div class="cat-cap">
+                                                <h5>New Schedule</h5>
+                                                <a asp-controller="Admin" asp-action="GenerateSchedule">Generate New Schedule</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                <div class="single-cat text-center mb-50">
+                                    <div class="cat-icon">
+                                        <i class="fa fa-calendar-check"></i>
+                                    </div>
+                                    <div class="cat-cap">
+                                        <h5>All Schedules</h5>
+                                        <a asp-controller="Admin" asp-action="ListSchedules">All Approved Schedules</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                    
+            <h5>Flight Schedules to Approve:</h5>
             @if(@AdminController.scheduleToApprove == null)
             {
                 <p>All schedules have been approved.</p>
@@ -36,15 +80,15 @@
             else
             {
                 <p>@AdminController.scheduleToApprove.Date.ToString("D") - @AdminController.scheduleToApprove.Date.Hour.ToString("00") : @AdminController.scheduleToApprove.Date.Minute.ToString("00")</p>
-                <a class="btn btn-primary" asp-controller="Admin" asp-action="DetailSchedule" asp-route-id="-1">Detail</a>
-                <a class="btn btn-success" asp-controller="Admin" asp-action="ApproveSchedule" >Approve Schedule</a>
+                <a class="genric-btn info circle" asp-controller="Admin" asp-action="DetailSchedule" asp-route-id="-1">Detail</a>
+                <a class="genric-btn warning circle" asp-controller="Admin" asp-action="ApproveSchedule" >Approve Schedule</a>
             }
-            <br />
-            <br />
-            <br />
-            <a class="btn btn-primary" asp-controller="Admin" asp-action="ListSchedules">See All Approved Schedules</a>
+
+            
+           </div>
     </div>
 </div>
+</main>
 
 <script src="~/lib/bootstrap/bootstrap-admin/popper.min.js"></script>
 <link href="~/lib/bootstrap/bootstrap-admin/bootstrap-parkeasy.css" rel="stylesheet" />
