@@ -4,8 +4,8 @@
 <!-- add method to make list of available planes for that flight - check flight region (destination), and Departure date/time -->
 
 
-
-@if(@FlightController.planes.Count > 0)
+<main>
+@if(@PlaneController.planeEntities.Count > 0)
 {
     <h2>Please select the plane for this flight</h2>
 <form asp-controller="Flight" asp-action="PlanePicker" asp-route-id=@Model.FlightNr method="post">
@@ -14,9 +14,9 @@
         <label>Available Planes:</label>
         <br />
         <select name="selectedPlaneNr">
-            @foreach(var item in @FlightController.planes)
+            @foreach(var item in @PlaneController.planeEntities)
             {
-                 <option value=@item.PlaneNr>@item.CurrentAirline.Name - @item.PlaneNr</option>
+                 <option value=@item.PlaneNr>@item.CurrentAirline.Name  - @item.PlaneNr</option>
             }
         </select>
     </div>
@@ -30,3 +30,4 @@ else
 
     <a class="btn btn-primary" asp-controller="Flight" asp-action="Create">Go Back</a>
 }
+</main>

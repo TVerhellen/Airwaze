@@ -32,6 +32,7 @@ namespace AirWaze.Database
             _dbContext.Entry(flight.CurrentPlane.CurrentAirline).State = EntityState.Unchanged;
             _dbContext.Entry(flight.CurrentGate).State = EntityState.Unchanged;
             _dbContext.Entry(flight.CurrentRunway).State = EntityState.Unchanged;
+            _dbContext.Entry(flight.Destination).State = EntityState.Unchanged;
             _dbContext.SaveChanges();
         }
 
@@ -98,6 +99,7 @@ namespace AirWaze.Database
                 .Include(x => x.CurrentPlane.CurrentAirline)
                 .Include(x => x.CurrentGate)
                 .Include(x => x.CurrentRunway)
+                .Include(x => x.Destination)
                 .SingleOrDefault(flight => flight.FlightNr.Equals(nr));
         }
 
@@ -122,6 +124,7 @@ namespace AirWaze.Database
                 .Include(x => x.CurrentPlane.CurrentAirline)
                 .Include(x => x.CurrentGate)
                 .Include(x => x.CurrentRunway)
+                .Include(x => x.Destination)
                 .ToList();
         }
 
@@ -226,6 +229,11 @@ namespace AirWaze.Database
         public void UpdateFlight(Flight flight)
         {
             _dbContext.Flights.Update(flight);
+            //_dbContext.Entry(flight.CurrentPlane).State = EntityState.Unchanged;
+            //_dbContext.Entry(flight.CurrentPlane.CurrentAirline).State = EntityState.Unchanged;
+            //_dbContext.Entry(flight.CurrentGate).State = EntityState.Unchanged;
+            //_dbContext.Entry(flight.CurrentRunway).State = EntityState.Unchanged;
+            //_dbContext.Entry(flight.Destination).State = EntityState.Unchanged;
             _dbContext.SaveChanges();
         }
 
@@ -254,7 +262,7 @@ namespace AirWaze.Database
 
         public List<Gate> GetGates()
         {
-            return _dbContext.Gates.ToList();
+            return _dbContext.Gates.AsNoTracking().ToList();
         }
 
         public void AddGate(Gate gate)
@@ -264,7 +272,7 @@ namespace AirWaze.Database
 
         public List<Runway> GetRunways()
         {
-            return _dbContext.Runways.ToList();
+            return _dbContext.Runways.AsNoTracking().ToList();
         }
 
         public void AddRunway(Runway runway)
@@ -274,24 +282,24 @@ namespace AirWaze.Database
 
         public Gate GetGateByNr(int nr)
         {
-            return _dbContext.Gates
+            return _dbContext.Gates.AsNoTracking()
                 .SingleOrDefault(gate => gate.Number.Equals(nr));
         }
 
         public Runway GetRunwayByNr(int nr)
         {
-            return _dbContext.Runways
+            return _dbContext.Runways.AsNoTracking()
                .SingleOrDefault(runway => runway.Number.Equals(nr));
         }
 
         public List<Destination> GetDestinations()
         {
-            return _dbContext.Destinations.ToList();
+            return _dbContext.Destinations.AsNoTracking().ToList();
         }
 
         public Destination GetDestinationByID(int id)
         {
-            return _dbContext.Destinations.SingleOrDefault(destination => destination.DestinationID == id);
+            return _dbContext.Destinations.AsNoTracking().SingleOrDefault(destination => destination.DestinationID == id);
         }
 
         public void AddDestination(Destination destination)
@@ -299,16 +307,16 @@ namespace AirWaze.Database
             throw new NotImplementedException();
         }
 
-        public void UpdateGate(Gate gate)
-        {
-            _dbContext.Gates.Update(gate);
-            _dbContext.SaveChanges();
-        }
+        //public void UpdateGate(Gate gate)
+        //{
+        //    _dbContext.Gates.Update(gate);
+        //    _dbContext.SaveChanges();
+        //}
 
-        public void UpdateRunway(Runway runway)
-        {
-            _dbContext.Runways.Update(runway);
-            _dbContext.SaveChanges();
-        }
+        //public void UpdateRunway(Runway runway)
+        //{
+        //    _dbContext.Runways.Update(runway);
+        //    _dbContext.SaveChanges();
+        //}
     } 
 }

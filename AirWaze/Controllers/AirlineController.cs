@@ -144,7 +144,7 @@ namespace AirWaze.Controllers
            
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Airline")]
         //Airline?? Zeker Admin   //evt minder laten editen indien airline - Tijs
         [HttpGet]
         public IActionResult Update(Guid ID)
