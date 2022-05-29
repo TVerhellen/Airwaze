@@ -148,6 +148,14 @@ namespace AirWaze.Controllers
 
         [Authorize(Roles = "Admin")]
         //Roles: Admin + Airport Staff
+        [HttpGet]
+        public IActionResult CreateAgain(string id)
+        {
+            var flightViewModel = tempFlightModels.FirstOrDefault(x => x.FlightNr == id);
+            return View("Create",flightViewModel);
+        }
+
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> Create(FlightCreateViewModel flightViewModel)
@@ -243,12 +251,14 @@ namespace AirWaze.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(string id, FlightEditViewModel flightViewModel)
         {
-            //TODO: add selectedGate and selectedRunway
             await Task.Delay(1500);
             flightViewModel.CurrentPlane = PlaneController.planeEntities.FirstOrDefault(x => x.PlaneNr == Request.Form["selectedPlaneNr"]);
-            flightViewModel.Status = Convert.ToInt32(Request.Form["selectedStatus"]);
-            flightViewModel.Destination = destinations.FirstOrDefault(x => x.Name == Request.Form["selectedDestination"]);
+            flightViewModel.CurrentGate = Airport.Gates.FirstOrDefault(x => x.Number == Convert.ToInt32(Request.Form["selectedGate"]));
+            flightViewModel.CurrentRunway = Airport.Runways.FirstOrDefault(x => x.Number == Convert.ToInt32(Request.Form["selectedRunway"]));
             flightViewModel.FlightNr = id;
+            flightViewModel.Destination = flights.FirstOrDefault(x => x.FlightNr == id).Destination;
+            flightViewModel.Status = Convert.ToInt32(Request.Form["selectedStatus"]);
+            
 
             var flightEntity = flights.FirstOrDefault(x => x.FlightNr == id);
 

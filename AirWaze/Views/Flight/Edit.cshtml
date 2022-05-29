@@ -14,20 +14,14 @@
 
 <form asp-controller="Flight" asp-action="Edit" asp-route-id="@Model.FlightNr" method="post">
  <div class="form-group">
-        <label>Destination:</label>
-        <select name="selectedDestination">
-            @foreach(var item in allDestinations)
-            {
-                 <option value=@item.Name>@item.Region  - @item.Name</option>
-            }
-        </select>
+        <label>Destination: @Model.Destination.Name (@Model.Destination.Region)</label>
     </div>
     <br />
 
     <!-- look up fill in datetimepicker with value -->
     <div class="form-group">
         <label asp-for="Departure"></label>
-        <input class="form-control" asp-for="Departure" value="@Model.Departure.ToString("o")"/>
+        <input class="form-control" asp-for="Departure"/>
         <span asp-validation-for="Departure"></span>
     </div>
      <br />
@@ -39,14 +33,28 @@
         <select name="selectedGate">
             @foreach(Gate gate in Airport.Gates)
             {
-                if(gate.Number == 0)
-                {
-                    <option value=@gate.Number>@gate.Number - None Assigned Yet</option>
-                }
-                else
-                {
-                    <option value=@gate.Number>@gate.Number</option>
-                }
+                    if(gate.Number == Model.CurrentGate.Number)
+                    {
+                        if(gate.Number == 0)
+                        {
+                            <option value="@gate.Number" selected>@gate.Number - None Assigned Yet</option>
+                        }
+                        else
+                        {
+                            <option value="@gate.Number" selected>@gate.Number</option>
+                        }
+                    }
+                    else
+                    {
+                        if(gate.Number == 0)
+                        {
+                            <option value="@gate.Number">@gate.Number - None Assigned Yet</option>
+                        }
+                        else
+                        {
+                            <option value="@gate.Number">@gate.Number</option>
+                        }
+                    }
             }
          </select>
     </div>
@@ -58,14 +66,28 @@
         <select name="selectedRunway">
             @foreach(Runway runway in Airport.Runways)
             {
-                if(runway.Number == 0)
-                {
-                    <option value=@runway.Number>@runway.Number - None Assigned Yet</option>
-                }
-                else
-                {
-                    <option value=@runway.Number>@runway.Number</option>
-                }
+                 if(@runway.Number == @Model.CurrentRunway.Number)
+                    {
+                        if(@runway.Number == 0)
+                        {
+                            <option selected value="@runway.Number">@runway.Number - None Assigned Yet</option>
+                        }
+                        else
+                        {
+                            <option selected value="@runway.Number">@runway.Number</option>
+                        }
+                    }
+                    else
+                    {
+                        if(runway.Number == 0)
+                        {
+                            <option value="@runway.Number">@runway.Number - None Assigned Yet</option>
+                        }
+                        else
+                        {
+                            <option value="@runway.Number">@runway.Number</option>
+                        }
+                    }
             }
          </select>
     </div>
@@ -77,7 +99,14 @@
         <select name="selectedPlaneNr">
             @foreach(var item in @availablePlanesForThisFlight)
             {
-                 <option value=@item.PlaneNr>@item.CurrentAirline.Name - @item.PlaneNr</option>
+                if(@item.PlaneNr == @Model.CurrentPlane.PlaneNr)
+                {
+                        <option value="@item.PlaneNr" selected>@item.CurrentAirline.Name - @item.PlaneNr</option>
+                    }
+                    else
+                    {
+                                            <option value="@item.PlaneNr">@item.CurrentAirline.Name - @item.PlaneNr</option>
+                    }
             }
         </select>
     </div>
@@ -86,14 +115,70 @@
         <label>Status</label>
         <br />
         <select name="selectedStatus">
-                 <option value=0>0 - Awaiting Approval</option>
-                 <option value=1>1 - Approved</option>
-                 <option value=2>2 - Delayed</option>
-                 <option value=3>3 - Boarding</option>
-                 <option value=4>4 - Departed</option>
-                 <option value=5>5 - Arrived</option>
-                 <option value=6>6 - Cancelled</option>
-                 <option value=7>7 - Completed</option>
+            @if(Model.Status == 0)
+            {
+                <option value=0 selected>0 - Awaiting Approval</option>
+            }
+            else
+            {
+                    <option value=0>0 - Awaiting Approval</option>
+                }
+                 @if(Model.Status == 1)
+            {
+                <option value=1 selected>1 - Approved</option>
+            }
+            else
+            {
+                    <option value=1>1 - Approved</option>
+                }
+                @if(Model.Status == 2)
+            {
+                <option value=2 selected>2 - Delayed</option>
+            }
+            else
+            {
+                    <option value=2>2 - Delayed</option>
+                }
+                 @if(Model.Status == 3)
+            {
+                <option value=3 selected>3 - Boarding</option>
+            }
+            else
+            {
+                     <option value=3>3 - Boarding</option>
+                }
+               @if(Model.Status == 4)
+            {
+                <option value=4 selected>4 - Departed</option>
+            }
+            else
+            {
+                     <option value=4>4 - Departed</option>
+                }  
+                @if(Model.Status == 5)
+            {
+                <option value=5 selected>5 - Arrived</option>
+            }
+            else
+            {
+                     <option value=5>5 - Arrived</option>
+                }  
+                 @if(Model.Status == 6)
+            {
+                 <option value=6 selected>6 - Cancelled</option>
+            }
+            else
+            {
+                     <option value=6>6 - Cancelled</option>
+                }  
+                 @if(Model.Status == 7)
+            {
+                 <option value=7 selected>7 - Completed</option>
+            }
+            else
+            {
+                     <option value=7>7 - Completed</option>
+                }  
         </select>
     </div>
      <a class="btn btn-primary" asp-controller="Flight" asp-action="Index">Go Back</a>

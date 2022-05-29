@@ -16,7 +16,21 @@
         <select name="selectedDestination">
             @foreach(var item in allDestinations)
             {
-                 <option value=@item.Name>@item.Region  - @item.Name</option>
+                    if(@Model.Destination != null)
+                    {
+                        if(@Model.Destination.Name == item.Name)
+                        {
+                                <option selected value=@item.Name>@item.Region  - @item.Name</option>
+                        }
+                        else
+                        {
+                            <option value=@item.Name>@item.Region  - @item.Name</option>
+                        }
+                    }
+                    else
+                    {
+                        <option value=@item.Name>@item.Region  - @item.Name</option>
+                    }
             }
         </select>
     </div>

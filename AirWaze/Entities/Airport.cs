@@ -449,7 +449,7 @@ namespace AirWaze.Entities
                 //only check planes that fly to same region as destination
                 if (plane.FlightRegion == originalFlight.Destination.Region)
                 {
-                    //Make list of all flights with currentPlane = this plane and with status 0 - 5
+                    //Make list of all flights with currentPlane = this plane and with status 0 - 5, without the flight which it is currently checking availability for
                     List<Flight> flightsPerPlane = new List<Flight>();
 
                     foreach (Flight flight in Flights)
@@ -463,6 +463,8 @@ namespace AirWaze.Entities
                     //If there are flights with this plane, check for each flight if timeslots do not overlap with original flight
                     if(flightsPerPlane.Count > 0)
                     {
+                        bool planeAvailable = true;
+
                         foreach(Flight flightPP in flightsPerPlane)
                         {
                             //Make timeslot for the flights with this plane
@@ -472,11 +474,20 @@ namespace AirWaze.Entities
                             //Compare overlap on both timeslots, if none -> plane is available
                             bool overlap = newFlightPeriodStart < originalFlightPeriodEnd && originalFlightPeriodStart < newFlightPeriodEnd;
 
-                            if (!overlap)
+                            if (overlap && flightPP.FlightNr != originalFlight.FlightNr)
                             {
-                                availablePlanes.Add(plane);
+                                planeAvailable = false;
                             }
                         }
+
+                        if(planeAvailable)
+                        {
+                            availablePlanes.Add(plane);
+                        }
+                    }
+                    else
+                    {
+                        availablePlanes.Add(plane);
                     }
                 }
             }
