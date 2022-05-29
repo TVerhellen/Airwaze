@@ -79,7 +79,7 @@
                                             }
                                             @if (User.IsInRole("Customer") || !User.Identity.IsAuthenticated)
                                             {
-                                                <li> <a asp-area="" asp-controller="Home" asp-action="Map" style="background-color: transparent">Map Prototype</a></li>
+                                                <li> <a asp-area="" asp-controller="Home" asp-action="Blazortest" style="background-color: transparent">Map Prototype</a></li>
                                             }                                            
                                             @if (User.IsInRole("Admin"))
                                             {
