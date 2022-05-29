@@ -1,17 +1,24 @@
 ﻿@using AirWaze.Controllers
 @using AirWaze.Models
-
+@using AirWaze.Entities
 @model FlightCreateViewModel
 
+@{
+    List<Destination> allDestinations = FlightController.destinations.OrderBy(dest => dest.Region).ThenBy(dest => dest.Name).ToList();
+}
+<main>
 <h1>Create New Flight</h1>
 
 <form asp-controller="Flight" asp-action="Create" method="post">
     
-    <!--combobox destinations-->
-     <div class="form-group">
-       <label asp-for="Destination"></label>
-       <input class="form-control" asp-for="Destination" />
-       <span asp-validation-for="Destination"></span>
+ <div class="form-group">
+        <label>Destination:</label>
+        <select name="selectedDestination">
+            @foreach(var item in allDestinations)
+            {
+                 <option value=@item.Name>@item.Region  - @item.Name</option>
+            }
+        </select>
     </div>
     <br />
 
@@ -40,3 +47,4 @@
                     });
         }
     </script>
+    </main>

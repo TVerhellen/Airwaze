@@ -144,7 +144,7 @@ namespace AirWaze.Controllers
            
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Airline")]
         //Airline?? Zeker Admin   //evt minder laten editen indien airline - Tijs
         [HttpGet]
         public IActionResult Update(Guid ID)
@@ -263,5 +263,25 @@ namespace AirWaze.Controllers
             return RedirectToAction("Create");
         }
 
+        public async Task<IActionResult> FLightList(Guid ID)
+        {
+            List<Flight> flightstodisplay= new List<Flight>();
+            List<Flight> myflightlist = _myDatabase.GetFlights();
+            flightstodisplay = myflightlist.FindAll(x => x.CurrentPlane.CurrentAirline.AirlineID == ID);
+            List<FlightListViewModel> mymodel = new List<FlightListViewModel>();
+            foreach (Flight flight in flightstodisplay)
+            {
+                FlightListViewModel x = new FlightListViewModel
+                {
+                    FlightID = flight.FlightID,
+                    FlightNr = flight.FlightNr,
+                    Departure = flight.Departure,
+                    Destination = flight.Destination,
+                    Status = flight.Status,                
+               };
+               mymodel.Add(x);
+            }           
+            return View(mymodel);
+        }
     }
 }

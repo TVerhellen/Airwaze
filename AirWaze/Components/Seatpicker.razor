@@ -1,0 +1,283 @@
+﻿
+
+@using AirWaze.Entities
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.AspNetCore.Http.Extensions
+@using Microsoft.Extensions.Logging
+@using Blazor.Extensions; 
+@using Blazor.Extensions.Canvas
+@using Blazor.Extensions.Canvas.Canvas2D;
+@using Microsoft.AspNetCore.Mvc.TagHelpers;
+@using Microsoft.JSInterop
+@using BrowserInterop.Extensions
+@using BrowserInterop.Geolocation
+@inject ILogger<Seatpicker> Logger
+@inject IJSRuntime jsRuntime
+
+<head>
+    <style>
+        
+.blog_left_sidebar1 {
+    background-image: url('../Images/A319SeatPicker.jpg');
+    background-size: contain;
+    height: 1266px;
+    width: 720px;
+}
+.blog_right_sidebar {
+             background-color: #af932a;
+             background-size: contain; 
+             padding: 20px;
+             }
+    </style>
+
+</head>
+
+<div style="padding-top:200px;"></div>
+
+
+<br />
+
+  <section class="blog_area section-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 mb-5 mb-lg-0">
+                        <div class="blog_left_sidebar1">           
+                    <div @onmousedown="ReportPointerLocation">
+                        <BECanvas Width="720" Height="1266" @ref="_canvasReference" >   
+                        </BECanvas>
+                    </div>
+                </div>
+                </div>
+               <div class="col-lg-4">                 
+                   @if (selectedseat != "")
+                    {
+                          @if (istaken)
+                            {
+                                <div class="blog_right_sidebar">                                                        
+                                            <div style="padding-top:20px;">
+                                                 <h1 class="widget_title">SEAT TAKEN</h1>  
+                                                 <button class="btn btn-primary"style="margin-bottom:40px;margin-top:30px;" @onclick=CancelSeat>Cancel</button>
+                                            </div>                                  
+                                </div>
+                            }
+                           else
+                            {
+                                <div class="blog_right_sidebar">                                                        
+                                            <div style="padding-top:20px;">
+                                                 <h3 class="widget_title">@selectedseat</h3>
+                                                 <p>Your seatnumber: @alfcolumn</p>
+                                                 <p>Row : @row</p>
+                                                 <br />
+                                                  <h3>Price</h3>                                              
+                                                  <p>@price Euros</p>
+                                                  <p>CLass = @seatclass</p>
+                                                <br>
+                                                <div class="media-body">
+                                                        <a href="blog_details.html">Insert Link </a>                                                   
+                                                    </div>
+                                                <br>
+                                                <div class="media post_item">                                
+                                                    <img src="Images/seat.jpg" alt="Sample Image" height="240" width="240"/>                                                                                       
+                                                </div>
+                                                
+                                                <a class="btn btn-secondary" style="margin-top:60px;" @onclick=ConfirmSeat href="/Ticket/Create">Confirm Seat, To Payment Menu</a>
+                                                <button class="btn btn-primary"style="margin-bottom:40px;margin-top:30px;" @onclick=CancelSeat>Cancel</button>
+
+                                            </div>                                  
+                                 </div>
+                    }
+
+                }
+                else
+                {
+                    <div class="blog_right_sidebar">                                                        
+                                            <div style="padding-top:20px;">
+                                                 <h1 class="widget_title">Click on any seat to Select it</h1>                                                  
+                                            </div>                                  
+                                </div>
+                }
+                </div>
+            </div>       
+        </div>
+      </section>                                   
+
+<p>@mousePointerMessage</p>
+<p>@selectedseat</p>
+
+ 
+@code {
+    private string[,] thisseatdiagram;
+    private string seatdiagramstring;
+    private int x = 176;
+    private int y = 273;
+    private bool istaken = false;
+    private bool renderbool = true;
+    private bool isseatselected = false;
+    private string selectedseat = "";
+    private string row;
+    private double column;
+    private string alfcolumn = "";
+
+    private int price;
+    private string seatclass = "Economy";
+    private Random generator = new Random();
+
+    private string? mousePointerMessage;
+
+    //ticket to edit
+    //private Ticket myticket  = AirWaze.Controllers.TicketController.
+    //Diagram
+    //thisseatdiagram = myticket.flight.seatdiagram;
+
+    private async Task ReportPointerLocation(MouseEventArgs e)
+    {       
+        await Task.Delay(2000);
+        mousePointerMessage = $"Mouse coordinates: {e.OffsetX}:{e.OffsetY}";      
+        if (isseatselected == false)
+        {         
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 23; j++)
+                {
+                    if (e.OffsetX > (x + ( i * 65)) && (e.OffsetY > y + ( j * 30)) && (e.OffsetX < ((x + ( i * 65)) + 20)) && (e.OffsetY < (( y  + ( j * 30)) +20)))
+                    {                       
+                        await this._context.SetFillStyleAsync("black");      
+                        await this._context.FillRectAsync(e.OffsetX, e.OffsetY, 10, 10);
+                        if (thisseatdiagram[j,i] == "1")
+                        {
+                            istaken = true;
+                        }
+                        isseatselected = true;  
+                        //HIT , select seat[j,i]
+                        // Naar html 
+                        row = (Math.Round((e.OffsetY - 273) / 30) + 1).ToString();
+                        column = (Math.Round((e.OffsetX - 176) / 65) + 1);
+                        price = generator.Next(1000, 5000);
+                        switch (column)
+                        {
+                            case 1:
+                                alfcolumn = "A";
+                                break;
+                            case 2:
+                                alfcolumn = "B";
+                                break;
+                            case 3:
+                                alfcolumn = "C";
+                                break;
+                            case 4:
+                                alfcolumn = "D";
+                                break;
+                            case 5:
+                                alfcolumn = "E";
+                                break;
+                            case 6:
+                                alfcolumn = "F";
+                                break;
+                        }
+                        selectedseat = $"Stoel {alfcolumn} -- {row}";
+                    }                    
+                }
+            }           
+        }      
+    }
+
+    private Canvas2DContext _context;
+
+    protected BECanvasComponent _canvasReference;
+
+
+    protected async Task OnRenderAsync(bool firstRender)
+    {
+        //this._context = await this._canvasReference.CreateCanvas2DAsync();
+        //await this._context.SetFillStyleAsync("green");             
+        //await this._context.FillRectAsync(176, 273, 20, 20);        
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        int columncounter = 0;
+        int rowcounter = 0;
+        seatdiagramstring = "00000000000001000000000/00000001000000000000000/00000001000000001000000/00000000000010000000000/00000000000100000000000/00000000000001000000000/";
+        if (seatdiagramstring != null)
+        {
+
+            seatdiagramstring = seatdiagramstring.Remove(seatdiagramstring.LastIndexOf('/'));
+            string[] mylist = seatdiagramstring.Split('/');
+            foreach (string x in mylist)
+            {
+                rowcounter++;
+                columncounter = x.Count();
+            }
+            thisseatdiagram = new string[columncounter, rowcounter];
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 23; j++)
+                {
+                    thisseatdiagram[j, i] = mylist[i].Substring(j, 1);
+                }
+            }
+        }        
+        if (thisseatdiagram == null)
+        {
+            thisseatdiagram = new string[23, 6];
+            FillEmtpyPlane(6, 23);
+        }      
+        if (isseatselected == false)
+        {
+            this._context = await this._canvasReference.CreateCanvas2DAsync();
+            for (int i = 0 ; i < 6; i++)
+            {
+                for (int j = 0 ; j < 23; j++)
+                {
+                    if (thisseatdiagram[j,i] == "0")
+                    {
+                        await this._context.SetFillStyleAsync("green");
+                        await this._context.FillRectAsync(x +( i * 65), y + (j * 30), 20, 20);
+                    }
+                    else
+                    {
+                        await this._context.SetFillStyleAsync("red");
+                        await this._context.FillRectAsync(x +( i * 65), y + (j * 30), 20, 20);
+                    }               
+                }            
+            } 
+        }        
+    }
+
+    public void FillEmtpyPlane(int colums, int rows)
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            for (int j = 0; j < 23; j++)
+            {                              
+                thisseatdiagram[j, i] = "0";                                   
+            }
+        } 
+    }
+
+    public void ConfirmSeat()
+    {
+        seatdiagramstring = "";
+        int thisrow = Convert.ToInt32(row);
+        int thiscolumn = Convert.ToInt32(column);
+        thisseatdiagram[thisrow, thiscolumn] = "1";
+        for (int i = 0; i < 6; i++)
+        {
+            for (int j = 0; j < 23; j++)
+            {
+                seatdiagramstring += thisseatdiagram[j, i];
+            }
+            seatdiagramstring += "/";
+        }
+        //myticket.seat = x;
+        //myticket.flight.seatdiagram = seatdiagramstring
+        //Airwaze.Controllers.TicketController.TicketstoHande.Add(myticket)
+    }
+    public void CancelSeat()
+    {
+        isseatselected = false;
+        selectedseat = "";
+        istaken = false;
+    }
+ }

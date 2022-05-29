@@ -8,6 +8,8 @@
     <head>
 	 <link rel="stylesheet" href="~/css/planeindex.css">
 </head>
+<main >
+    <div style="padding-top:200px;"></div>
     <div class="row">
         @*<div class="col-lg-2 bg-dark-blue d-none d-sm-block" style="padding-top: 50px; padding-bottom: 20px;">
                 <center><i class="fas fa-user fa-5x text-white" style="padding-bottom: 20px;"></i></center>
@@ -24,8 +26,7 @@
                     <a class="list-group-item" asp-action="Index" asp-controller="Flight"><i class="fa fa-plane-departure text-white">&nbsp; Flights</i></a> 
                     <a class="list-group-item" asp-action="Schedule" asp-controller="Admin"><i class="fa fa-clock text-white">&nbsp; Schedule</i></a>  
                 </div>
-        </div>*@
-        
+        </div>*@      
             <div>
                 <h1>Manage planes</h1>
                 @*<h1 style="color:red;">Hallo Admin</h1>*@
@@ -45,21 +46,20 @@
                     </div>
                 </form>
                 <br/>
-
                 <div class="planeindexcontainer">
                     @if (Model.Count != 0)
                     {
                         <div class="progress-table-wrap">
 						                    <div class="progress-table">
 							                    <div class="table-head">
-                                                    <div class="serial" style="margin-left:20px;">Airliner</div>
-                                                    <div class="serial" style="margin-left:20px;">Logo</div>
-								                    <div class="serial" style="margin-left:60px;">Nr</div>
-								                    <div class="visit" style="margin-left:20px;">Capacity</div>
-								                    <div class="visit" style="margin-left:80px;">Region</div>
-								                    <div class="visit" style="margin-left:60px;">Manfufacturer</div>
-								                    <div class="visit" style="margin-left:60px;">Type</div>
-								                    <div class="visit" style="margin-left:60px;">ConstructionYear</div>
+                                                     <div class="serial" style="padding-left:20px;padding-right:20px;margin-left:20px">Logo</div>
+                                                    <div class="serial" style="padding-left:20px;padding-right:20px">Airliner</div>
+								                    <div class="serial" style="padding-left:20px;padding-right:20px">Nr</div>
+								                    <div class="visit" style="padding-left:20px;padding-right:20px">Capacity</div>
+								                    <div class="visit" style="padding-left:20px;padding-right:20px">Region</div>
+								                    <div class="visit" style="padding-left:20px;padding-right:20px">Manfufacturer</div>
+								                    <div class="visit" style="padding-left:20px;padding-right:20px">Type</div>
+								                    <div class="visit" style="padding-left:20px;padding-right:20px">ConstructionYear</div>
 								                    <div class="percentage"></div>
 								                    <div class="percentage"></div>
 								                    <div class="percentage"></div>
@@ -67,19 +67,19 @@
 							                     @foreach (var plane in Model)
 							                    {
 								                    <div class="table-row">
-                                                        <div class="serial" style="margin-left:20px;">@plane.CurrentAirline.Name</div>
-                                                         <div class="serial" style="margin-left:20px;">
-                                                                <img src="@Url.Content(@plane.CurrentAirline.Logo)" alt="Sample Image" width="100" height="100" />
-                                                        </div>               
-									                    <div class="serial" style="margin-left:60px;">@plane.PlaneNr</div>
-									                    <div class="visit" style="margin-left:20px;">@plane.PassengerCapacity</div>
-									                    <div class="visit" style="margin-left:20px;">@plane.FlightRegion</div>
-									                    <div class="visit" style="margin-left:20px;">@plane.Manufacturer</div>
-									                    <div class="visit" style="margin-left:20px;">@plane.Type</div>
-									                    <div class="visit" style="margin-left:20px;">@plane.ConstructionYear</div>
-									                    <div class="visit" style="margin-left:20px"><a class="genric-btn info circle arrow" asp-action="Detail" asp-controller="Plane" asp-route-ID=@plane.PlaneNr>Detail</a></div>
-									                    <div class="visit" style="margin-left:20px"><a class="genric-btn warning circle arrow" asp-action="Update" asp-controller="Plane" asp-route-ID=@plane.PlaneNr>Edit</a></div>
-									                    <div class="visit" style="margin-left:20px"><a class="genric-btn danger circle arrow" asp-action="Delete" asp-controller="Plane" asp-route-ID=@plane.PlaneNr>Delete</a></div>									
+                                                        <div class="serial" style="padding-left:20px;padding-right:20px;margin-left:20px">
+                                                                <img src="@Url.Content(@plane.CurrentAirline.Logo)" alt="Sample Image" width="60" height="60" />
+                                                        </div>
+                                                        <div class="serial" style="padding-left:20px;margin-right:20px">@plane.CurrentAirline.NameTag</div>                                                                       
+									                    <div class="serial" style="padding-left:20px;padding-right:20px">@plane.PlaneNr</div>
+									                    <div class="visit" style="padding-left:20px;padding-right:20px">@plane.PassengerCapacity</div>
+									                    <div class="visit" style="padding-left:20px;padding-right:20px">@plane.FlightRegion</div>
+									                    <div class="visit" style="padding-left:20px;padding-right:20px">@plane.Manufacturer</div>
+									                    <div class="visit" style="padding-left:20px;padding-right:20px">@plane.Type</div>
+									                    <div class="visit" style="padding-left:20px;padding-right:20px">@plane.ConstructionYear</div>
+									                    <div class="visit" style="padding-left:20px;padding-right:20px"><a class="genric-btn info circle arrow" asp-action="Detail" asp-controller="Plane" asp-route-ID=@plane.PlaneNr>Detail</a></div>
+									                    <div class="visit" style="padding-left:20px;padding-right:20px"><a class="genric-btn warning circle arrow" asp-action="Update" asp-controller="Plane" asp-route-ID=@plane.PlaneNr>Edit</a></div>
+									                    <div class="visit" style="padding-left:20px;padding-right:20px"><a class="genric-btn danger circle arrow" asp-action="Delete" asp-controller="Plane" asp-route-ID=@plane.PlaneNr>Delete</a></div>									
 								                    </div>						
 							                    }
                                               </div>
@@ -89,18 +89,13 @@
                         {
                             <h1>No Planes Currently Available</h1>
                         }
-                    <div style="margin:100px;">
-                     <a class="genric-btn primary e-large" asp-area="" asp-controller="Plane" asp-action="Type" style="margin-left:250px;width:600px;">Add New Plane</a>
+                    <div style="padding-top:100px;padding-left:200px;padding-bottom:100px">
+                     <a class="genric-btn primary e-large" asp-area="" asp-controller="Plane" asp-action="Type" style="width:600px;">Add New Plane</a>
                     </div> 
-                    </div>
-    
-              
-   
+                    </div>                   
+            </div>
         </div>
-        
-
-
-
+</main>
 <script src="~/lib/bootstrap/bootstrap-admin/popper.min.js"></script>
 <link href="~/lib/bootstrap/bootstrap-admin/bootstrap-parkeasy.css" rel="stylesheet" />
 <link href="~/lib/bootstrap/bootstrap-admin/dashboard.css" rel="stylesheet" />

@@ -12,16 +12,13 @@
 @using BrowserInterop.Geolocation  
 @using AirWaze.Entities
 
-
 @inject ILogger<Canvasformap> Logger
 @inject IJSRuntime jsRuntime
 
 <head>
    
-    <style>
-        
+    <style>        
         body
-
         {
         margin-top: 20px;
         margin-bottom: 60px;
@@ -29,14 +26,15 @@
         width: none;
         background-image: url('../Images/gps.jpg');
         background-size: cover;
-        }
-
-        
-
+        }       
+        .blog_right_sidebar {
+             background-color: #516eb1;
+             background-size: contain; 
+             padding: 20px;
+             }
     </style>
 </head>
-
-
+<div style="padding-top:200px;"></div>
 
 <h1>Click area for more info!</h1>
                                       
@@ -54,20 +52,21 @@
                 </div>
                 </div>
                <div class="col-lg-4">
-                        <div class="blog_right_sidebar">
-                             <div>
+                   <div>
                                          <a href="/" @onclick="KillEvents"><i class='fas fa-home' style='font-size:84px;color:red'></i></a>
                                         </div>
+                        <div class="blog_right_sidebar">
+                             
                              @switch (@selectedService)
                                 {
                                     case 1:  
-                                        <div style="padding-top:60px;">
+                                        <div style="padding-top:20px;">
                                          <h3 class="widget_title">Gates 3 & 4</h3>
                                          <p>Gates number 3 & 4 are located here</p>
                                          <p>Luxury Seating Acomodation and Shop Delivery available on site</p>
                                          <br />
                                           <h3>Gps Details:</h3>                                              
-                                          <p>@distancegates34.ToString("0,00") m distance from your current position, bearing @bearinggates34.ToString("0,00")</p>
+                                          <p>@distancegates34.ToString("0,00") m distance from your current position, bearing @bearinggates34.ToString("0,00"). Walking Time : approx. @GetWalkingTime(@distancegates34) minutes.</p>
                                         <br>
                                         <div class="media-body">
                                                 <a href="blog_details.html">Insert Link </a>
@@ -75,19 +74,19 @@
                                             </div>
                                         <br>
                                         <div class="media post_item">                                
-                                            <img src="Images/gates.jpg" alt="Sample Image" height="360" width="360"/>                                                                                       
+                                            <img src="Images/gates.jpg" alt="Sample Image" height="240" width="240"/>                                                                                       
                                         </div>   
                                         </div>
                                         
                                      break;                                   
                                     case 2:
-                                        <div style="padding-top:60px;">
+                                        <div style="padding-top:20px;">
                                          <h3 class="widget_title">Gates 1 & 2</h3>
                                          <p>Gates number 1 & 2 are located here</p>
                                          <p>Luxury Seating Acomodation and Shop Delivery available on site</p>
                                          <br />
                                           <h3>Gps Details:</h3>                                              
-                                          <p>@distancegates12.ToString("0,00") m distance from your current position, bearing @bearinggates12.ToString("0,00")</p>
+                                          <p>@distancegates12.ToString("0,00") m distance from your current position, bearing @bearinggates12.ToString("0,00"). Walking Time : approx. @GetWalkingTime(@distancegates12) minutes.</p>
                                         <br>
                                         <div class="media-body">
                                                 <a href="blog_details.html">Insert Link </a>
@@ -95,18 +94,18 @@
                                             </div>
                                         <br>
                                         <div class="media post_item">                                
-                                            <img src="Images/gates.jpg" alt="Sample Image" height="360" width="360"/>                                                                                       
+                                            <img src="Images/gates.jpg" alt="Sample Image" height="240" width="240"/>                                                                                       
                                         </div>   
                                         </div>
                                         break;
                                     case 3:
-                                        <div style="padding-top:60px;">
+                                        <div style="padding-top:20px;">
                                          <h3 class="widget_title">Gates 5 & 6</h3>
                                          <p>Gates number 5 & 6 are located here</p>
                                          <p>Luxury Seating Acomodation and Shop Delivery available on site</p>
                                          <br />
                                           <h3>Gps Details:</h3>                                              
-                                          <p>@distancegates56.ToString("0,00") m distance from your current position, bearing @bearinggates56.ToString("0,00")</p>
+                                          <p>@distancegates56.ToString("0,00") m distance from your current position, bearing @bearinggates56.ToString("0,00"). Walking Time : approx. @GetWalkingTime(@distancegates56) minutes.</p>
                                         <br>
                                         <div class="media-body">
                                                 <a href="blog_details.html">Insert Link </a>
@@ -114,18 +113,18 @@
                                             </div>
                                         <br>
                                         <div class="media post_item">                                
-                                            <img src="Images/gates.jpg" alt="Sample Image" height="360" width="360"/>                                                                                       
+                                            <img src="Images/gates.jpg" alt="Sample Image" height="240" width="240"/>                                                                                       
                                         </div>   
                                         </div>
                                         break;
                                     case 4:
-                                        <div style="padding-top:60px;">
+                                        <div style="padding-top:20px;">
                                          <h3 class="widget_title">Gates 7, 8 & 9</h3>
                                          <p>Gates number 7, 8 & 9 are located here</p>
                                          <p>Luxury Seating Acomodation and Shop Delivery available on site</p>
                                          <br />
                                           <h3>Gps Details:</h3>                                              
-                                          <p>@distancegates789.ToString("0,00") m distance from your current position, bearing @bearinggates789.ToString("0,00")</p>
+                                          <p>@distancegates789.ToString("0,00") m distance from your current position, bearing @bearinggates789.ToString("0,00"). Walking Time : approx. @GetWalkingTime(@distancegates789) minutes.</p>
                                         <br>
                                         <div class="media-body">
                                                 <a href="blog_details.html">Insert Link </a>
@@ -133,18 +132,18 @@
                                             </div>
                                         <br>
                                         <div class="media post_item">                                
-                                            <img src="Images/gates.jpg" alt="Sample Image" height="360" width="360"/>                                                                                       
+                                            <img src="Images/gates.jpg" alt="Sample Image" height="240" width="240"/>                                                                                       
                                         </div>   
                                         </div>
                                         break;
                                     case 5:
-                                        <div style="padding-top:60px;">
+                                        <div style="padding-top:20px;">
                                          <h3 class="widget_title">Gates 1000</h3>
                                          <p>Gates number 7, 8 & 9 are located here</p>
                                          <p>Luxury Seating Acomodation and Shop Delivery available on site</p>
                                          <br />
                                           <h3>Gps Details:</h3>                                              
-                                          <p>@distancegates789.ToString("0,00") m distance from your current position, bearing @bearinggates789.ToString("0,00")</p>
+                                          <p>@distancegates789.ToString("0,00") m distance from your current position, bearing @bearinggates789.ToString("0,00"). Walking Time : approx. @GetWalkingTime(@distancegates789) minutes.</p>
                                         <br>
                                         <div class="media-body">
                                                 <a href="blog_details.html">Insert Link </a>
@@ -152,43 +151,43 @@
                                             </div>
                                         <br>
                                         <div class="media post_item">                                
-                                            <img src="Images/gates.jpg" alt="Sample Image" height="360" width="360"/>                                                                                       
+                                            <img src="Images/gates.jpg" alt="Sample Image" height="240" width="240"/>                                                                                       
                                         </div>   
                                         </div>
                                         break;
                                     case 6:
-                                        <div style="padding-top:60px;">
+                                        <div style="padding-top:20px;">
                                          <h3 class="widget_title">BurgerKing</h3>
                                          <p>Eat in/ take out / delivery at gates</p>
                                          <p>Whoppers - SoftDrinks - Ice</p>
                                          <br />
                                           <h3>Gps Details:</h3>                                              
-                                          <p>@distancegates789.ToString("0,00") m distance from your current position, bearing @bearinggates789.ToString("0,00")</p>
+                                          <p>@distancegates789.ToString("0,00") m distance from your current position, bearing @bearinggates789.ToString("0,00"). Walking Time : approx. @GetWalkingTime(distancegates789) minutes.</p>
                                         <br>
                                         <div class="media-body">
                                                 <a href="blog_details.html">Insert Link </a>                                                 
                                             </div>
                                         <br>
                                         <div class="media post_item">                                
-                                            <img src="Images/burgerking.jpg" alt="Sample Image" height="360" width="360"/>                                                                                       
+                                            <img src="Images/burgerking.jpg" alt="Sample Image" height="240" width="240"/>                                                                                       
                                         </div>   
                                         </div>
                                          break;                                       
                                     case 7:
-                                        <div style="padding-top:60px;">
+                                        <div style="padding-top:20px;">
                                          <h3 class="widget_title">TaxFreeShop</h3>
                                          <p>Buy Shit</p>
                                          <p>Perfume - Tobacco - Alcohol</p>
                                          <br />
                                           <h3>Gps Details:</h3>                                              
-                                          <p>@distancegates789.ToString("0,00") m distance from your current position, bearing @bearinggates789.ToString("0,00")</p>
+                                          <p>@distancegates789.ToString("0,00") m distance from your current position, bearing @bearinggates789.ToString("0,00"). Walking Time : approx. @GetWalkingTime(@distancegates789) minutes.</p>
                                         <br>
                                         <div class="media-body">
                                                 <a href="blog_details.html">Insert Link </a>                                                 
                                             </div>
                                         <br>
                                         <div class="media post_item">                                
-                                            <img src="Images/Dutyfree.jpg" alt="Sample Image" height="360" width="360"/>                                                                                       
+                                            <img src="Images/Dutyfree.jpg" alt="Sample Image" height="240" width="240"/>                                                                                       
                                         </div>   
                                         </div>
                                         break;
@@ -420,17 +419,17 @@
         bearingpitta = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, pittalat, pittalon);
         bearingfrietkot = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, frietkotlat, frietkotlon);
 
-        //Once DB is Updated
+        //Gates in st Niklaas
         distancegates12 = GetDistance(AirWaze.Entities.Airport.Gates[0].CoordsLon, AirWaze.Entities.Airport.Gates[0].CoordsLat);
         distancegates34 = GetDistance(AirWaze.Entities.Airport.Gates[2].CoordsLon, AirWaze.Entities.Airport.Gates[2].CoordsLat);
         distancegates56 = GetDistance(AirWaze.Entities.Airport.Gates[4].CoordsLon, AirWaze.Entities.Airport.Gates[4].CoordsLat);
         distancegates789 = GetDistance(AirWaze.Entities.Airport.Gates[6].CoordsLon, AirWaze.Entities.Airport.Gates[6].CoordsLat);
-         bearinggates12 = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, AirWaze.Entities.Airport.Gates[0].CoordsLat, AirWaze.Entities.Airport.Gates[0].CoordsLon);
-         bearinggates34 = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, AirWaze.Entities.Airport.Gates[2].CoordsLat, AirWaze.Entities.Airport.Gates[2].CoordsLon);
-         bearinggates56 = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, AirWaze.Entities.Airport.Gates[4].CoordsLat, AirWaze.Entities.Airport.Gates[4].CoordsLon);
-         bearinggates789 = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, AirWaze.Entities.Airport.Gates[6].CoordsLat, AirWaze.Entities.Airport.Gates[6].CoordsLon);
+        bearinggates12 = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, AirWaze.Entities.Airport.Gates[0].CoordsLat, AirWaze.Entities.Airport.Gates[0].CoordsLon);
+        bearinggates34 = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, AirWaze.Entities.Airport.Gates[2].CoordsLat, AirWaze.Entities.Airport.Gates[2].CoordsLon);
+        bearinggates56 = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, AirWaze.Entities.Airport.Gates[4].CoordsLat, AirWaze.Entities.Airport.Gates[4].CoordsLon);
+        bearinggates789 = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, AirWaze.Entities.Airport.Gates[6].CoordsLat, AirWaze.Entities.Airport.Gates[6].CoordsLon);
 
-        //SintNiklaas
+        // 3 points in SintNiklaas
         distanceregentiestraat =  GetDistance(regentiestraatlon, regentiestraatlat);
         distanceherderstraat =  GetDistance( herderstraatlon, herderstraatlat);
         distancebasisschool =  GetDistance(basisschoollon, basisschoollat);
@@ -496,15 +495,20 @@
 
     public double GetDistance(double longitude, double latitude, double otherLongitude, double otherLatitude)
     {
-    var d1 = latitude * (Math.PI / 180.0);
-    var num1 = longitude * (Math.PI / 180.0);
-    var d2 = otherLatitude * (Math.PI / 180.0);
-    var num2 = otherLongitude * (Math.PI / 180.0) - num1;
-    var d3 = Math.Pow(Math.Sin((d2 - d1) / 2.0), 2.0) + Math.Cos(d1) * Math.Cos(d2) * Math.Pow(Math.Sin(num2 / 2.0), 2.0);
-    
-    return 6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(d3), Math.Sqrt(1.0 - d3)));
+        var d1 = latitude * (Math.PI / 180.0);
+        var num1 = longitude * (Math.PI / 180.0);
+        var d2 = otherLatitude * (Math.PI / 180.0);
+        var num2 = otherLongitude * (Math.PI / 180.0) - num1;
+        var d3 = Math.Pow(Math.Sin((d2 - d1) / 2.0), 2.0) + Math.Cos(d1) * Math.Cos(d2) * Math.Pow(Math.Sin(num2 / 2.0), 2.0);
+
+        return 6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(d3), Math.Sqrt(1.0 - d3)));
     }
-    
+
+    public int GetWalkingTime(double distance)
+    {
+        return (int)Math.Round(distance / 80);
+    }
+
 
 
        

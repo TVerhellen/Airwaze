@@ -1,6 +1,6 @@
 ﻿@model FlightDetailViewModel
 
-
+<main>
 <h1>Flight Details</h1>
 
 <!-- Possible Notifications: Delayed?, Cancelled, Boarding, In Transit, Arrived At Destination, Fully Booked -->
@@ -8,7 +8,7 @@
 <h2>Flight Number</h2>
 <p>@Model.FlightNr</p>
 <h2>Destination</h2>
-<p>@Model.Destination</p>
+<p>@Model.Destination.Name</p>
 <h2>Airline</h2>
 <p>@Model.CurrentPlane.CurrentAirline.Name</p>
 <h2>Departure</h2>
@@ -67,8 +67,9 @@ else
 {
     <p>@Model.CurrentRunway.Number</p>
 }
-<!-- TODO: route button to page with tickets only for this flight -->
+<!-- TODO: route button to page with tickets only for this flight 
 <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index">Booked Tickets</a>
+-->
 <a class="btn btn-primary" asp-controller="Flight" asp-action="Index">Go Back</a>
 
-
+</main>
