@@ -42,6 +42,24 @@
         </div>
         <div class="col-lg-9" style="padding-bottom: 50px;">
             <h3 class="font-weight-bold" style="padding-top: 50px; padding-bottom: 30px;">Overview planes</h3>   
+            <div class="row">
+                        <div class="col-md-3">
+                            <div class="stats stats-primary ">
+                                <h4 class="stats-title"> Planes </h4>
+                                <div class="stats-content">
+                                    <div class="stats-icon">
+                                    <i class="fas fa-plane"></i>
+                                    </div>
+                                    <div class="stats-data">
+                                        <div class="stats-number">@Model.Count()</div>
+                                        <div class="stats-change">
+                                            <span class="stats-timeframe"> &nbsp;&nbsp;Total &nbsp;&nbsp;registered &nbsp;&nbsp;planes</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            </div>
             <a class="genric-btn info circle btnall" asp-area="" asp-controller="Plane" asp-action="Type">Add New Plane</a>
             <br/>
             <br/>
@@ -123,4 +141,5 @@
 
 <script src="~/lib/bootstrap/bootstrap-admin/popper.min.js"></script>
 <link href="~/lib/bootstrap/bootstrap-admin/bootstrap-parkeasy.css" rel="stylesheet" />
+<link href="~/lib/bootstrap/bootstrap-admin/dashboard.css" rel="stylesheet" />
 

@@ -1,26 +1,5 @@
-﻿body {
-    margin-bottom: 60px;
-    height: none;
-    width: none;
-    background-color: #664c2a;
-    background-size: cover;
-}
-
-.peoples-visit .single-visit.left-img::before {
-    position: absolute;
-    left: 0;
-    content: "";
-    top: 0;
-    bottom: 0;
-/*    background-image: url('../Images/DetailAirline.jpg');*/
-    width: 50%;
-    border-radius: 0 5px 0 0;
-/*    background-size: cover;
-    background-repeat: no-repeat;*/
-}
-
 .hero-area2 {
-    background-image: url(../Images/airlineDashboard.jpg);
+    background-image: url(../Images/airplanetype.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     min-height: 500px;
@@ -35,16 +14,13 @@
         bottom: 0;
         right: -4%;
     }
-
     h2 {
         padding-right: 20%;
     }
-
     .left {
-        margin-left: 0;
+        margin-left:0;
     }
 }
-
 @media only screen and (max-width: 1300px) and (min-width: 601px) {
     .hero-area2 {
         width: 117%;
@@ -54,11 +30,9 @@
         bottom: 0;
         right: -4%;
     }
-
     h2 {
         padding-right: 20%;
     }
-
     .left {
         margin-left: -4%;
     }
@@ -73,10 +47,21 @@
         bottom: 0;
         right: -50%;
     }
-
     .left {
         margin-left: -30%;
     }
 }
 
+h2{
+    margin-left:20%;
+}
 
+.center {
+    margin: auto;
+    width: 100%;
+    padding: 10px;
+}
+
+.country{
+    width: 27%;
+}
