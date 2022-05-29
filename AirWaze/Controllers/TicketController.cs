@@ -124,7 +124,7 @@ namespace AirWaze.Controllers
             TicketCreateViewModel toHandle = ticketsToHandle.Single(x => x.TicketNr == ticketNr);
             TicketFlightPickerViewModel flightPicker = new TicketFlightPickerViewModel()
             {
-                flightList = database.GetFlightsByDate(toHandle.Departure, 3),
+                flightList = database.GetFlightsByParams(toHandle.Departure, 3, toHandle.Destination),
                 TicketNr = ticketNr
             };
 
@@ -214,7 +214,7 @@ namespace AirWaze.Controllers
             Flight chosenFlight = database.GetFlightByNr(ID);
             string ticketnr = GenerateTicketNumber(chosenFlight);
             string seat = GenerateSeatNumber(chosenFlight);
-            toHandle.Price = toHandle.FirstClass ? (toHandle.ExtraLuggage ? chosenFlight.Destination.Distance * (decimal)1.2 + 75 : chosenFlight.Destination.Distance * (decimal)1.2) : (toHandle.ExtraLuggage ? chosenFlight.Destination.Distance + 75 : chosenFlight.Destination.Distance);
+            toHandle.Price = toHandle.FirstClass ? (toHandle.ExtraLuggage ? chosenFlight.Destination.Distance * (decimal)0.07 + 75 : chosenFlight.Destination.Distance * (decimal)0.07) : (toHandle.ExtraLuggage ? chosenFlight.Destination.Distance * (decimal)0.05 + 75 : chosenFlight.Destination.Distance * (decimal)0.05);
 
             loadedTickets.Add(new Ticket()
             {

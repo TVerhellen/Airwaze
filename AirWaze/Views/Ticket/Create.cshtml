@@ -8,7 +8,8 @@
 
 @model TicketCreateViewModel
 <main>
-<form asp-controller="Ticket" asp-action="Create" method="post">
+    <div class="slider-height d-flex align-items-center">
+        <form asp-controller="Ticket" asp-action="Create" method="post">
     <div class="form-group">
         <label asp-for="LastName">Last Name</label>
         <input class="form-control" asp-for="LastName"/>
@@ -30,7 +31,7 @@
             }
         </select>
     </div>
-    <button class="btn btn-primary" type="submit">Confirm Plane</button>
+
     <div class="form-group">
         <label asp-for="FirstClass">Preferred time of departure</label>
         <input asp-for="Departure"/>
@@ -48,6 +49,8 @@
 
     <button class="btn btn-primary" onclick="message()" type="submit">Create Ticket</button>
 </form>
+    </div>
+
 </main>
 <script type="text/javascript">
         function message()

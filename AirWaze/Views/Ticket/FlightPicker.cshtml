@@ -6,6 +6,7 @@
 }
 @model TicketFlightPickerViewModel
 <main>
+    <div class="slider-height d-flex align-items-center">
 <table>
     <tr>
         <th>Destination</th>
@@ -14,11 +15,12 @@
     @foreach (var flight in Model.flightList)
     {
         <tr>
-            <td>@flight.Destination</td>
+            <td>@flight.Destination.Name</td>
             <td>@flight.Departure</td>
-            <td><a asp-action="Payment" asp-route-ID="@flight.FlightNr" asp-route-ticket="@Model.TicketNr">Select</a></td>
+            <td><a asp-action="Payment" asp-route-ID="@flight.FlightNr" asp-route-ticket="@Model.TicketNr" style="color:black">Select</a></td>
         </tr>
     }
 </table>
 <a class="btn btn-primary" asp-action="Create">Go Back</a>
+</div>
 </main>

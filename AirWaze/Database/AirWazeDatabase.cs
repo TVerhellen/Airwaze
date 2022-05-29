@@ -98,19 +98,21 @@ namespace AirWaze.Database
                 .Include(x => x.CurrentPlane.CurrentAirline)
                 .Include(x => x.CurrentGate)
                 .Include(x => x.CurrentRunway)
+                .Include(x => x.Destination)
                 .SingleOrDefault(flight => flight.FlightNr.Equals(nr));
         }
 
-        public List<Flight> GetFlightsByDate(DateTime date, int range)
+        public List<Flight> GetFlightsByParams(DateTime date, int range, string destination)
         {
-            DateTime earliest = date;
-            earliest.AddDays(-range);
+            DateTime earliest = date.AddDays(-range);
+            DateTime latest = date.AddDays(range);
             var query = from flight in _dbContext.Flights
-                        where flight.Departure >= earliest
+                        where flight.Departure >= earliest && flight.Departure <= latest && flight.Destination.Name == destination
                         select flight;
             return query
                 .Include(x => x.CurrentPlane)
                 .Include(x => x.CurrentPlane.CurrentAirline)
+                .Include(x => x.Destination)
                 .ToList();
         }
 

@@ -12,7 +12,7 @@ namespace AirWaze.Database.Design
 
         Flight GetFlightByNr(string nr);
 
-        List<Flight> GetFlightsByDate(DateTime date, int range);
+        List<Flight> GetFlightsByParams(DateTime date, int range, string destination);
 
         void AddFlight(Flight flight);
 
