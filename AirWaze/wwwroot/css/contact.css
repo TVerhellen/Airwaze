@@ -5,20 +5,39 @@
     min-height: 500px;
 }
 
-@media (max-width: 2000px) {
+@media only screen and (max-width: 600px) {
     .hero-area2 {
-        width: 108%;
+        width: 120%;
         height: 200%;
-        left: -4%;
+        left: -9%;
         top: -5%;
         bottom: 0;
         right: -4%;
     }
+
+    h2 {
+        padding-right: 20%;
+    }
 }
 
-@media (max-width: 5000px) {
+@media only screen and (max-width: 1300px) and (min-width: 601px) {
     .hero-area2 {
-        width: 183%;
+        width: 117%;
+        height: 200%;
+        left: -7%;
+        top: -5%;
+        bottom: 0;
+        right: -4%;
+    }
+
+    h2 {
+        padding-right: 20%;
+    }
+}
+
+@media only screen and (min-width: 1301px) and (max-width: 2500px) {
+    .hero-area2 {
+        width: 186%;
         height: 200%;
         left: -50%;
         top: -5%;
@@ -27,8 +46,8 @@
     }
 }
 
-h2{
-    margin-left:20%;
+h2 {
+    margin-left: 20%;
 }
 
 

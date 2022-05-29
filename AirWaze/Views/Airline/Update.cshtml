@@ -5,9 +5,23 @@
 }
 @model AirlineEditViewModel
 
-<head>
-	 <link rel="stylesheet" href="~/css/airlineindex.css">
-</head>
+
+<link rel="stylesheet" href="~/css/airlineindex.css">
+
+<main>
+    <div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap text-center pt-50">
+                            <h2>Dashboard</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+
 <div style="padding-top:200px;"></div>
 <h1 class="mb-30" style="padding-left:380px;padding: 20px;">Update details for @Model.Name</h1>
 							<form asp-controller="Airline" asp-action="Update" method="post">
@@ -73,6 +87,7 @@
 								</div>								
                                   <button class="genric-btn primary e-large" onclick="message()" type="submit" style="margin-top:50px;margin-left:35%;">Update Airline Details<span class="lnr lnr-arrow-right"></span></button>
 							</form>
+</main>
 
 <script type="text/javascript">
         function message()

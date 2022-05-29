@@ -5,81 +5,124 @@
 }
 @model List<PlaneListViewModel> 
 
-    <head>
-	 <link rel="stylesheet" href="~/css/planeindex.css">
-</head>
-<main >
-    <div style="padding-top:200px;"></div>
-    <div class="row">
-        @*<div class="col-lg-2 bg-dark-blue d-none d-sm-block" style="padding-top: 50px; padding-bottom: 20px;">
-                <center><i class="fas fa-user fa-5x text-white" style="padding-bottom: 20px;"></i></center>
+<link rel="stylesheet" href="~/css/planeindex.css">
+
+<main>
+    <div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap text-center pt-50">
+                            <h2>Dashboard</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="container-fluid" style="padding: 0 0 0 0;">
+        <div class="row">
+        <div class="col-lg-2 bg-dark-blue d-none d-sm-block left" style="padding-top: 10px; padding-bottom: 20px;">
+            <center><i class="fas fa-user fa-5x text-white" style="padding-bottom: 20px;"></i></center>
+
                 <center>
                     <p style="color:white">@User.Identity.Name</p>
-                </center>          
+                </center>
+            
 
                 <div class="list-group text-left font-weight-bold" style="padding-top: 30px;">
                     <a class="list-group-item" asp-action="Index" asp-controller="Admin"><i class="fas fa-tachometer-alt text-white"> &nbsp; Dashboard</i></a>
                     <a class="list-group-item" asp-action="ListAllRoles" asp-controller="Role"><i class="fas fa-user text-white"> &nbsp; Manage roles</i></a>
                     <a class="list-group-item" asp-action="ListUsers" asp-controller="Admin"><i class="fas fa-users text-white"> &nbsp; Users</i></a>
-                    <a class="list-group-item" asp-action="List" asp-controller="Airline"><i class="fa fa-user-check text-white">&nbsp; Airlines</i></a>
-                    <a class="list-group-item" asp-action="List" asp-controller="Plane"><i class="fa fa-plane text-white"></i>&nbsp; Planes</i></a>
-                    <a class="list-group-item" asp-action="Index" asp-controller="Flight"><i class="fa fa-plane-departure text-white">&nbsp; Flights</i></a> 
-                    <a class="list-group-item" asp-action="Schedule" asp-controller="Admin"><i class="fa fa-clock text-white">&nbsp; Schedule</i></a>  
+                    <a class="list-group-item" asp-action="List" asp-controller="Airline"><i class="fas fa-user-check text-white">&nbsp; Airlines</i></a>
+                    <a class="list-group-item" asp-action="List" asp-controller="Plane"><i class="fas fa-plane text-white"></i>&nbsp; Planes</i></a>
+                    <a class="list-group-item" asp-action="Index" asp-controller="Flight"><i class="fas fa-plane-departure text-white">&nbsp; Flights</i></a> 
+                    <a class="list-group-item" asp-action="Schedule" asp-controller="Admin"><i class="fas fa-clock text-white">&nbsp; Schedule</i></a>  
                 </div>
-        </div>*@      
-            <div>
-                <h1>Manage planes</h1>
-                @*<h1 style="color:red;">Hallo Admin</h1>*@
-
+        </div>
+        <div class="col-lg-9" style="padding-bottom: 50px;">
+            <h3 class="font-weight-bold" style="padding-top: 50px; padding-bottom: 30px;">Overview planes</h3>   
+            <div class="row">
+                        <div class="col-md-3">
+                            <div class="stats stats-primary ">
+                                <h4 class="stats-title"> Planes </h4>
+                                <div class="stats-content">
+                                    <div class="stats-icon">
+                                    <i class="fas fa-plane"></i>
+                                    </div>
+                                    <div class="stats-data">
+                                        <div class="stats-number">@Model.Count()</div>
+                                        <div class="stats-change">
+                                            <span class="stats-timeframe"> &nbsp;&nbsp;Total &nbsp;&nbsp;registered &nbsp;&nbsp;planes</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+            <a class="genric-btn info circle btnall" asp-area="" asp-controller="Plane" asp-action="Type">Add New Plane</a>
+            <br/>
+            <br/>
+             <div class="blog_right_sidebar">
+            <aside class="single_sidebar_widget search_widget">
                 <form asp-action="List" method="get">
-                    <div class="form-actions no-color">
-                        <p>
-                            Search by: &nbsp;
-                            @Html.RadioButton("option", "Name") Name &nbsp;
-                            @Html.RadioButton("option", "Type") Type &nbsp;
-                            @Html.RadioButton("option", "Date") Date &nbsp;
-                            @Html.RadioButton("option", "Capacity") Capacity &nbsp; &nbsp;
-                        <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" /> &nbsp;
-                        <input class="btn btn-primary" type="submit" value="Search"/> &nbsp;
-                        <a href="/Plane/List" class="btn btn-primary">Show all planes</a> 
-                        </p>
+                    <div class="form-group">
+                        <div class="input-group mb-3">
+                            <p>
+                                <br/>
+                                <div>
+                                <br/>
+                                Search by: &nbsp;
+                                @Html.RadioButton("option", "Name") Name &nbsp;
+                                @Html.RadioButton("option", "Type") Type &nbsp;
+                                @Html.RadioButton("option", "Date") Date &nbsp;
+                                @Html.RadioButton("option", "Capacity") Capacity &nbsp; &nbsp;      
+                                </div>
+                                <div class="input-group-append">
+                                    &nbsp; &nbsp;  <input type="text" class="form-control" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="Search Keyword" onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = 'Search Keyword'"/> &nbsp;&nbsp;
+                                    <button class="genric-btn danger circle" type="submit"><i class="fa fa-search"></i></button>&nbsp;                                    
+                                    <button class="genric-btn danger circle" onclick="window.location.href='/Plane/List'" type="button" style="width:80%; height:50px;">Show all planes</button>
+                                </div>
+                            </p>
+                        </div>
                     </div>
                 </form>
-                <br/>
-                <div class="planeindexcontainer">
+                </aside>
+                </div>
                     @if (Model.Count != 0)
                     {
-                        <div class="progress-table-wrap">
+                        <div class="progress-table-wrap planeindexcontainer">
 						                    <div class="progress-table">
 							                    <div class="table-head">
-                                                     <div class="serial" style="padding-left:20px;padding-right:20px;margin-left:20px">Logo</div>
-                                                    <div class="serial" style="padding-left:20px;padding-right:20px">Airliner</div>
-								                    <div class="serial" style="padding-left:20px;padding-right:20px">Nr</div>
-								                    <div class="visit" style="padding-left:20px;padding-right:20px">Capacity</div>
-								                    <div class="visit" style="padding-left:20px;padding-right:20px">Region</div>
-								                    <div class="visit" style="padding-left:20px;padding-right:20px">Manfufacturer</div>
-								                    <div class="visit" style="padding-left:20px;padding-right:20px">Type</div>
-								                    <div class="visit" style="padding-left:20px;padding-right:20px">ConstructionYear</div>
-								                    <div class="percentage"></div>
-								                    <div class="percentage"></div>
-								                    <div class="percentage"></div>
+                                                    <div class="country">Airliner</div>
+                                                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<div class="country">Logo</div>
+								                    <div class="country">Number</div>
+								                    <div class="country">Capacity</div>
+								                    <div class="country">Region</div>
+								                    <div class="country">Manufacturer</div>&nbsp; 
+								                    <div class="country">Type</div>
+								                    <div class="country">ConstructionYear</div>&nbsp; 
+								                    <div class="country"></div>&nbsp; 
+								                    <div class="country"></div>&nbsp; 
+								                    <div class="country"></div>
 							                    </div>
 							                     @foreach (var plane in Model)
 							                    {
 								                    <div class="table-row">
-                                                        <div class="serial" style="padding-left:20px;padding-right:20px;margin-left:20px">
-                                                                <img src="@Url.Content(@plane.CurrentAirline.Logo)" alt="Sample Image" width="60" height="60" />
-                                                        </div>
-                                                        <div class="serial" style="padding-left:20px;margin-right:20px">@plane.CurrentAirline.NameTag</div>                                                                       
-									                    <div class="serial" style="padding-left:20px;padding-right:20px">@plane.PlaneNr</div>
-									                    <div class="visit" style="padding-left:20px;padding-right:20px">@plane.PassengerCapacity</div>
-									                    <div class="visit" style="padding-left:20px;padding-right:20px">@plane.FlightRegion</div>
-									                    <div class="visit" style="padding-left:20px;padding-right:20px">@plane.Manufacturer</div>
-									                    <div class="visit" style="padding-left:20px;padding-right:20px">@plane.Type</div>
-									                    <div class="visit" style="padding-left:20px;padding-right:20px">@plane.ConstructionYear</div>
-									                    <div class="visit" style="padding-left:20px;padding-right:20px"><a class="genric-btn info circle arrow" asp-action="Detail" asp-controller="Plane" asp-route-ID=@plane.PlaneNr>Detail</a></div>
-									                    <div class="visit" style="padding-left:20px;padding-right:20px"><a class="genric-btn warning circle arrow" asp-action="Update" asp-controller="Plane" asp-route-ID=@plane.PlaneNr>Edit</a></div>
-									                    <div class="visit" style="padding-left:20px;padding-right:20px"><a class="genric-btn danger circle arrow" asp-action="Delete" asp-controller="Plane" asp-route-ID=@plane.PlaneNr>Delete</a></div>									
+                                                        <div class="country">@plane.CurrentAirline.Name</div>
+                                                         &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<div class="country">
+                                                                <img src="@Url.Content(@plane.CurrentAirline.Logo)" alt="Sample Image" width="40" height="40" />
+                                                        </div>               
+									                    <div class="country">@plane.PlaneNr</div> 
+									                    <div class="country">@plane.PassengerCapacity</div>
+									                    <div class="country">@plane.FlightRegion</div>
+									                    <div class="country">@plane.Manufacturer</div>
+									                    <div class="country">@plane.Type</div>
+									                    <div class="country">@plane.ConstructionYear.ToShortDateString()</div> &nbsp; &nbsp; 
+									                    <div class="country"><a class="genric-btn info circle btnCrud" asp-action="Detail" asp-controller="Plane" asp-route-ID=@plane.PlaneNr>Detail</a></div> &nbsp;  
+									                    <div class="country"><a class="genric-btn warning circle btnCrud" asp-action="Update" asp-controller="Plane" asp-route-ID=@plane.PlaneNr>Edit</a></div> &nbsp;  
+									                    <div class="country"><a class="genric-btn danger circle btnCrud" asp-action="Delete" asp-controller="Plane" asp-route-ID=@plane.PlaneNr>Delete</a></div> &nbsp;  									
 								                    </div>						
 							                    }
                                               </div>
@@ -89,13 +132,14 @@
                         {
                             <h1>No Planes Currently Available</h1>
                         }
-                    <div style="padding-top:100px;padding-left:200px;padding-bottom:100px">
-                     <a class="genric-btn primary e-large" asp-area="" asp-controller="Plane" asp-action="Type" style="width:600px;">Add New Plane</a>
-                    </div> 
-                    </div>                   
-            </div>
+
+                    </div>
         </div>
-</main>
+        </div>
+
+</main>      
+
 <script src="~/lib/bootstrap/bootstrap-admin/popper.min.js"></script>
 <link href="~/lib/bootstrap/bootstrap-admin/bootstrap-parkeasy.css" rel="stylesheet" />
 <link href="~/lib/bootstrap/bootstrap-admin/dashboard.css" rel="stylesheet" />
+
