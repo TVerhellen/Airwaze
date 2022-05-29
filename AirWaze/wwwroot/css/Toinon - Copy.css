@@ -206,8 +206,7 @@ a {
 }
 
     a:hover {
-        color: #fff;
-        background-color: #080c24;
+        color: #fff
     }
 
     a:focus, a:hover, .portfolio-cat a:hover, .footer -menu li a:hover {
