@@ -7,66 +7,6 @@
 }
 
 
-.hero-area2 {
-    background-image: url(../Images/airlineDashboard.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    min-height: 500px;
-}
-
-@media only screen and (max-width: 600px) {
-    .hero-area2 {
-        width: 120%;
-        height: 200%;
-        left: -9%;
-        top: -5%;
-        bottom: 0;
-        right: -4%;
-    }
-
-    h2 {
-        padding-right: 20%;
-    }
-
-    .left {
-        margin-left: 0;
-    }
-}
-
-@media only screen and (max-width: 1300px) and (min-width: 601px) {
-    .hero-area2 {
-        width: 117%;
-        height: 200%;
-        left: -7%;
-        top: -5%;
-        bottom: 0;
-        right: -4%;
-    }
-
-    h2 {
-        padding-right: 20%;
-    }
-
-    .left {
-        margin-left: -4%;
-    }
-}
-
-@media only screen and (min-width: 1301px) and (max-width: 2500px) {
-    .hero-area2 {
-        width: 186%;
-        height: 200%;
-        left: -50%;
-        top: -5%;
-        bottom: 0;
-        right: -50%;
-    }
-
-    .left {
-        margin-left: -30%;
-    }
-}
-
 
 
 

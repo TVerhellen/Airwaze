@@ -1,7 +1,19 @@
-﻿.haraldcontainer {
-    height: 800px;
-    width: 800px;
+﻿body {
+    margin-bottom: 60px;
+    height: none;
+    width: none;
+    background-image: url('../Images/planebackground.jpg');
+    background-size: cover;
 }
+
+.haraldcontainer {
+    background-image: url('../Images/TerminalEdit.png');
+    background-size: contain;
+    height: 800px;
+    width: 600px;
+}
+
+
 
 
 .hero-area2 {
@@ -20,17 +32,21 @@
         bottom: 0;
         right: -4%;
     }
+
     h2 {
         padding-right: 20%;
     }
+
     .left {
         margin-left: 0;
     }
+
     .blog_right_sidebar {
         width: 150%;
         height: 15%
     }
 }
+
 @media only screen and (max-width: 1300px) and (min-width: 601px) {
     .hero-area2 {
         width: 117%;
@@ -40,18 +56,22 @@
         bottom: 0;
         right: -4%;
     }
+
     h2 {
         padding-right: 20%;
     }
+
     .left {
         margin-left: -4%;
     }
+
     .blog_right_sidebar {
         width: 124%;
         height: 12%
     }
-    .planeindexcontainer{
-        width:124%;
+
+    .planeindexcontainer {
+        width: 124%;
     }
 }
 
@@ -64,23 +84,27 @@
         bottom: 0;
         right: -50%;
     }
+
     .center {
         left: 10%;
     }
+
     .left {
         margin-left: -30%;
     }
+
     .blog_right_sidebar {
         width: 200%;
         height: 12%
     }
+
     .planeindexcontainer {
         width: 200%;
     }
 }
 
-h2{
-    margin-left:20%;
+h2 {
+    margin-left: 20%;
 }
 
 .btnall {
@@ -93,8 +117,6 @@ h2{
     width: 100%;
 }
 
-.all{
-    width:200px;
+.all {
+    width: 200px;
 }
-
-
