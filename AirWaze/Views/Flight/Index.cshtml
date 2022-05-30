@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="hero-cap text-center pt-50">
-                            <h2>Dashboard</h2>
+                            <h2>Flights Overview</h2>
                         </div>
                     </div>
                 </div>
@@ -37,8 +37,7 @@
             </div>
             <div class="col-lg-9" style="padding-bottom: 50px;">
                 <div class="section-top-border">
-					<h3 class="mb-30">Overview flights</h3>
-                    <a class="genric-btn info circle" asp-controller="Flight" asp-action="Create">Add New Flight</a>
+                    <a class="genric-btn info circle" style="width:250px; height:75px; font-size:x-large; text-align: center; line-height:75px; " asp-controller="Flight" asp-action="Create">Plan New Flight</a>
                     <br />
                     <br />
             @*searchfunction*@
@@ -72,12 +71,12 @@
                     {
                      <div class="progress-table-wrap planeindexcontainer">
 						<div class="progress-table">
-							<div class="table-head">								
-								<div class="country">Date</div>
-                                <div class="country">Time</div>
-                                <div class="country">Destination</div>
-                                <div class="country">Number</div>
-                                <div class="country">Status</div>
+							<div class="table-head" style="background-color:royalblue">								
+								<div class="country" style="color:white">Date</div>
+                                <div class="country" style="color:white">Time</div>
+                                <div class="country" style="color:white">Destination</div>
+                                <div class="country" style="color:white">Number</div>
+                                <div class="country" style="color:white">Status</div>
                                 <div class="country"></div>
                                 <div class="country"></div>
                                 <div class="country"></div>
@@ -120,8 +119,13 @@
                                 {
                                             <div class="country"><a asp-action="EditRole" asp-route-id="@x.FlightNr" class="genric-btn warning circle">Edit</a></div> 
                                             <div class="country"><a asp-action="DeleteRole" asp-route-id="@x.FlightNr" class="genric-btn danger circle">Delete</a></div>
-                                }
-                                </div>
+                                        }
+                                        else
+                                        {
+                                             <div class="country">&nbsp</div> 
+                                            <div class="country">&nbsp</div> 
+                                        }
+                                    </div>
                             }
                         </div>
                     </div>
