@@ -7,7 +7,11 @@
 }
 
 @model TicketCreateViewModel
+<head>
+    <link rel="stylesheet" href="~/css/Tijs.css" asp-append-version="true" />
+</head>
 <main>
+    <div class="listContainer">
     <div class="slider-height d-flex align-items-center">
         <form asp-controller="Ticket" asp-action="Create" method="post">
     <div class="form-group">
@@ -50,5 +54,5 @@
     <button class="btn btn-primary" type="submit">Create Ticket</button>
 </form>
     </div>
-
+    </div>
 </main>

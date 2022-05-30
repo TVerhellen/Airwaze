@@ -249,7 +249,7 @@ namespace AirWaze.Controllers
                 LoadTicketList(myUser);
             }
             
-            return RedirectToAction("Index");
+            return RedirectToAction("List");
         }
 
         public IActionResult FailedPayment(TicketCreateViewModel newTicket)

@@ -5,8 +5,12 @@
 @{
 }
 @model TicketFlightPickerViewModel
+<head>
+    <link rel="stylesheet" href="~/css/Tijs.css" asp-append-version="true" />
+</head>
 <main>
     <div class="slider-height d-flex align-items-center">
+        <div class="listContainer">
 <table class="table">
     <tr>
         <th>Destination</th>
@@ -21,7 +25,9 @@
             <td><a asp-action="Payment" asp-route-ID="@flight.FlightNr" onclick="message()" asp-route-ticket="@Model.TicketNr" style="color:black">Select</a></td>
         </tr>
     }
-</table></div>
+</table>
+</div>
+</div>
 <a class="btn btn-primary" asp-action="Create">Go Back</a>
 
 </main>

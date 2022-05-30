@@ -5,9 +5,12 @@
 }
 
 @model TicketPaymentViewModel
-
+<head>
+    <link rel="stylesheet" href="~/css/Tijs.css" asp-append-version="true" />
+</head>
 <main>
     <div class="slider-height d-flex align-items-center">
+        <div class="listContainer">
 <h1>Payment</h1>
 <p>Destination: @Model.CurrentFlight.Destination.Name</p>
 <p>Departure: @Model.CurrentFlight.Departure</p>
@@ -16,8 +19,8 @@
 <h2>Total Price: € @Model.Price</h2>
 
 <a class="btn btn-primary" asp-action="ConfirmedPayment" asp-route-ID="@Model.TicketNr">Pay Now</a>
-<a class="btn btn-primary" asp-action="Edit" asp-route-ID="@Model.TicketNr">Change Ticket</a>
 <a class="btn btn-danger" asp-action="Delete" asp-route-ID="@Model.TicketNr">Abort</a>
+</div>
 </div>
 </main>
 

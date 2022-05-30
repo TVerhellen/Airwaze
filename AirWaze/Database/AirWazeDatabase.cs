@@ -148,6 +148,7 @@ namespace AirWaze.Database
                         select ticket;
             return query
                 .Include(x => x.CurrentFlight)
+                .Include(x => x.CurrentFlight.Destination)
                 .Include(x => x.CurrentUser)
                 .ToList();
 
