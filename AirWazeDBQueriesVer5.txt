@@ -1,0 +1,148 @@
+INSERT INTO AspNetRoles(
+		[Id]
+		,[Name]
+		,[NormalizedName])
+	VALUES ('52585d2c-bcb9-45e2-b807-41f4aef03202', 'Admin','ADMIN') , ('57880a44-2e03-4281-a5b4-34acc522cfed', 'Customer', 'CUSTOMER') , ('adea6abb-a8bc-4b35-be4e-4e6a384138dd', 'Airline', 'AIRLINE')
+
+
+ INSERT INTO AspNetUsers([Id]
+      ,[LastName]
+      ,[FirstName]
+      ,[StreetName]
+      ,[HouseNumber]
+      ,[Bus]
+      ,[Zipcode]
+      ,[City]
+      ,[Country]
+      ,[UserName]
+      ,[NormalizedUserName]
+      ,[Email]
+      ,[NormalizedEmail]
+      ,[EmailConfirmed]
+      ,[PasswordHash]
+      ,[SecurityStamp]
+      ,[ConcurrencyStamp]
+      ,[PhoneNumber]
+      ,[PhoneNumberConfirmed]
+      ,[TwoFactorEnabled]      
+      ,[LockoutEnabled]
+      ,[AccessFailedCount])
+
+VALUES ('760c6563-9a63-4d27-a4e5-172a8cffc968','Admin','Admin','Admin',1,'Admin','Admin','Admin','Admin','Admin@Admin.Admin','ADMIN@ADMIN.ADMIN','Admin@Admin.Admin','ADMIN@ADMIN.ADMIN',0,'AQAAAAEAACcQAAAAEAXp5ve+lOshqoRJS93kF2/3ODrp77nZjP32xgqA6BiBK58FEMkyjBktVrqc/ePAtw==','EEXZTGO2EN6JMG572RPGIUC3T7TO5NEU','ca4a17da-a608-408f-9a6f-21913af464fd','Admin',0,0,1,0)
+
+INSERT INTO AspNetUserRoles(
+		[UserId]
+		,[RoleId])
+  VAlUES ('760c6563-9a63-4d27-a4e5-172a8cffc968','52585d2c-bcb9-45e2-b807-41f4aef03202')
+
+
+INSERT INTO Airlines (AirlineID, Name, NameTag, CompanyNumber, Adress, Number, City, Email, PhoneNumber, AccountNumber, Logo)
+VALUES ('0cac61ab-d1d0-4f16-a874-6009f9f585d8','RyanAir', 'RYA', '555666777', 'HighRoad', '55', 'Dublin','harald.vandoorne@gmail.com', '555888999','111-222-333', '~/Images/Logo.jpg' );
+
+INSERT INTO Airlines (AirlineID, Name, NameTag, CompanyNumber, Adress, Number, City, Email, PhoneNumber, AccountNumber, Logo)
+VALUES ('0b020029-e4a3-4be5-9e30-12a627ba25ba','Malaysia Airways', 'MAL', '554666787', 'Heavens Street', '20', 'Kuala Lumpur','malaysia@toinonair.com', '555888989','181-282-383', '~/Images/Logo2.png' );
+
+INSERT INTO Airlines (AirlineID, Name, NameTag, CompanyNumber, Adress, Number, City, Email, PhoneNumber, AccountNumber, Logo)
+VALUES ('fe2aea9a-4c8f-42bb-b08e-1ce912565069','LuftHansa', 'LUF', '7576668527', 'NewyorkAvenue', '20', 'Bachtendekupe','bart@bart.com', '888888989','881-582-363', '~/Images/Logo1.png' );
+
+INSERT INTO Airlines (AirlineID, Name, NameTag, CompanyNumber, Adress, Number, City, Email, PhoneNumber, AccountNumber, Logo)
+VALUES ('3211d707-ae49-437b-9eb6-c7a541542d07','Japan Airlines', 'JAP', '9676000822', 'Ergensstraat', '20', 'Niemandsland','tijs@televitas.com', '11111111','701-589-343', '~/Images/Logo3.png' );
+
+INSERT INTO Airlines (AirlineID, Name, NameTag, CompanyNumber, Adress, Number, City, Email, PhoneNumber, AccountNumber, Logo)
+VALUES ('dce8e24c-3e87-4887-b1b7-7b82141972ca','American Airways', 'AA', '9676000822', 'Ergensstraat', '20', 'Niemandsland','american@America.America', '11111111','701-589-343', '~/Images/Logo4.png' );
+
+INSERT INTO Airlines (AirlineID, Name, NameTag, CompanyNumber, Adress, Number, City, Email, PhoneNumber, AccountNumber, Logo)
+VALUES ('1634bd29-bee5-412b-bf96-c8760da841f1','Quantas', 'Quantas', '9676000822', 'Ergensstraat', '20', 'Niemandsland','quantas@quantas.quantas', '11111111','701-589-343', '~/Images/Logo5.png' );
+
+INSERT INTO Airlines (AirlineID, Name, NameTag, CompanyNumber, Adress, Number, City, Email, PhoneNumber, AccountNumber, Logo)
+VALUES ('4e2776a3-b042-4de1-a2ea-a6db7018fd66','United Airlines', 'UA', '9676000822', 'Ergensstraat', '20', 'Niemandsland','tijs@televitas.com', '11111111','701-589-343', '~/Images/Logo6.png' );
+
+INSERT INTO Airlines (AirlineID, Name, NameTag, CompanyNumber, Adress, Number, City, Email, PhoneNumber, AccountNumber, Logo)
+VALUES ('9aef4ce7-a00e-482c-93da-6230fc74d50f','South West', 'SW', '9676000822', 'Ergensstraat', '20', 'Niemandsland','tijs@televitas.com', '11111111','701-589-343', '~/Images/Logo7.png' );
+
+INSERT INTO Gates ([Number],[CoordsLon],[CoordsLat])
+VALUES (1,4.142220,51.174476),(2,4.142220,51.174476),(3,4.139911,51.174476),(4,4.139911,51.174476),(5,4.139911,51.171676),(6,4.139911,51.171676),(7,4.139984,51.169935),(8,4.139984,51.169935),(9,4.139984,51.169935),(0,0,0);
+
+           
+INSERT INTO Runways([Number])
+VALUES (1),(2),(3),(0);
+
+
+INSERT INTO Planes (
+      [PlaneNr]
+      ,[CurrentAirlineAirlineID]
+      ,[PassengerCapacity]
+      ,[FuelCapacity]
+      ,[Type]
+      ,[Manufacturer]
+      ,[FlightRegion]
+      ,[FirstClassCapacity]
+      ,[LoadCapacity]
+      ,[FuelUsagePerKM]
+      ,[IsAvailable]
+	  ,[AirMiles]
+      ,[ConstructionYear]
+      ,[FlightHours]
+      ,[NextMainentance]
+      ,[SeatDiagramPic])
+VALUES ('737-RYAN-EUR89', '0cac61ab-d1d0-4f16-a874-6009f9f585d8', 150, 5000, '737', 'Boeing', 'EUR', 36, 5000, 50, 1, 50000, '5-20-1990', 500, 60000, '~/PlaneLayout/737.jpg' ), ('747-MALAYSIA-ASI50', '0b020029-e4a3-4be5-9e30-12a627ba25ba', 136, 10000, 'A-500', 'Airbus', 'EUR', 0, 6000, 20, 1, 2000, '5-20-2010', 400, 90000, '~/PlaneLayout/767.jpg' ),('767-LUFT-ASI50', 'fe2aea9a-4c8f-42bb-b08e-1ce912565069', 200, 12000, '767', 'Boeing', 'EUR', 50, 8000, 10, 1, 10000, '5-20-1996', 900, 50000, '~/PlaneLayout/787.jpg' ), ('A256-Japan-ASI59', '3211d707-ae49-437b-9eb6-c7a541542d07', 2, 2000, 'GULF1', 'Gulfstream', 'ASI', 0, 2000, 1, 1, 1000000, '5-20-1984', 500, 60000, '~/PlaneLayout/Gulf.jpg' ),
+('A319-RYAN-OCE50', '0cac61ab-d1d0-4f16-a874-6009f9f585d8', 138, 5000, 'A319', 'Airbus', 'OCE', 0, 5000, 50, 1, 50000, '5-20-1990', 500, 60000, '~/PlaneLayout/A319.jpg' ),('A319-RYAN-NA48', '0cac61ab-d1d0-4f16-a874-6009f9f585d8', 138, 5000, 'A319', 'Airbus', 'NA', 0, 5000, 50, 1, 50000, '5-20-1990', 500, 60000, '~/PlaneLayout/A319.jpg' ),('A319-MALAYSIA-NA48', '0b020029-e4a3-4be5-9e30-12a627ba25ba', 138, 5000, 'A319', 'Airbus', 'NA', 0, 5000, 50, 1, 50000, '5-20-1990', 500, 60000, '~/PlaneLayout/A319.jpg' ),('A319-LUFT-NA48', 'fe2aea9a-4c8f-42bb-b08e-1ce912565069', 138, 5000, 'A319', 'Airbus', 'NA', 0, 5000, 50, 1, 50000, '5-20-1990', 500, 60000, '~/PlaneLayout/A319.jpg' ),
+('A319-JAP-ASI62', '3211d707-ae49-437b-9eb6-c7a541542d07', 138, 5000, 'A319', 'Airbus', 'ASI', 0, 5000, 50, 1, 50000, '5-20-1990', 500, 60000, '~/PlaneLayout/A319.jpg' ),('A319-AA-NA48', 'dce8e24c-3e87-4887-b1b7-7b82141972ca', 138, 5000, 'A319', 'Airbus', 'NA', 0, 5000, 50, 1, 50000, '5-20-1990', 500, 60000, '~/PlaneLayout/A319.jpg' ),('A319-QUANTAS-SA25', '1634bd29-bee5-412b-bf96-c8760da841f1', 138, 5000, 'A319', 'Airbus', 'SA', 0, 5000, 50, 1, 50000, '5-20-1990', 500, 60000, '~/PlaneLayout/A319.jpg' ),('A319-UA-AFR48', '4e2776a3-b042-4de1-a2ea-a6db7018fd66', 138, 5000, 'A319', 'Airbus', 'AFR', 0, 5000, 50, 1, 50000, '5-20-1990', 500, 60000, '~/PlaneLayout/A319.jpg' ),
+('A319-SWA-EU99', '9aef4ce7-a00e-482c-93da-6230fc74d50f', 138, 5000, 'A319', 'Airbus', 'EUR', 0, 5000, 50, 1, 50000, '5-20-1990', 500, 60000, '~/PlaneLayout/A319.jpg' ), ('767-JAP-SA11', '3211d707-ae49-437b-9eb6-c7a541542d07', 200, 12000, '767', 'Boeing', 'SA', 50, 8000, 10, 1, 10000, '5-20-1996', 900, 50000, '~/PlaneLayout/787.jpg' ), ('787-QUANT-EUR66', '1634bd29-bee5-412b-bf96-c8760da841f1', 150, 5000, '787', 'Boeing', 'EUR', 36, 5000, 50, 1, 50000, '5-20-1990', 500, 60000, '~/PlaneLayout/787.jpg' ), ('A321-LUFT-AFR87', 'fe2aea9a-4c8f-42bb-b08e-1ce912565069', 138, 5000, 'A321', 'Airbus', 'AFR', 0, 5000, 50, 1, 50000, '5-20-1990', 500, 60000, '~/PlaneLayout/A321.jpg' ),
+('A321-SW-EUR87', '9aef4ce7-a00e-482c-93da-6230fc74d50f', 138, 5000, 'A321', 'Airbus', 'EUR', 0, 5000, 50, 1, 50000, '5-20-1990', 500, 60000, '~/PlaneLayout/A321.jpg' ), ('A321-UA-EUR50', '4e2776a3-b042-4de1-a2ea-a6db7018fd66', 138, 5000, 'A321', 'Airbus', 'EUR', 0, 5000, 50, 1, 50000, '5-20-1990', 500, 60000, '~/PlaneLayout/A321.jpg' ), ('A321-MALAYSIA-EUR87', '0b020029-e4a3-4be5-9e30-12a627ba25ba', 138, 5000, 'A321', 'Airbus', 'EUR', 0, 5000, 50, 1, 50000, '5-20-1990', 500, 60000, '~/PlaneLayout/A321.jpg' ), ('A318-JAPAN-AFR87', '3211d707-ae49-437b-9eb6-c7a541542d07', 138, 5000, 'A321', 'Airbus', 'AFR', 0, 5000, 50, 1, 50000, '5-20-1990', 500, 60000, '~/PlaneLayout/A318.jpg' );
+
+
+
+INSERT INTO Destinations(
+		[Name]
+		,[Distance]
+		,[Region]
+		,[FlightTime])
+VALUES ('Helsinki', 2123, 'EUR', '03:00:00'),('Rome', 1500, 'EUR', '02:30:00'),('Kinshasa', 12000, 'AF', '08:00:00'),('Beijing', 20000, 'ASI', '12:00:00'),('Wellington', 25000, 'OCE', '22:00:00'),('Berlin', 900, 'EUR', '02:00:00'),('Lissabon', 1500, 'EUR', '03:00:00'),('Ibiza', 2000, 'EUR', '03:30:00'),
+('Monaco', 1100, 'EUR', '02:45:00'),('NewYork', 12000, 'NA', '12:00:00'),('Los Angeles', 18000, 'NA', '16:00:00'),('Rio De Janeiro', 19000, 'SA', '03:00:00'),('Buenos Aires', 22000, 'SA', '03:00:00'),('Palermo', 4000, 'EUR', '03:00:00'),('Cape Town', 17000, 'AFR', '10:00:00'), ('Tokyo', 2123, 'ASI', '14:00:00');
+
+INSERT INTO Flights(
+       [FlightNr]
+      ,[CurrentPlanePlaneID]	
+	  ,[CurrentPlaneConfirmed]
+      ,[Departure]
+      ,[DestinationID]
+      ,[Status]
+	  ,[CurrentGateGateID]
+	  ,[CurrentRunwayRunwayID])
+VALUES ('VLucht13',1,0, '5-20-2022',1 ,0,10,4),('VLucht15',2,0, '5-20-2022',2,0,10,4),('VLucht16',2,0, '5-20-2022', 1,0,10,4),('VLucht17',3,0, '5-20-2022',1 ,0,10,4)
+
+
+INSERT INTO Users ([Id]
+	  ,[LastName]
+      ,[FirstName]
+      ,[Email]
+      ,[StreetName]
+      ,[HouseNumber]
+      ,[Bus]
+      ,[Zipcode]
+      ,[City]
+      ,[Country]
+      ,[PhoneNumber])
+VALUES ('28ad6fbd-b6c2-40e7-a5ee-9e2a4d169921','Vandoorne','Harald','harald@milehighclub.com','Ijzerweg',66,'25','8434','Westende','Belgium','0587946465'),('1ae81691-34a9-4b37-95cb-47a7e6bfac28','Naesen','Toinon','toinon@milehighclub.com','GrindPad',1,'0','8400','Bredene','Belgium','0595055562'),('7b1a9a6c-658a-4391-8149-1184fac528be','Verhellen','Tijs','tijs@milehighclub.com','Koperstraat',894,'4','1000','Brussel','Belgium','0456789456'),('4cad21e6-f199-4529-aa11-81d6e9172f75','Van WeyenBergh','Bart','bart@milehighclub.com','Bosdreef',88,'69','1','Utopia','Mars','0587946465')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
