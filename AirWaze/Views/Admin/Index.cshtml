@@ -1,4 +1,8 @@
-﻿<link rel="stylesheet" href="~/css/dashboard.css">
+﻿@using static Microsoft.EntityFrameworkCore.DbLoggerCategory
+
+@model List<FlightListViewModel>
+
+<link rel="stylesheet" href="~/css/dashboard.css">
 <link rel="stylesheet" href="~/css/statisticAdmin.css">
 <link rel="stylesheet" href="~/css/dashboardCircle.css">
 <link href="~/lib/bootstrap/bootstrap-admin/bootstrap-parkeasy.css" rel="stylesheet" />
@@ -46,7 +50,9 @@
                 <br/>
                 What would you like to do? Click on the left. 
             </p>
-			<br/>			
+			<br/>	
+			<div>
+			</div>
 				<div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
 					<div class="card flex-fill">
 								<div class="card-header">
