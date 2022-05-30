@@ -6,23 +6,11 @@
 @model AirlineEditViewModel
 
 
-<link rel="stylesheet" href="~/css/airlineindex.css">
+<head>
+	 <link rel="stylesheet" href="~/css/airlineindex.css">
+</head>
 
-<main>
-    <div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center ">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="hero-cap text-center pt-50">
-                            <h2>Dashboard</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br/>
-
-<h1 class="mb-30" style="padding-left:380px;padding: 20px;">Update details for @Model.Name</h1>
+<h3 class="mb-30">Your Airliner</h3>
 							<form asp-controller="Airline" asp-action="Update" method="post">
 								 <div class="form-group" hidden="hidden">
                                     <label asp-for="AirlineID"></label>
@@ -50,43 +38,120 @@
                                     <span class="text-danger" asp-validation-for="NameTag"></span>
 								</div>
 								<div class="mt-10">
-									<input class="single-input" asp-for="CompanyNumber" placeholder="CompanyNumber"
-										onfocus="this.placeholder = ''" onblur="this.placeholder = 'CompanyNumber'" required />
-                                    <span class="text-danger" asp-validation-for="CompanyNumber"></span>
+									<input type="text" name="last_name" placeholder="Last Name"
+										onfocus="this.placeholder = ''" onblur="this.placeholder = 'Last Name'" required
+										class="single-input">
 								</div>
 								<div class="mt-10">
-									<input class="single-input" asp-for="Adress" placeholder="Adress"
-										onfocus="this.placeholder = ''" onblur="this.placeholder = 'Adress'" required />
-                                    <span class="text-danger" asp-validation-for="Adress"></span>
+									<input type="email" name="EMAIL" placeholder="Email address"
+										onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email address'" required
+										class="single-input">
 								</div>
-                                <div class="mt-10">
-									<input class="single-input" asp-for="Number" placeholder="Number"
-										onfocus="this.placeholder = ''" onblur="this.placeholder = 'Number'" required />
-                                    <span class="text-danger" asp-validation-for="Number"></span>
+								<div class="input-group-icon mt-10">
+									<div class="icon"><i class="fa fa-thumb-tack" aria-hidden="true"></i></div>
+									<input type="text" name="address" placeholder="Address" onfocus="this.placeholder = ''"
+										onblur="this.placeholder = 'Address'" required class="single-input">
 								</div>
-                                <div class="mt-10">
-									<input class="single-input" asp-for="City" placeholder="City"
-										onfocus="this.placeholder = ''" onblur="this.placeholder = 'City'" required />
-                                    <span class="text-danger" asp-validation-for="City"></span>
+								<div class="input-group-icon mt-10">
+									<div class="icon"><i class="fa fa-plane" aria-hidden="true"></i></div>
+									<div class="form-select" id="default-select"">
+												<select>
+													<option value=" 1">City</option>
+										<option value="1">Dhaka</option>
+										<option value="1">Dilli</option>
+										<option value="1">Newyork</option>
+										<option value="1">Islamabad</option>
+										</select>
+									</div>
 								</div>
-                                 <div class="mt-10">
-									<input class="single-input" asp-for="Email" placeholder="Email"
-										onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" required />
-                                    <span class="text-danger" asp-validation-for="Email"></span>
+								<div class="input-group-icon mt-10">
+									<div class="icon"><i class="fa fa-globe" aria-hidden="true"></i></div>
+									<div class="form-select" id="default-select"">
+												<select>
+													<option value=" 1">Country</option>
+										<option value="1">Bangladesh</option>
+										<option value="1">India</option>
+										<option value="1">England</option>
+										<option value="1">Srilanka</option>
+										</select>
+									</div>
 								</div>
-                                <div class="mt-10">
-									<input class="single-input" asp-for="PhoneNumber" placeholder="PhoneNumber"
-										onfocus="this.placeholder = ''" onblur="this.placeholder = 'PhoneNumber'" required />
-                                    <span class="text-danger" asp-validation-for="PhoneNumber"></span>
+	
+								<div class="mt-10">
+									<textarea class="single-textarea" placeholder="Message" onfocus="this.placeholder = ''"
+										onblur="this.placeholder = 'Message'" required></textarea>
 								</div>
-                                 <div class="mt-10">
-									<input class="single-input" asp-for="AccountNumber" placeholder="AccountNumber"
-										onfocus="this.placeholder = ''" onblur="this.placeholder = 'AccountNumber'" required />
-                                    <span class="text-danger" asp-validation-for="AccountNumber"></span>
-								</div>								
-                                  <button class="genric-btn primary e-large" onclick="message()" type="submit" style="margin-top:50px;margin-left:35%;">Update Airline Details<span class="lnr lnr-arrow-right"></span></button>
+								<div class="mt-10">
+									<input type="text" name="first_name" placeholder="Primary color"
+										onfocus="this.placeholder = ''" onblur="this.placeholder = 'Primary color'" required
+										class="single-input-primary">
+								</div>
+								<div class="mt-10">
+									<input type="text" name="first_name" placeholder="Accent color"
+										onfocus="this.placeholder = ''" onblur="this.placeholder = 'Accent color'" required
+										class="single-input-accent">
+								</div>
+								<div class="mt-10">
+									<input type="text" name="first_name" placeholder="Secondary color"
+										onfocus="this.placeholder = ''" onblur="this.placeholder = 'Secondary color'"
+										required class="single-input-secondary">
+								</div>
 							</form>
-</main>
+
+
+
+<form asp-controller="Airline" asp-action="Update" method="post">
+    
+    
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input class ="form-control" asp-for="Name" />
+        <span class="text-danger" asp-validation-for="Name"></span>
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="NameTag"></label>
+        <input class ="form-control" asp-for="NameTag" />
+        <span class="text-danger" asp-validation-for="NameTag"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CompanyNumber"></label>
+        <input class ="form-control" asp-for="CompanyNumber" />
+        <span class="text-danger" asp-validation-for="CompanyNumber"></span>
+    </div>    
+    <div class="form-group">
+        <label asp-for="Adress"></label>
+        <input class ="form-control" asp-for="Adress" />
+        <span class="text-danger" asp-validation-for="Adress"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Number"></label>
+        <input class ="form-control" asp-for="Number" />
+        <span class="text-danger" asp-validation-for="Number"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="City"></label>
+        <input class ="form-control" asp-for="City" />
+        <span class="text-danger" asp-validation-for="City"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input class ="form-control" asp-for="Email" />
+        <span class="text-danger" asp-validation-for="Email"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PhoneNumber"></label>
+        <input class ="form-control" asp-for="PhoneNumber" />
+        <span class="text-danger" asp-validation-for="PhoneNumber"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="AccountNumber"></label>
+        <input class ="form-control" asp-for="AccountNumber" />
+        <span class="text-danger" asp-validation-for="AccountNumber"></span>
+    </div>
+
+    <button class="btn btn-secondary" onclick="message()" type="submit" style="margin-top:50px;margin-left:40%;width:400px;">Update</button> 
+</form>
 
 <script type="text/javascript">
         function message()

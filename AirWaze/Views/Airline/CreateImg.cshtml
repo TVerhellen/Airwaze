@@ -6,20 +6,11 @@
 @model AirlineCreateViewModel
 
 
-<link rel="stylesheet" href="~/css/airlineindex.css">
-<main>
-    <div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center ">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="hero-cap text-center pt-50">
-                            <h2>New Airline</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br/>
+<head>
+	 <link rel="stylesheet" href="~/css/airlineindex.css">
+</head>
+   
+
 <h3 class="mb-30">New Airliner</h3>
 							<form asp-controller="Airline" asp-action="Create" method="post">								 
                                 @if (Model.Logo != null)
@@ -75,8 +66,7 @@
 								</div>								
                                   <button class="genric-btn primary e-large" onclick="message()" type="submit" style="margin-top:50px;margin-left:35%;">Create Airline<span class="lnr lnr-arrow-right"></span></button>
 							</form>
-                </div>
-</main>
+
 
 <script type="text/javascript">
         function message()
