@@ -5,23 +5,9 @@
 }
 @model PlaneCreateViewModel
 
-<link rel="stylesheet" href="~/css/planecreate.css">
-
-<main>
-    <div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center ">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="hero-cap text-center pt-50">
-                            <h2>New Airplane</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br/>
-        <div class="col-lg-9" style="padding-bottom: 50px;">
-            <h3 class="font-weight-bold" style="padding-top: 50px; padding-bottom: 30px;">Add New Plane</h3>   
+<head>
+    <link rel="stylesheet" href="~/css/planecreate.css">
+</head>
 <div style="padding-top:200px;"></div>
 <form asp-controller="Plane" asp-action="Create" method="post">
     <div class="form-group" >
@@ -100,7 +86,6 @@
 
     <button class="btn btn-secondary" type="submit" onclick="message()" style="margin-top:50px;margin-left:40%;width:400px;">Create</button> 
 </form>
-</div>
 
 <script type="text/javascript">
         function message()

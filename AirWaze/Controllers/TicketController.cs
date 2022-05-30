@@ -18,6 +18,7 @@ namespace AirWaze.Controllers
         public static List<Destination> allDestinations = new List<Destination>();
         public static List<Flight> allFlights = new List<Flight>();
         public static List<TicketCreateViewModel> ticketsToHandle = new List<TicketCreateViewModel>();
+        public static List<Ticket> TicketsFromSeatpicker = new List<Ticket>();
         static ApplicationUser myUser;
 
         public TicketController(IAirWazeDatabase db, UserManager<AirWazeUser> userManager)

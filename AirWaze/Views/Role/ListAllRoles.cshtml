@@ -66,15 +66,17 @@
 					{
 					<div class="progress-table-wrap">
 						<div class="progress-table">
-							<div class="table-head">								
-								<div class="country center">Role</div>
-                                <div class="country center"></div>
-                                <div class="country center"></div>
+							<div class="table-head">	
+                                <div class="serial"></div>
+								<div class="country">Role</div>
+                                <div class="country"></div>
+                                <div class="country"></div>
 							</div>
                              @foreach (var role in Model)
                             {
 							<div class="table-row">
-								<div class="country center"> @role.Name</div>	
+                                <div class="serial"></div>
+								<div class="country"> @role.Name</div>	
                                 <div class="country"><a asp-action="EditRole" asp-route-id="@role.Id" class="genric-btn warning circle">Edit</a></div>
                                 <div class="country"><a asp-action="DeleteRole" asp-route-id="@role.Id" class="genric-btn danger circle">Delete</a></div>
 							</div>
