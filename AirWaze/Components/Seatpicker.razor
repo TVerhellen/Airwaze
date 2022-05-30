@@ -142,8 +142,8 @@
                 {
                     if (e.OffsetX > (x + ( i * 65)) && (e.OffsetY > y + ( j * 30)) && (e.OffsetX < ((x + ( i * 65)) + 20)) && (e.OffsetY < (( y  + ( j * 30)) +20)))
                     {                       
-                        await this._context.SetFillStyleAsync("black");      
-                        await this._context.FillRectAsync(e.OffsetX, e.OffsetY, 10, 10);
+                        await this._context.SetFillStyleAsync("blue");      
+                        await this._context.FillRectAsync((x + ( i * 65)), (y + ( j * 30)), 20, 20);
                         if (thisseatdiagram[j,i] == "1")
                         {
                             istaken = true;
@@ -180,7 +180,7 @@
                 }
             }           
         }      
-    }
+    
 
     private Canvas2DContext _context;
 
