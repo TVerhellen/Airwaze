@@ -8,13 +8,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\js\limonte-sweetalert2\**" />
     <Compile Remove="wwwroot\lib\bootstrap\citylisting-master\assets\**" />
+    <Compile Remove="wwwroot\lib\bootstrap\statistics\**" />
     <Compile Remove="wwwroot\NewFolder1\**" />
+    <Content Remove="wwwroot\js\limonte-sweetalert2\**" />
     <Content Remove="wwwroot\lib\bootstrap\citylisting-master\assets\**" />
+    <Content Remove="wwwroot\lib\bootstrap\statistics\**" />
     <Content Remove="wwwroot\NewFolder1\**" />
+    <EmbeddedResource Remove="wwwroot\js\limonte-sweetalert2\**" />
     <EmbeddedResource Remove="wwwroot\lib\bootstrap\citylisting-master\assets\**" />
+    <EmbeddedResource Remove="wwwroot\lib\bootstrap\statistics\**" />
     <EmbeddedResource Remove="wwwroot\NewFolder1\**" />
+    <None Remove="wwwroot\js\limonte-sweetalert2\**" />
     <None Remove="wwwroot\lib\bootstrap\citylisting-master\assets\**" />
+    <None Remove="wwwroot\lib\bootstrap\statistics\**" />
     <None Remove="wwwroot\NewFolder1\**" />
   </ItemGroup>
 
@@ -39,7 +47,6 @@
 
   <ItemGroup>
     <Folder Include="Scripts\" />
-    <Folder Include="wwwroot\js\limonte-sweetalert2\" />
     <Folder Include="wwwroot\lib\bootstrap\citylisting-master\Doc\css\" />
   </ItemGroup>
 
@@ -78,6 +85,8 @@
     <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shBrushXml.js" />
     <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shCore.js" />
     <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shLegacy.js" />
+    <None Include="wwwroot\js\app.js" />
+    <None Include="wwwroot\js\app.js.map" />
   </ItemGroup>
 
   <ItemGroup>
