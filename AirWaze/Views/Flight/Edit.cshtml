@@ -43,7 +43,7 @@
                     {
                         if(gate.Number == 0)
                         {
-                            <option value="@gate.Number" selected>@gate.Number - None Assigned Yet</option>
+                            <option value="@gate.Number" selected>None Assigned Yet</option>
                         }
                         else
                         {
@@ -54,7 +54,7 @@
                     {
                         if(gate.Number == 0)
                         {
-                            <option value="@gate.Number">@gate.Number - None Assigned Yet</option>
+                            <option value="@gate.Number">None Assigned Yet</option>
                         }
                         else
                         {
@@ -66,33 +66,33 @@
     </div>
      <br />
 
-    <div class="form-group">
+    <div class="form-group" style="text-align:left;">
         <h3 style="margin-left: 0;">Runway</h3>
         <select name="selectedRunway">
             @foreach(Runway runway in Airport.Runways)
             {
                  if(@runway.Number == @Model.CurrentRunway.Number)
-                    {
-                        if(@runway.Number == 0)
-                        {
-                            <option selected value="@runway.Number">@runway.Number - None Assigned Yet</option>
-                        }
-                        else
-                        {
-                            <option selected value="@runway.Number">@runway.Number</option>
-                        }
-                    }
-                    else
-                    {
-                        if(runway.Number == 0)
-                        {
-                            <option value="@runway.Number">@runway.Number - None Assigned Yet</option>
-                        }
-                        else
-                        {
-                            <option value="@runway.Number">@runway.Number</option>
-                        }
-                    }
+                 {
+                      if(@runway.Number == 0)
+                      {
+                          <option selected value="@runway.Number">None Assigned Yet</option>
+                      }
+                      else
+                      {
+                          <option selected value="@runway.Number">@runway.Number</option>
+                      }
+                 }
+                 else
+                 {
+                      if(runway.Number == 0)
+                      {
+                          <option value="@runway.Number">None Assigned Yet</option>
+                      }
+                      else
+                      {
+                          <option value="@runway.Number">@runway.Number</option>
+                      }
+                 }
                     
             }
          </select>
@@ -100,7 +100,8 @@
      <br />
 
      <div class="form-group">
-        <h3 style="margin-left: 0;">Plane</h3>
+         <br />
+        <h3>Plane</h3>
         <select name="selectedPlaneNr">
             @foreach(var item in @availablePlanesForThisFlight)
             {
@@ -115,7 +116,7 @@
             }
         </select>
     </div>
-
+    <br />
      <div class="form-group">
         <h3 style="margin-left: 0;">Status</h3>
         <select name="selectedStatus">
@@ -185,6 +186,9 @@
                 }  
         </select>
     </div>
+    <br />
+    <br />
+    <br />
      <a class="btn btn-danger active" asp-controller="Flight" asp-action="Index">Go Back</a>
     <button class="btn btn-primary active" onclick="message()" type="submit">Edit Flight</button>
 </form>
