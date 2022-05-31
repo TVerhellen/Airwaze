@@ -77,7 +77,14 @@
                                     <input asp-for="IsAvailable"  readonly="readonly"/>
                                     <label asp-for="IsAvailable">Currently Available?</label>  
                                 </div>     
-                                <a class="genric-btn info-border circle" asp-action="Index" asp-controller="Airline">Back</a>
+                                @if (User.IsInRole("Airline"))
+                                {
+                                    <a class="genric-btn info-border circle" asp-action="Index" asp-controller="Airline">Back</a>
+                                }
+                                else if(User.IsInRole("Admin"))
+                                {
+                                    <a class="genric-btn info-border circle" asp-action="List" asp-controller="Plane">Back</a>
+                                }
                             </form>
                                 
                             </div>

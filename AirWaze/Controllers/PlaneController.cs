@@ -354,7 +354,14 @@ namespace AirWaze.Controllers
                 _myDatabase.UpdatePlane(newEntity);
                 planeEntities = _myDatabase.GetPlanes();
                 airlineEntities = _myDatabase.GetAirlines();
-                return RedirectToAction("Index");
+                if (User.IsInRole("Admin"))
+                {
+                    return RedirectToAction("List");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
             return View(planeUpdateViewModel);
         }
