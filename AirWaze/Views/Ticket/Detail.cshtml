@@ -33,7 +33,7 @@
     {
         <p>Extra Luggage: No</p>
     }
-<p>Price: @Model.Price</p>
+<p>Price: € @Model.Price.ToString("F2")</p>
 
 <a class="btn btn-primary" asp-controller="Ticket" asp-action="List">Return</a>
 <a class="btn btn-primary" asp-controller="Ticket" asp-action="Edit" asp-route-ID="@Model.TicketNr">Change Passenger Information</a>
