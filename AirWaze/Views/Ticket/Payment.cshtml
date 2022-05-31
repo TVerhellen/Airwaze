@@ -17,7 +17,7 @@
 <p>Departure: @Model.CurrentFlight.Departure</p>
 @if (Model.FirstClass) { <p>First Class</p> } else { <p>Economy</p> }
 @if (Model.ExtraLuggage) { <p>with extra luggage</p> } else { <p>with standard luggage</p> }
-<h2>Total Price: € @Model.Price</h2>
+<h2>Total Price: € @Model.Price.ToString("F2")</h2>
 @if(Model.CurrentFlight.CurrentPlane.Type == "A319")
 {
     <a class="btn btn-primary" asp-action="SeatPicker" asp-route-ID="@Model.TicketNr">Pick Ticket</a>
