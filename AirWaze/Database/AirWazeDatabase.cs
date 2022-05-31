@@ -196,6 +196,7 @@ namespace AirWaze.Database
                 .Include(x => x.CurrentFlight)
                 .Include(x => x.CurrentFlight.CurrentPlane)
                 .Include(x => x.CurrentFlight.CurrentPlane.CurrentAirline)
+                .Include(x => x.CurrentFlight.Destination)
                 .ToList();
         }
 
