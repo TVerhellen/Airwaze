@@ -92,7 +92,7 @@ namespace AirWaze.Entities
                 }
                 return seatNr;
             }
-            return null;
+            return "15B";
         }
     }
 }

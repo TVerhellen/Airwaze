@@ -5,20 +5,41 @@
 @{
 }
 @model TicketFlightPickerViewModel
+<head>
+    <link rel="stylesheet" href="~/css/Tijs.css" asp-append-version="true" />
+</head>
 <main>
-<table>
+    <div class="slider-height d-flex align-items-center">
+        <div class="listContainer">
+<table class="table">
     <tr>
         <th>Destination</th>
         <th>Departure time</th>
+        <th></th>
     </tr>
     @foreach (var flight in Model.flightList)
     {
         <tr>
-            <td>@flight.Destination</td>
+            <td>@flight.Destination.Name</td>
             <td>@flight.Departure</td>
-            <td><a asp-action="Payment" asp-route-ID="@flight.FlightNr" asp-route-ticket="@Model.TicketNr">Select</a></td>
+            <td><a asp-action="Payment" asp-route-ID="@flight.FlightNr" onclick="message()" asp-route-ticket="@Model.TicketNr" style="color:black">Select</a></td>
         </tr>
     }
 </table>
+</div>
+</div>
 <a class="btn btn-primary" asp-action="Create">Go Back</a>
+
 </main>
+<script type="text/javascript">
+        function message()
+        {
+            Swal.fire({                   
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Ticket Created',
+                    showConfirmButton: false,
+                    timer: 1500                 
+                    });
+        }
+    </script>

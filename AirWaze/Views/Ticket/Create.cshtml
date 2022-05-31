@@ -7,9 +7,13 @@
 }
 
 @model TicketCreateViewModel
+<head>
+    <link rel="stylesheet" href="~/css/Tijs.css" asp-append-version="true" />
+</head>
 <main>
-<div style="padding-top:200px;"></div>
-<form asp-controller="Ticket" asp-action="Create" method="post">
+    <div class="listContainer">
+    <div class="slider-height d-flex align-items-center">
+        <form asp-controller="Ticket" asp-action="Create" method="post">
     <div class="form-group">
         <label asp-for="LastName">Last Name</label>
         <input class="form-control" asp-for="LastName"/>
@@ -31,10 +35,10 @@
             }
         </select>
     </div>
-    <button class="btn btn-primary" type="submit">Confirm Plane</button>
+
     <div class="form-group">
         <label asp-for="FirstClass">Preferred time of departure</label>
-        <input asp-for="Departure"/>
+        <input asp-for="Departure" value="@DateTime.Today.ToString("yyyy-MM-dd")"/>
     </div>
 
 
@@ -47,18 +51,8 @@
         <label asp-for="ExtraLuggage">Extra Luggage?</label>
     </div>
 
-    <button class="btn btn-primary" onclick="message()" type="submit">Create Ticket</button>
+    <button class="btn btn-primary" type="submit">Create Ticket</button>
 </form>
+    </div>
+    </div>
 </main>
-<script type="text/javascript">
-        function message()
-        {
-            Swal.fire({                   
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Ticket Created',
-                    showConfirmButton: false,
-                    timer: 1500                 
-                    });
-        }
-    </script>

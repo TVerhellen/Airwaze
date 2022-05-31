@@ -4,7 +4,12 @@
 @{
 }
 @model TicketDeleteViewModel
+<head>
+    <link rel="stylesheet" href="~/css/Tijs.css" asp-append-version="true" />
+</head>
 <main>
+    <div class="slider-height d-flex align-items-center">
+        <div class="listContainer">
 <h1>Cancelling your ticket</h1>
 <h2>Ticket Information</h2>
 <p>Name: @Model.LastName @Model.FirstName</p>
@@ -13,6 +18,8 @@
 
 <a class="btn btn-danger" onclick="message()" asp-action="ConfirmedDelete" asp-route-ID="@Model.TicketNr">Cancel Ticket</a>
 <a class="btn btn-primary" asp-action="List">Go Back</a>
+</div>
+</div>
 </main>
 <script type="text/javascript">
         function message()
