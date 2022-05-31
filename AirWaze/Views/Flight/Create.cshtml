@@ -6,13 +6,26 @@
 @{
     List<Destination> allDestinations = FlightController.destinations.OrderBy(dest => dest.Region).ThenBy(dest => dest.Name).ToList();
 }
-<main>
-<h1>Create New Flight</h1>
 
-<form asp-controller="Flight" asp-action="Create" method="post">
+<link rel="stylesheet" href="~/css/flightindex.css">
+
+<div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap text-center pt-50">
+                            <h2>Add New Flight</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+<form style="margin-right: 65%;" asp-controller="Flight" asp-action="Create" method="post">
     
  <div class="form-group">
-        <label>Destination:</label>
+        <h3 style="margin-left: 0">Destination:</h3>
         <select name="selectedDestination">
             @foreach(var item in allDestinations)
             {
@@ -35,19 +48,20 @@
         </select>
     </div>
     <br />
-
+    <br />
+    <br />
 
     <div class="form-group">
-        <label asp-for="Departure"></label>
-        <input class="form-control" asp-for="Departure" />
+        <h3 style="margin-left: 0">Departure Date & Time:</h3>
+        <input class="form-control" asp-for="Departure"/>
         <span asp-validation-for="Departure"></span>
     </div>
      <br />
 
 
 
-     <a class="btn btn-primary" asp-controller="Flight" asp-action="Index">Go Back</a>
-    <button class="btn btn-primary" onclick="message()" type="submit">Create Flight</button>
+     <a class="btn btn-danger active" asp-controller="Flight" asp-action="Index">Go Back</a>
+     <button class="btn btn-primary active" onclick="message()" type="submit">Create Flight</button>
 </form>
 <script type="text/javascript">
         function message()
@@ -61,4 +75,3 @@
                     });
         }
     </script>
-    </main>

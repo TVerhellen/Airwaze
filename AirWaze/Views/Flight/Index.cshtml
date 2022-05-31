@@ -14,11 +14,10 @@
                 </div>
             </div>
         </div>
-        <br/>
         <div class="container-fluid" style="padding: 0 0 0 0;">
         <div class="row">
             <div class="col-lg-2 bg-dark-blue d-none d-sm-block left" style="padding-top: 10px; padding-bottom: 20px;">
-            <center><i class="fas fa-user fa-5x text-white" style="padding-bottom: 20px;"></i></center>
+                <center><i class="fas fa-user fa-5x text-white" style="padding-bottom: 20px;"></i></center>
 
                 <center>
                     <p style="color:white">@User.Identity.Name</p>
@@ -83,7 +82,7 @@
 							</div> 
                             @foreach (var x in @Model)
                             {
-                                <div class="table-row">
+                                    <div class="table-row">
 								    <div class="country"> @x.Departure.Date.DayOfWeek @x.Departure.Date.ToShortDateString()</div>	
                                     <div class="country"> @x.Departure.Hour.ToString("00"):@x.Departure.Minute.ToString("00")</div>	
                                     <div class="country"> @x.Destination.Name</div>	
