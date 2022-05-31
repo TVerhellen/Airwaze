@@ -142,7 +142,10 @@ namespace AirWaze.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var flightViewModel = new FlightCreateViewModel();
+            var flightViewModel = new FlightCreateViewModel
+            {
+                Departure = DateTime.Parse(DateTime.Now.ToString("g"))
+            };
             return View(flightViewModel);
         }
 

@@ -1,75 +1,88 @@
 ﻿@model FlightDetailViewModel
 
-<main>
-<h1>Flight Details</h1>
+<link rel="stylesheet" href="~/css/flightindex.css">
 
-<!-- Possible Notifications: Delayed?, Cancelled, Boarding, In Transit, Arrived At Destination, Fully Booked -->
-<!-- Calculate -->
-<h2>Flight Number</h2>
-<p>@Model.FlightNr</p>
-<h2>Destination</h2>
-<p>@Model.Destination.Name</p>
-<h2>Airline</h2>
-<p>@Model.CurrentPlane.CurrentAirline.Name</p>
-<h2>Departure</h2>
-<p>@Model.Departure.ToString("R")</p>
-<h2></h2>
-<h2>Flight Duration (hh:mm)</h2>
-<p>@Model.Destination.FlightTime</p>
-<h2>Distance</h2>
-<p>@Model.Destination.Distance km</p>
-<h2>Gate</h2>
+<div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap text-center pt-50">
+                            <h2>Flight Details</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+<h3>Flight Number</h3>
+<div class="details">@Model.FlightNr</div>
+<br />
+<h3>Destination</h3>
+<div class="details">@Model.Destination.Name</div>
+<br />
+<h3>Airline</h3>
+<div class="details">@Model.CurrentPlane.CurrentAirline.Name</div>
+<br />
+<h3>Departure</h3>
+<div class="details">@Model.Departure.ToString("R")</div>
+<br />
+<h3>Flight Duration (hh:mm)</h3>
+<div class="details">@Model.Destination.FlightTime</div>
+<br />
+<h3>Distance</h3>
+<div class="details">@Model.Destination.Distance km</div>
+<br />
+<h3>Gate</h3>
 @if(Model.CurrentGate.Number == 0)
 {
-    <p>No Gate assigned yet.</p>
+    <div class="details">No Gate assigned yet.</div>
 }
 else
 {
-    <p>@Model.CurrentGate.Number</p>
+    <div class="details">@Model.CurrentGate.Number</div>
 }
-<h2>Current Status</h2>
+<br />
+<h3>Current Status</h3>
 @switch (Model.Status)
             {
                 case 0:
-                    <p>Awaiting Approval</p>
+                    <div class="details">Awaiting Approval</div>
                     break;
                 case 1:
-                    <p>Approved</p>
+                    <div class="details">Approved</div>
                     break;
                 case 2:
-                    <p>Delayed</p>
+                    <div class="details">Delayed</div>
                     break;
                 case 3:
-                    <p>Boarding</p>
+                    <div class="details">Boarding</div>
                     break;
                 case 4:
-                    <p>Departed</p>
+                    <div class="details">Departed</div>
                     break;
                 case 5:
-                    <p>Arrived</p>
+                    <div class="details">Arrived</div>
                     break;
                 case 6:
-                    <p>Cancelled</p>
+                    <div class="details">Cancelled</div>
                     break;
                 default:
                     break;
             }
-
-<!-- For Airport staff-->
-<h2>Plane</h2>
-<p>@Model.CurrentPlane.PlaneNr</p>
-<h2>Runway</h2>
+            <br />
+<h3>Plane</h3>
+<div class="details">@Model.CurrentPlane.PlaneNr</div>
+<br />
+<h3>Runway</h3>
 @if(Model.CurrentRunway.Number == 0)
 {
-    <p>No Runway assigned yet.</p>
+    <div class="details">No Runway assigned yet.</div>
 }
 else
 {
-    <p>@Model.CurrentRunway.Number</p>
+    <div class="details">@Model.CurrentRunway.Number</div>
 }
-<!-- TODO: route button to page with tickets only for this flight 
-<a class="btn btn-primary" asp-controller="Ticket" asp-action="Index">Booked Tickets</a>
--->
-<a class="btn btn-primary" asp-controller="Flight" asp-action="Index">Go Back</a>
-
-</main>
+<br />
+<br />
+<a style="margin-left: 25%;" class="btn btn-primary active" asp-controller="Flight" asp-action="Index">Go Back</a>

@@ -1,40 +1,55 @@
 ﻿@model FlightDeleteViewModel
-<main>
-<p>Are you sure you want to delete Flight @Model.FlightNr?</p>
+<link rel="stylesheet" href="~/css/flightindex.css">
+
+<div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap text-center pt-50">
+                            <h2>Delete Flight</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+<h1>Are you sure you want to delete Flight @Model.FlightNr to @Model.Destination.Name ?</h1>
 <br />
-<p>Destination: @Model.Destination.Name - Departure: @Model.Departure.ToString("R")</p>
+<h2 style="margin-left: 0;">Departure: @Model.Departure.ToString("R")</h2>
 @switch(@Model.Status)
 {
     case 0:
-            <p>Status: Awaiting Approval</p>
+            <h2 style="margin-left: 0;">Status: Awaiting Approval</h2>
             break;
     case 1:
-        <p>Status: Approved</p>
+        <h2 style="margin-left: 0;">Status: Approved</h2>
         break;
     case 2:
-        <p>Status: Delayed</p>
+        <h2 style="margin-left: 0;">Status: Delayed</h2>
         break;
     case 3:
-        <p>Status: Boarding</p>
+        <h2 style="margin-left: 0;">Status: Boarding</h2>
         break;
     case 4:
-        <p>Status: Departed</p>
+        <h2 style="margin-left: 0;">Status: Departed</h2>
         break;
     case 5:
-        <p>Status: Arrived</p>
+        <h2 style="margin-left: 0;">Status: Arrived</h2>
         break;
     case 6:
-        <p>Status: Cancelled</p>
+        <h2 style="margin-left: 0;">Status: Cancelled</h2>
         break;
     case 7:
-        <p>Status: Completed</p>
+        <h2 style="margin-left: 0;">Status: Completed</h2>
         break;
     default:
         break;
 }
-
-<a asp-controller="Flight" asp-action="Index">Go Back</a>
-<a class="btn btn-danger" onclick="message()" asp-controller="Flight" asp-action="DeleteConfirm" asp-route-id="@Model.FlightNr">Delete</a>
+<br />
+<br />
+<a class="btn btn-danger active" asp-controller="Flight" asp-action="Index">Go Back</a>
+<a class="btn btn-primary active" onclick="message()" asp-controller="Flight" asp-action="DeleteConfirm" asp-route-id="@Model.FlightNr">Delete</a>
 
 <script type="text/javascript">
         function message()
