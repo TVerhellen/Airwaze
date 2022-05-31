@@ -259,6 +259,7 @@ namespace AirWaze.Controllers
         {
             Ticket newTicket = loadedTickets.Single(x => x.TicketNr == ID);
             TicketsForSeatpicker.Add(newTicket);
+            HttpContext.Session.SetString("TicketNr", newTicket.TicketNr);
             return View();
         }
 
