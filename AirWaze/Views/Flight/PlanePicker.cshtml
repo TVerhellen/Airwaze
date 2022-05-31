@@ -2,7 +2,6 @@
 @using AirWaze.Entities
 @model FlightCreateViewModel
 
-<!-- add method to make list of available planes for that flight - check flight region (destination), and Departure date/time -->
 @{
     Flight tempFlight = new Flight
             {
@@ -12,10 +11,26 @@
     List<Plane> availablePlanesForThisFlight = Airport.GetAvailablePlanesForFlight(tempFlight).ToList();
 }
 
-<main>
+    <link rel="stylesheet" href="~/css/flightindex.css">
+
+<div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap text-center pt-50">
+                            <h2>Assign Plane</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
 @if(availablePlanesForThisFlight.Count > 0)
 {
-    <h2>Please select the plane for this flight</h2>
+    <h2>Please select the plane for flight @Model.FlightNr to @Model.Destination.Name (@Model.Destination.Region)</h2>
+    <br />
+    <br />
 <form asp-controller="Flight" asp-action="PlanePicker" asp-route-id=@Model.FlightNr method="post">
 
  <div class="form-group">
@@ -28,7 +43,9 @@
             }
         </select>
     </div>
-    <button class="btn btn-primary" type="submit">Confirm Plane</button>
+    <br />
+    <br />
+    <button class="btn btn-primary active" type="submit">Confirm Plane</button>
     </form>
 }
 else
@@ -38,4 +55,3 @@ else
 
     <a class="btn btn-primary" asp-controller="Flight" asp-action="CreateAgain" asp-route-id="@Model.FlightNr">Go Back</a>
 }
-</main>

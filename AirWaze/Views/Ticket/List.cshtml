@@ -5,9 +5,14 @@
 }
 
 @model List<TicketListViewModel>
+<head>
+    <link rel="stylesheet" href="~/css/Tijs.css" asp-append-version="true" />
+</head>
+
 
 <main>
-<div>
+<div class="slider-height d-flex align-items-center">
+    <div class="listContainer">
   @*searchfunction*@
     <form asp-action="List" method="get">
         <div class="form-actions no-color">
@@ -23,21 +28,37 @@
         </div>
     </form>
     <br/>
-    <table>
+    <table class="table">
         <tr>
             <th>Ticket Number</th>
             <th>Name</th>
             <th>Status</th>
+            <th></th>
         </tr>
         @foreach(var ticket in Model)
         {
             <tr>
                 <td>@ticket.TicketNr</td>
                 <td>@ticket.LastName @ticket.FirstName</td>
-                <td>@ticket.Status</td>
+                @{switch (ticket.Status)
+                    {
+                        case 1:
+                            <td>Paid</td>
+                            break;
+                        case 3:
+                            <td>Boarded</td>
+                            break;
+                        case 4:
+                        case 5:
+                            <td>Cancelled</td>
+                            break;
+                    }
+                }
                 <td><a class="btn btn-primary" asp-action="Detail" asp-route-ID="@ticket.TicketNr">Details</a></td>
             </tr>
         }
 
     </table>
+    </div>
 </div>
+</main>

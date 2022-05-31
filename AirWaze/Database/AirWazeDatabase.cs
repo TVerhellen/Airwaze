@@ -88,6 +88,9 @@ namespace AirWaze.Database
             _dbContext.Entry(ticket.CurrentFlight).State = EntityState.Unchanged;
             _dbContext.Entry(ticket.CurrentFlight.CurrentPlane).State = EntityState.Unchanged;
             _dbContext.Entry(ticket.CurrentFlight.CurrentPlane.CurrentAirline).State = EntityState.Unchanged;
+            _dbContext.Entry(ticket.CurrentFlight.Destination).State = EntityState.Unchanged;
+            _dbContext.Entry(ticket.CurrentFlight.CurrentGate).State = EntityState.Unchanged;
+            _dbContext.Entry(ticket.CurrentFlight.CurrentRunway).State = EntityState.Unchanged;
             return _dbContext.SaveChanges();
         }
 
@@ -103,16 +106,17 @@ namespace AirWaze.Database
                 .SingleOrDefault(flight => flight.FlightNr.Equals(nr));
         }
 
-        public List<Flight> GetFlightsByDate(DateTime date, int range)
+        public List<Flight> GetFlightsByParams(DateTime date, int range, string destination)
         {
-            DateTime earliest = date;
-            earliest.AddDays(-range);
+            DateTime earliest = date.AddDays(-range);
+            DateTime latest = date.AddDays(range);
             var query = from flight in _dbContext.Flights
-                        where flight.Departure >= earliest
+                        where flight.Departure >= earliest && flight.Departure <= latest && flight.Destination.Name == destination
                         select flight;
             return query
                 .Include(x => x.CurrentPlane)
                 .Include(x => x.CurrentPlane.CurrentAirline)
+                .Include(x => x.Destination)
                 .ToList();
         }
 
@@ -144,6 +148,7 @@ namespace AirWaze.Database
                         select ticket;
             return query
                 .Include(x => x.CurrentFlight)
+                .Include(x => x.CurrentFlight.Destination)
                 .Include(x => x.CurrentUser)
                 .ToList();
 
@@ -191,6 +196,7 @@ namespace AirWaze.Database
                 .Include(x => x.CurrentFlight)
                 .Include(x => x.CurrentFlight.CurrentPlane)
                 .Include(x => x.CurrentFlight.CurrentPlane.CurrentAirline)
+                .Include(x => x.CurrentFlight.Destination)
                 .ToList();
         }
 

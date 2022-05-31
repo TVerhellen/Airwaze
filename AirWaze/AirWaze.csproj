@@ -9,19 +9,15 @@
 
   <ItemGroup>
     <Compile Remove="wwwroot\js\limonte-sweetalert2\**" />
-    <Compile Remove="wwwroot\lib\bootstrap\citylisting-master\assets\**" />
     <Compile Remove="wwwroot\lib\bootstrap\statistics\**" />
     <Compile Remove="wwwroot\NewFolder1\**" />
     <Content Remove="wwwroot\js\limonte-sweetalert2\**" />
-    <Content Remove="wwwroot\lib\bootstrap\citylisting-master\assets\**" />
     <Content Remove="wwwroot\lib\bootstrap\statistics\**" />
     <Content Remove="wwwroot\NewFolder1\**" />
     <EmbeddedResource Remove="wwwroot\js\limonte-sweetalert2\**" />
-    <EmbeddedResource Remove="wwwroot\lib\bootstrap\citylisting-master\assets\**" />
     <EmbeddedResource Remove="wwwroot\lib\bootstrap\statistics\**" />
     <EmbeddedResource Remove="wwwroot\NewFolder1\**" />
     <None Remove="wwwroot\js\limonte-sweetalert2\**" />
-    <None Remove="wwwroot\lib\bootstrap\citylisting-master\assets\**" />
     <None Remove="wwwroot\lib\bootstrap\statistics\**" />
     <None Remove="wwwroot\NewFolder1\**" />
   </ItemGroup>
@@ -47,44 +43,9 @@
 
   <ItemGroup>
     <Folder Include="Scripts\" />
-    <Folder Include="wwwroot\lib\bootstrap\citylisting-master\Doc\css\" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\contact_process.php" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\fonts\fontawesome-webfont.svg" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\img\Thumbs.db" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\js\custom.js" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\js\jquery-1.11.0.min.js" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\js\jquery.nav.js" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shAutoloader.js" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shBrushAppleScript.js" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shBrushAS3.js" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shBrushBash.js" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shBrushColdFusion.js" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shBrushCpp.js" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shBrushCSharp.js" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shBrushCss.js" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shBrushDelphi.js" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shBrushDiff.js" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shBrushErlang.js" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shBrushGroovy.js" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shBrushJava.js" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shBrushJavaFX.js" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shBrushJScript.js" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shBrushPerl.js" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shBrushPhp.js" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shBrushPlain.js" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shBrushPowerShell.js" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shBrushPython.js" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shBrushRuby.js" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shBrushSass.js" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shBrushScala.js" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shBrushSql.js" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shBrushVb.js" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shBrushXml.js" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shCore.js" />
-    <None Include="wwwroot\lib\bootstrap\citylisting-master\Doc\syntax-highlighter\scripts\shLegacy.js" />
     <None Include="wwwroot\js\app.js" />
     <None Include="wwwroot\js\app.js.map" />
   </ItemGroup>

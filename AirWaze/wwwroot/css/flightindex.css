@@ -11,6 +11,10 @@
     min-height: 500px;
 }
 
+.table-row:nth-child(even) {
+    background-color: lightcyan;
+}
+
 @media only screen and (max-width: 600px) {
     .hero-area2 {
         width: 120%;
@@ -101,4 +105,21 @@ h2{
     text-align: left;
 }
 
+.btn-primary{
+    background-color: dodgerblue;
+}
+
+h3 {
+    margin-left: 25%;
+}
+
+.details {
+    margin-left: 25%;
+    margin-right: 20%;
+    border: solid 1px;
+    border-color: black;
+    font-size: 24px;
+    padding: 8px;
+    color: chocolate;
+}
 
