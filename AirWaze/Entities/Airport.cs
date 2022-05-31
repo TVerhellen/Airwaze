@@ -440,7 +440,6 @@ namespace AirWaze.Entities
             List<Plane> availablePlanes = new List<Plane>();
 
             //Make timeslot for this flight to compare plane timeslots with
-            //TODO: Test this calculation!!!!
             DateTime originalFlightPeriodStart = originalFlight.Departure.AddHours(-2);
             DateTime originalFlightPeriodEnd = originalFlight.Departure.Add((2 * originalFlight.Destination.FlightTime) + TimeSpan.FromDays(7));
 
@@ -496,6 +495,7 @@ namespace AirWaze.Entities
         private static void DelayFlight(Flight flight, int minutesDelay)
         {
             flight.Departure = flight.Departure.AddMinutes(minutesDelay);
+            flight.Status = 2;
             UpdateFlightInAllLists(flight);
         }
         private static void UpdateAirportListsFromControllerLists()
@@ -506,7 +506,7 @@ namespace AirWaze.Entities
             //Flights = Flights.OrderBy(flight => flight.Departure).ToList();
             Planes = PlaneController.planeEntities.ToList();
         }
-        private static void UpdateFlightInAllLists(Flight updatedFlight)
+        public static void UpdateFlightInAllLists(Flight updatedFlight)
         {
             //look for correct flight in Flights List and update only properties that can be modified in Airport Class automatically
             foreach(Flight flight in Flights)
@@ -538,7 +538,7 @@ namespace AirWaze.Entities
                 }
             }
         }
-        private static void UpdatePlaneInAllLists(Plane updatedPlane)
+        public static void UpdatePlaneInAllLists(Plane updatedPlane)
         {
             //look for correct plane in Planes List and update only properties that can be modified in Airport Class automatically
             foreach (Plane plane in Planes)
@@ -560,7 +560,7 @@ namespace AirWaze.Entities
                 }
             }
         }
-        private static void UpdateRunwayInRunwaysList(Runway updatedRunway)
+        public static void UpdateRunwayInRunwaysList(Runway updatedRunway)
         {
             //look for correct plane in Planes List and update only properties that can be modified in Airport Class automatically
             foreach (Runway runway in Runways)
@@ -572,7 +572,7 @@ namespace AirWaze.Entities
                 }
             }
         }
-        private static void UpdateGateInGatesList(Gate updatedGate)
+        public static void UpdateGateInGatesList(Gate updatedGate)
         {
             //look for correct plane in Planes List and update only properties that can be modified in Airport Class automatically
             foreach (Gate gate in Gates)

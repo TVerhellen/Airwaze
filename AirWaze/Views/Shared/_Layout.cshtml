@@ -66,10 +66,7 @@
                                 <div class="main-menu f-right d-none d-lg-block">
                                     <nav>
                                         <ul id="navigation">   
-                                            @if (!User.Identity.IsAuthenticated)
-                                            {
-                                                <li> <a asp-area="" asp-controller="Home" asp-action="Departures" style="background-color: transparent">Departures</a></li>
-                                            }      
+                                            <li> <a asp-area="" asp-controller="Home" asp-action="Departures" style="background-color: transparent">Departures</a></li>
                                             @if (User.IsInRole("Customer") && !User.Identity.IsAuthenticated)
                                             {
                                                 <li><a asp-area="" asp-controller="Ticket" asp-action="Create" style="background-color: transparent">Book Your Ticket</a></li>
