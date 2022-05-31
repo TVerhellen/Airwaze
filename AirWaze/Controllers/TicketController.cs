@@ -21,6 +21,7 @@ namespace AirWaze.Controllers
         public static List<Ticket> TicketsFromSeatpicker = new List<Ticket>();
         public static List<Ticket> TicketsForSeatpicker = new List<Ticket>();
         static ApplicationUser myUser;
+        private Random random = new Random();
 
         public TicketController(IAirWazeDatabase db, UserManager<AirWazeUser> userManager)
         {
@@ -210,8 +211,9 @@ namespace AirWaze.Controllers
             return RedirectToAction("List");
         }
 
-        public IActionResult Payment(string ID, string ticket)
+        public async Task<IActionResult> Payment(string ID, string ticket)
         {
+            await Task.Delay(1500);
             TicketCreateViewModel toHandle = ticketsToHandle.Single(x => x.TicketNr == ticket);
             Flight chosenFlight = database.GetFlightByNr(ID);
             string ticketnr = GenerateTicketNumber(chosenFlight);
@@ -259,8 +261,18 @@ namespace AirWaze.Controllers
         {
             Ticket newTicket = loadedTickets.Single(x => x.TicketNr == ID);
             TicketsForSeatpicker.Add(newTicket);
-            HttpContext.Session.SetString("TicketNr", newTicket.TicketNr);
+            //HttpContext.Session.SetString("TicketNr", newTicket.TicketNr);
             return View();
+        }
+
+        public IActionResult SeatPickerConfirmed()
+        {
+            Ticket ticket = TicketsFromSeatpicker.LastOrDefault(x => x.CurrentUser == myUser);
+            TicketsFromSeatpicker.Remove(ticket);
+            TicketsForSeatpicker.Remove(TicketsForSeatpicker.LastOrDefault(x => x.TicketNr == ticket.TicketNr));
+            loadedTickets[loadedTickets.IndexOf(loadedTickets.LastOrDefault(x => x.TicketNr == ticket.TicketNr))] = ticket;
+            database.UpdateTicket(ticket);
+            return RedirectToAction("List");
         }
 
         public IActionResult FailedPayment(TicketCreateViewModel newTicket)
@@ -271,7 +283,17 @@ namespace AirWaze.Controllers
 
         public string GenerateTicketNumber(Flight flight)
         {
-            return Guid.NewGuid().ToString();
+            string ticketNumber;
+            do
+            {
+                ticketNumber = "";
+                ticketNumber += flight.Destination.Name.Substring(0, 4) + "-";
+                ticketNumber += flight.Departure.Day + flight.Departure.Month + "-";
+                ticketNumber += myUser.Id.Substring(0, 4) + "-";
+                ticketNumber += random.Next(0, 1000).ToString();
+            }
+            while (loadedTickets.FirstOrDefault(x => x.TicketNr.Equals(ticketNumber)) != null);
+            return ticketNumber;
         }
 
         public string GenerateSeatNumber(Flight flight)

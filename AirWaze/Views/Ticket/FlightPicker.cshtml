@@ -8,11 +8,13 @@
 <head>
     <link rel="stylesheet" href="~/css/Tijs.css" asp-append-version="true" />
 </head>
+<div class="filler"></div>
 <main>
-    <div class="slider-height d-flex align-items-center">
+    <div class="slider-height d-flex align-items-top">
         <div class="listContainer">
 <table class="table">
     <tr>
+        <th>Airline</th>
         <th>Destination</th>
         <th>Departure time</th>
         <th></th>
@@ -20,9 +22,10 @@
     @foreach (var flight in Model.flightList)
     {
         <tr>
+            <td>@flight.CurrentPlane.CurrentAirline.Name</td>
             <td>@flight.Destination.Name</td>
             <td>@flight.Departure</td>
-            <td><a asp-action="Payment" asp-route-ID="@flight.FlightNr" onclick="message()" asp-route-ticket="@Model.TicketNr" style="color:black">Select</a></td>
+            <td><a class="btn btn-primary" asp-action="Payment" asp-route-ID="@flight.FlightNr" onclick="message()" asp-route-ticket="@Model.TicketNr" style="color:black">Select</a></td>
         </tr>
     }
 </table>
