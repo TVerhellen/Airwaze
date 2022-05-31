@@ -46,12 +46,7 @@ namespace AirWaze.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-        [Route("/Seatpicker")]
-        public IActionResult Map()
-        {
-            return View();
-        }
+        }       
         public IActionResult Departures()
         {
             List<FlightListViewModel> departures = new List<FlightListViewModel>();

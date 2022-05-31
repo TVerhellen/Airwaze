@@ -11,15 +11,14 @@ namespace AirWaze.Controllers
     {
 
         private IAirWazeDatabase _myDatabase;
-
-        public static AirWazeUser loggedinuser = new AirWazeUser();
-
+        
         public static Airline LoggedInAirline;
 
         private static List<Airline> airlineEntities = new List<Airline>();      
         //Gets All Entities of Airlines Later on - Will do For all uses!
         public AirlineController(IAirWazeDatabase mydatabase)
         {
+           
             if (_myDatabase == null)
             {
                 _myDatabase = mydatabase;               
@@ -34,8 +33,7 @@ namespace AirWaze.Controllers
             AirlineIndexViewModel mymodel = new AirlineIndexViewModel();          
             if (LoggedInAirline == null)
             {
-
-                loggedinuser.Id = User.Identity.Name;
+              
                 LoggedInAirline = new Airline
                 {
                     Email = User.Identity.Name,
