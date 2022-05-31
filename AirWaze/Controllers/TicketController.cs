@@ -266,7 +266,8 @@ namespace AirWaze.Controllers
             return View();
         }
 
-        public IActionResult SeatPickerConfirmed()
+        [Route("Ticket/SeatPicked")]
+        public IActionResult SeatPicked()
         {
             Ticket ticket = TicketsFromSeatpicker.LastOrDefault(x => x.CurrentUser == myUser);
             TicketsFromSeatpicker.Remove(ticket);
