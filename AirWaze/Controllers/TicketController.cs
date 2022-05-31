@@ -19,6 +19,7 @@ namespace AirWaze.Controllers
         public static List<Flight> allFlights = new List<Flight>();
         public static List<TicketCreateViewModel> ticketsToHandle = new List<TicketCreateViewModel>();
         public static List<Ticket> TicketsFromSeatpicker = new List<Ticket>();
+        public static List<Ticket> TicketsForSeatpicker = new List<Ticket>();
         static ApplicationUser myUser;
 
         public TicketController(IAirWazeDatabase db, UserManager<AirWazeUser> userManager)
@@ -251,6 +252,14 @@ namespace AirWaze.Controllers
             }
             
             return RedirectToAction("List");
+        }
+
+        [Route("SeatPicker")]
+        public IActionResult SeatPicker(string ID)
+        {
+            Ticket newTicket = loadedTickets.Single(x => x.TicketNr == ID);
+            TicketsForSeatpicker.Add(newTicket);
+            return View();
         }
 
         public IActionResult FailedPayment(TicketCreateViewModel newTicket)
