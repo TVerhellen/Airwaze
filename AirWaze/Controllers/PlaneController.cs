@@ -210,7 +210,7 @@ namespace AirWaze.Controllers
             {
                 //UniqueCOmbo with Meaning
 
-                string tempPlaneNr = planeViewModel.CurrentAirline.NameTag + DateTime.Now.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) + generator.Next(0, 100).ToString() + planeViewModel.FlightRegion;
+                string tempPlaneNr = planeViewModel.CurrentAirline.NameTag + DateTime.Now.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture) + generator.Next(0, 100).ToString() + planeViewModel.FlightRegion;
                 var newEntity = new Plane
                 {
                     
