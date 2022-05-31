@@ -50,20 +50,6 @@ namespace AirWaze.Entities
         public static void StartAirport()
         {
             UpdateAirportListsFromDatabase();
-
-            //TESTING PURPOSES
-            //TODO: DELETE AFTER TESTING
-            //
-            Gates[0].IsAvailable = false;
-            Gates[1].IsAvailable = false;
-            Gates[2].IsAvailable = false;
-            Gates[3].IsAvailable = false;
-            Gates[5].IsAvailable = false;
-            Gates[7].IsAvailable = false;
-            Gates[8].IsAvailable = false;
-            Gates[9].IsAvailable = false;
-            //
-
             IsOnline = true;
             StartTimer(1);
         }
