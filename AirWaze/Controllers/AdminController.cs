@@ -93,7 +93,8 @@ namespace AirWaze.Controllers
                 if(flight.Status == 0)
                 {
                     flight.Status = 1;
-                    _airwazeDatabase.UpdateFlight(flight);
+                    Airport.UpdateFlightInAllLists(flight);
+                    //_airwazeDatabase.UpdateFlight(flight);
                 }
             }
             Airport.ApprovedSchedules.Add(new Schedule
