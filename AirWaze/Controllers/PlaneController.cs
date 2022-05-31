@@ -54,8 +54,9 @@ namespace AirWaze.Controllers
         [Authorize(Roles = "Airline")]
         // AIRLINE ROLE
         [HttpGet]
-        public async Task<IActionResult> Index(Guid ID)
-        {          
+        public async Task<IActionResult> Index(Guid ID, string searchString, string option)
+        {
+            ViewData["CurrentFilter"] = searchString;
             LoggedInAirline = airlineEntities.FirstOrDefault(x => x.AirlineID == ID);
             if (LoggedInAirline == null)
             {
@@ -98,8 +99,32 @@ namespace AirWaze.Controllers
                     NextMainentance = plane.NextMainentance,
                 }) ;
             }
+            //searchfunction
+            var myPlane = from s in thislist
+                          select s;
 
-            return View(thislist);
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                if (option == "Name")
+                {
+                    myPlane = myPlane.Where(s => s.PlaneNr.Contains(searchString));
+                }
+                else if (option == "Type")
+                {
+                    myPlane = myPlane.Where(s => s.Type.Contains(searchString));
+                }
+                else if (option == "Capacity")
+                {
+                    myPlane = myPlane.Where(s => s.PassengerCapacity.ToString().Contains(searchString)).ToList();
+                }
+                else if (option == "Date")
+                {
+                    myPlane = myPlane.Where(s => s.ConstructionYear.ToString("dd/MM/yyyy").Contains(searchString) || s.ConstructionYear.ToString("dd-MM-yyyy").Contains(searchString)).ToList();
+                }
+            }
+            return View(myPlane.ToList());
+
+            //return View(thislist);
         }
 
         [Authorize(Roles = "Admin")]
