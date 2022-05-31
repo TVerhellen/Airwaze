@@ -4,7 +4,7 @@
 }
 <link rel="stylesheet" href="~/css/flightindex.css">
 
-<div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center ">
+<div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center " style="background-image: url(../Images/controltower.jpg)">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-12">
@@ -42,10 +42,21 @@ else
 @if(@AdminController.scheduleToApprove.Flights.Count > 0)
 {
     <a class="btn btn-warning active" asp-controller="Admin" asp-action="Schedule">No - Go Back</a>
-    <a class="btn btn-success active" asp-controller="Admin" asp-action="ConfirmApproveSchedule">Yes - Approve</a>
+    <a class="btn btn-success active" onclick="message()" asp-controller="Admin" asp-action="ConfirmApproveSchedule">Yes - Approve</a>
 }
 
 
-
+<script type="text/javascript">
+        function message()
+        {
+            Swal.fire({                   
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Schedule Generated',
+                    showConfirmButton: false,
+                    timer: 1500                   
+                    });
+        }
+    </script>
 
 
