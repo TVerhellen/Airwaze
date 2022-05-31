@@ -62,7 +62,7 @@ namespace AirWaze.Controllers
 
                 LoggedInAirline = new Airline
                 {
-                    Name = "Harald Airways",
+                    Name = "RyanAir",
                 };
                 LoggedInAirline =  airlineEntities.FirstOrDefault(x => x.Name == LoggedInAirline.Name);
                
@@ -187,14 +187,14 @@ namespace AirWaze.Controllers
 
                 LoggedInAirline = new Airline
                 {
-                    Name = "RyanAir",
+                    Name = "AirWazeAir",
                 };
                 LoggedInAirline = airlineEntities.FirstOrDefault(x => x.Name == LoggedInAirline.Name);
                 if (LoggedInAirline == null)
                 {
                     LoggedInAirline = new Airline
                     {
-                        Name = "RyanAir",
+                        Name = "AirWazeAir",
                     };
                     LoggedInAirline.CurrentPlanes = new List<Plane>();
                 }                
