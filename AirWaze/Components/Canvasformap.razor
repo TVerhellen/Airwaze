@@ -202,8 +202,10 @@
         
         </section>                                                                                       
 @code {
-    private int selectedService = 0;
 
+    //Variabels
+
+    private int selectedService = 0;
     private WindowNavigatorGeolocation geolocationWrapper;
     private GeolocationPosition currentPosition;
     private GeolocationPosition oldposition;
@@ -263,6 +265,7 @@
     private double bearingaldi;
 
 
+    //On start Component
     protected override async Task OnInitializedAsync()
     {
         var window = await jsRuntime.Window();
@@ -271,6 +274,7 @@
         await StartTimer();
     }
 
+    // Actual Start
     public async Task StartTimer()
     {
 
@@ -278,9 +282,9 @@
         thisTimer = new System.Timers.Timer(1000);
         thisTimer.Elapsed += CountDownTimer;
         thisTimer.Enabled = true;
-
     }
 
+    //On Tick
     public void CountDownTimer(Object source, System.Timers.ElapsedEventArgs e)
     {
         if (counter % 5 == 0 && counter > 5)
@@ -302,6 +306,7 @@
         InvokeAsync(StateHasChanged);
     }
 
+    //Calls GPS position and compares to grid and imgmap + paints
     public async Task GetGeolocation()
     {
         int x;
@@ -373,6 +378,7 @@
 
     }
 
+    //Gets Mouse Location on Imgmap
     private async Task ReportPointerLocation(MouseEventArgs e)
     {
         mousePointerMessage = $"Mouse coordinates: {e.OffsetX}:{e.OffsetY}";
@@ -439,24 +445,27 @@
         bearingbasisschool = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, basisschoollat, basisschoollon);
     }
 
-
+    //Await Call for rendering
     protected async Task OnRenderAsync(bool firstRender)
     {
         this._context = await this._canvasReference.CreateCanvas2DAsync();        
     }
 
+    //Degrees
     public static double Radians(double x)
     {
         double PIx = 3.141592653589793;
         return x * PIx / 180;
     }
 
+    //Calcs Distance
     public double GetDistance(double x, double y)
     {
         return GetDistance(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, x, y);
 
     }
 
+    //Kills Componentevents -- IMPORTANT
     public async Task KillEvents()
     {
 
@@ -466,6 +475,7 @@
         }        
     }
 
+    //dDegrees to Absolute bearing
     static double DegreeBearing(double lat1, double lon1, double lat2, double lon2)
     {   
         var dLon = ToRad(lon2-lon1);
@@ -479,21 +489,25 @@
         return x;
     }
 
+    //To Radians
     public static double ToRad(double degrees)
     {
         return degrees * (Math.PI / 180);
     }
 
+    //TO degrees
     public static double ToDegrees(double radians)
     {
         return radians * 180 / Math.PI;
     }
 
+    //Bearing to relative Bearing 
     public static double ToBearing(double radians) 
     {        
         return (ToDegrees(radians) +360) % 360;
     }
 
+    //Distance between 2 points long/lat
     public double GetDistance(double longitude, double latitude, double otherLongitude, double otherLatitude)
     {
         var d1 = latitude * (Math.PI / 180.0);
@@ -505,6 +519,7 @@
         return 6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(d3), Math.Sqrt(1.0 - d3)));
     }
 
+    //Distance To Walking time
     public int GetWalkingTime(double distance)
     {
         return (int)Math.Round(distance / 80);
