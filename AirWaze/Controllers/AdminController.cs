@@ -49,7 +49,7 @@ namespace AirWaze.Controllers
         [HttpGet]
         public IActionResult GenerateSchedule()
         {
-            return View(new ScheduleGenerateViewModel());
+            return View(new ScheduleGenerateViewModel { Date = DateTime.Parse(DateTime.Now.ToString("g"))});
         }
 
         [ValidateAntiForgeryToken]

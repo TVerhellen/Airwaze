@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="~/css/flightindex.css">
 
 <main>
-    <div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center ">
+    <div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center " style="background-image: url(../Images/departures_background.jpg)">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-12">
@@ -120,7 +120,7 @@
                                 &nbsp; <div class="country"><a class="genric-btn info circle" asp-controller="Flight" asp-action="Detail" asp-route-id="@x.FlightNr">Details</a></div>
                                 @if (x.Status == 0 || x.Status == 1 || x.Status == 2 || x.Status == 3)
                                 {
-                                            <div class="country"><a asp-controller="Flight" asp-action="Edit" asp-route-id="@x.FlightNr" class="genric-btn warning circle">Edit</a></div> 
+                                            <div class="country"><a asp-controller="Flight" asp-action="Edit" asp-route-id="@x.FlightNr" class="genric-btn warning circle" style="color: black;">Edit</a></div> 
                                             <div class="country"><a asp-controller="Flight" asp-action="Delete" asp-route-id="@x.FlightNr" class="genric-btn danger circle">Delete</a></div>
                                         }
                                         else

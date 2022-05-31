@@ -25,8 +25,8 @@
 <h2>Flight @Model.FlightNr to @Model.Destination.Name (@Model.Destination.Region)</h2>
 <br />
 
-<form asp-controller="Flight" asp-action="Edit" asp-route-id="@Model.FlightNr" method="post">
-    <div style="margin-right: 65%;" class="form-group">
+<form  style="margin-right: 65%;" asp-controller="Flight" asp-action="Edit" asp-route-id="@Model.FlightNr" method="post">
+    <div class="form-group">
         <h3 style="margin-left: 0;">Departure Date & Time</h3>
         <input class="form-control" asp-for="Departure"/>
         <span asp-validation-for="Departure"></span>
@@ -35,7 +35,7 @@
 
 
      <div class="form-group">
-        <h3 style="margin-left: 0;">Gate</h3>
+        <h3  style="margin-left: 0;">Gate</h3>
         <select name="selectedGate">
             @foreach(Gate gate in Airport.Gates)
             {
@@ -65,9 +65,11 @@
          </select>
     </div>
      <br />
+     <br />
+     <br />
 
-    <div class="form-group" style="text-align:left;">
-        <h3 style="margin-left: 0;">Runway</h3>
+    <div class="form-group">
+        <h3  style="margin-left: 0;">Runway</h3>
         <select name="selectedRunway">
             @foreach(Runway runway in Airport.Runways)
             {
@@ -98,10 +100,10 @@
          </select>
     </div>
      <br />
-
+     <br />
      <div class="form-group">
          <br />
-        <h3>Plane</h3>
+        <h3  style="margin-left: 0;">Plane</h3>
         <select name="selectedPlaneNr">
             @foreach(var item in @availablePlanesForThisFlight)
             {
@@ -117,8 +119,10 @@
         </select>
     </div>
     <br />
+    <br />
+    <br />
      <div class="form-group">
-        <h3 style="margin-left: 0;">Status</h3>
+        <h3  style="margin-left: 0;">Status</h3>
         <select name="selectedStatus">
             @if(Model.Status == 0)
             {
