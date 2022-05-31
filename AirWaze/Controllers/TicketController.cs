@@ -175,7 +175,7 @@ namespace AirWaze.Controllers
             };
             return View(editTicket);
         }
-
+        
         [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> Edit(string ID, TicketEditViewModel editedTicket)

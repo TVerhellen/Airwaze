@@ -66,18 +66,21 @@
                                 <div class="main-menu f-right d-none d-lg-block">
                                     <nav>
                                         <ul id="navigation">   
-                                            <li> <a asp-area="" asp-controller="Home" asp-action="Departures" style="background-color: transparent">Departures</a></li>
-                                            @if (User.IsInRole("Customer") && User.Identity.IsAuthenticated)
+                                            @if (!User.Identity.IsAuthenticated)
+                                            {
+                                                <li> <a asp-area="" asp-controller="Home" asp-action="Departures" style="background-color: transparent">Departures</a></li>
+                                            }      
+                                            else if (User.IsInRole("Customer") && User.Identity.IsAuthenticated)
                                             {
                                                 <li><a asp-area="" asp-controller="Ticket" asp-action="Create" style="background-color: transparent">Book Your Ticket</a></li>
                                                 <li> <a asp-area="" asp-controller="Ticket" asp-action="List" style="background-color: transparent">My Tickets</a></li>
                                                 <li> <a asp-area="" asp-controller="Home" asp-action="Blazortest" style="background-color: transparent">Airport Map</a></li>
                                             }                                            
-                                            @if (User.IsInRole("Admin"))
+                                            else if (User.IsInRole("Admin"))
                                             {
                                                 <li class="add-list"><a asp-area="" asp-controller="Admin" asp-action="Index">Airport Dashboard</a></li>
                                             }
-                                            @if (User.IsInRole("Airline"))
+                                            else
                                             {
                                                 <li class="add-list"><a asp-area="" asp-controller="Airline" asp-action="Index">Your Dashboard</a></li>
                                             }

@@ -60,23 +60,12 @@ x@{
                        </div>
                        <br/>
                     <div>
-                        <a asp-action="EditUsersInRole" onclick="message()" asp-route-id="@Model.Id" class="genric-btn info circle">Add/Remove users in role</a>
+                        <a asp-action="EditUsersInRole" asp-route-id="@Model.Id" class="genric-btn info circle">Add/Remove users in role</a>
                     </div>
              </div>
         </form>
     </div>
 </main>
 
-<script type="text/javascript">
-        function message()
-        {
-            Swal.fire({                   
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Role Updated',
-                    showConfirmButton: false,
-                    timer: 1500                 
-                    });
-        }
-</script>
+
     

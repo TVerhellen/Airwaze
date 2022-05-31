@@ -43,10 +43,33 @@
                     <br/>
                     <div class="my-3">
                         <a asp-action="EditRole" asp-route-id="@roleId" class="genric-btn primary circle">Cancel</a>
-                        <input type="submit" value="Update" class="genric-btn warning circle" />
+                        <input type="submit" value="Update" onclick="message()" class="genric-btn warning circle" />
                     </div>
                 </div>
             </form>
 
         </div>
 </main>
+
+<script type="text/javascript">
+       
+        
+       function message()
+        {
+      
+            Swal.fire({
+  text: 'Role Updated',
+  icon:'success',
+  target: '#custom-target',
+  customClass: {
+    container: 'position-absolute'
+  },
+  toast: true,
+  position: 'top-right',
+  showConfirmButton: false,
+  timer: 1500,
+  timerProgressBar: true
+})
+                    
+        }
+    </script>

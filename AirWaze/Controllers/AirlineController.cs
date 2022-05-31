@@ -1,4 +1,5 @@
-﻿using AirWaze.Database.Design;
+﻿using AirWaze.Areas.Identity.Data;
+using AirWaze.Database.Design;
 using AirWaze.Entities;
 using AirWaze.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -10,13 +11,14 @@ namespace AirWaze.Controllers
     {
 
         private IAirWazeDatabase _myDatabase;
-
+        
         public static Airline LoggedInAirline;
 
         private static List<Airline> airlineEntities = new List<Airline>();      
         //Gets All Entities of Airlines Later on - Will do For all uses!
         public AirlineController(IAirWazeDatabase mydatabase)
         {
+           
             if (_myDatabase == null)
             {
                 _myDatabase = mydatabase;               
@@ -31,7 +33,7 @@ namespace AirWaze.Controllers
             AirlineIndexViewModel mymodel = new AirlineIndexViewModel();          
             if (LoggedInAirline == null)
             {
-                
+              
                 LoggedInAirline = new Airline
                 {
                     Email = User.Identity.Name,
@@ -111,7 +113,7 @@ namespace AirWaze.Controllers
 
                 airlineEntities.Add(newEntity);
                 _myDatabase.AddAirline(newEntity);  
-                return RedirectToAction("Index");
+                return RedirectToAction("List");
             }          
             return View(airlineViewModel);
         }

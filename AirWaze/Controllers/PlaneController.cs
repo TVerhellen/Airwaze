@@ -62,7 +62,7 @@ namespace AirWaze.Controllers
 
                 LoggedInAirline = new Airline
                 {
-                    Name = "Harald Airways",
+                    Name = "RyanAir",
                 };
                 LoggedInAirline =  airlineEntities.FirstOrDefault(x => x.Name == LoggedInAirline.Name);
                
@@ -165,7 +165,7 @@ namespace AirWaze.Controllers
             return View(planeCreateViewModel);
         }
 
-        [Authorize(Roles = "Airline")]
+        [Authorize(Roles = "Airline, Admin")]
         //Airline
         [HttpGet]
         public IActionResult AddPlane(Airline ID)
@@ -187,14 +187,19 @@ namespace AirWaze.Controllers
 
                 LoggedInAirline = new Airline
                 {
-                    Name = "Harald Airways",
+                    Name = "AirWazeAir",
                 };
                 LoggedInAirline = airlineEntities.FirstOrDefault(x => x.Name == LoggedInAirline.Name);
-
-
+                if (LoggedInAirline == null)
+                {
+                    LoggedInAirline = new Airline
+                    {
+                        Name = "AirWazeAir",
+                    };
+                    LoggedInAirline.CurrentPlanes = new List<Plane>();
+                }                
             }
-
-            if (LoggedInAirline.CurrentPlanes == null)
+            else if (LoggedInAirline.CurrentPlanes == null)
             {
                 LoggedInAirline.CurrentPlanes = new List<Plane>();
             }
@@ -232,7 +237,14 @@ namespace AirWaze.Controllers
                 _myDatabase.AddPlane(newEntity);
                 //planeEntities = _myDatabase.GetPlanes();
                 //airlineEntities = _myDatabase.GetAirlines();
-                return RedirectToAction("Index", newEntity.CurrentAirline.AirlineID);
+                if (User.IsInRole("Admin"))
+                {
+                    return RedirectToAction("List");
+                }
+                else
+                {
+                    return RedirectToAction("Index", newEntity.CurrentAirline.AirlineID);
+                }              
             }
             return View(planeViewModel);
         }
