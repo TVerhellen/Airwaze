@@ -102,6 +102,7 @@ namespace AirWaze.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            GetUser();
             return View(new TicketCreateViewModel());
         }
 

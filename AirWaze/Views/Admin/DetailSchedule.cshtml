@@ -5,6 +5,23 @@
 @{
     int flightCounter = 1;
 }
+
+<link rel="stylesheet" href="~/css/flightindex.css">
+
+<div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap text-center pt-50">
+                            <h2>Schedule Details</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+
 <h1>Schedule for @Model.Date.ToString("D") - @Model.Date.Hour.ToString("00") : @Model.Date.Minute.ToString("00")</h1>
 
         @foreach(var flight in @Model.Flights)
