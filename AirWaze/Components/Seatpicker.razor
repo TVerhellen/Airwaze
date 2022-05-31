@@ -1,5 +1,6 @@
 ﻿
 
+@using Blazor
 @using AirWaze.Entities
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.Forms
@@ -22,7 +23,6 @@
 @using Microsoft.AspNetCore.Identity;
 @using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 @using Microsoft.AspNetCore.Mvc;
-
 @inject SignInManager<AirWazeUser> SignInManager
 @inject UserManager<AirWazeUser> UserManager
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
@@ -105,8 +105,7 @@
                                                 <div class="media post_item">                                
                                                     <img src="Images/seat.jpg" alt="Sample Image" height="240" width="240"/>                                                                                       
                                                 </div>                                               
-                                                <a class="btn btn-secondary" style="margin-top:60px;" @onclick=ConfirmSeat href="/Ticket/List">Confirm Seat</a>
-                                                <a class="genric-btn info-border circle arrow" @onclick=ConfirmSeat asp-controller="Ticket" asp-action="List" asp-route-ID="" style="margin-left:10px;">Yes<span class="lnr lnr-arrow-right"></span></a>
+                                                <a class="btn btn-secondary" style="margin-top:60px;" @onclick=ConfirmSeat href="/Ticket/List">Confirm Seat</a>                                                
                                                 <button class="btn btn-primary"style="margin-bottom:40px;margin-top:30px;" @onclick=CancelSeat>Cancel</button>
 
                                             </div>                                  
