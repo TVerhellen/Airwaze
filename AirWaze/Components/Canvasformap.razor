@@ -119,12 +119,12 @@
                                         break;
                                     case 4:
                                         <div style="padding-top:20px;">
-                                         <h3 class="widget_title">Gates 7, 8 & 9</h3>
-                                         <p>Gates number 7, 8 & 9 are located here</p>
+                                         <h3 class="widget_title">Gates ?????</h3>
+                                         <p>AKA Kruispunt NoordLaan-Herderstraat</p>
                                          <p>Luxury Seating Acomodation and Shop Delivery available on site</p>
                                          <br />
                                           <h3>Gps Details:</h3>                                              
-                                          <p>@distancegates789.ToString("0,00") m distance from your current position, bearing @bearinggates789.ToString("0,00"). Walking Time : approx. @GetWalkingTime(@distancegates789) minutes.</p>
+                                          <p>@distanceherderstraat.ToString("0,00") m distance from your current position, bearing @bearingherderstraat.ToString("0,00"). Walking Time : approx. @GetWalkingTime(@distanceherderstraat) minutes.</p>
                                         <br>
                                         <div class="media-body">
                                                 <a href="blog_details.html">Insert Link </a>
@@ -138,7 +138,7 @@
                                         break;
                                     case 5:
                                         <div style="padding-top:20px;">
-                                         <h3 class="widget_title">Gates 1000</h3>
+                                         <h3 class="widget_title">Gates 7, 8 & 9</h3>
                                          <p>Gates number 7, 8 & 9 are located here</p>
                                          <p>Luxury Seating Acomodation and Shop Delivery available on site</p>
                                          <br />
@@ -158,11 +158,12 @@
                                     case 6:
                                         <div style="padding-top:20px;">
                                          <h3 class="widget_title">BurgerKing</h3>
+                                         <p>AKA Kruispunt regentieStraat</p>
                                          <p>Eat in/ take out / delivery at gates</p>
                                          <p>Whoppers - SoftDrinks - Ice</p>
                                          <br />
                                           <h3>Gps Details:</h3>                                              
-                                          <p>@distancegates789.ToString("0,00") m distance from your current position, bearing @bearinggates789.ToString("0,00"). Walking Time : approx. @GetWalkingTime(distancegates789) minutes.</p>
+                                          <p>@distanceregentiestraat.ToString("0,00") m distance from your current position, bearing @bearingregentiestraat.ToString("0,00"). Walking Time : approx. @GetWalkingTime(distanceregentiestraat) minutes.</p>
                                         <br>
                                         <div class="media-body">
                                                 <a href="blog_details.html">Insert Link </a>                                                 
@@ -176,11 +177,11 @@
                                     case 7:
                                         <div style="padding-top:20px;">
                                          <h3 class="widget_title">TaxFreeShop</h3>
-                                         <p>Buy Shit</p>
+                                         <p> AKA Basisschool OLVP ST Niklaas</p>
                                          <p>Perfume - Tobacco - Alcohol</p>
                                          <br />
                                           <h3>Gps Details:</h3>                                              
-                                          <p>@distancegates789.ToString("0,00") m distance from your current position, bearing @bearinggates789.ToString("0,00"). Walking Time : approx. @GetWalkingTime(@distancegates789) minutes.</p>
+                                          <p>@distancebasisschool.ToString("0,00") m distance from your current position, bearing @bearingbasisschool.ToString("0,00"). Walking Time : approx. @GetWalkingTime(@distancebasisschool) minutes.</p>
                                         <br>
                                         <div class="media-body">
                                                 <a href="blog_details.html">Insert Link </a>                                                 
@@ -202,8 +203,10 @@
         
         </section>                                                                                       
 @code {
-    private int selectedService = 0;
 
+    //Variabels
+
+    private int selectedService = 0;
     private WindowNavigatorGeolocation geolocationWrapper;
     private GeolocationPosition currentPosition;
     private GeolocationPosition oldposition;
@@ -227,8 +230,8 @@
     private double bearinggates56;
     private double bearinggates789;
 
-    //specific doubles for sintNiklaas
-
+    //specific doubles for sintNiklaas -- reference points for map
+    
     private double herderstraatlon = 4.142743;
     private double herderstraatlat = 51.171666;
     private double regentiestraatlon = 4.142771;
@@ -249,20 +252,21 @@
 
     //specific doubles for Wondelgem  //VS ALDI-fietkot-PITTA
 
-    private double aldilon = 3.717714;
-    private double aldilat = 51.084001;
-    private double pittalon = 3.716733;
-    private double pittalat = 51.080390;
-    private double frietkotlon = 3.711019;
-    private double frietkotlat =  51.083220;
-    private double distancealdi;
-    private double distancepitta;
-    private double distancefrietkot;
-    private double bearingpitta;
-    private double bearingfrietkot;
-    private double bearingaldi;
+    //private double aldilon = 3.717714;
+    //private double aldilat = 51.084001;
+    //private double pittalon = 3.716733;
+    //private double pittalat = 51.080390;
+    //private double frietkotlon = 3.711019;
+    //private double frietkotlat =  51.083220;
+    //private double distancealdi;
+    //private double distancepitta;
+    //private double distancefrietkot;
+    //private double bearingpitta;
+    //private double bearingfrietkot;
+    //private double bearingaldi;
 
 
+    //On start Component
     protected override async Task OnInitializedAsync()
     {
         var window = await jsRuntime.Window();
@@ -271,6 +275,7 @@
         await StartTimer();
     }
 
+    // Actual Start/FiresTimer+AddsEvent
     public async Task StartTimer()
     {
 
@@ -278,13 +283,14 @@
         thisTimer = new System.Timers.Timer(1000);
         thisTimer.Elapsed += CountDownTimer;
         thisTimer.Enabled = true;
-
     }
 
+    //On Tick-Event
     public void CountDownTimer(Object source, System.Timers.ElapsedEventArgs e)
     {
         if (counter % 5 == 0 && counter > 5)
         {
+            //FOR MOBILE DEPLOYMENT, GET TRUE BEARING WITHOUT DEVICE GYROSCOPE AKA FREE
             if (oldposition == null && currentPosition != null)
             {
                 oldposition = currentPosition;
@@ -302,21 +308,26 @@
         InvokeAsync(StateHasChanged);
     }
 
+    //Calls GPS position and compares to grid and imgmap + paints
     public async Task GetGeolocation()
     {
         int x;
         int y;
+        //GPS
         currentPosition = (await geolocationWrapper.GetCurrentPosition(new PositionOptions()
         {
             EnableHighAccuracy = true,
             MaximumAgeTimeSpan = TimeSpan.FromHours(1),
             TimeoutTimeSpan = TimeSpan.FromMinutes(1)
         })).Location;
-        this._context = await this._canvasReference.CreateCanvas2DAsync();       
+        this._context = await this._canvasReference.CreateCanvas2DAsync(); 
+        //AFBAKENEN VELD
         if (currentPosition.Coords.Latitude < 51.084944 && currentPosition.Coords.Latitude > 51.0802263 && currentPosition.Coords.Longitude < 3.719737 && currentPosition.Coords.Longitude > 3.709195)
         {
+            //Paint coords
             x = (int)Math.Round(((51.177484 - currentPosition.Coords.Latitude / 800) / 0.00001239875)/1000);
             y =  (int)Math.Round(((4.143673 - currentPosition.Coords.Longitude / 600) / 0.000016638333)/1000);
+            //Paint
             await this._context.SetFillStyleAsync("black");      
             await this._context.FillRectAsync(x, y, 20, 20);
             await this._context.SetFillStyleAsync("red");           
@@ -373,9 +384,11 @@
 
     }
 
+    //Gets Mouse Location on Imgmap
     private async Task ReportPointerLocation(MouseEventArgs e)
     {
         mousePointerMessage = $"Mouse coordinates: {e.OffsetX}:{e.OffsetY}";
+        //Compares mouse coords to canvas
         if (330 < e.OffsetX && 360 > e.OffsetX && 54 < e.OffsetY && 90 > e.OffsetY)
         {
             selectedService = 1;
@@ -408,19 +421,21 @@
         {
             selectedService = 0;
         }
+        //Update Canvas
         this._context = await this._canvasReference.CreateCanvas2DAsync();
+        //Call GPS for Updates
         await GetGeolocation();
 
         //WOndelgem
 
-        distancealdi =  GetDistance(aldilon, aldilat);
-        distancefrietkot =  GetDistance( frietkotlon, frietkotlat);
-        distancepitta =  GetDistance(pittalon, pittalat);
-        bearingaldi = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, aldilat, aldilon);
-        bearingpitta = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, pittalat, pittalon);
-        bearingfrietkot = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, frietkotlat, frietkotlon);
+        //distancealdi =  GetDistance(aldilon, aldilat);
+        //distancefrietkot =  GetDistance( frietkotlon, frietkotlat);
+        //distancepitta =  GetDistance(pittalon, pittalat);
+        //bearingaldi = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, aldilat, aldilon);
+        //bearingpitta = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, pittalat, pittalon);
+        //bearingfrietkot = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, frietkotlat, frietkotlon);
 
-        //Gates in st Niklaas
+        //Gates in "st Niklaas" from List in entities
         distancegates12 = GetDistance(AirWaze.Entities.Airport.Gates[0].CoordsLon, AirWaze.Entities.Airport.Gates[0].CoordsLat);
         distancegates34 = GetDistance(AirWaze.Entities.Airport.Gates[2].CoordsLon, AirWaze.Entities.Airport.Gates[2].CoordsLat);
         distancegates56 = GetDistance(AirWaze.Entities.Airport.Gates[4].CoordsLon, AirWaze.Entities.Airport.Gates[4].CoordsLat);
@@ -439,24 +454,27 @@
         bearingbasisschool = DegreeBearing(currentPosition.Coords.Latitude, currentPosition.Coords.Longitude, basisschoollat, basisschoollon);
     }
 
-
+    //Await Call for rendering
     protected async Task OnRenderAsync(bool firstRender)
     {
         this._context = await this._canvasReference.CreateCanvas2DAsync();        
     }
 
+    //Degrees
     public static double Radians(double x)
     {
         double PIx = 3.141592653589793;
         return x * PIx / 180;
     }
 
+    //Calcs Distance
     public double GetDistance(double x, double y)
     {
         return GetDistance(currentPosition.Coords.Longitude, currentPosition.Coords.Latitude, x, y);
 
     }
 
+    //Kills Componentevents -- IMPORTANT
     public async Task KillEvents()
     {
 
@@ -466,6 +484,7 @@
         }        
     }
 
+    //dDegrees to Absolute bearing
     static double DegreeBearing(double lat1, double lon1, double lat2, double lon2)
     {   
         var dLon = ToRad(lon2-lon1);
@@ -479,21 +498,25 @@
         return x;
     }
 
+    //To Radians
     public static double ToRad(double degrees)
     {
         return degrees * (Math.PI / 180);
     }
 
+    //TO degrees
     public static double ToDegrees(double radians)
     {
         return radians * 180 / Math.PI;
     }
 
+    //Bearing to relative Bearing 
     public static double ToBearing(double radians) 
     {        
         return (ToDegrees(radians) +360) % 360;
     }
 
+    //Distance between 2 points long/lat
     public double GetDistance(double longitude, double latitude, double otherLongitude, double otherLatitude)
     {
         var d1 = latitude * (Math.PI / 180.0);
@@ -505,12 +528,13 @@
         return 6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(d3), Math.Sqrt(1.0 - d3)));
     }
 
+    //Distance To Walking time
     public int GetWalkingTime(double distance)
     {
         return (int)Math.Round(distance / 80);
     }
 
-
+    //For Future Projects @Mousedown > @OnCLick => EventArgs!!!!
 
        
  }
