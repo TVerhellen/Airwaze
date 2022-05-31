@@ -65,33 +65,27 @@
                                 <!-- Main-menu -->
                                 <div class="main-menu f-right d-none d-lg-block">
                                     <nav>
-                                        <ul id="navigation">      
-                                            <li> <a asp-area="" asp-controller="Home" asp-action="Index" style="background-color: transparent"><i class='fas fa-home' style='font-size:20px;color:white'></i></a></li>
-                                            @if (User.IsInRole("Customer") || User.IsInRole("Admin"))
+                                        <ul id="navigation">   
+                                            @if (!User.Identity.IsAuthenticated)
                                             {
-                                                <li> <a asp-area="" asp-controller="Ticket" asp-action="List" style="background-color: transparent">Tickets</a></li>
-                                                <li><a asp-area="" asp-controller="Ticket" asp-action="Create" style="background-color: transparent">Book Your Ticket</a></li>
-                                            }
-                                            @if (User.IsInRole("Admin"))
-                                            {
-                                                <li> <a  asp-area="" asp-controller="Flight" asp-action="Index" style="background-color: transparent">Flights</a></li>
-                                            }
+                                                <li> <a asp-area="" asp-controller="Home" asp-action="Departures" style="background-color: transparent">Departures</a></li>
+                                            }      
                                             @if (User.IsInRole("Customer") || !User.Identity.IsAuthenticated)
                                             {
+                                                <li><a asp-area="" asp-controller="Ticket" asp-action="Create" style="background-color: transparent">Book Your Ticket</a></li>
+                                                <li> <a asp-area="" asp-controller="Ticket" asp-action="List" style="background-color: transparent">My Tickets</a></li>
                                                 <li> <a asp-area="" asp-controller="Home" asp-action="Blazortest" style="background-color: transparent">Airport Map</a></li>
                                             }                                            
                                             @if (User.IsInRole("Admin"))
                                             {
-                                                <li class="add-list"><a asp-area="" asp-controller="Admin" asp-action="Index"> Dashboard</a></li>
+                                                <li class="add-list"><a asp-area="" asp-controller="Admin" asp-action="Index">Airport Dashboard</a></li>
                                             }
                                             @if (User.IsInRole("Airline"))
                                             {
                                                 <li class="add-list"><a asp-area="" asp-controller="Airline" asp-action="Index">Your Dashboard</a></li>
-                                                <li> <a asp-area="" asp-controller="Home" asp-action="Map" style="background-color: transparent">Airport Map</a></li>
                                             }
                                             <li><partial name="_LoginPartial" /></li>
                                         </ul>
-                                        
                                     </nav>
                                 </div>
                 </div>
