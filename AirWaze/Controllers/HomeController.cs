@@ -36,7 +36,7 @@ namespace AirWaze.Controllers
             return View();
         }
 
-        [Route("/test")]
+        [Route("/AirportMap")]
         public IActionResult Blazortest()
         {
             return View();
@@ -46,12 +46,7 @@ namespace AirWaze.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-        [Route("/map")]
-        public IActionResult Map()
-        {
-            return View();
-        }
+        }       
         public IActionResult Departures()
         {
             List<FlightListViewModel> departures = new List<FlightListViewModel>();
