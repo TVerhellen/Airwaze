@@ -129,14 +129,14 @@
 
  
 @code {
-    
+
     private static Ticket myticket  = new Ticket();    
     private string[,] thisseatdiagram;
     private string seatdiagramstring;
     private int x = 176;
     private int y = 273;
     private bool istaken = false;
-    private bool renderbool = true;
+    private bool confirmed = false;
     private bool isseatselected = false;
     private string selectedseat = "";
     private string row;
@@ -217,7 +217,9 @@
     //Repaints the canvas as long as no seat is selected, gets seatdiagram 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        int columncounter = 0;
+        if (!confirmed)
+        {
+            int columncounter = 0;
         int rowcounter = 0;       
         myticket = TicketController.TicketsForSeatpicker.LastOrDefault(x => x.CurrentUser.Email == name);
         seatdiagramstring = myticket.CurrentFlight.SeatDiagram;
@@ -265,7 +267,9 @@
                     }               
                 }            
             } 
-        }        
+        }       
+      }
+         
     }
 
     //Fills empty seatdiagram specific for A319
@@ -306,6 +310,7 @@
         isseatselected = false;
         selectedseat = "";
         istaken = false;
+        confirmed = true;
     }
     
 }
