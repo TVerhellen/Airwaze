@@ -34,9 +34,9 @@
 								                    <div class="table-row">                                                        
                                                         <div class="serial" style="padding-left:20px;margin-right:20px">@flight.FlightNr</div>                                                                       
 									                    <div class="serial" style="padding-left:20px;padding-right:20px">@flight.Departure</div>
-									                    <div class="visit" style="padding-left:20px;padding-right:20px">@flight.Destination</div>
+									                    <div class="visit" style="padding-left:20px;padding-right:20px">@flight.Destination.Name</div>
 									                    <div class="visit" style="padding-left:20px;padding-right:20px">@flight.Status</div>									                    
-									                    <div class="visit" style="padding-left:20px;padding-right:20px"><a class="genric-btn info circle arrow" asp-action="Detail" asp-controller="Flight" asp-route-id=@flight.FlightID>Detail</a></div>								                  									
+									                    <div class="visit" style="padding-left:20px;padding-right:20px"><a class="genric-btn info circle arrow" asp-action="Detail" asp-controller="Flight" asp-route-id=@flight.FlightNr>Detail</a></div>								                  									
 								                    </div>						
 							                    }
                                               </div>

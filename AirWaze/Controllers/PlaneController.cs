@@ -103,6 +103,7 @@ namespace AirWaze.Controllers
         }
 
         [Authorize(Roles = "Admin")]
+
         //ADMIN ROLE
         public async Task<IActionResult> List(string option, string searchString)
         {
