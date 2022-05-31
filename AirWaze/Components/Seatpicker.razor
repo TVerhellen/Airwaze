@@ -129,7 +129,6 @@
 
  
 @code {
-    //HIER TICKET UIT CREATE PLZ
 
     private static Ticket myticket  = new Ticket();    
     private string[,] thisseatdiagram;
@@ -137,7 +136,7 @@
     private int x = 176;
     private int y = 273;
     private bool istaken = false;
-    private bool renderbool = true;
+    private bool confirmed = false;
     private bool isseatselected = false;
     private string selectedseat = "";
     private string row;
@@ -149,8 +148,11 @@
     private string mousePointerMessage;
     private AirWazeUser myUser = new AirWazeUser();   
     string name;
+    private Canvas2DContext _context;
+    protected BECanvasComponent _canvasReference;
 
 
+    //On start Component, gets LoggedInID
     protected async override Task OnInitializedAsync()
     {
         var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
@@ -158,6 +160,7 @@
         name = user.Identity.Name;
     }
 
+    //Reports Click on canvas, selects and paints seat
     private async Task ReportPointerLocation(MouseEventArgs e)
     {
         await Task.Delay(2000);
@@ -209,17 +212,14 @@
                 }
             }
         }
-    }
+    }  
 
-    private Canvas2DContext _context;
-
-    protected BECanvasComponent _canvasReference;
-
-
-
+    //Repaints the canvas as long as no seat is selected, gets seatdiagram 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        int columncounter = 0;
+        if (!confirmed)
+        {
+            int columncounter = 0;
         int rowcounter = 0;       
         myticket = TicketController.TicketsForSeatpicker.LastOrDefault(x => x.CurrentUser.Email == name);
         seatdiagramstring = myticket.CurrentFlight.SeatDiagram;
@@ -267,9 +267,12 @@
                     }               
                 }            
             } 
-        }        
+        }       
+      }
+         
     }
 
+    //Fills empty seatdiagram specific for A319
     public void FillEmtpyPlane(int colums, int rows)
     {
         for (int i = 0; i < 6; i++)
@@ -281,8 +284,10 @@
         } 
     }
 
+    //Confirm Selection and move on
     public void ConfirmSeat()
     {
+        confirmed = true;
         seatdiagramstring = "";
         int thisrow = Convert.ToInt32(row)- 1;
         int thiscolumn = Convert.ToInt32(column) - 1 ;
@@ -299,11 +304,14 @@
         myticket.Seat = selectedseat;
         TicketController.TicketsFromSeatpicker.Add(myticket);
     }
+
+    //Triggers repaint of canvas
     public void CancelSeat()
     {
         isseatselected = false;
         selectedseat = "";
         istaken = false;
+        
     }
     
 }
