@@ -109,7 +109,14 @@
 								</div>
 								</ul>
 								<br />
+								@if (User.IsInRole("Airline"))
+                                {
 								 <a class="genric-btn info-border circle arrow" asp-action="Index" asp-controller="Airline">Back</a>
+								}
+								else if(User.IsInRole("Admin"))
+                                {
+								 <a class="genric-btn info-border circle arrow" asp-action="List" asp-controller="Airline">Back</a>
+								}
 							</form>
                                 
                             </div>
