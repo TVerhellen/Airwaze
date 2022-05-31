@@ -70,7 +70,7 @@
                                             {
                                                 <li> <a asp-area="" asp-controller="Home" asp-action="Departures" style="background-color: transparent">Departures</a></li>
                                             }      
-                                            @if (User.IsInRole("Customer") && !User.Identity.IsAuthenticated)
+                                            @if (User.IsInRole("Customer") && User.Identity.IsAuthenticated)
                                             {
                                                 <li><a asp-area="" asp-controller="Ticket" asp-action="Create" style="background-color: transparent">Book Your Ticket</a></li>
                                                 <li> <a asp-area="" asp-controller="Ticket" asp-action="List" style="background-color: transparent">My Tickets</a></li>

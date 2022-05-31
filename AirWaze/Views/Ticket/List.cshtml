@@ -6,12 +6,13 @@
 
 @model List<TicketListViewModel>
 <head>
-    <link rel="stylesheet" href="~/css/Tijs.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Tijs.css"  />
 </head>
 
-
+<div class="filler"></div>
 <main>
-<div class="slider-height d-flex align-items-center">
+<div class="slider-height flex align-items-top">
+    
     <div class="listContainer">
   @*searchfunction*@
     <form asp-action="List" method="get">
@@ -31,6 +32,8 @@
     <table class="table">
         <tr>
             <th>Ticket Number</th>
+            <th>Destination</th>
+            <th>Departure</th>
             <th>Name</th>
             <th>Status</th>
             <th></th>
@@ -39,6 +42,8 @@
         {
             <tr>
                 <td>@ticket.TicketNr</td>
+                <td>@ticket.CurrentFlight.Destination.Name</td>
+                <td>@ticket.CurrentFlight.Departure</td>
                 <td>@ticket.LastName @ticket.FirstName</td>
                 @{switch (ticket.Status)
                     {
