@@ -287,6 +287,7 @@
     //Confirm Selection and move on
     public void ConfirmSeat()
     {
+        confirmed = true;
         seatdiagramstring = "";
         int thisrow = Convert.ToInt32(row)- 1;
         int thiscolumn = Convert.ToInt32(column) - 1 ;
@@ -310,7 +311,7 @@
         isseatselected = false;
         selectedseat = "";
         istaken = false;
-        confirmed = true;
+        
     }
     
 }
