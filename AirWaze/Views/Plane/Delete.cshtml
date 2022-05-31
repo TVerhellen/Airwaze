@@ -19,7 +19,7 @@
                             <div class="visit-caption" style="background-color:#ce9244;">
                                 <span>Delete @Model.PlaneNr?</span>
                                 <ul>                                                                       
-                                    <br />
+                                    <br/>
                                     <li>@Model.PlaneNr</li>                                                                      
                                     <li>@Model.CurrentAirline.Name</li>
                                     <li>@Model.Manufacturer</li>
@@ -28,15 +28,15 @@
                                 <br />
                                 <h1>Delete this Plane?</h1>
                                 <br />
-                                 <a class="genric-btn info-border circle arrow" onclick="message()" asp-controller="Plane" asp-action="DeleteConfirm" asp-route-ID="@Model.PlaneNr" style="margin-left:10px;">Ja<span class="lnr lnr-arrow-right"></span></a>
-                                 <a class="genric-btn danger-border circle arrow" asp-controller="Plane" asp-action="Index" style="margin-left:10px;">Neen<span class="lnr lnr-arrow-right"></span></a>
+                                 <a class="genric-btn info-border circle arrow" onclick="message()" asp-controller="Plane" asp-action="DeleteConfirm" asp-route-ID="@Model.PlaneNr" style="margin-left:10px;">Yes<span class="lnr lnr-arrow-right"></span></a>
+                                 <a class="genric-btn danger-border circle arrow" asp-controller="Plane" asp-action="Index" style="margin-left:10px;">No<span class="lnr lnr-arrow-right"></span></a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+
   
     <script type="text/javascript">
         function message()

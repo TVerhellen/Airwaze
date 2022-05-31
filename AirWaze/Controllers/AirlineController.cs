@@ -113,7 +113,7 @@ namespace AirWaze.Controllers
 
                 airlineEntities.Add(newEntity);
                 _myDatabase.AddAirline(newEntity);  
-                return RedirectToAction("Index");
+                return RedirectToAction("List");
             }          
             return View(airlineViewModel);
         }

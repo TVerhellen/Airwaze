@@ -315,8 +315,8 @@
         this._context = await this._canvasReference.CreateCanvas2DAsync();       
         if (currentPosition.Coords.Latitude < 51.084944 && currentPosition.Coords.Latitude > 51.0802263 && currentPosition.Coords.Longitude < 3.719737 && currentPosition.Coords.Longitude > 3.709195)
         {
-            x = (int)Math.Round(((51.084944 - currentPosition.Coords.Latitude / 800) /  0.0001757)/1000);
-            y =  (int)Math.Round(((3.719737 - currentPosition.Coords.Longitude / 600) / 0.000005897125)/1000);
+            x = (int)Math.Round(((51.177484 - currentPosition.Coords.Latitude / 800) / 0.00001239875)/1000);
+            y =  (int)Math.Round(((4.143673 - currentPosition.Coords.Longitude / 600) / 0.000016638333)/1000);
             await this._context.SetFillStyleAsync("black");      
             await this._context.FillRectAsync(x, y, 20, 20);
             await this._context.SetFillStyleAsync("red");           
@@ -357,12 +357,13 @@
             await this._context.StrokeTextAsync("You are Here!", x, y);
         }
 
-        //Sint-Niklaas
+        //WONDELGEM
 
         //if (currentPosition.Coords.Latitude < 51.084944 && currentPosition.Coords.Latitude > 51.0802263 && currentPosition.Coords.Longitude < 3.719737 && currentPosition.Coords.Longitude > 3.709195)
         //{
-        //    x = (int)Math.Round(((51.177484 - currentPosition.Coords.Latitude / 800) / 0.00001239875)/1000);
-        //    y =  (int)Math.Round(((4.143673 - currentPosition.Coords.Longitude / 600) / 0.000016638333)/1000);
+        //    x = (int)Math.Round(((51.084944 - currentPosition.Coords.Latitude / 800) /  0.0001757)/1000);
+        //    y =  (int)Math.Round(((3.719737 - currentPosition.Coords.Longitude / 600) / 0.000005897125)/1000);
+        
         //    await this._context.SetFillStyleAsync("black");      
         //    await this._context.FillRectAsync(x, y, 20, 20);
         //    await this._context.SetFontAsync("46px Calibri");
