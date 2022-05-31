@@ -1,4 +1,5 @@
-﻿using AirWaze.Database.Design;
+﻿using AirWaze.Areas.Identity.Data;
+using AirWaze.Database.Design;
 using AirWaze.Entities;
 using AirWaze.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -10,6 +11,8 @@ namespace AirWaze.Controllers
     {
 
         private IAirWazeDatabase _myDatabase;
+
+        public static AirWazeUser loggedinuser = new AirWazeUser();
 
         public static Airline LoggedInAirline;
 
@@ -31,7 +34,8 @@ namespace AirWaze.Controllers
             AirlineIndexViewModel mymodel = new AirlineIndexViewModel();          
             if (LoggedInAirline == null)
             {
-                
+
+                loggedinuser.Id = User.Identity.Name;
                 LoggedInAirline = new Airline
                 {
                     Email = User.Identity.Name,

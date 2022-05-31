@@ -13,8 +13,21 @@
 @using BrowserInterop.Extensions
 @using BrowserInterop.Geolocation
 @using AirWaze.Controllers
+@using AirWaze.Areas.Identity.Data;
+@using AirWaze.Data;
+@using AirWaze.Database.Design;
+@using AirWaze.Models;
+@using Microsoft.AspNetCore.Authorization;
+@using Microsoft.AspNetCore.Identity;
+@using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+@using Microsoft.AspNetCore.Mvc;
+
+@inject SignInManager<AirWazeUser> SignInManager
+@inject UserManager<AirWazeUser> UserManager
+
 @inject ILogger<Seatpicker> Logger
 @inject IJSRuntime jsRuntime
+@inject IAirWazeDatabase mydb
 
 <head>
     <style>
@@ -90,8 +103,7 @@
                                                 <br>
                                                 <div class="media post_item">                                
                                                     <img src="Images/seat.jpg" alt="Sample Image" height="240" width="240"/>                                                                                       
-                                                </div>
-                                                
+                                                </div>                                               
                                                 <a class="btn btn-secondary" style="margin-top:60px;" @onclick=ConfirmSeat href="/Ticket/Create">Confirm Seat, To Payment Menu</a>
                                                 <button class="btn btn-primary"style="margin-bottom:40px;margin-top:30px;" @onclick=CancelSeat>Cancel</button>
 
@@ -112,6 +124,7 @@
             </div>       
         </div>
       </section>                                   
+ 
 
  
 @code {
@@ -132,8 +145,7 @@
     private int price;
     private string seatclass = "Economy";
     private Random generator = new Random();
-    private string? mousePointerMessage;
-   
+    private string? mousePointerMessage;    
     private async Task ReportPointerLocation(MouseEventArgs e)
     {
         await Task.Delay(2000);
@@ -285,6 +297,7 @@
         selectedseat = "";
         istaken = false;
     }
- }
+    
+}
 
 }
