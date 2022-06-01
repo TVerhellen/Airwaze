@@ -1,8 +1,22 @@
 ﻿@model List<FlightListViewModel>
 
+    <link rel="stylesheet" href="~/css/flightindex.css">
 
-<h1>Departures Board</h1>
-<h2>@DateTime.Now.ToString("f")</h2>
+<div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center " style="background-image: url(../Images/runway.jpg)">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap text-center pt-50">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+<img src="~/Images/fasttrack_departures.png" style="display: block; margin-left: auto; margin-right: auto; margin-top: -36px; width: 50%;"/>
+<br />
+<h2 style="border: solid 2px; border-color: darkgoldenrod ; margin-left: 35%; margin-right: 37%; font-weight: bolder;">&emsp;@DateTime.Now.DayOfWeek @DateTime.Now.ToString("g")</h2>
 <br />
 <br />
                 <table class="table table-striped">
@@ -20,7 +34,7 @@
                         {
                             @foreach (var x in @Model)
                             {
-                                <tr  style="background-color:darkgray; color:white; font-family:'Lucida Sans Typewriter'">
+                                <tr  style="background-color:darkgray; color:white; font-weight: bold; font-size: 20px; font-family:'Lucida Sans Typewriter'">
                                     <td>@x.Departure.Hour.ToString("00"):@x.Departure.Minute.ToString("00")</td>
                                     <td>@x.Destination.Name</td>     
                                     <td>@x.FlightNr</td>
@@ -35,25 +49,28 @@
                                     @switch (x.Status)
                                     {
                                         case 0:
-                                            <p>Awaiting Approval</p>
+                                            <td>Awaiting Approval</td>
                                             break;
                                         case 1:
-                                            <p>Approved</p>
+                                            <td>Approved</td>
                                             break;
                                         case 2:
-                                            <p>Delayed</p>
+                                            <td>Delayed</td>
                                             break;
                                         case 3:
-                                            <p>Boarding</p>
+                                            <td>Boarding</td>
                                             break;
                                         case 4:
-                                            <p>Departed</p>
+                                            <td>Departed</td>
                                             break;
                                         case 5:
-                                            <p>Arrived</p>
+                                            <td>Arrived</td>
                                             break;
                                         case 6:
-                                            <p>Cancelled</p>
+                                            <td>Cancelled</td>
+                                            break;
+                                        case 7:
+                                            <td>Completed</td>
                                             break;
                                         default:
                                             break;
@@ -65,6 +82,10 @@
                         {
                             <tr>
                                 <td>No flights planned at the moment.</td>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
                             </tr>
                         }
                   </tbody>

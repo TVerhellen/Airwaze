@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="~/css/flightindex.css">
 
 <main>
-    <div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center ">
+    <div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center " style="background-image: url(../Images/controltower.jpg)">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-12">
@@ -22,25 +22,25 @@
         <br/>
                 <div class="col-lg-9" style="padding-bottom: 50px;">
             <div class="section-top-border">
-			    <h3 class="mb-30">All schedules</h3>
-@if(Airport.ApprovedSchedules == null)
+@if(Airport.ApprovedSchedules.Count == 0)
 {
-    <h4>There are no approved schedules yet.</h4>
+    <h3 style="margin-left: 0;">There are no approved schedules yet.</h3>
 }
 else
 {
     <table class="table table-striped">
-                    <thead class="rounded">
+                    <thead style="background-color:navy;">
                         <tr>
-                            <th scope="col">Approved Schedules</th>
+                            <th scope="col"><h1 style="color: white;">Approved Schedules</h1></th>
+                            <th scope="col"> </th>
                         </tr>
                     </thead>
                     <tbody>   
             @foreach(var schedule in approvedSchedules)
             {
               <tr>
-                    <td><h3>@schedule.Date.ToString("D") - @schedule.Date.Hour.ToString("00") : @schedule.Date.Minute.ToString("00")</h3></td>
-                    <td><a class="btn btn-primary" asp-controller="Admin" asp-action="DetailSchedule" asp-route-id="@schedule.ScheduleID">Detail</a></td>
+                    <td><h2 style="margin-left: 0;">@schedule.Date.ToString("dd/MM/yyyy hh:mm")</h2></td>
+                    <td><a class="btn btn-primary active" asp-controller="Admin" asp-action="DetailSchedule" asp-route-id="@schedule.ScheduleID">Detail</a></td>
               </tr>      
             }
     </tbody>
@@ -48,7 +48,7 @@ else
 }
 <br />
 <br />
-<a class="btn btn-primary" asp-controller="Admin" asp-action="Schedule">Back</a>
+<a class="btn btn-danger active" asp-controller="Admin" asp-action="Schedule">Go Back</a>
 </div>
 </div>
 </main>

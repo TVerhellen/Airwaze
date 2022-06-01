@@ -300,7 +300,8 @@ namespace AirWaze.Controllers
 
         public string GenerateSeatNumber(Flight flight)
         {
-            return flight.FillSeatDiagram(1);
+            return "15B";
+            //return flight.FillSeatDiagram(1);
         }
 
         public void LoadTicketList(ApplicationUser user)

@@ -8,7 +8,7 @@
 
 <link rel="stylesheet" href="~/css/flightindex.css">
 
-<div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center ">
+<div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center " style="background-image: url(../Images/controltower.jpg)">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-12">
@@ -22,37 +22,11 @@
         <br />
         <br />
 
-<h1>Schedule for @Model.Date.ToString("D") - @Model.Date.Hour.ToString("00") : @Model.Date.Minute.ToString("00")</h1>
+<h1 style="font-weight: bolder">Schedule for @Model.Date.ToString("D") - @Model.Date.Hour.ToString("00") : @Model.Date.Minute.ToString("00")</h1>
 
         @foreach(var flight in @Model.Flights)
         {
-            <p>@flightCounter: @Model.Flights[flightCounter-1].Departure - @Model.Flights[flightCounter-1].FlightNr - @Model.Flights[flightCounter-1].Destination - Gate @Model.Flights[flightCounter-1].CurrentGate.Number</p>
-            switch (Model.Flights[flightCounter-1].Status)
-            {
-                case 0:
-                    <p>Status: WAITING FOR APPROVAL</p>
-                    break;
-                case 1:
-                    <p>Status: APPROVED</p>
-                    break;
-                case 2:
-                    <p>Status: DELAYED</p>
-                    break;
-                case 3:
-                    <p>Status: BOARDING</p>
-                    break;
-                case 4:
-                    <p>Status: DEPARTED</p>
-                    break;
-                case 5:
-                    <p>Status: ARRIVED</p>
-                    break;
-                case 6:
-                    <p>Status: CANCELLED</p>
-                    break;
-                default:
-                    break;
-            }
+            <h2 style="margin-left: 0;">@flightCounter: @Model.Flights[flightCounter-1].Departure.ToString("dd/MM/yyyy hh:mm") - @Model.Flights[flightCounter-1].FlightNr - @Model.Flights[flightCounter-1].Destination.Name</h2>
             flightCounter++;
         }       
 
@@ -60,9 +34,9 @@
 <br />
 @if(AdminController.scheduleToApprove == null)
 {
-    <a class="btn btn-primary" asp-controller="Admin" asp-action="ListSchedules">Go Back</a>
+    <a class="btn btn-danger active" asp-controller="Admin" asp-action="ListSchedules">Go Back</a>
 }
 else
 {
-    <a class="btn btn-primary" asp-controller="Admin" asp-action="Schedule">Go Back</a>
+    <a class="btn btn-danger active" asp-controller="Admin" asp-action="Schedule">Go Back</a>
 }

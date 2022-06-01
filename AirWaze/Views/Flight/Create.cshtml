@@ -9,7 +9,7 @@
 
 <link rel="stylesheet" href="~/css/flightindex.css">
 
-<div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center ">
+<div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center " style="background-image: url(../Images/departures_background.jpg)">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-12">
@@ -61,17 +61,5 @@
 
 
      <a class="btn btn-danger active" asp-controller="Flight" asp-action="Index">Go Back</a>
-     <button class="btn btn-primary active" onclick="message()" type="submit">Create Flight</button>
+     <button class="btn btn-primary active" type="submit">Create Flight</button>
 </form>
-<script type="text/javascript">
-        function message()
-        {
-            Swal.fire({                   
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Flight Created',
-                    showConfirmButton: false,
-                    timer: 1500                   
-                    });
-        }
-    </script>

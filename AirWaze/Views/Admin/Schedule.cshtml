@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="~/css/flightindex.css">
 
 <main>
-    <div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center ">
+    <div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center " style="background-image: url(../Images/controltower.jpg)">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-12">
@@ -37,7 +37,7 @@
                 </div>
         </div>
         <div class="col-lg-9" style="padding-bottom: 50px;">
-           <h3 class="font-weight-bold" style="padding-top: 50px; padding-bottom: 30px;">Manage schedule</h3>
+           <h3 class="font-weight-bold" style="padding-top: 50px; padding-bottom: 30px;">Manage Schedules</h3>
             <div class="section-top-border">
                     <div class="categories-area">
                     <div class="container">                      
@@ -63,7 +63,7 @@
                                     </div>
                                     <div class="cat-cap">
                                         <h5>All Schedules</h5>
-                                        <a asp-controller="Admin" asp-action="ListSchedules">All Approved Schedules</a>
+                                        <a asp-controller="Admin" asp-action="ListSchedules">See Approved Schedules</a>
                                     </div>
                                 </div>
                             </div>
@@ -77,9 +77,9 @@
             }
             else
             {
-                <p>@AdminController.scheduleToApprove.Date.ToString("D") - @AdminController.scheduleToApprove.Date.Hour.ToString("00") : @AdminController.scheduleToApprove.Date.Minute.ToString("00")</p>
+                <p>@AdminController.scheduleToApprove.Date.ToString("dd/MM/yyyy hh:mm")</p>
                 <a class="genric-btn info circle" asp-controller="Admin" asp-action="DetailSchedule" asp-route-id="-1">Detail</a>
-                <a class="genric-btn warning circle" asp-controller="Admin" asp-action="ApproveSchedule" >Approve Schedule</a>
+                <a class="genric-btn warning circle" style="color: black" asp-controller="Admin" asp-action="ApproveSchedule" >Approve Schedule</a>
             }
 
             

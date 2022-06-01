@@ -7,7 +7,7 @@
 
 <link rel="stylesheet" href="~/css/flightindex.css">
 
-<div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center ">
+<div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center " style="background-image: url(../Images/controltower.jpg)">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-12">
@@ -21,13 +21,26 @@
         <br />
         <br />
 
-<form asp-controller="Admin" asp-action="GenerateSchedule" method="post">
+<form style="margin-right: 65%;" asp-controller="Admin" asp-action="GenerateSchedule" method="post">
     <div class="form-group">
         <label>Date and Time:</label>
-        <input type="datetime-local" min="@DateTime.Now" max="@DateTime.Now.AddDays(30)" class="form-control" asp-for="Date"/>
+        <input class="form-control" asp-for="Date"/>
         <span asp-validation-for="Date"></span>
     </div>
-    <button class="btn btn-primary" type="submit">Create New Schedule</button>
+    <br />
+    <a class="btn btn-danger active" asp-controller="Admin" asp-action="Schedule">Go Back</a>
+    <button class="btn btn-primary active" onclick="message()" type="submit">Generate Schedule</button>
 </form>
 
-<a class="btn btn-primary" asp-controller="Admin" asp-action="Schedule">Go Back</a>
+<script type="text/javascript">
+        function message()
+        {
+            Swal.fire({                   
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Schedule Generated',
+                    showConfirmButton: false,
+                    timer: 1500                   
+                    });
+        }
+    </script>

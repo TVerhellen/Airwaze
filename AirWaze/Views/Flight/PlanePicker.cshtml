@@ -13,7 +13,7 @@
 
     <link rel="stylesheet" href="~/css/flightindex.css">
 
-<div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center ">
+<div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center " style="background-image: url(../Images/departures_background.jpg)">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-12">
@@ -26,7 +26,14 @@
         </div>
         <br />
         <br />
-@if(availablePlanesForThisFlight.Count > 0)
+@if(availablePlanesForThisFlight.Count == 0)
+{
+    <h2>There are currently no planes available for this flight.</h2>
+    <h2>Please select another Departure Time.</h2>
+    <br />
+    <a class="btn btn-danger active" asp-controller="Flight" asp-action="CreateAgain" asp-route-id="@Model.FlightNr">Go Back</a>
+}
+else
 {
     <h2>Please select the plane for flight @Model.FlightNr to @Model.Destination.Name (@Model.Destination.Region)</h2>
     <br />
@@ -45,13 +52,20 @@
     </div>
     <br />
     <br />
-    <button class="btn btn-primary active" type="submit">Confirm Plane</button>
+    <a class="btn btn-danger active" asp-controller="Flight" asp-action="CreateAgain" asp-route-id="@Model.FlightNr">Go Back</a>
+    <button class="btn btn-primary active" onclick="message()" type="submit">Assign Plane</button>
     </form>
 }
-else
-{
-    <h2>There are currently no planes available for this flight.</h2>
-    <p>Please select another Departure Time.</p>
 
-    <a class="btn btn-primary" asp-controller="Flight" asp-action="CreateAgain" asp-route-id="@Model.FlightNr">Go Back</a>
-}
+<script type="text/javascript">
+        function message()
+        {
+            Swal.fire({                   
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Flight Created',
+                    showConfirmButton: false,
+                    timer: 1500                   
+                    });
+        }
+    </script>

@@ -4,7 +4,7 @@
 }
 <link rel="stylesheet" href="~/css/flightindex.css">
 
-<div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center ">
+<div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center " style="background-image: url(../Images/controltower.jpg)">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-12">
@@ -23,7 +23,7 @@
 <h1>Are you sure you want to approve the following schedule?</h1>
 <br />
 <br />
-<h2>@AdminController.scheduleToApprove.Date.ToString("D") - @AdminController.scheduleToApprove.Date.Hour.ToString("00"): @AdminController.scheduleToApprove.Date.Minute.ToString("00")</h2>
+<h2 style="margin-left: 0; font-weight: bolder;">@AdminController.scheduleToApprove.Date.DayOfWeek @AdminController.scheduleToApprove.Date.ToString("dd/MM/yyyy hh:mm")</h2>
 <br />
 @if(@AdminController.scheduleToApprove.Flights.Count == 0)
 {
@@ -31,20 +31,32 @@
 }
 else
 {
-    <h2>Flights:</h2>
 @foreach(var flight in @AdminController.scheduleToApprove.Flights)
 {
-    <p>@flightCounter: @AdminController.scheduleToApprove.Flights[flightCounter-1].Departure - @AdminController.scheduleToApprove.Flights[flightCounter-1].FlightNr - @AdminController.scheduleToApprove.Flights[flightCounter-1].Destination - Gate @AdminController.scheduleToApprove.Flights[flightCounter-1].CurrentGate.Number</p>
+    <h3 style="margin-left: 0;">@flightCounter: @AdminController.scheduleToApprove.Flights[flightCounter-1].Departure.ToString("dd/MM/yyyy hh:mm") - @AdminController.scheduleToApprove.Flights[flightCounter-1].FlightNr - @AdminController.scheduleToApprove.Flights[flightCounter-1].Destination.Name</h3>
     flightCounter++;
     }
 }
 <br />
+<a class="btn btn-danger active" asp-controller="Admin" asp-action="DeleteSchedule">No - Delete this Schedule</a> 
 @if(@AdminController.scheduleToApprove.Flights.Count > 0)
 {
-    <a class="btn btn-success" asp-controller="Admin" asp-action="ConfirmApproveSchedule">Yes - Approve</a>
-<a class="btn btn-warning" asp-controller="Admin" asp-action="Schedule">No - Go Back</a>
+    <a class="btn btn-warning active" asp-controller="Admin" asp-action="Schedule">No - Go Back</a>
+    <a class="btn btn-success active" onclick="message()" asp-controller="Admin" asp-action="ConfirmApproveSchedule">Yes - Approve</a>
 }
-<a class="btn btn-danger" asp-controller="Admin" asp-action="DeleteSchedule">No - Delete this Schedule</a>
 
+
+<script type="text/javascript">
+        function message()
+        {
+            Swal.fire({                   
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Schedule Generated',
+                    showConfirmButton: false,
+                    timer: 1500                   
+                    });
+        }
+    </script>
 
 
