@@ -124,7 +124,7 @@
                                          <p>Luxury Seating Acomodation and Shop Delivery available on site</p>
                                          <br />
                                           <h3>Gps Details:</h3>                                              
-                                          <p>@distanceherderstraat.ToString("0,00") m distance from your current position, bearing @bearingherderstraat.ToString("0,00"). Walking Time : approx. @GetWalkingTime(@distanceherderstraat) minutes.</p>
+                                          @*<p>@distanceherderstraat.ToString("0,00") m distance from your current position, bearing @bearingherderstraat.ToString("0,00"). Walking Time : approx. @GetWalkingTime(@distanceherderstraat) minutes.</p>*@
                                         <br>
                                         <div class="media-body">
                                                 <a href="blog_details.html">Insert Link </a>
@@ -322,10 +322,10 @@
         })).Location;
         this._context = await this._canvasReference.CreateCanvas2DAsync(); 
         //AFBAKENEN VELD
-        if (currentPosition.Coords.Latitude < 51.084944 && currentPosition.Coords.Latitude > 51.0802263 && currentPosition.Coords.Longitude < 3.719737 && currentPosition.Coords.Longitude > 3.709195)
+        if (currentPosition.Coords.Latitude < 51.177484 && currentPosition.Coords.Latitude > 51.167565 && currentPosition.Coords.Longitude < 4.143673 && currentPosition.Coords.Longitude > 4.133690)
         {
             //Paint coords
-            x = (int)Math.Round(((51.177484 - currentPosition.Coords.Latitude / 800) / 0.00001239875)/1000);
+            x = (int)Math.Round(((51.177484 - currentPosition.Coords.Latitude / 800) / 0.00001239875)/10000);
             y =  (int)Math.Round(((4.143673 - currentPosition.Coords.Longitude / 600) / 0.000016638333)/1000);
             //Paint
             await this._context.SetFillStyleAsync("black");      
